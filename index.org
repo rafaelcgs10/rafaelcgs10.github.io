@@ -1,0 +1,16 @@
+#+TITLE: Rafael Castro's home page
+#+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+OPTIONS: toc:nil num:nil H:4 ^:nil pri:t
+#+OPTIONS: html-postamble:nil
+#+AUTHOR: Rafael Castro
+#+LANGUAGE: en
+#+EMAIL: rafaelcgs10@gmail.com
+
+
+| I'm a project of computer scientist at the Santa Catarina State University and at the moment I'm doing my master's thesis. | file:eu.jpg |
+  
+* email: rafaelcgs10@gmail.com
+* [[https://github.com/rafaelcgs10][GitHub]]
+
+* [[https://twitter.com/rafaelcgs101][Twitter]]
