@@ -1,17 +1,16 @@
 #+TITLE: Aula 1 de Coq
 #+AUTHOR: Rafael Castro
 #+EMAIL: rafaelcgs10@gmail.com
-#+DATE: 03/05/2018
 #+startup: beamer
 #+LaTeX_CLASS: beamer
-#+BEAMER_THEME: Copenhagen 
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
 #+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
 #+OPTIONS:   H:2 toc:t
+#+DATE: 03/05/2018
 
 #+LANGUAGE: pt
 
-* Introduc\{c}c\~ao Assistentes de Provas
+* Introducao
 
 ** Provadores Automáticos
   - Entre com uma proposição, aperte um botão e veja a resposta.
@@ -20,7 +19,7 @@
   - São procedimentos de decisão.
   - Fornecem um formalismo para especificar a proposição, mas não para a sua prova. Fornecem uma valoração caso falso.
 ** Assistentes de Provas
-  - São provadores semi-automáticos.
+  - São provadores semi-automáticos; Entre com uma proposição, aperte um botão e veja a resposta.
   - Uso com domínio menos restrito.
   - Podem utilizar provadores automáticos, mas ainda necessitam do humano.
   - Fornecem um formalismo para representar a prova. /Lembra/ as regras da Dedução.
