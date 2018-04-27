@@ -8,14 +8,21 @@
 #+OPTIONS: html-postamble:nil
 #+LANGUAGE: en
 
-* Assistentes de provas
-** Provadores automáticos vs Assistentes de provas
+* Assistentes de Provas
+** Provadores Automáticos vs Assistentes de Provas
 
-*** Provadores automáticos: Entre com uma proposição, aperte um botão e veja a resposta.
+*** Provadores Automáticos: Entre com uma proposição, aperte um botão e veja a resposta.
 **** Fazem todo o trabalho da prova. Humanos não são necessários.
 **** Limitados a domínios específicos.
 **** São procedimentos de decisão.
 **** Fornecem um formalismo para especificar a proposição, mas não para a sua prova. Fornecem uma valoração caso falso.
-*** Assistentes de provas: são provadores semi-automáticos; Entre com uma proposição, aperte um botão e veja a resposta.
+*** Assistentes de Provas: são provadores semi-automáticos; Entre com uma proposição, aperte um botão e veja a resposta.
 **** Uso com domínio menos restrito.
-**** A
+**** Podem utilizar provadores automáticos, mas ainda necessitam do humano.
+**** Fornecem um formalismo para representar a prova. /Lembra/ as regras da Dedução.
+
+** O que Assistente de provas fazem?
+*** O núcleo de um assistente de provas é um verificador, que verificam a consistência lógica da prova. 
+*** Fornecem de maneira interativa informações sobre o estado atual da prova.
+*** Ajudam a encontrar teoremas e lemas para o progresso da prova.
+*** Permitem implementar métodos não-deterministas para auxiliar a prova. 
