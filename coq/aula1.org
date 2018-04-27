@@ -1,28 +1,28 @@
 #+TITLE: Aula 1 de Coq
 #+AUTHOR: Rafael Castro
 #+EMAIL: rafaelcgs10@gmail.com
-#+LATEX_CLASS: beamer
-#+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
-#+OPTIONS: toc:nil num:nil H:4 ^:nil pri:t
-#+OPTIONS: html-postamble:nil
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+BEAMER_THEME: Madrid
+
 #+LANGUAGE: en
 
-* Assistentes de Provas
-** Provadores Automáticos vs Assistentes de Provas
+* Provadores Automáticos vs Assistentes de Provas
 
-*** Provadores Automáticos: Entre com uma proposição, aperte um botão e veja a resposta.
-**** Fazem todo o trabalho da prova. Humanos não são necessários.
-**** Limitados a domínios específicos.
-**** São procedimentos de decisão.
-**** Fornecem um formalismo para especificar a proposição, mas não para a sua prova. Fornecem uma valoração caso falso.
-*** Assistentes de Provas: são provadores semi-automáticos; Entre com uma proposição, aperte um botão e veja a resposta.
-**** Uso com domínio menos restrito.
-**** Podem utilizar provadores automáticos, mas ainda necessitam do humano.
-**** Fornecem um formalismo para representar a prova. /Lembra/ as regras da Dedução.
+** Provadores Automáticos
+  - Entre com uma proposição, aperte um botão e veja a resposta.
+  - Fazem todo o trabalho da prova. Humanos não são necessários.
+  - Limitados a domínios específicos.
+  - São procedimentos de decisão.
+  - Fornecem um formalismo para especificar a proposição, mas não para a sua prova. Fornecem uma valoração caso falso.
+** Assistentes de Provas
+  - São provadores semi-automáticos; Entre com uma proposição, aperte um botão e veja a resposta.
+  - Uso com domínio menos restrito.
+  - Podem utilizar provadores automáticos, mas ainda necessitam do humano.
+  - Fornecem um formalismo para representar a prova. /Lembra/ as regras da Dedução.
 
-** O que Assistente de provas fazem?
-*** O núcleo de um assistente de provas é um verificador, que verificam a consistência lógica da prova. 
-*** Fornecem de maneira interativa informações sobre o estado atual da prova.
-*** Ajudam a encontrar teoremas e lemas para o progresso da prova.
-*** Permitem implementar métodos não-deterministas para auxiliar a prova. 
+* O que Assistente de provas fazem?
+ - O núcleo de um assistente de provas é um verificador, que verifica a consistência lógica da prova. 
+ - Fornecem de maneira interativa informações sobre o estado atual da prova.
+ - Ajudam a encontrar teoremas e lemas para o progresso da prova.
+ - Permitem implementar métodos não-deterministas para auxiliar a prova. 
