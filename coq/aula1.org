@@ -19,7 +19,7 @@
   - São procedimentos de decisão.
   - Fornecem um formalismo para especificar a proposição, mas não para a sua prova. Fornecem uma valoração caso falso.
 ** Assistentes de Provas
-  - São provadores semi-automáticos; Entre com uma proposição, aperte um botão e veja a resposta.
+  - São provadores semi-automáticos.
   - Uso com domínio menos restrito.
   - Podem utilizar provadores automáticos, mas ainda necessitam do humano.
   - Fornecem um formalismo para representar a prova. /Lembra/ as regras da Dedução.
