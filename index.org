@@ -9,8 +9,10 @@
 
 
 | I'm a project of computer scientist at the Santa Catarina State University and at the moment I'm doing my master's thesis. | file:eu.jpg |
+
+* [[./coq.html][Curso de Coq]]
   
-* email: rafaelcgs10@gmail.com
 * [[https://github.com/rafaelcgs10][GitHub]]
 
 * [[https://twitter.com/rafaelcgs101][Twitter]]
+* email: rafaelcgs10@gmail.com

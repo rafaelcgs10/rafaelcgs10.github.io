@@ -1,0 +1,87 @@
+% Created 2018-04-27 sex 23:12
+% Intended LaTeX compiler: pdflatex
+\documentclass[presentation]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{graphicx, hyperref, udesc, url}
+\usetheme{default}
+\author{Rafael Castro}
+\date{03/05/2018}
+\title{Aula 1 de Coq}
+\hypersetup{
+ pdfauthor={Rafael Castro},
+ pdftitle={Aula 1 de Coq},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 25.3.1 (Org mode 9.1.11)}, 
+ pdflang={Portuguese}}
+\begin{document}
+
+\maketitle
+
+\section{Introducao}
+\label{sec:orgfda01c0}
+
+\begin{frame}[label={sec:orgf0a4bd8}]{Provadores Automáticos}
+\begin{itemize}
+\item Entre com uma proposição, aperte um botão e veja a resposta.
+\item Fazem todo o trabalho da prova. Humanos não são necessários.
+\item Limitados a domínios específicos.
+\item São procedimentos de decisão.
+\item Fornecem um formalismo para especificar a proposição, mas não para a sua prova. Fornecem uma valoração caso falso.
+\end{itemize}
+\end{frame}
+\begin{frame}[label={sec:org04d3165}]{Assistentes de Provas}
+\begin{itemize}
+\item São provadores semi-automáticos.
+\item Uso com domínio menos restrito: podem falar sobre diversas lógicas, teorias e até mesmo programas.
+\item Podem utilizar provadores automáticos, mas ainda necessitam do humano.
+\item Fornecem um formalismo para representar a prova. \emph{Lembra} as regras da Dedução.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:orgbd249e0}]{Como Assistentes de provas assistem?}
+\begin{itemize}
+\item O núcleo de um assistente de provas é um verificador, que verifica a consistência lógica da prova.
+\item Fornecem de maneira interativa de visualizar as informações sobre o estado atual da prova.
+\item Ajudam a encontrar teoremas e lemas para o progresso da prova.
+\item Permitem implementar métodos não-deterministas para auxiliar a prova.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:orgc0772aa}]{Qual assistente utilizar?}
+\begin{itemize}
+\item Existem diversos assistentes, cada um baseado numa teoria matemática e com as suas peculiaridades:
+Agda, Isabelle, HOL, Minlog, Coq\ldots{}
+\item Iremmos utilizar Coq! Mas por que?
+1 - É o que eu sei algo;
+2 - Existe desde 1984;
+3 - Há vários livros.
+4 - Suporte para ordem superior, tipos dependentes, automação e extração de código.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org1e669dc}]{Como aprender Coq?}
+\end{frame}
+
+\section{Baby's First Steps}
+\label{sec:orgca965c1}
+
+\begin{frame}[label={sec:orgc68d649}]{Como utilizar o assistente de provas?}
+\begin{itemize}
+\item CoqIDE = Bom lugar para começar sem perder o foco. Tem os recursos básicos.
+\item Emacs + ProofGeneral + Company-coq =
+\end{itemize}
+\end{frame}
+\end{document}
