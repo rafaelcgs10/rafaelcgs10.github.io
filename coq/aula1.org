@@ -50,6 +50,16 @@ realizáveis somente com papel e caneta: Four Color Theorem
  - Coq é um assistentes de provas (dã) desenvolvido desde 1984 pelo French Institute for Research in Computer Science and Automation (INRIA).
  - Coq é fruto de sistemas de tipos: *Higher order dependently typed polymorphic lambda calculus*, o nomeado Calculus of Constructions (CoC).
  - Inicialmente chamado de CoC, foi estendido em 1991 para suportar construções indutivas e o nome mudou para Coq. Referência a Thierry Coquand.
+ - Coq tem quatro linguagens:
+   1. Gallina: linguagem de programação funcional total e com tipos dependentes.
+   2. Tatic: linguagem para criar provas com a ajuda do assistente/verificador.
+   3. Vernecular: linguagem de comandos. Enunciar teoremas, funções...
+   4. LTac: criação de novas táticas e procedimentos de prova.
+
+** Programação certificada em Coq
+ - Coq permite não só provar teoremas da matemática, mas também provar propriedades de programas.
+ - Provar correturede de programas. /Dijkstra screams in pleasure/
+ - Programas verificados (ou provas) em Coq podem ser extraídos para outras linguagens como Haskell, OCaml e Scheme.
    
 ** Como aprender Coq?
    Vamos utilizar o Volume 1 do Software Foundations 

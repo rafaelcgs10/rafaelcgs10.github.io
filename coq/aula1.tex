@@ -1,4 +1,4 @@
-% Created 2018-04-30 seg 15:28
+% Created 2018-04-30 seg 15:45
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
@@ -31,9 +31,9 @@
 \maketitle
 
 \section{Introducao}
-\label{sec:org007f3b1}
+\label{sec:orgdc1ecc2}
 
-\begin{frame}[label={sec:org0661ae4}]{Provadores Automáticos}
+\begin{frame}[label={sec:orgd47ef28}]{Provadores Automáticos}
 \begin{itemize}
 \item Entre com uma proposição, aperte um botão e veja a resposta.
 \item Fazem todo o trabalho da prova. Humanos não são necessários.
@@ -42,7 +42,7 @@
 \item Fornecem um formalismo para especificar a proposição, mas não para a sua prova. Fornecem uma valoração caso falso.
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org6f6a866}]{Assistentes de Provas}
+\begin{frame}[label={sec:orgb7485dd}]{Assistentes de Provas}
 \begin{itemize}
 \item São provadores semi-automáticos.
 \item Uso com domínio menos restrito: podem falar sobre diversas lógicas, teorias e até mesmo programas.
@@ -51,7 +51,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgbb3e083}]{Como Assistentes de provas assistem?}
+\begin{frame}[label={sec:orgf1b7f96}]{Como Assistentes de provas assistem?}
 \begin{itemize}
 \item O núcleo de um assistente de provas é um verificador, que verifica a consistência lógica da prova.
 \item A verficação humana de provas é demorada e sujeita a falhas: Último Teorema de Fermat.
@@ -67,7 +67,7 @@ realizáveis somente com papel e caneta: Four Color Theorem
 \end{frame}
 
 
-\begin{frame}[label={sec:orgfadd7fa}]{Qual assistente utilizar?}
+\begin{frame}[label={sec:org82acf36}]{Qual assistente utilizar?}
 \begin{itemize}
 \item Existem diversos assistentes, cada um baseado numa teoria matemática e com as suas peculiaridades:
 Agda, Isabelle, HOL, Minlog, Coq\ldots{}
@@ -81,15 +81,30 @@ Agda, Isabelle, HOL, Minlog, Coq\ldots{}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgd7e2898}]{O que é Coq?}
+\begin{frame}[label={sec:org4ad2cb1}]{O que é Coq?}
 \begin{itemize}
 \item Coq é um assistentes de provas (dã) desenvolvido desde 1984 pelo French Institute for Research in Computer Science and Automation (INRIA).
 \item Coq é fruto de sistemas de tipos: \alert{Higher order dependently typed polymorphic lambda calculus}, o nomeado Calculus of Constructions (CoC).
 \item Inicialmente chamado de CoC, foi estendido em 1991 para suportar construções indutivas e o nome mudou para Coq. Referência a Thierry Coquand.
+\item Coq tem quatro linguagens:
+\begin{enumerate}
+\item Gallina: linguagem de programação funcional total e com tipos dependentes.
+\item Tatic: linguagem para criar provas com a ajuda do assistente/verificador.
+\item Vernecular: linguagem de comandos. Enunciar teoremas, funções\ldots{}
+\item LTac: criação de novas táticas e procedimentos de prova.
+\end{enumerate}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org413a091}]{Como aprender Coq?}
+\begin{frame}[label={sec:org20e9645}]{Programação certificada em Coq}
+\begin{itemize}
+\item Coq permite não só provar teoremas da matemática, mas também provar propriedades de programas.
+\item Provar correturede de programas. \emph{Dijkstra screams in pleasure}
+\item Programas verificados (ou provas) em Coq podem ser extraídos para outras linguagens como Haskell, OCaml e Scheme.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org61d426a}]{Como aprender Coq?}
 Vamos utilizar o Volume 1 do Software Foundations 
 \url{https://softwarefoundations.cis.upenn.edu/}
 \begin{center}
@@ -97,7 +112,7 @@ Vamos utilizar o Volume 1 do Software Foundations
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org8e3d4fa}]{Coq é confiável?}
+\begin{frame}[label={sec:orgd3a054b}]{Coq é confiável?}
 O que eu preciso confiar quando vejo uma prova em Coq? 
 \begin{itemize}
 \item \alert{A teoria por trás de Coq}: Coq 8.0 é equivalente a Zermelo-Fraenkel set theory + inaccessible cardinals.
@@ -110,9 +125,9 @@ O que eu preciso confiar quando vejo uma prova em Coq?
 \end{frame}
 
 \section{Baby's First Steps}
-\label{sec:org9aec6a6}
+\label{sec:orgb0e0217}
 
-\begin{frame}[label={sec:org59431f3}]{Como utilizar o assistente de provas?}
+\begin{frame}[label={sec:orgeee1876}]{Como utilizar o assistente de provas?}
 \begin{itemize}
 \item CoqIDE = Bom lugar para começar sem perder o foco. Tem os recursos básicos.
 \item Emacs + ProofGeneral + Company-coq = a maneira mais eficiente de usar Coq.

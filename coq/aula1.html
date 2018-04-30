@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt">
 <head>
-<!-- 2018-04-30 seg 14:39 -->
+<!-- 2018-04-30 seg 15:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Aula 1 - Introdução à introdução</title>
+<title>Aula 1 - Introdução à introdução de Coq</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Rafael Castro - rafaelcgs10.github.io/coq" />
 <style type="text/css">
@@ -230,17 +230,14 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Aula 1 - Introdução à introdução</h1>
-<p>
-Demais aulas: <a href="https://rafaelcgs10.github.io/coq">rafaelcgs10.github.io/coq</a> 
-</p>
+<h1 class="title">Aula 1 - Introdução à introdução de Coq</h1>
 
-<div id="outline-container-org4956b7f" class="outline-2">
-<h2 id="org4956b7f"><span class="section-number-2">1</span> Introducao</h2>
+<div id="outline-container-orgc874653" class="outline-2">
+<h2 id="orgc874653"><span class="section-number-2">1</span> Introducao</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org468164f" class="outline-3">
-<h3 id="org468164f"><span class="section-number-3">1.1</span> Provadores Automáticos</h3>
+<div id="outline-container-orgaacb934" class="outline-3">
+<h3 id="orgaacb934"><span class="section-number-3">1.1</span> Provadores Automáticos</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
 <li>Entre com uma proposição, aperte um botão e veja a resposta.</li>
@@ -251,8 +248,8 @@ Demais aulas: <a href="https://rafaelcgs10.github.io/coq">rafaelcgs10.github.io/
 </ul>
 </div>
 </div>
-<div id="outline-container-org116966d" class="outline-3">
-<h3 id="org116966d"><span class="section-number-3">1.2</span> Assistentes de Provas</h3>
+<div id="outline-container-org892069b" class="outline-3">
+<h3 id="org892069b"><span class="section-number-3">1.2</span> Assistentes de Provas</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
 <li>São provadores semi-automáticos.</li>
@@ -263,8 +260,8 @@ Demais aulas: <a href="https://rafaelcgs10.github.io/coq">rafaelcgs10.github.io/
 </div>
 </div>
 
-<div id="outline-container-org59c32d7" class="outline-3">
-<h3 id="org59c32d7"><span class="section-number-3">1.3</span> Como Assistentes de provas assistem?</h3>
+<div id="outline-container-orgd70cd85" class="outline-3">
+<h3 id="orgd70cd85"><span class="section-number-3">1.3</span> Como Assistentes de provas assistem?</h3>
 <div class="outline-text-3" id="text-1-3">
 <ul class="org-ul">
 <li>O núcleo de um assistente de provas é um verificador, que verifica a consistência lógica da prova.</li>
@@ -286,8 +283,8 @@ realizáveis somente com papel e caneta: Four Color Theorem
 </div>
 
 
-<div id="outline-container-orge4b1a7b" class="outline-3">
-<h3 id="orge4b1a7b"><span class="section-number-3">1.4</span> Qual assistente utilizar?</h3>
+<div id="outline-container-org447c6f4" class="outline-3">
+<h3 id="org447c6f4"><span class="section-number-3">1.4</span> Qual assistente utilizar?</h3>
 <div class="outline-text-3" id="text-1-4">
 <ul class="org-ul">
 <li>Existem diversos assistentes, cada um baseado numa teoria matemática e com as suas peculiaridades:
@@ -296,25 +293,45 @@ Agda, Isabelle, HOL, Minlog, Coq&#x2026;</li>
 <ol class="org-ol">
 <li>É o que eu sei algo;</li>
 <li>Existe desde 1984;</li>
-<li>Há vários livros.</li>
+<li>Há vários livros;</li>
 <li>Suporte para ordem superior, tipos dependentes, automação e extração de código.</li>
 </ol></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3b172a4" class="outline-3">
-<h3 id="org3b172a4"><span class="section-number-3">1.5</span> O que é Coq?</h3>
+<div id="outline-container-orgdaaf2ff" class="outline-3">
+<h3 id="orgdaaf2ff"><span class="section-number-3">1.5</span> O que é Coq?</h3>
 <div class="outline-text-3" id="text-1-5">
 <ul class="org-ul">
-<li>Coq é um</li>
+<li>Coq é um assistentes de provas (dã) desenvolvido desde 1984 pelo French Institute for Research in Computer Science and Automation (INRIA).</li>
+<li>Coq é fruto de sistemas de tipos: <b>Higher order dependently typed polymorphic lambda calculus</b>, o nomeado Calculus of Constructions (CoC).</li>
+<li>Inicialmente chamado de CoC, foi estendido em 1991 para suportar construções indutivas e o nome mudou para Coq. Referência a Thierry Coquand.</li>
+<li>Coq tem quatro linguagens:
+<ol class="org-ol">
+<li>Gallina: linguagem de programação funcional total e com tipos dependentes.</li>
+<li>Tatic: linguagem para criar provas com a ajuda do assistente/verificador.</li>
+<li>Vernecular: linguagem de comandos. Enunciar teoremas, funções&#x2026;</li>
+<li>LTac: criação de novas táticas e procedimentos de prova.</li>
+</ol></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgbeaa963" class="outline-3">
-<h3 id="orgbeaa963"><span class="section-number-3">1.6</span> Como aprender Coq?</h3>
+<div id="outline-container-org1beae89" class="outline-3">
+<h3 id="org1beae89"><span class="section-number-3">1.6</span> Programação certificada em Coq</h3>
 <div class="outline-text-3" id="text-1-6">
+<ul class="org-ul">
+<li>Coq permite não só provar teoremas da matemática, mas também provar propriedades de programas.</li>
+<li>Provar que programas estão corretos. <i>Dijkstra screams in pleasure</i></li>
+<li>Programas verificados (ou provas) em Coq podem ser extraídos para outras linguagens como Haskell, OCaml e Scheme.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge09fce2" class="outline-3">
+<h3 id="orge09fce2"><span class="section-number-3">1.7</span> Como aprender Coq?</h3>
+<div class="outline-text-3" id="text-1-7">
 <p>
 Vamos utilizar o Volume 1 do Software Foundations 
 <a href="https://softwarefoundations.cis.upenn.edu/">https://softwarefoundations.cis.upenn.edu/</a>
@@ -327,21 +344,34 @@ Vamos utilizar o Volume 1 do Software Foundations
 </div>
 </div>
 
-<div id="outline-container-orgcd4818a" class="outline-3">
-<h3 id="orgcd4818a"><span class="section-number-3">1.7</span> Coq é confiável?</h3>
+<div id="outline-container-org25083a5" class="outline-3">
+<h3 id="org25083a5"><span class="section-number-3">1.8</span> Coq é confiável?</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+O que eu preciso confiar quando vejo uma prova em Coq? 
+</p>
+<ul class="org-ul">
+<li><b>A teoria por trás de Coq</b>: Coq 8.0 é equivalente a Zermelo-Fraenkel set theory + inaccessible cardinals.</li>
+<li><b>A implementação do núcle do Coq</b>: A implementação representa a teoria por trás de Coq e é pequena para evitar o risco de erros.</li>
+<li><b>O compilador de OCaml</b>: Utiliza somente bibliotecas básicas, então é improvável que um bug no compilador quebre a lógica de Coq sem quebrar todo os outros softwares feitos em OCaml.</li>
+<li><b>Seu hardware</b>: Se o seu hardware falhar, pode ser possível provar o Falso (illuminati confirmed). Teste em outros computadores.</li>
+<li><b>Seu sistema operacional</b>: idem hardware.</li>
+<li><b>Seus axiomas</b>: Coq permite você adicionar novos axiomas, os quais precisam ser consistentes com a teoria de Coq.</li>
+</ul>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org80acb7b" class="outline-2">
-<h2 id="org80acb7b"><span class="section-number-2">2</span> Baby's First Steps</h2>
+<div id="outline-container-org384750f" class="outline-2">
+<h2 id="org384750f"><span class="section-number-2">2</span> Baby's First Steps</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org25c7ee5" class="outline-3">
-<h3 id="org25c7ee5"><span class="section-number-3">2.1</span> Como utilizar o assistente de provas?</h3>
+<div id="outline-container-orgc1ecccf" class="outline-3">
+<h3 id="orgc1ecccf"><span class="section-number-3">2.1</span> Como utilizar o assistente de provas?</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li>CoqIDE = Bom lugar para começar sem perder o foco. Tem os recursos básicos.</li>
-<li>Emacs + ProofGeneral + Company-coq =</li>
+<li>Emacs + ProofGeneral + Company-coq = a maneira mais eficiente de usar Coq.</li>
 </ul>
 </div>
 </div>
@@ -350,7 +380,7 @@ Vamos utilizar o Volume 1 do Software Foundations
 <div id="postamble" class="status">
 <p class="date">Date: 02/05/2018</p>
 <p class="author">Author: Rafael Castro - rafaelcgs10.github.io/coq</p>
-<p class="date">Created: 2018-04-30 seg 14:39</p>
+<p class="date">Created: 2018-04-30 seg 15:43</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
