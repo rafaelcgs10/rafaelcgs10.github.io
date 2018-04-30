@@ -67,9 +67,9 @@ realizáveis somente com papel e caneta: Four Color Theorem
    [[file:./sf.jpeg]]
 
 ** Coq é confiável?
-   O que eu preciso confiar quando vejo uma prova em Coq? 
+   No que eu preciso confiar quando vejo uma prova em Coq? 
  - *A teoria por trás de Coq*: Coq 8.0 é equivalente a Zermelo-Fraenkel set theory + inaccessible cardinals.
- - *A implementação do núcle do Coq*: A implementação representa a teoria por trás de Coq e é pequena para evitar o risco de erros.
+ - *A implementação do núcleo do Coq*: A implementação representa a teoria por trás de Coq e é pequena para evitar o risco de erros.
  - *O compilador de OCaml*: Utiliza somente bibliotecas básicas, então é improvável que um bug no compilador quebre a lógica de Coq sem quebrar todo os outros softwares feitos em OCaml.
  - *Seu hardware*: Se o seu hardware falhar, pode ser possível provar o Falso (illuminati confirmed). Teste em outros computadores.
  - *Seu sistema operacional*: idem hardware.
@@ -83,7 +83,7 @@ realizáveis somente com papel e caneta: Four Color Theorem
 
 ** Baby's First Type
  - Coq não tem um conjunto de dados básicos /build-in/. Todos os tipos de Coq são definidos em Coq.
- - Tipos são definidos com /Inductive/, seguido do identificado, o tipo desse tipo e a definição.
+ - Tipos são definidos com /Inductive/, seguido do identificador, o tipo desse tipo e a sua definição em /| termo : tipo/.
 #+BEGIN_SRC coq
 Inductive day : Type :=
   | monday : day
@@ -96,6 +96,8 @@ Inductive day : Type :=
 #+END_SRC
 
 ** Baby's First Proof
+ - Teoremas são enunciados com /Theorem/, seguido do seu identificador e a sua proposição (tipo).
+ - Provas são enunciadas com /Proof/ e finalizadas com /Qed/.
 #+BEGIN_SRC coq
 Theorem fridayIsFriday : friday = friday.
 Proof.
