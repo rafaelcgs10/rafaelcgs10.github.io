@@ -1,4 +1,4 @@
-% Created 2018-04-30 seg 11:34
+% Created 2018-04-30 seg 13:19
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
@@ -16,12 +16,12 @@
 \usepackage{hyperref}
 \usepackage{graphicx, hyperref, udesc, url}
 \usetheme{default}
-\author{Rafael Castro}
-\date{03/05/2018}
-\title{Aula 1 de Coq}
+\author{Rafael Castro - rafaelcgs10.github.io/coq}
+\date{02/05/2018}
+\title{Aula 1 - Introdução à introdução}
 \hypersetup{
- pdfauthor={Rafael Castro},
- pdftitle={Aula 1 de Coq},
+ pdfauthor={Rafael Castro - rafaelcgs10.github.io/coq},
+ pdftitle={Aula 1 - Introdução à introdução},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 25.3.1 (Org mode 9.1.11)}, 
@@ -29,11 +29,12 @@
 \begin{document}
 
 \maketitle
+Demais aulas: \href{https://rafaelcgs10.github.io/coq}{rafaelcgs10.github.io/coq} 
 
 \section{Introducao}
-\label{sec:org02d2f72}
+\label{sec:orgb7bd958}
 
-\begin{frame}[label={sec:orgb3ccb78}]{Provadores Automáticos}
+\begin{frame}[label={sec:orgc284944}]{Provadores Automáticos}
 \begin{itemize}
 \item Entre com uma proposição, aperte um botão e veja a resposta.
 \item Fazem todo o trabalho da prova. Humanos não são necessários.
@@ -42,7 +43,7 @@
 \item Fornecem um formalismo para especificar a proposição, mas não para a sua prova. Fornecem uma valoração caso falso.
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org0d7e165}]{Assistentes de Provas}
+\begin{frame}[label={sec:org338fdf9}]{Assistentes de Provas}
 \begin{itemize}
 \item São provadores semi-automáticos.
 \item Uso com domínio menos restrito: podem falar sobre diversas lógicas, teorias e até mesmo programas.
@@ -51,16 +52,23 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orge460205}]{Como Assistentes de provas assistem?}
+\begin{frame}[label={sec:org6badaa3}]{Como Assistentes de provas assistem?}
 \begin{itemize}
 \item O núcleo de um assistente de provas é um verificador, que verifica a consistência lógica da prova.
+\item A verficação humana de provas é demorada e sujeita a falhas: Último Teorema de Fermat.
 \item Fornecem de maneira interativa de visualizar as informações sobre o estado atual da prova.
 \item Ajudam a encontrar teoremas e lemas para o progresso da prova.
 \item Permitem implementar métodos não-deterministas para auxiliar a prova.
 \end{itemize}
+Assistentes de provas permitem provar coisas que não seriam 
+realizáveis somente com papel e caneta: Four Color Theorem
+\begin{center}
+\includegraphics[width=60]{./four.jpeg}
+\end{center} 
 \end{frame}
 
-\begin{frame}[label={sec:orgea5ae09}]{Qual assistente utilizar?}
+
+\begin{frame}[label={sec:org0031e26}]{Qual assistente utilizar?}
 \begin{itemize}
 \item Existem diversos assistentes, cada um baseado numa teoria matemática e com as suas peculiaridades:
 Agda, Isabelle, HOL, Minlog, Coq\ldots{}
@@ -74,18 +82,27 @@ Agda, Isabelle, HOL, Minlog, Coq\ldots{}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org8cbc353}]{Como aprender Coq?}
+\begin{frame}[label={sec:org257f78f}]{O que é Coq?}
+\begin{itemize}
+\item Coq é um
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org1bcb7df}]{Como aprender Coq?}
 Vamos utilizar o Volume 1 do Software Foundations 
 \url{https://softwarefoundations.cis.upenn.edu/}
 \begin{center}
-\includegraphics[width=.9\linewidth]{./sf.jpeg}
+\includegraphics[width=100px]{./sf.jpeg}
 \end{center}
 \end{frame}
 
-\section{Baby's First Steps}
-\label{sec:org88a10b5}
+\begin{frame}[label={sec:org4a4955f}]{Coq é confiável?}
+\end{frame}
 
-\begin{frame}[label={sec:org2b95eba}]{Como utilizar o assistente de provas?}
+\section{Baby's First Steps}
+\label{sec:org1594a49}
+
+\begin{frame}[label={sec:orgeb06be2}]{Como utilizar o assistente de provas?}
 \begin{itemize}
 \item CoqIDE = Bom lugar para começar sem perder o foco. Tem os recursos básicos.
 \item Emacs + ProofGeneral + Company-coq =

@@ -1,14 +1,16 @@
 #+TITLE: Aula 1 - Introdução à introdução
-#+AUTHOR: Rafael Castro
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
 #+EMAIL: rafaelcgs10@gmail.com
 #+startup: beamer
 #+LaTeX_CLASS: beamer
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
 #+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
 #+OPTIONS:   H:2 toc:nil
-#+DATE: 03/05/2018
+#+DATE: 02/05/2018
 
 #+LANGUAGE: pt
+
+Demais aulas: [[https://rafaelcgs10.github.io/coq][rafaelcgs10.github.io/coq]] 
 
 * Introducao
 
@@ -26,9 +28,16 @@
 
 ** Como Assistentes de provas assistem?
  - O núcleo de um assistente de provas é um verificador, que verifica a consistência lógica da prova. 
+ - A verficação humana de provas é demorada e sujeita a falhas: Último Teorema de Fermat.
  - Fornecem de maneira interativa de visualizar as informações sobre o estado atual da prova.
  - Ajudam a encontrar teoremas e lemas para o progresso da prova.
  - Permitem implementar métodos não-deterministas para auxiliar a prova. 
+Assistentes de provas permitem provar coisas que não seriam 
+realizáveis somente com papel e caneta: Four Color Theorem
+   #+attr_html: :width 400
+   #+attr_latex: :width 60
+   [[file:./four.jpeg]] 
+
 
 ** Qual assistente utilizar?
  - Existem diversos assistentes, cada um baseado numa teoria matemática e com as suas peculiaridades:
@@ -38,11 +47,17 @@
    2. Existe desde 1984;
    3. Há vários livros.
    4. Suporte para ordem superior, tipos dependentes, automação e extração de código.
+      
+** O que é Coq?
+ - Coq é um 
    
 ** Como aprender Coq?
    Vamos utilizar o Volume 1 do Software Foundations 
    [[https://softwarefoundations.cis.upenn.edu/]]
+   #+attr_latex: :width 100px
    [[file:./sf.jpeg]]
+
+** Coq é confiável?
 
 * Baby's First Steps
 

@@ -7,13 +7,22 @@
 #+LANGUAGE: pt
 #+EMAIL: rafaelcgs10@gmail.com
 
-| Aula                               | Data       | Exercícios     | Fonte |
-| [[./coq/aula1.html][1.1 - Introdução à introdução]]      | 02/05/2018 |                |       |
-| 1.2 - Programação Funcional em Coq | 02/05/2018 | [[./coq/doit.gif]] |       |
-| 2 - Prova por indução              | 07/05/2018 |                |       |
-| 3 - Lists                          | 09/05/2018 |                |       |
-| 4 - Tatics                         | 14/05/2018 |                |       |
-| 5 - Lógica em Coq                  | 16/05/2018 |                |       |
+
+| Aula                          | Data       | Exercícios     | Fonte |
+| [[./coq/aula1.html][1 - Introdução à introdução]]   | 02/05/2018 |                |       |
+| 1 - Prova pro indução 1       | 07/05/2018 | [[./coq/doit.gif]] |       |
+| 2 - Prova por indução 2       | 09/05/2018 |                |       |
+| 3 - Listas 1                  | 14/05/2018 |                |       |
+| 4 - Listas 2                  | 16/05/2018 |                |       |
+| 5 - Polimorfismo 1            | 21/05/2018 |                |       |
+| 6 - Polimorfismo 2  		| 23/05/2018 |                |       |
+| 7 - Táticas 1 		| 28/05/2018 |                |       |
+| 8 - Táticas 2 		| 30/05/2018 |                |       |
+| 9 - Lógica em Coq 1 		| 04/06/2018 |                |       |
+| 10 - Lógicas em Coq 2 	| 06/06/2018 |                |       |
+| 11 - Revisão 			| 11/06/2018 |                |       |
+
+| Prova prática Coq | 13/06/2018 |
 
 | Referência                           |
 | Software Foundations: Livro e vídeos |
