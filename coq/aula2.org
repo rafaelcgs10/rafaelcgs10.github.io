@@ -1,0 +1,18 @@
+#+TITLE: Aula 2 - Programação Funcional em Coq
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
+#+EMAIL: rafaelcgs10@gmail.com
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
+#+OPTIONS:   H:2 toc:nil
+#+DATE: 02/05/2018
+
+#+LANGUAGE: pt
+
+* Programação Funcional
+
+** O que é Programação Funcional?
+ - O paradigma de programação funcional é baseado no simples conceito: se funções não têm efeitos colaterais, então tudo o que precisamos saber sobre funções são os seus mapeamentos. - (se ignorarmos ropriedades não funcionais como a eficiência!).
+ - O termo funcional enfatiza que funções são /first class values/, ou seja, elas podem ser passadas para funções e retornada por funções.
+ - Polimorfismo, Tipos de Dados Algébricos e Tipos Recursivo (indutivos).
