@@ -8,20 +8,20 @@
 #+EMAIL: rafaelcgs10@gmail.com
 
 
-| Aula                                  | Data       | Exercícios     | Fonte |
-| [[./coq/aula1.html][1 - Introdução à introdução de Coq]]    | 02/05/2018 |                |       |
-| [[./coq/aula2.html][2 - Programação Funcional em Coq]]      | 02/05/2018 | [[./coq/doit.gif]] |       |
-| 3 - Prova por indução 1               | 07/05/2018 |                |       |
-| 4 - Prova por indução 2               | 09/05/2018 |                |       |
-| 5 - Listas 1                          | 14/05/2018 |                |       |
-| 6 - Listas 2                          | 16/05/2018 |                |       |
-| 7 - Polimorfismo 1                    | 21/05/2018 |                |       |
-| 8 - Polimorfismo 2  		        | 23/05/2018 |                |       |
-| 9 - Táticas 1 		        | 28/05/2018 |                |       |
-| 10 - Táticas 2 		        | 30/05/2018 |                |       |
-| 11 - Lógica em Coq 1 		        | 04/06/2018 |                |       |
-| 12 - Lógicas em Coq 2 	        | 06/06/2018 |                |       |
-| 13 - Revisão 			        | 11/06/2018 |                |       |
+| Aula                                  | Data       | Exercícios     | Fonte   |
+| [[./coq/aula1.html][1 - Introdução à introdução de Coq]]    | 02/05/2018 |                | [[./aula1.v][aula1.v]] |
+| [[./coq/aula2.html][2 - Programação Funcional em Coq]]      | 02/05/2018 | [[./coq/doit.gif]] |         |
+| 3 - Prova por indução 1               | 07/05/2018 |                |         |
+| 4 - Prova por indução 2               | 09/05/2018 |                |         |
+| 5 - Listas 1                          | 14/05/2018 |                |         |
+| 6 - Listas 2                          | 16/05/2018 |                |         |
+| 7 - Polimorfismo 1                    | 21/05/2018 |                |         |
+| 8 - Polimorfismo 2  		        | 23/05/2018 |                |         |
+| 9 - Táticas 1 		        | 28/05/2018 |                |         |
+| 10 - Táticas 2 		        | 30/05/2018 |                |         |
+| 11 - Lógica em Coq 1 		        | 04/06/2018 |                |         |
+| 12 - Lógicas em Coq 2 	        | 06/06/2018 |                |         |
+| 13 - Revisão 			        | 11/06/2018 |                |         |
 
 | Prova prática Coq | 13/06/2018 |
 
