@@ -15,8 +15,8 @@
 ** Provadores Automáticos
   - Entre com uma proposição, aperte um botão e veja a resposta.
   - Fazem todo o trabalho da prova. Humanos não são necessários.
-  - Limitados a domínios específicos.
   - São procedimentos de decisão.
+  - Limitados a domínios específicos.
   - Fornecem um formalismo para especificar a proposição, mas não para a sua prova. Fornecem uma valoração caso falso.
 ** Assistentes de Provas
   - São provadores semi-automáticos.
@@ -81,3 +81,25 @@ realizáveis somente com papel e caneta: Four Color Theorem
 ** Como utilizar o assistente de provas?
  - CoqIDE = Bom lugar para começar sem perder o foco. Tem os recursos básicos. 
  - Emacs + ProofGeneral + Company-coq = a maneira mais eficiente de usar Coq.
+
+** Baby's First Type
+ - Coq não tem um conjunto de dados básicos /build-in/. Todos os tipos de Coq são definidos em Coq.
+ - Tipos são definidos com /Inductive/, seguido do identificado, o tipo desse tipo e a definição.
+#+BEGIN_SRC coq
+Inductive day : Type :=
+  | monday : day
+  | tuesday : day
+  | wednesday : day
+  | thursday : day
+  | friday : day
+  | saturday : day
+  | sunday : day.
+#+END_SRC
+
+** Baby's First Proof
+#+BEGIN_SRC coq
+Theorem fridayIsFriday : friday = friday.
+Proof.
+  reflexivity.
+Qed.
+#+END_SRC

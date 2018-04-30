@@ -1,4 +1,4 @@
-% Created 2018-04-30 seg 15:45
+% Created 2018-04-30 seg 16:00
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
@@ -31,9 +31,9 @@
 \maketitle
 
 \section{Introducao}
-\label{sec:orgdc1ecc2}
+\label{sec:org32583ea}
 
-\begin{frame}[label={sec:orgd47ef28}]{Provadores Automáticos}
+\begin{frame}[label={sec:org7a466a4}]{Provadores Automáticos}
 \begin{itemize}
 \item Entre com uma proposição, aperte um botão e veja a resposta.
 \item Fazem todo o trabalho da prova. Humanos não são necessários.
@@ -42,7 +42,7 @@
 \item Fornecem um formalismo para especificar a proposição, mas não para a sua prova. Fornecem uma valoração caso falso.
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgb7485dd}]{Assistentes de Provas}
+\begin{frame}[label={sec:org46e15fd}]{Assistentes de Provas}
 \begin{itemize}
 \item São provadores semi-automáticos.
 \item Uso com domínio menos restrito: podem falar sobre diversas lógicas, teorias e até mesmo programas.
@@ -51,7 +51,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgf1b7f96}]{Como Assistentes de provas assistem?}
+\begin{frame}[label={sec:orgff05ceb}]{Como Assistentes de provas assistem?}
 \begin{itemize}
 \item O núcleo de um assistente de provas é um verificador, que verifica a consistência lógica da prova.
 \item A verficação humana de provas é demorada e sujeita a falhas: Último Teorema de Fermat.
@@ -67,7 +67,7 @@ realizáveis somente com papel e caneta: Four Color Theorem
 \end{frame}
 
 
-\begin{frame}[label={sec:org82acf36}]{Qual assistente utilizar?}
+\begin{frame}[label={sec:org36cdc15}]{Qual assistente utilizar?}
 \begin{itemize}
 \item Existem diversos assistentes, cada um baseado numa teoria matemática e com as suas peculiaridades:
 Agda, Isabelle, HOL, Minlog, Coq\ldots{}
@@ -81,7 +81,7 @@ Agda, Isabelle, HOL, Minlog, Coq\ldots{}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org4ad2cb1}]{O que é Coq?}
+\begin{frame}[label={sec:org7829ede}]{O que é Coq?}
 \begin{itemize}
 \item Coq é um assistentes de provas (dã) desenvolvido desde 1984 pelo French Institute for Research in Computer Science and Automation (INRIA).
 \item Coq é fruto de sistemas de tipos: \alert{Higher order dependently typed polymorphic lambda calculus}, o nomeado Calculus of Constructions (CoC).
@@ -96,7 +96,7 @@ Agda, Isabelle, HOL, Minlog, Coq\ldots{}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org20e9645}]{Programação certificada em Coq}
+\begin{frame}[label={sec:org1a53811}]{Programação certificada em Coq}
 \begin{itemize}
 \item Coq permite não só provar teoremas da matemática, mas também provar propriedades de programas.
 \item Provar correturede de programas. \emph{Dijkstra screams in pleasure}
@@ -104,7 +104,7 @@ Agda, Isabelle, HOL, Minlog, Coq\ldots{}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org61d426a}]{Como aprender Coq?}
+\begin{frame}[label={sec:org7ac564b}]{Como aprender Coq?}
 Vamos utilizar o Volume 1 do Software Foundations 
 \url{https://softwarefoundations.cis.upenn.edu/}
 \begin{center}
@@ -112,7 +112,7 @@ Vamos utilizar o Volume 1 do Software Foundations
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:orgd3a054b}]{Coq é confiável?}
+\begin{frame}[label={sec:org87bfa8a}]{Coq é confiável?}
 O que eu preciso confiar quando vejo uma prova em Coq? 
 \begin{itemize}
 \item \alert{A teoria por trás de Coq}: Coq 8.0 é equivalente a Zermelo-Fraenkel set theory + inaccessible cardinals.
@@ -125,12 +125,28 @@ O que eu preciso confiar quando vejo uma prova em Coq?
 \end{frame}
 
 \section{Baby's First Steps}
-\label{sec:orgb0e0217}
+\label{sec:org52f850b}
 
-\begin{frame}[label={sec:orgeee1876}]{Como utilizar o assistente de provas?}
+\begin{frame}[label={sec:org6234760}]{Como utilizar o assistente de provas?}
 \begin{itemize}
 \item CoqIDE = Bom lugar para começar sem perder o foco. Tem os recursos básicos.
 \item Emacs + ProofGeneral + Company-coq = a maneira mais eficiente de usar Coq.
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgbc72368}]{Baby's First Type}
+ \begin{itemize}
+\item Coq não tem um conjunto de dados básicos \emph{build-in}. Todos os tipos de Coq são definidos em Coq.
+\end{itemize}
+\begin{verbatim}
+Inductive day : Type :=
+  | monday : day
+  | tuesday : day
+  | wednesday : day
+  | thursday : day
+  | friday : day
+  | saturday : day
+  | sunday : day.
+\end{verbatim}
 \end{frame}
 \end{document}
