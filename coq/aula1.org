@@ -34,8 +34,7 @@ Assistentes de provas permitem provar coisas que não seriam
 realizáveis somente com papel e caneta: Four Color Theorem
    #+attr_html: :width 400
    #+attr_latex: :width 60
-   [[./coq/four.jpeg]] 
-
+   [[file:./four.jpeg]]
 
 ** Qual assistente utilizar?
  - Existem diversos assistentes, cada um baseado numa teoria matemática e com as suas peculiaridades:
