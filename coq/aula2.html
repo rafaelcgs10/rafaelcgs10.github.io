@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt">
 <head>
-<!-- 2018-04-30 seg 17:01 -->
+<!-- 2018-04-30 seg 17:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Aula 2 - Programação Funcional em Coq</title>
@@ -232,33 +232,27 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">Aula 2 - Programação Funcional em Coq</h1>
 
-<div id="outline-container-org174f99c" class="outline-2">
-<h2 id="org174f99c"><span class="section-number-2">1</span> Programação Funcional</h2>
+<div id="outline-container-orgbb1de7e" class="outline-2">
+<h2 id="orgbb1de7e"><span class="section-number-2">1</span> Programação Funcional</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org6c78b69" class="outline-3">
-<h3 id="org6c78b69"><span class="section-number-3">1.1</span> O que é Programação Funcional?</h3>
+<div id="outline-container-org9f44242" class="outline-3">
+<h3 id="org9f44242"><span class="section-number-3">1.1</span> O que é Programação Funcional?</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
-<li>O paradigma de programação funcional é baseado no simples conceito: se funções não têm efeitos colaterais, então tudo o que precisamos saber sobre funções são os seus mapeamentos. - (se ignorarmos ropriedades não funcionais como a eficiência!).</li>
-<li>O termo funcional enfatiza que funções são <i>first class values</i>, ou seja, elas podem ser passadas para funções e retornada por funções.</li>
-<li>Polimorfismo, Tipos de Dados Algébricos e Tipos Recursivo (indutivos).</li>
+<li>O paradigma de programação funcional é baseado no simples conceito: se funções não têm efeitos colaterais, então tudo o que precisamos saber sobre funções são os seus mapeamentos. - (se ignorarmos propriedades não funcionais como a eficiência!).</li>
+<li>O termo funcional enfatiza que funções são <i>first class values</i>, ou seja, elas podem ser passadas como argumento para funções e retornadas por funções.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org238d682" class="outline-3">
-<h3 id="org238d682"><span class="section-number-3">1.2</span> Baby's First Functional Program</h3>
+<div id="outline-container-org2d50128" class="outline-3">
+<h3 id="org2d50128"><span class="section-number-3">1.2</span> Baby's First Functional Program</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
 <li>Um programa funcional é apenas um mapeamento!</li>
-<li>Um programa (não recursivo) é definido com <i>Definition</i>, seguido pelo identificador, a sequência de argumentos, o tipo do seu retorno e a sua</li>
-</ul>
-<p>
-definição.
-</p>
-<ul class="org-ul">
-<li>Casamento de padrão desconstroi um identificador em seus possíveis valores. A seta <i>=&gt;</i> informa o respectivo resultado para um valor.</li>
+<li>Um programa (não recursivo) é definido com <i>Definition</i>, seguido pelo identificador, a sequência de argumentos, o tipo do seu retorno e a sua definição.</li>
+<li>Casamento de padrão desconstroi um identificador em seus possíveis termos. A seta <i>=&gt;</i> informa o respectivo resultado.</li>
 </ul>
 <div class="org-src-container">
 <pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Definition</span> <span style="color: #93E0E3;">next_weekday</span> (<span style="color: #DFAF8F;">d</span>:day) : day :=
@@ -276,8 +270,8 @@ definição.
 </div>
 </div>
 
-<div id="outline-container-org7b6672c" class="outline-3">
-<h3 id="org7b6672c"><span class="section-number-3">1.3</span> Executando computações com Coq</h3>
+<div id="outline-container-org5435a2e" class="outline-3">
+<h3 id="org5435a2e"><span class="section-number-3">1.3</span> Executando computações em Coq</h3>
 <div class="outline-text-3" id="text-1-3">
 <div class="org-src-container">
 <pre class="src src-coq">Compute (next_weekday friday).
@@ -287,12 +281,52 @@ Compute (next_weekday (next_weekday saturday)).
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgef4ae68" class="outline-3">
+<h3 id="orgef4ae68"><span class="section-number-3">1.4</span> Baby's First Proof about some Function</h3>
+<div class="outline-text-3" id="text-1-4">
+<ul class="org-ul">
+<li><i>Example</i> é o mesmo que <i>Theorem</i>, que também é o mesmo que <i>Lemma</i>.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Example</span> <span style="color: #93E0E3;">test_next_weekday</span>:
+  (next_weekday (next_weekday saturday)) = tuesday.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">simpl</span>. <span style="color: #BFEBBF;">reflexivity</span>.
+<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6668dfc" class="outline-3">
+<h3 id="org6668dfc"><span class="section-number-3">1.5</span> Tipo booleano</h3>
+<div class="outline-text-3" id="text-1-5">
+<ul class="org-ul">
+<li>O tipo padrão booleano é definido em Coq por:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Inductive</span> <span style="color: #93E0E3;">bool</span> : <span style="color: #7CB8BB;">Type</span> :=
+  | true : bool
+  | false : bool.
+</pre>
+</div>
+<ul class="org-ul">
+<li>Como isso, de alguma, maneira representa os booleanos? De forma alguma!</li>
+<li>Booleanos tem sua semântica dada pelas suas operações (tabela verdade).</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2a7d0f5" class="outline-3">
+<h3 id="org2a7d0f5"><span class="section-number-3">1.6</span> Funções sobre booleanos</h3>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 02/05/2018</p>
 <p class="author">Author: Rafael Castro - rafaelcgs10.github.io/coq</p>
-<p class="date">Created: 2018-04-30 seg 17:01</p>
+<p class="date">Created: 2018-04-30 seg 17:42</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

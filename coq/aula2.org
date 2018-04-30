@@ -13,15 +13,13 @@
 * Programação Funcional
 
 ** O que é Programação Funcional?
- - O paradigma de programação funcional é baseado no simples conceito: se funções não têm efeitos colaterais, então tudo o que precisamos saber sobre funções são os seus mapeamentos. - (se ignorarmos ropriedades não funcionais como a eficiência!).
+ - O paradigma de programação funcional é baseado no simples conceito: se funções não têm efeitos colaterais, então tudo o que precisamos saber sobre funções são os seus mapeamentos. - (se ignorarmos propriedades não funcionais como a eficiência!).
  - O termo funcional enfatiza que funções são /first class values/, ou seja, elas podem ser passadas como argumento para funções e retornadas por funções.
- - Polimorfismo, Tipos de Dados Algébricos e Tipos Recursivo (indutivos).
 
 ** Baby's First Functional Program
  - Um programa funcional é apenas um mapeamento!
- - Um programa (não recursivo) é definido com /Definition/, seguido pelo identificador, a sequência de argumentos, o tipo do seu retorno e a sua
-definição.
- - Casamento de padrão desconstroi um identificador em seus possíveis valores. A seta /=>/ informa o respectivo resultado para um valor.
+ - Um programa (não recursivo) é definido com /Definition/, seguido pelo identificador, a sequência de argumentos, o tipo do seu retorno e a sua definição.
+ - Casamento de padrão desconstroi um identificador em seus possíveis termos. A seta /=>/ informa o respectivo resultado.
 #+BEGIN_SRC coq
 Definition next_weekday (d:day) : day :=
   match d with
@@ -41,3 +39,25 @@ Compute (next_weekday friday).
 
 Compute (next_weekday (next_weekday saturday)).
 #+END_SRC
+
+** Baby's First Proof about some Function
+ - /Example/ é o mesmo que /Theorem/, que também é o mesmo que /Lemma/.
+#+BEGIN_SRC coq
+Example test_next_weekday:
+  (next_weekday (next_weekday saturday)) = tuesday.
+Proof.
+  simpl. reflexivity.
+Qed.
+#+END_SRC
+
+** Tipo booleano
+ - O tipo padrão booleano é definido em Coq por:
+#+BEGIN_SRC coq
+Inductive bool : Type :=
+  | true : bool
+  | false : bool.
+#+END_SRC
+ - Como isso, de alguma, maneira representa os booleanos? De forma alguma! 
+ - Booleanos tem sua semântica dada pelas suas operações (tabela verdade).
+
+** Funções sobre booleanos
