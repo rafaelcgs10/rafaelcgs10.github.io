@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt">
 <head>
-<!-- 2018-04-27 sex 23:15 -->
+<!-- 2018-04-30 seg 11:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Aula 1 de Coq</title>
@@ -232,12 +232,12 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">Aula 1 de Coq</h1>
 
-<div id="outline-container-org44b5af8" class="outline-2">
-<h2 id="org44b5af8"><span class="section-number-2">1</span> Introducao</h2>
+<div id="outline-container-orgc56661b" class="outline-2">
+<h2 id="orgc56661b"><span class="section-number-2">1</span> Introducao</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org0dca673" class="outline-3">
-<h3 id="org0dca673"><span class="section-number-3">1.1</span> Provadores Automáticos</h3>
+<div id="outline-container-org4447032" class="outline-3">
+<h3 id="org4447032"><span class="section-number-3">1.1</span> Provadores Automáticos</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
 <li>Entre com uma proposição, aperte um botão e veja a resposta.</li>
@@ -248,8 +248,8 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfb5cc8e" class="outline-3">
-<h3 id="orgfb5cc8e"><span class="section-number-3">1.2</span> Assistentes de Provas</h3>
+<div id="outline-container-orgec518db" class="outline-3">
+<h3 id="orgec518db"><span class="section-number-3">1.2</span> Assistentes de Provas</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
 <li>São provadores semi-automáticos.</li>
@@ -260,8 +260,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9acc081" class="outline-3">
-<h3 id="org9acc081"><span class="section-number-3">1.3</span> Como Assistentes de provas assistem?</h3>
+<div id="outline-container-org086f221" class="outline-3">
+<h3 id="org086f221"><span class="section-number-3">1.3</span> Como Assistentes de provas assistem?</h3>
 <div class="outline-text-3" id="text-1-3">
 <ul class="org-ul">
 <li>O núcleo de um assistente de provas é um verificador, que verifica a consistência lógica da prova.</li>
@@ -272,32 +272,41 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orge7d4f73" class="outline-3">
-<h3 id="orge7d4f73"><span class="section-number-3">1.4</span> Qual assistente utilizar?</h3>
+<div id="outline-container-orga75465f" class="outline-3">
+<h3 id="orga75465f"><span class="section-number-3">1.4</span> Qual assistente utilizar?</h3>
 <div class="outline-text-3" id="text-1-4">
 <ul class="org-ul">
 <li>Existem diversos assistentes, cada um baseado numa teoria matemática e com as suas peculiaridades:
 Agda, Isabelle, HOL, Minlog, Coq&#x2026;</li>
-<li>Iremmos utilizar Coq! Mas por que?
-1 - É o que eu sei algo;
-2 - Existe desde 1984;
-3 - Há vários livros.
-4 - Suporte para ordem superior, tipos dependentes, automação e extração de código.</li>
+<li>Iremos utilizar Coq! Mas por que?
+<ol class="org-ol">
+<li>É o que eu sei algo;</li>
+<li>Existe desde 1984;</li>
+<li>Há vários livros.</li>
+<li>Suporte para ordem superior, tipos dependentes, automação e extração de código.</li>
+</ol></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge38a838" class="outline-3">
-<h3 id="orge38a838"><span class="section-number-3">1.5</span> Como aprender Coq?</h3>
+<div id="outline-container-org156cc5e" class="outline-3">
+<h3 id="org156cc5e"><span class="section-number-3">1.5</span> Como aprender Coq?</h3>
+<div class="outline-text-3" id="text-1-5">
+
+<div class="figure">
+<p><a href="https://softwarefoundations.cis.upenn.edu/"><img src="./sf.jpeg" alt="sf.jpeg" /></a>
+</p>
+</div>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org5b99715" class="outline-2">
-<h2 id="org5b99715"><span class="section-number-2">2</span> Baby's First Steps</h2>
+<div id="outline-container-orgc6e1b75" class="outline-2">
+<h2 id="orgc6e1b75"><span class="section-number-2">2</span> Baby's First Steps</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org500c7fe" class="outline-3">
-<h3 id="org500c7fe"><span class="section-number-3">2.1</span> Como utilizar o assistente de provas?</h3>
+<div id="outline-container-org3b6f8a2" class="outline-3">
+<h3 id="org3b6f8a2"><span class="section-number-3">2.1</span> Como utilizar o assistente de provas?</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li>CoqIDE = Bom lugar para começar sem perder o foco. Tem os recursos básicos.</li>
@@ -310,7 +319,7 @@ Agda, Isabelle, HOL, Minlog, Coq&#x2026;</li>
 <div id="postamble" class="status">
 <p class="date">Date: 03/05/2018</p>
 <p class="author">Author: Rafael Castro</p>
-<p class="date">Created: 2018-04-27 sex 23:15</p>
+<p class="date">Created: 2018-04-30 seg 11:31</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -33,13 +33,16 @@
 ** Qual assistente utilizar?
  - Existem diversos assistentes, cada um baseado numa teoria matemática e com as suas peculiaridades:
    Agda, Isabelle, HOL, Minlog, Coq...
- - Iremmos utilizar Coq! Mas por que?
-   1 - É o que eu sei algo;
-   2 - Existe desde 1984;
-   3 - Há vários livros.
-   4 - Suporte para ordem superior, tipos dependentes, automação e extração de código.
+ - Iremos utilizar Coq! Mas por que?
+   1. É o que eu sei algo;
+   2. Existe desde 1984;
+   3. Há vários livros.
+   4. Suporte para ordem superior, tipos dependentes, automação e extração de código.
    
 ** Como aprender Coq?
+   Vamos utilizar o Volume 1 do Software Foundations 
+   [[https://softwarefoundations.cis.upenn.edu/]]
+   [[file:./sf.jpeg]]
 
 * Baby's First Steps
 

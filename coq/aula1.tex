@@ -1,4 +1,4 @@
-% Created 2018-04-27 sex 23:12
+% Created 2018-04-30 seg 11:34
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
@@ -31,9 +31,9 @@
 \maketitle
 
 \section{Introducao}
-\label{sec:orgfda01c0}
+\label{sec:org02d2f72}
 
-\begin{frame}[label={sec:orgf0a4bd8}]{Provadores Automáticos}
+\begin{frame}[label={sec:orgb3ccb78}]{Provadores Automáticos}
 \begin{itemize}
 \item Entre com uma proposição, aperte um botão e veja a resposta.
 \item Fazem todo o trabalho da prova. Humanos não são necessários.
@@ -42,7 +42,7 @@
 \item Fornecem um formalismo para especificar a proposição, mas não para a sua prova. Fornecem uma valoração caso falso.
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org04d3165}]{Assistentes de Provas}
+\begin{frame}[label={sec:org0d7e165}]{Assistentes de Provas}
 \begin{itemize}
 \item São provadores semi-automáticos.
 \item Uso com domínio menos restrito: podem falar sobre diversas lógicas, teorias e até mesmo programas.
@@ -51,7 +51,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgbd249e0}]{Como Assistentes de provas assistem?}
+\begin{frame}[label={sec:orge460205}]{Como Assistentes de provas assistem?}
 \begin{itemize}
 \item O núcleo de um assistente de provas é um verificador, que verifica a consistência lógica da prova.
 \item Fornecem de maneira interativa de visualizar as informações sobre o estado atual da prova.
@@ -60,25 +60,32 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgc0772aa}]{Qual assistente utilizar?}
+\begin{frame}[label={sec:orgea5ae09}]{Qual assistente utilizar?}
 \begin{itemize}
 \item Existem diversos assistentes, cada um baseado numa teoria matemática e com as suas peculiaridades:
 Agda, Isabelle, HOL, Minlog, Coq\ldots{}
-\item Iremmos utilizar Coq! Mas por que?
-1 - É o que eu sei algo;
-2 - Existe desde 1984;
-3 - Há vários livros.
-4 - Suporte para ordem superior, tipos dependentes, automação e extração de código.
+\item Iremos utilizar Coq! Mas por que?
+\begin{enumerate}
+\item É o que eu sei algo;
+\item Existe desde 1984;
+\item Há vários livros.
+\item Suporte para ordem superior, tipos dependentes, automação e extração de código.
+\end{enumerate}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org1e669dc}]{Como aprender Coq?}
+\begin{frame}[label={sec:org8cbc353}]{Como aprender Coq?}
+Vamos utilizar o Volume 1 do Software Foundations 
+\url{https://softwarefoundations.cis.upenn.edu/}
+\begin{center}
+\includegraphics[width=.9\linewidth]{./sf.jpeg}
+\end{center}
 \end{frame}
 
 \section{Baby's First Steps}
-\label{sec:orgca965c1}
+\label{sec:org88a10b5}
 
-\begin{frame}[label={sec:orgc68d649}]{Como utilizar o assistente de provas?}
+\begin{frame}[label={sec:org2b95eba}]{Como utilizar o assistente de provas?}
 \begin{itemize}
 \item CoqIDE = Bom lugar para começar sem perder o foco. Tem os recursos básicos.
 \item Emacs + ProofGeneral + Company-coq =
