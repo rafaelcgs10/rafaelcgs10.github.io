@@ -10,10 +10,10 @@
 | Aula                               | Data       | Exercícios     | Fonte |
 | [[./coq/aula1.html][1.1 - Introdução à introdução]]      | 02/05/2018 |                |       |
 | 1.2 - Programação Funcional em Coq | 02/05/2018 | [[./coq/doit.gif]] |       |
-| 2 - Programação Funcional em Coq   | 07/05/2018 |                |       |
-| 3 - Prova por indução              | 09/05/2018 |                |       |
-| 4 -                                | 14/05/2018 |                |       |
-| 5 -                                | 16/05/2018 |                |       |
+| 2 - Prova por indução              | 07/05/2018 |                |       |
+| 3 - Lists                          | 09/05/2018 |                |       |
+| 4 - Tatics                         | 14/05/2018 |                |       |
+| 5 - Lógica em Coq                  | 16/05/2018 |                |       |
 
 | Referência                           |
 | Software Foundations: Livro e vídeos |
