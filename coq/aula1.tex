@@ -1,4 +1,4 @@
-% Created 2018-04-30 seg 13:19
+% Created 2018-04-30 seg 15:28
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
@@ -18,10 +18,10 @@
 \usetheme{default}
 \author{Rafael Castro - rafaelcgs10.github.io/coq}
 \date{02/05/2018}
-\title{Aula 1 - Introdução à introdução}
+\title{Aula 1 - Introdução à introdução de Coq}
 \hypersetup{
  pdfauthor={Rafael Castro - rafaelcgs10.github.io/coq},
- pdftitle={Aula 1 - Introdução à introdução},
+ pdftitle={Aula 1 - Introdução à introdução de Coq},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 25.3.1 (Org mode 9.1.11)}, 
@@ -29,12 +29,11 @@
 \begin{document}
 
 \maketitle
-Demais aulas: \href{https://rafaelcgs10.github.io/coq}{rafaelcgs10.github.io/coq} 
 
 \section{Introducao}
-\label{sec:orgb7bd958}
+\label{sec:org007f3b1}
 
-\begin{frame}[label={sec:orgc284944}]{Provadores Automáticos}
+\begin{frame}[label={sec:org0661ae4}]{Provadores Automáticos}
 \begin{itemize}
 \item Entre com uma proposição, aperte um botão e veja a resposta.
 \item Fazem todo o trabalho da prova. Humanos não são necessários.
@@ -43,7 +42,7 @@ Demais aulas: \href{https://rafaelcgs10.github.io/coq}{rafaelcgs10.github.io/coq
 \item Fornecem um formalismo para especificar a proposição, mas não para a sua prova. Fornecem uma valoração caso falso.
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org338fdf9}]{Assistentes de Provas}
+\begin{frame}[label={sec:org6f6a866}]{Assistentes de Provas}
 \begin{itemize}
 \item São provadores semi-automáticos.
 \item Uso com domínio menos restrito: podem falar sobre diversas lógicas, teorias e até mesmo programas.
@@ -52,7 +51,7 @@ Demais aulas: \href{https://rafaelcgs10.github.io/coq}{rafaelcgs10.github.io/coq
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org6badaa3}]{Como Assistentes de provas assistem?}
+\begin{frame}[label={sec:orgbb3e083}]{Como Assistentes de provas assistem?}
 \begin{itemize}
 \item O núcleo de um assistente de provas é um verificador, que verifica a consistência lógica da prova.
 \item A verficação humana de provas é demorada e sujeita a falhas: Último Teorema de Fermat.
@@ -68,7 +67,7 @@ realizáveis somente com papel e caneta: Four Color Theorem
 \end{frame}
 
 
-\begin{frame}[label={sec:org0031e26}]{Qual assistente utilizar?}
+\begin{frame}[label={sec:orgfadd7fa}]{Qual assistente utilizar?}
 \begin{itemize}
 \item Existem diversos assistentes, cada um baseado numa teoria matemática e com as suas peculiaridades:
 Agda, Isabelle, HOL, Minlog, Coq\ldots{}
@@ -76,19 +75,21 @@ Agda, Isabelle, HOL, Minlog, Coq\ldots{}
 \begin{enumerate}
 \item É o que eu sei algo;
 \item Existe desde 1984;
-\item Há vários livros.
+\item Há vários livros;
 \item Suporte para ordem superior, tipos dependentes, automação e extração de código.
 \end{enumerate}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org257f78f}]{O que é Coq?}
+\begin{frame}[label={sec:orgd7e2898}]{O que é Coq?}
 \begin{itemize}
-\item Coq é um
+\item Coq é um assistentes de provas (dã) desenvolvido desde 1984 pelo French Institute for Research in Computer Science and Automation (INRIA).
+\item Coq é fruto de sistemas de tipos: \alert{Higher order dependently typed polymorphic lambda calculus}, o nomeado Calculus of Constructions (CoC).
+\item Inicialmente chamado de CoC, foi estendido em 1991 para suportar construções indutivas e o nome mudou para Coq. Referência a Thierry Coquand.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org1bcb7df}]{Como aprender Coq?}
+\begin{frame}[label={sec:org413a091}]{Como aprender Coq?}
 Vamos utilizar o Volume 1 do Software Foundations 
 \url{https://softwarefoundations.cis.upenn.edu/}
 \begin{center}
@@ -96,16 +97,25 @@ Vamos utilizar o Volume 1 do Software Foundations
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org4a4955f}]{Coq é confiável?}
+\begin{frame}[label={sec:org8e3d4fa}]{Coq é confiável?}
+O que eu preciso confiar quando vejo uma prova em Coq? 
+\begin{itemize}
+\item \alert{A teoria por trás de Coq}: Coq 8.0 é equivalente a Zermelo-Fraenkel set theory + inaccessible cardinals.
+\item \alert{A implementação do núcle do Coq}: A implementação representa a teoria por trás de Coq e é pequena para evitar o risco de erros.
+\item \alert{O compilador de OCaml}: Utiliza somente bibliotecas básicas, então é improvável que um bug no compilador quebre a lógica de Coq sem quebrar todo os outros softwares feitos em OCaml.
+\item \alert{Seu hardware}: Se o seu hardware falhar, pode ser possível provar o Falso (illuminati confirmed). Teste em outros computadores.
+\item \alert{Seu sistema operacional}: idem hardware.
+\item \alert{Seus axiomas}: Coq permite você adicionar novos axiomas, os quais precisam ser consistentes com a teoria de Coq.
+\end{itemize}
 \end{frame}
 
 \section{Baby's First Steps}
-\label{sec:org1594a49}
+\label{sec:org9aec6a6}
 
-\begin{frame}[label={sec:orgeb06be2}]{Como utilizar o assistente de provas?}
+\begin{frame}[label={sec:org59431f3}]{Como utilizar o assistente de provas?}
 \begin{itemize}
 \item CoqIDE = Bom lugar para começar sem perder o foco. Tem os recursos básicos.
-\item Emacs + ProofGeneral + Company-coq =
+\item Emacs + ProofGeneral + Company-coq = a maneira mais eficiente de usar Coq.
 \end{itemize}
 \end{frame}
 \end{document}

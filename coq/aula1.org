@@ -1,4 +1,4 @@
-#+TITLE: Aula 1 - Introdução à introdução
+#+TITLE: Aula 1 - Introdução à introdução de Coq
 #+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
 #+EMAIL: rafaelcgs10@gmail.com
 #+startup: beamer
@@ -9,8 +9,6 @@
 #+DATE: 02/05/2018
 
 #+LANGUAGE: pt
-
-Demais aulas: [[https://rafaelcgs10.github.io/coq][rafaelcgs10.github.io/coq]] 
 
 * Introducao
 
@@ -45,11 +43,13 @@ realizáveis somente com papel e caneta: Four Color Theorem
  - Iremos utilizar Coq! Mas por que?
    1. É o que eu sei algo;
    2. Existe desde 1984;
-   3. Há vários livros.
+   3. Há vários livros;
    4. Suporte para ordem superior, tipos dependentes, automação e extração de código.
       
 ** O que é Coq?
- - Coq é um 
+ - Coq é um assistentes de provas (dã) desenvolvido desde 1984 pelo French Institute for Research in Computer Science and Automation (INRIA).
+ - Coq é fruto de sistemas de tipos: *Higher order dependently typed polymorphic lambda calculus*, o nomeado Calculus of Constructions (CoC).
+ - Inicialmente chamado de CoC, foi estendido em 1991 para suportar construções indutivas e o nome mudou para Coq. Referência a Thierry Coquand.
    
 ** Como aprender Coq?
    Vamos utilizar o Volume 1 do Software Foundations 
@@ -58,9 +58,16 @@ realizáveis somente com papel e caneta: Four Color Theorem
    [[file:./sf.jpeg]]
 
 ** Coq é confiável?
+   O que eu preciso confiar quando vejo uma prova em Coq? 
+ - *A teoria por trás de Coq*: Coq 8.0 é equivalente a Zermelo-Fraenkel set theory + inaccessible cardinals.
+ - *A implementação do núcle do Coq*: A implementação representa a teoria por trás de Coq e é pequena para evitar o risco de erros.
+ - *O compilador de OCaml*: Utiliza somente bibliotecas básicas, então é improvável que um bug no compilador quebre a lógica de Coq sem quebrar todo os outros softwares feitos em OCaml.
+ - *Seu hardware*: Se o seu hardware falhar, pode ser possível provar o Falso (illuminati confirmed). Teste em outros computadores.
+ - *Seu sistema operacional*: idem hardware.
+ - *Seus axiomas*: Coq permite você adicionar novos axiomas, os quais precisam ser consistentes com a teoria de Coq.
 
 * Baby's First Steps
 
 ** Como utilizar o assistente de provas?
  - CoqIDE = Bom lugar para começar sem perder o foco. Tem os recursos básicos. 
- - Emacs + ProofGeneral + Company-coq = 
+ - Emacs + ProofGeneral + Company-coq = a maneira mais eficiente de usar Coq.
