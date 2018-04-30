@@ -1,4 +1,4 @@
-#+TITLE: Curso de Coq da disciplina OTAP001
+#+TITLE: Curso de Coq da disciplina OPAT001
 #+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
 #+OPTIONS: toc:nil num:nil H:4 ^:nil pri:t

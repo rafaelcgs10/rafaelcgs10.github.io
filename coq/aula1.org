@@ -1,4 +1,4 @@
-#+TITLE: Aula 1 de Coq
+#+TITLE: Aula 1 - Introdução à introdução
 #+AUTHOR: Rafael Castro
 #+EMAIL: rafaelcgs10@gmail.com
 #+startup: beamer
