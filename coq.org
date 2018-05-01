@@ -27,4 +27,4 @@
 | Prova prática Coq | 13/06/2018 |
 
 | Referência                           |
-| Software Foundations: Livro e vídeos |
+| Software Foundations: [[https://softwarefoundations.cis.upenn.edu/][Livro]] e [[https://deepspec.org/event/dsss17/coq_intensive.html][vídeos]] |
