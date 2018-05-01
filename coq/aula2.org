@@ -46,7 +46,8 @@ Compute (next_weekday (next_weekday saturday)).
 Example test_next_weekday:
   (next_weekday (next_weekday saturday)) = tuesday.
 Proof.
-  simpl. reflexivity.
+  simpl.
+  reflexivity.
 Qed.
 #+END_SRC
 
@@ -61,3 +62,80 @@ Inductive bool : Type :=
  - Booleanos tem sua semântica dada pelas suas operações (tabela verdade).
 
 ** Funções sobre booleanos
+#+BEGIN_SRC coq
+Definition negb (b:bool) : bool :=
+  match b with
+  | true => false
+  | false => true
+  end.
+Definition andb (b1:bool) (b2:bool) : bool :=
+  match b1 with
+  | true => b2
+  | false => false
+  end.
+Definition orb (b1:bool) (b2:bool) : bool :=
+  match b1 with
+  | true => true
+  | false => b2
+  end.
+#+END_SRC
+
+** Pequenas provas como testes
+ - Apenas alguns testes de nossas funções.
+#+BEGIN_SRC coq
+Example test_orb1: (orb true false) = true.
+Proof. reflexivity. Qed.
+Example test_orb2: (orb false false) = false.
+Proof. reflexivity. Qed.
+Example test_orb3: (orb false true) = true.
+Proof. reflexivity. Qed.
+Example test_orb4: (orb true true) = true.
+Proof. reflexivity. Qed.
+#+END_SRC
+
+** Notações para definições
+#+BEGIN_SRC coq
+Notation "x && y" := (andb x y).
+Notation "x || y" := (orb x y).
+
+Example test_orb5: false || false || true = true.
+Proof. simpl. reflexivity. Qed.
+#+END_SRC
+
+** Módulos em Coq
+ - Coq tem um sistema de módulos para organizar o desenvolvimento de sistemas grandes.
+ - Cerca-se entre /Module X/ e /End X/, onde /X/ é o nome do módulo.
+ - Depois do /End X/ as definições desse módulo são referidas como /X.foo/.
+
+* Números Naturais
+
+** Números Naturais
+ - A definição é como na Aritmética de Peano. Todos os 8 axiomas são contemplados pela definição indutiva abaixo. /~ Falaremos mais disso depois!/
+ - $0$ é um número natural
+ - /S/ define o sucessor de um número natural. Se /p/ é um número natural, então /S p/ também é.
+ - Cuidado! /S/ é uma função que apenas define (indutivamente) os elementos de nat e não representa uma computação. /S/ define o sucessor, ele não computa o sucessor (não é (+1)).
+#+BEGIN_SRC coq
+Module NatPlayground.
+
+ Inductive nat : Type :=
+  | O : nat
+  | S : nat -> nat.
+#+END_SRC
+
+** Primeira função sobre naturais
+#+BEGIN_SRC coq
+Definition pred (n : nat) : nat :=
+  match n with
+    | O => O
+    | S n' => n'
+  end.
+  
+End NatPlayground.
+
+Check (S (S (S (S O)))).
+
+Compute (pred 4).
+
+Check S.
+Check pred.
+#+END_SRC
