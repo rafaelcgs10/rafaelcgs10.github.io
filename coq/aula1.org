@@ -99,6 +99,7 @@ Inductive day : Type :=
  - Teoremas são enunciados com /Theorem/, seguido do seu identificador e a sua proposição (tipo).
  - Provas são enunciadas com /Proof/ e finalizadas com /Qed/.
  - A tática /reflexivity/ verifica se os termos dos dois lados da igualdade são os mesmos (mas não faz somente isso).
+ - A janela lateral contem o objetivo e o contexto no estado atual da prova.
 #+BEGIN_SRC coq
 Theorem fridayIsFriday : friday = friday.
 Proof.
