@@ -11,9 +11,9 @@
 | Aula                                                     | Data       | Exercícios          | Fonte   |
 | [[./coq/aula1.html][1 - Introdução à introdução de Coq]]                       | 02/05/2018 |                     | [[./coq/aula1.v][aula1.v]] |
 | [[./coq/aula2.html][2 - Programação Funcional em Coq]]                         | 02/05/2018 | [[./coq/doit1.v][file:./coq/doit.gif]] | [[./coq/aula2.v][aula2.v]] |
-| 3 - Recursão estrita em Coq                              | 07/05/2018 |                     |         |
+| [[./coq/aula3.html][3 - Recursão estrita em Coq]]                              | 07/05/2018 |                     | [[./coq/aula2.v][aula3.v]] |
 | 4 - Prova por simplificação, reescrita e análise de caso | 07/05/2018 |                     |         |
-| 5 - Prova por indução 1                                  | 09/05/2018 |                     |         |
+| 5 - Prova por indução                                    | 09/05/2018 |                     |         |
 | 6 - Listas 1                                             | 14/05/2018 |                     |         |
 | 7 - Listas 2                                             | 16/05/2018 |                     |         |
 | 8 - Polimorfismo 1                                       | 21/05/2018 |                     |         |

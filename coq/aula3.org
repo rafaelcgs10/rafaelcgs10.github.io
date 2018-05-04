@@ -137,7 +137,9 @@ Check ((0 + 1) + 1).
 * Exemplos de funções usando A.P. 
 ** Função fatorial
   *Exercício realizado em aula*
+  
 /factorial(0) =  1/
+
 /factorial(n) =  n * factorial(n-1)/
 
 #+BEGIN_SRC coq
@@ -151,6 +153,8 @@ Example test_factorial2: (factorial 5) = (mult 10 12).
 #+END_SRC
 
 ** Função teste de igualdade booleano
+   
+   - Como funciona a seguinte função de igualdade booleana?
 
 #+BEGIN_SRC coq
  Fixpoint beq_nat (n m : nat) : bool :=
@@ -167,6 +171,8 @@ Example test_factorial2: (factorial 5) = (mult 10 12).
 #+END_SRC
 
 ** Função teste de menor ou igual booleano
+   
+   - Como funciona a seguinte função de menor/igual bololeana?
 
 #+BEGIN_SRC coq
 Fixpoint leb_nat (n m : nat) : bool :=
