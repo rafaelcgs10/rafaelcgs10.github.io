@@ -34,9 +34,9 @@
 #+BEGIN_SRC coq
 Fixpoint evenb (n:nat) : bool :=
   match n with
-  | O ⇒ true
-  | S O ⇒ false
-  | S (S n') ⇒ evenb n'
+  | O => true
+  | S O => false
+  | S (S n') => evenb n'
   end.
 #+END_SRC
 
@@ -63,8 +63,8 @@ Proof. simpl. reflexivity. Qed.
 Module NatPlayground2.
 Fixpoint plus (n : nat) (m : nat) : nat :=
   match n with
-    | O ⇒ m
-    | S n' ⇒ S (plus n' m)
+    | O => m
+    | S n' => S (plus n' m)
   end.
 #+END_SRC
 
@@ -92,8 +92,8 @@ Compute (plus 3 2).
 #+BEGIN_SRC coq
 Fixpoint mult (n m : nat) : nat :=
   match n with
-    | O ⇒ O
-    | S n' ⇒ plus m (mult n' m)
+    | O => O
+    | S n' => plus m (mult n' m)
   end.
   
 Example test_mult1: (mult 3 3) = 9.
@@ -111,9 +111,9 @@ Proof. simpl. reflexivity. Qed.
 #+BEGIN_SRC coq
 Fixpoint minus (n m:nat) : nat :=
   match n, m with
-  | O , _ ⇒ O
-  | S _ , O ⇒ n
-  | S n', S m' ⇒ minus n' m'
+  | O , _ => O
+  | S _ , O => n
+  | S n', S m' => minus n' m'
   end.
   
 End NatPlayground2.
@@ -159,13 +159,13 @@ Example test_factorial2: (factorial 5) = (mult 10 12).
 #+BEGIN_SRC coq
  Fixpoint beq_nat (n m : nat) : bool :=
   match n with
-  | O ⇒ match m with
-         | O ⇒ true
-         | S m' ⇒ false
+  | O => match m with
+         | O => true
+         | S m' => false
          end
-  | S n' ⇒ match m with
-            | O ⇒ false
-            | S m' ⇒ beq_nat n' m'
+  | S n' => match m with
+            | O => false
+            | S m' => beq_nat n' m'
             end
   end.
 #+END_SRC
