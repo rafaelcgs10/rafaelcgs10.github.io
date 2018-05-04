@@ -1,0 +1,24 @@
+#+TITLE: Aula 4 - Prova por simplificação, reescrita e análise de caso
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
+#+EMAIL: rafaelcgs10@gmail.com
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
+#+OPTIONS:   H:2 toc:nil
+#+DATE: 07/05/2018
+
+#+LANGUAGE: pt
+
+* Prova por Simplificação
+
+** Prova por Simplificação
+ - Já vimos alguns exemplos de simplificação utilizando a /tactic simpl/ e /reflexivity/.
+ - O exemplo abaixo é um pouco diferente dos anteriores: há o quantificador para todo (/forall/).
+ - A /tactic intros/ remove do objetivo o quantificador e o termo de um tipo quantificado, e insere no contexto um termo arbitrário do mesmo tipo com um dado identificador.
+#+BEGIN_SRC coq
+Theorem plus_O_n : forall n : nat, 0 + n = n.
+Proof.
+  intros n. simpl. reflexivity.  Qed.
+#+END_SRC
+
