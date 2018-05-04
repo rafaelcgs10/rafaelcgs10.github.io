@@ -1,0 +1,204 @@
+#+TITLE: Aula 3 - Recursão Estrita em Coq
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
+#+EMAIL: rafaelcgs10@gmail.com
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
+#+OPTIONS:   H:2 toc:nil
+#+DATE: 07/05/2018
+
+#+LANGUAGE: pt
+
+* Recursão Primitiva
+
+** Terminação em Coq
+ - Gallina é total. Logo, terminação é uma propriedade crucial da linguagem Gallina. 
+ - Programas que não terminam são equivalentes à proposições falsa.
+ - Escrever um programa que não termina em Coq é provar o falso, é introduzir inconsistência.
+   
+** Recursão Primitiva
+ - Recursão Estrita, Recursão primitiva e Recursão estrutural significam a mesma coisa.
+ - Um tipo especial de recursão. 
+ - Todas as funções com recursão estrita terminam, portanto são totais.
+ - Mas nem todas as funções totais são de recursão primitiva!
+ - São como laços contados em linguagens imperativas, com limite de iteração fixo (/for/, etc...).
+ - As funções da Aritmética de Peano são exatamente essas com recursão primitiva (adinção, subtração, multiplicação...).
+   
+** Recursão Primitiva em Coq
+ - Em Gallina, funções com recursão primitiva são aquelas cuja chamada recursiva acontece apenas em subtermos sintáticos do argumento original.
+ - Ou seja, a chamada recursiva ocorre num subtermo que pode ser capturado por um casamento de padrão.
+ - Isso é feito por meio do comando /Fixpoint/, que é similar ao /Definition/ mas permite recursão primitiva.
+ - Por exemplo, a função abaixo testa se um número é par.
+ - Note que /n'/ é subtermo de /n/.
+#+BEGIN_SRC coq
+Fixpoint evenb (n:nat) : bool :=
+  match n with
+  | O ⇒ true
+  | S O ⇒ false
+  | S (S n') ⇒ evenb n'
+  end.
+#+END_SRC
+
+** Apenas alguns testes
+  - Vamos aproveitar para definir ímpar como sendo não par.
+  - Vamos testar!
+#+BEGIN_SRC coq
+Definition oddb (n:nat) : bool := negb (evenb n).
+
+Example test_oddb1: oddb 1 = true.
+Proof. simpl. reflexivity. Qed.
+Example test_oddb2: oddb 4 = false.
+Proof. simpl. reflexivity. Qed.
+#+END_SRC
+
+* Funções da A.P.
+** Função soma de Peano
+  - A função soma abaixo recebe dois números.
+  - É feito o casamento de padrão no primeiro argumento:
+    1. Se for zero, então o resultado é o valor do segundo número.
+    2. Se for um sucessor, então o resultado é o sucessor da soma de /n'/ com /m/. Adiciona um sucessor no resultado para cada sucessor do primeiro argumento.
+
+#+BEGIN_SRC coq
+ Module NatPlayground2.
+Fixpoint plus (n : nat) (m : nat) : nat :=
+  match n with
+    | O ⇒ m
+    | S n' ⇒ S (plus n' m)
+  end.
+#+END_SRC
+
+** Exemplo de soma
+
+#+BEGIN_SRC coq
+Compute (plus 3 2).
+
+(*  plus (S (S (S O))) (S (S O))
+==> S (plus (S (S O)) (S (S O)))
+      by the second clause of the match
+==> S (S (plus (S O) (S (S O))))
+      by the second clause of the match
+==> S (S (S (plus O (S (S O)))))
+      by the second clause of the match
+==> S (S (S (S (S O))))
+      by the first clause of the match
+*)
+#+END_SRC
+
+** Multiplicação de Peano
+  - Se os argumentos tiverem o mesmo tipo eles podem ser agrupados como /(n m : nat)/.
+  - A função multiplicação soma o segundo argumento uma vez para cada sucessor do primeiro argumento.
+
+#+BEGIN_SRC coq
+Fixpoint mult (n m : nat) : nat :=
+  match n with
+    | O ⇒ O
+    | S n' ⇒ plus m (mult n' m)
+  end.
+  
+Example test_mult1: (mult 3 3) = 9.
+Proof. simpl. reflexivity. Qed.
+#+END_SRC
+
+** Subtração de Peano
+  - É possível casar dois valores ao mesmo tempo ao colocar uma virgula entre eles.
+  - /_/ é um padrão coringa.
+  - A função subtração funciona assim:
+   1. Zero menos qualquer coisa dá zero. (Lembre-se que não tem negativo e a função precisa ser total).
+   2. Um número (sucessor) menos zero coisa resulta nesse número.
+   3. Um número (sucessor) menos um número (sucessor) resulta na subtração dos predecessores.
+
+#+BEGIN_SRC coq
+Fixpoint minus (n m:nat) : nat :=
+  match n, m with
+  | O , _ ⇒ O
+  | S _ , O ⇒ n
+  | S n', S m' ⇒ minus n' m'
+  end.
+  
+End NatPlayground2.
+#+END_SRC
+
+** Algumas Notações para A.P.
+
+#+BEGIN_SRC coq
+Notation "x + y" := (plus x y)
+                       (at level 50, left associativity)
+                       : nat_scope.
+Notation "x - y" := (minus x y)
+                       (at level 50, left associativity)
+                       : nat_scope.
+Notation "x * y" := (mult x y)
+                       (at level 40, left associativity)
+                       : nat_scope.
+Check ((0 + 1) + 1).
+#+END_SRC
+
+* Exemplos de funções usando A.P. 
+** Função fatorial
+  *Exercício realizado em aula*
+/factorial(0) =  1/
+/factorial(n) =  n * factorial(n-1)/
+
+#+BEGIN_SRC coq
+Fixpoint factorial (n:nat) : nat
+  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+
+Example test_factorial1: (factorial 3) = 6.
+(* FILL IN HERE *) Admitted.
+Example test_factorial2: (factorial 5) = (mult 10 12).
+(* FILL IN HERE *) Admitted
+#+END_SRC
+
+** Função teste de igualdade booleano
+
+#+BEGIN_SRC coq
+ Fixpoint beq_nat (n m : nat) : bool :=
+  match n with
+  | O ⇒ match m with
+         | O ⇒ true
+         | S m' ⇒ false
+         end
+  | S n' ⇒ match m with
+            | O ⇒ false
+            | S m' ⇒ beq_nat n' m'
+            end
+  end.
+#+END_SRC
+
+** Função teste de menor ou igual booleano
+
+#+BEGIN_SRC coq
+Fixpoint leb (n m : nat) : bool :=
+  match n with
+  | O ⇒ true
+  | S n' ⇒
+      match m with
+      | O ⇒ false
+      | S m' ⇒ leb n' m'
+      end
+  end.
+  
+Example test_leb1: (leb 2 2) = true.
+Proof. simpl. reflexivity. Qed.
+Example test_leb2: (leb 2 4) = true.
+Proof. simpl. reflexivity. Qed.
+Example test_leb3: (leb 4 2) = false.
+Proof. simpl. reflexivity. Qed.
+#+END_SRC
+
+** Função teste menor booleano
+   
+  *Exercício realizado em sala*
+  - Dica: /leb n m <->  lt ? ?/
+
+#+BEGIN_SRC coq
+Definition lt (n m : nat) : bool
+  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+Example test_blt_nat1: (blt_nat 2 2) = false.
+(* FILL IN HERE *) Admitted.
+Example test_blt_nat2: (blt_nat 2 4) = true.
+(* FILL IN HERE *) Admitted.
+Example test_blt_nat3: (blt_nat 4 2) = false.
+(* FILL IN HERE *) Admitted.
+#+END_SRC
