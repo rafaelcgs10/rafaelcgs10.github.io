@@ -1,4 +1,4 @@
-#+TITLE: Aula 3 - Recursão Estrita em Coq
+#+TITLE: Aula 3 - Recursão Primitiva em Coq
 #+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
 #+EMAIL: rafaelcgs10@gmail.com
 #+startup: beamer
