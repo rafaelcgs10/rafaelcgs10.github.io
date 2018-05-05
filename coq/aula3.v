@@ -1,6 +1,3 @@
-
-
-
 Fixpoint evenb (n:nat) : bool :=
   match n with
   | O => true
