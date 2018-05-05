@@ -14,11 +14,99 @@
 
 ** Prova por Simplificação
  - Já vimos alguns exemplos de simplificação utilizando a /tactic simpl/ e /reflexivity/.
- - O exemplo abaixo é um pouco diferente dos anteriores: há o quantificador para todo (/forall/).
+ - Os exemplos abaixo são um pouco diferente dos anteriores: há o quantificador para todo (/forall/).
  - A /tactic intros/ remove do objetivo o quantificador e o termo de um tipo quantificado, e insere no contexto um termo arbitrário do mesmo tipo com um dado identificador.
 #+BEGIN_SRC coq
 Theorem plus_O_n : forall n : nat, 0 + n = n.
 Proof.
   intros n. simpl. reflexivity.  Qed.
+  
+Theorem plus_1_l : forall n:nat, 1 + n = S n.
+Proof.
+  intros n. reflexivity.  Qed.
+
+Theorem mult_0_l : forall n:nat, 0 * n = 0.
+Proof.
+  intros n. reflexivity.  Qed.
+
 #+END_SRC
 
+* Prova por Reescrita
+
+** Prova por Reescrita
+  - /intros/ também move hipoteses de implicações para o contexto.
+  - /n/ e /m/ são números arbitrários. Não podemos simplismente usar simplificação e reflexividade.
+  - Uma das hipoteses afirma que n é o mesmo número que m.
+  - A tática /rewrite/ com a seta /->/ substitui as ocorrencias do termo do lado esquerdo pelo do lado direito. Com a seta /<-/ o contrário.
+#+BEGIN_SRC coq
+
+Theorem plus_id_example : forall n m:nat,
+  n = m ->
+  n + n = m + m.
+Proof.
+  intros n m.
+  intros H.
+  rewrite -> H.
+  reflexivity.
+Qed.
+
+#+END_SRC
+
+** Exercícios de sala sobre reescrita
+   
+ *Exercícios realizados em sala*
+
+#+BEGIN_SRC coq
+Theorem mult_0_plus : forall n m : nat,
+  (0 + n) * m = n * m.
+Proof.
+  intros n m.
+  rewrite -> plus_O_n.
+  reflexivity.  Qed.
+
+(** **** Exercise: 2 stars (mult_S_1)  *)
+Theorem mult_S_1 : forall n m : nat,
+  m = S n ->
+  m * (1 + n) = m * m.
+Proof.
+  (* FILL IN HERE *) Admitted.
+
+#+END_SRC
+
+* Prova por Análise de Caso
+
+** Limites da Simplificação e Reescrita
+  - Simplificação e reescrita são muito poderosos, mas não são suficientes para o caso abaixo.
+  - A definição de ambas as funções faz casamento de padrão no primeiro argumento, porém o primeiro argumento de ambos é um número desconhecido.
+
+#+BEGIN_SRC coq
+Theorem plus_1_neq_0_firsttry : forall n : nat,
+  beq_nat (n + 1) 0 = false.
+Proof.
+  intros n.
+  simpl.  (* does nothing! *)
+Abort.
+
+#+END_SRC
+
+** Prova por Análise de Caso
+  - Para prosseguir na prova é necessário considerar os possíveis valores de /n/:
+    1. Se /n = 0/ então pode-se simplificar para /beq _nat 1 0 = false/
+    2. Se /n = S n'/ então pode-se simplificar para /beq _nat (S (n' + 1)) 0 = false/.
+  - A tática /destruct/ faz exatamente isso, ao analisar os possíveis valores com base na definição de /nat/.
+  - /destruct/ cria dois sub-objetivos novos.
+  - /as/ possibilitar definir os nomes que serão dados aos termos da análise de caso.
+  - O padrão é dado por uma lista de listas denotado por [ ... | ... | ... ]. Na definição de /nat/:
+    1. O primeiro termo somente pode ser /0/. Então usa-se uma lista vazia.
+    2. O segundo termo é um sucessor que tem um argumento que é um número natural. Nomea-se esse argumento de /n'/. Se houvesse mais um argumento para esse termo ele seria dado separado por um espaço: /[|n' m']/.
+  - O sinal /-/ serve para focar ocultar os demais objetivos e focar no atual. O uso é opcional, serve apenas para organizar a prova.
+
+#+BEGIN_SRC coq
+Theorem plus_1_neq_0 : forall n : nat,
+  beq_nat (n + 1) 0 = false.
+Proof.
+  intros n. destruct n as [| n'].
+  - reflexivity.
+  - reflexivity.   Qed.
+
+#+END_SRC
