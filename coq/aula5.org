@@ -1,0 +1,89 @@
+#+TITLE: Aula 5 - Prova por Indução
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
+#+EMAIL: rafaelcgs10@gmail.com
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
+#+OPTIONS:   H:2 toc:nil
+#+DATE: 07/05/2018
+
+#+LANGUAGE: pt
+
+* Prova por Indução
+
+** Elemento neutro da soma pela direita - Tentativa 1
+  - Já provamos que zero é o elemento neutro da soma apenas utilizando simplificação.
+  - Que tal prova que zero também é um elemento neutro se for o segundo argumento da função +?
+  - /n/ é um número arbitrário, não podemos realizar a computação.
+
+#+BEGIN_SRC coq
+Theorem plus_n_O_firsttry : forall n:nat,
+  n = n + 0.
+Proof.
+  intros n.
+  simpl. 
+Abort.
+#+END_SRC
+
+** Elemento neutro da soma pela direita - Tentativa 2
+  - A tática /destruct/ nos leva para um pouco mais longe, mas no segundo caso não há informação suficiente no contexto para avançar.
+
+#+BEGIN_SRC coq
+Theorem plus_n_O_secondtry : forall n:nat,
+  n = n + 0.
+Proof.
+  intros n. destruct n as [| n'].
+  - (* n = 0 *)
+    reflexivity. 
+  - (* n = S n' *)
+    simpl.
+Abort.
+#+END_SRC
+
+** Prova por Indução Informalmente
+  - Se /P(n)/ é uma proposição sobre números naturais e queremos provar que /P/ é verdade para todos os naturais, então fazemos o seguinte:
+    1. Mostra-se que /P(0)/ é verdade;
+    2. Mostra-se que para qualquer /n'/ arbitrário, se /P(n')/ é verdade então /P(S n')/ é veradade;
+    3. Conclui-se que /P(n)/ é verdade para todos os /n/.
+  
+** Prova por Indução em Coq
+  - Os passos são exatamente os mesmos da ideia informal.
+  - Aplicar a tática /induction/ gera dois sub-objetivos:
+    1. Provar P(0);
+    2. Provar /(P(n') -> P(S n')/.
+  - A tática /induction/ é utilizada exatamente da mesma maneira que a tática /destruct/.
+    
+** Elemento neutro da soma pela direita - Tentativa 3
+
+#+BEGIN_SRC coq
+Theorem plus_n_O : forall n:nat, n = n + 0.
+Proof.
+  intros n. induction n as [| n' IHn'].
+  - (* n = 0 *)    reflexivity.
+  - (* n = S n' *) simpl. rewrite <- IHn'. reflexivity.
+Qed.
+#+END_SRC
+
+** Substração /n/ por /n/
+
+#+BEGIN_SRC coq
+Theorem minus_diag : forall n,
+  minus n n = 0.
+Proof.
+  (* WORKED IN CLASS *)
+  intros n. induction n as [| n' IHn'].
+  - (* n = 0 *)
+    simpl. reflexivity.
+  - (* n = S n' *)
+    simpl. rewrite -> IHn'. reflexivity.  Qed.
+#+END_SRC
+
+** Multiplicação por zero na direita
+   *Exercício realizado em sala*
+#+BEGIN_SRC coq
+Theorem mult_0_r : forall n:nat,
+  n * 0 = 0.
+Proof.
+Admitted.
+#+END_SRC
