@@ -196,7 +196,7 @@ Proof. simpl. reflexivity. Qed.
 ** Função teste menor booleano
    
   *Exercício realizado em sala*
-  - Dica: /leb n m <->  lt ? ?/
+  - Dica: /n < m <->  ? <= ?/
 
 #+BEGIN_SRC coq
 Definition ltb_nat (n m : nat) : bool

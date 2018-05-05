@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt">
 <head>
-<!-- 2018-05-05 sáb 14:52 -->
+<!-- 2018-05-05 sáb 16:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Aula 3 - Recursão Primitiva em Coq</title>
@@ -232,12 +232,12 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">Aula 3 - Recursão Primitiva em Coq</h1>
 
-<div id="outline-container-orgce51c6b" class="outline-2">
-<h2 id="orgce51c6b"><span class="section-number-2">1</span> Recursão Primitiva</h2>
+<div id="outline-container-orgc88adcf" class="outline-2">
+<h2 id="orgc88adcf"><span class="section-number-2">1</span> Recursão Primitiva</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org0bb740a" class="outline-3">
-<h3 id="org0bb740a"><span class="section-number-3">1.1</span> Terminação em Coq</h3>
+<div id="outline-container-org3df2aef" class="outline-3">
+<h3 id="org3df2aef"><span class="section-number-3">1.1</span> Terminação em Coq</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
 <li>Gallina é total. Logo, terminação é uma propriedade crucial da linguagem Gallina.</li>
@@ -247,8 +247,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org14f8d89" class="outline-3">
-<h3 id="org14f8d89"><span class="section-number-3">1.2</span> Recursão Primitiva</h3>
+<div id="outline-container-orgc53f094" class="outline-3">
+<h3 id="orgc53f094"><span class="section-number-3">1.2</span> Recursão Primitiva</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
 <li>Recursão Estrita, Recursão primitiva e Recursão estrutural significam a mesma coisa.</li>
@@ -261,8 +261,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgfc74284" class="outline-3">
-<h3 id="orgfc74284"><span class="section-number-3">1.3</span> Recursão Primitiva em Coq</h3>
+<div id="outline-container-org98e3559" class="outline-3">
+<h3 id="org98e3559"><span class="section-number-3">1.3</span> Recursão Primitiva em Coq</h3>
 <div class="outline-text-3" id="text-1-3">
 <ul class="org-ul">
 <li>Em Gallina, funções com recursão primitiva são aquelas cuja chamada recursiva acontece apenas em subtermos sintáticos do argumento original.</li>
@@ -283,8 +283,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8325a67" class="outline-3">
-<h3 id="org8325a67"><span class="section-number-3">1.4</span> Apenas alguns testes</h3>
+<div id="outline-container-org6321e48" class="outline-3">
+<h3 id="org6321e48"><span class="section-number-3">1.4</span> Apenas alguns testes</h3>
 <div class="outline-text-3" id="text-1-4">
 <ul class="org-ul">
 <li>Vamos aproveitar para definir ímpar como sendo não par.</li>
@@ -303,12 +303,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6f135e3" class="outline-2">
-<h2 id="org6f135e3"><span class="section-number-2">2</span> Funções da A.P.</h2>
+<div id="outline-container-org6e42f9e" class="outline-2">
+<h2 id="org6e42f9e"><span class="section-number-2">2</span> Funções da A.P.</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orga99c7a4" class="outline-3">
-<h3 id="orga99c7a4"><span class="section-number-3">2.1</span> Função soma de Peano</h3>
+<div id="outline-container-org7ada334" class="outline-3">
+<h3 id="org7ada334"><span class="section-number-3">2.1</span> Função soma de Peano</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li>A função soma abaixo recebe dois números.</li>
@@ -331,8 +331,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org96a93c3" class="outline-3">
-<h3 id="org96a93c3"><span class="section-number-3">2.2</span> Exemplo de soma</h3>
+<div id="outline-container-org3f56927" class="outline-3">
+<h3 id="org3f56927"><span class="section-number-3">2.2</span> Exemplo de soma</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-coq">Compute (plus 3 2).
@@ -352,8 +352,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orge402db5" class="outline-3">
-<h3 id="orge402db5"><span class="section-number-3">2.3</span> Multiplicação de Peano</h3>
+<div id="outline-container-org6d155f5" class="outline-3">
+<h3 id="org6d155f5"><span class="section-number-3">2.3</span> Multiplicação de Peano</h3>
 <div class="outline-text-3" id="text-2-3">
 <ul class="org-ul">
 <li>Se os argumentos tiverem o mesmo tipo eles podem ser agrupados como <i>(n m : nat)</i>.</li>
@@ -374,8 +374,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org342a220" class="outline-3">
-<h3 id="org342a220"><span class="section-number-3">2.4</span> Subtração de Peano</h3>
+<div id="outline-container-orgf63fdb7" class="outline-3">
+<h3 id="orgf63fdb7"><span class="section-number-3">2.4</span> Subtração de Peano</h3>
 <div class="outline-text-3" id="text-2-4">
 <ul class="org-ul">
 <li>É possível casar dois valores ao mesmo tempo ao colocar uma virgula entre eles.</li>
@@ -402,8 +402,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2637cee" class="outline-3">
-<h3 id="org2637cee"><span class="section-number-3">2.5</span> Algumas Notações para A.P.</h3>
+<div id="outline-container-org216f50e" class="outline-3">
+<h3 id="org216f50e"><span class="section-number-3">2.5</span> Algumas Notações para A.P.</h3>
 <div class="outline-text-3" id="text-2-5">
 <div class="org-src-container">
 <pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Notation</span> <span style="color: #CC9393;">"x + y"</span> := (plus x y)
@@ -422,12 +422,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8555fd4" class="outline-2">
-<h2 id="org8555fd4"><span class="section-number-2">3</span> Exemplos de funções usando A.P.</h2>
+<div id="outline-container-org92a6b0b" class="outline-2">
+<h2 id="org92a6b0b"><span class="section-number-2">3</span> Exemplos de funções usando A.P.</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org37d2951" class="outline-3">
-<h3 id="org37d2951"><span class="section-number-3">3.1</span> Função fatorial</h3>
+<div id="outline-container-org73f4885" class="outline-3">
+<h3 id="org73f4885"><span class="section-number-3">3.1</span> Função fatorial</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <b>Exercício realizado em aula</b>
@@ -454,8 +454,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org86c5996" class="outline-3">
-<h3 id="org86c5996"><span class="section-number-3">3.2</span> Função teste de igualdade booleano</h3>
+<div id="outline-container-org5db0949" class="outline-3">
+<h3 id="org5db0949"><span class="section-number-3">3.2</span> Função teste de igualdade booleano</h3>
 <div class="outline-text-3" id="text-3-2">
 <ul class="org-ul">
 <li>Como funciona a seguinte função de igualdade booleana?</li>
@@ -478,8 +478,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orge71e324" class="outline-3">
-<h3 id="orge71e324"><span class="section-number-3">3.3</span> Função teste de menor ou igual booleano</h3>
+<div id="outline-container-orgbc15499" class="outline-3">
+<h3 id="orgbc15499"><span class="section-number-3">3.3</span> Função teste de menor ou igual booleano</h3>
 <div class="outline-text-3" id="text-3-3">
 <ul class="org-ul">
 <li>Como funciona a seguinte função de menor/igual bololeana?</li>
@@ -507,14 +507,14 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orge4f33ab" class="outline-3">
-<h3 id="orge4f33ab"><span class="section-number-3">3.4</span> Função teste menor booleano</h3>
+<div id="outline-container-org6bedfe6" class="outline-3">
+<h3 id="org6bedfe6"><span class="section-number-3">3.4</span> Função teste menor booleano</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 <b>Exercício realizado em sala</b>
 </p>
 <ul class="org-ul">
-<li>Dica: <i>leb n m &lt;-&gt;  lt ? ?</i></li>
+<li>Dica: <i>n &lt; m &lt;-&gt;  ? &lt;= ?</i></li>
 </ul>
 
 <div class="org-src-container">
@@ -536,7 +536,7 @@ for the JavaScript code in this tag.
 <div id="postamble" class="status">
 <p class="date">Date: 07/05/2018</p>
 <p class="author">Author: Rafael Castro - rafaelcgs10.github.io/coq</p>
-<p class="date">Created: 2018-05-05 sáb 14:52</p>
+<p class="date">Created: 2018-05-05 sáb 16:36</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
