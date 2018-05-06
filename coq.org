@@ -8,21 +8,21 @@
 #+EMAIL: rafaelcgs10@gmail.com
 
 
-| Aula                                                     | Data       | Exercícios          | Fonte   | Compilação |
-| [[./coq/aula1.html][1 - Introdução à introdução de Coq]]                       | 02/05/2018 |                     | [[./coq/aula1.v][aula1.v]] |            |
-| [[./coq/aula2.html][2 - Programação Funcional em Coq]]                         | 02/05/2018 | [[./coq/doit1.v][file:./coq/doit.gif]] | [[./coq/aula2.v][aula2.v]] |            |
-| [[./coq/aula3.html][3 - Recursão Primitiva em Coq]]                            | 07/05/2018 |                     | [[./coq/aula3.v][aula3.v]] | [[./coq/aula3.vo][aula3.vo]]   |
-| [[./coq/aula4.html][4 - Prova por simplificação, reescrita e análise de caso]] | 07/05/2018 |  [[./coq/doit2.v][file:./coq/doit2.gif]]                  | [[./coq/aula4.v][aula4.v]] | [[./coq/aula4.vo][aula4.vo]]   |
-| 5 - Prova por indução                                    | 09/05/2018 |                     |         |            |
-| 6 - Listas 1                                             | 14/05/2018 |                     |         |            |
-| 7 - Listas 2                                             | 16/05/2018 |                     |         |            |
-| 8 - Polimorfismo 1                                       | 21/05/2018 |                     |         |            |
-| 9 - Polimorfismo 2  		                     | 23/05/2018 |                     |         |            |
-| 10 - Táticas 1 		                          | 28/05/2018 |                     |         |            |
-| 11 - Táticas 2 		                          | 30/05/2018 |                     |         |            |
-| 12 - Lógica em Coq 1 		                    | 04/06/2018 |                     |         |            |
-| 13 - Lógicas em Coq 2 	                           | 06/06/2018 |                     |         |            |
-| 14 - Revisão 			                    | 11/06/2018 |                     |         |            |
+| Aula                                                     | Data       | Exercícios           | Fonte   | Compilação |
+| [[./coq/aula1.html][1 - Introdução à introdução de Coq]]                       | 02/05/2018 |                      | [[./coq/aula1.v][aula1.v]] |            |
+| [[./coq/aula2.html][2 - Programação Funcional em Coq]]                         | 02/05/2018 | [[./coq/doit1.v][file:./coq/doit.gif]]  | [[./coq/aula2.v][aula2.v]] |            |
+| [[./coq/aula3.html][3 - Recursão Primitiva em Coq]]                            | 07/05/2018 |                      | [[./coq/aula3.v][aula3.v]] | [[./coq/aula3.vo][aula3.vo]]   |
+| [[./coq/aula4.html][4 - Prova por simplificação, reescrita e análise de caso]] | 07/05/2018 | [[./coq/doit2.v][file:./coq/doit2.gif]] | [[./coq/aula4.v][aula4.v]] | [[./coq/aula4.vo][aula4.vo]]   |
+| [[./coq/aula5.html][5 - Prova por indução]]                                    | 09/05/2018 | [[./coq/doit3.v][file:./coq/doit3.gif]] | [[./coq/aula5.v][aula5.v]] | [[./coq/aula5.vo][aula5.vo]]   |
+| 6 - Listas 1                                             | 14/05/2018 |                      |         |            |
+| 7 - Listas 2                                             | 16/05/2018 |                      |         |            |
+| 8 - Polimorfismo 1                                       | 21/05/2018 |                      |         |            |
+| 9 - Polimorfismo 2  		                     | 23/05/2018 |                      |         |            |
+| 10 - Táticas 1 		                          | 28/05/2018 |                      |         |            |
+| 11 - Táticas 2 		                          | 30/05/2018 |                      |         |            |
+| 12 - Lógica em Coq 1 		                    | 04/06/2018 |                      |         |            |
+| 13 - Lógicas em Coq 2 	                           | 06/06/2018 |                      |         |            |
+| 14 - Revisão 			                    | 11/06/2018 |                      |         |            |
 *Sujeito a alterações!*
 
 | Prova prática Coq | 13/06/2018 |
