@@ -1,6 +1,6 @@
 Require Import aula3 aula4 aula5.
 
-(** **** Exercise: 2 stars, recommended (basic_induction)  *)
+(** **** Exercise: 2 stars, each one, recommended (basic_induction)  *)
 (** Prove the following using induction. You might need previously
     proven results. *)
 

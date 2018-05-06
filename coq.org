@@ -35,7 +35,9 @@
 
 | Enviar arquivos doit*.v para *rafaelcgs10@gmail.com*. |
 | Assunto do email: [OPAT001][CoqArTour][SeuNome]-DOIT*. |
-| Fim do torneio: dia 12/06/2018. | 
+| Fim do torneio: dia 12/06/2018. |
+| Colar zera as suas estrelas |
+| Utilizar teoremas da biblioteca padrão inválida o exercício. |
 | Os três melhores colocados deverão defender suas provas numa entrevista agendada. |
 
 | Referência                           |
