@@ -28,10 +28,10 @@
 | Prova prática Coq | 13/06/2018 |
 
 *Primeiro Torneio de Artes em Coq da UDESC (Coq's Art Tournament)* 
-| Posição  | Nome               | Pontos adicionais na prova prática |
-| Primeiro | Professor Aquaplay |                                  3 |
-| Segundo  | MS Barney          |                                  2 |
-| Terceiro | MC Carvão          |                                  1 |
+| Posição  | Nome               | Pontos adicionais na prova prática | Estrelas |
+| Primeiro | Professor Aquaplay |                                  3 |      ___ |
+| Segundo  | MS Barney          |                                  2 |      ___ |
+| Terceiro | MC Carvão          |                                  1 |      ___ |
 
 | Referência                           |
 | Software Foundations: [[https://softwarefoundations.cis.upenn.edu/][Livro]] e [[https://deepspec.org/event/dsss17/coq_intensive.html][vídeos]] |
