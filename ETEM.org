@@ -1,0 +1,39 @@
+
+* Cantor
+** O Pai da Teoria dos Conjuntos
+*** Georg Cantor
+  [[file:./ETEM/cantor.jpeg]]
+
+** Cardinalidade de Conjutos  
+*** Conjunto de todos os números pares: \(0, 2, 4, 6, 8, 10... \)
+*** Conjunto de todos os números naturais: \(0, 1, 2, 3, 4, 5... \)
+    
+  *Há mais números naturais do que pares?*
+
+** Naturais vs Reais
+*** Todos os números naturais: \(0, 1, 2, 3, 4, 5... \)
+*** Todos os números reais entre 0.0 e 1.0. Segmento de reta continuo de tamanho 1.
+*** Ambos tem infitos números.
+*** Se ambos tem o mesmo número de elementos, então há uma correspodência de 1 para 1.
+
+** Argumento da Diagonalização de Cantor
+*** Por facilidade, vamos representar os números do segumento de reta em base binária.
+  [[file:./ETEM/diagonal.png]]
+
+* Russel
+** O Pai da Teoria dos Tipos
+*** Bertrand Russell
+  [[file:./ETEM/russel.png]]
+** O Paradoxo de Russel
+   \[ M = {A | A \not \in A} \]
+*** M contém a si mesmo?
+*** Se sim, então pela deveria ser pela sua própria definição.
+*** Se não, então deveria pela sua própria definição.
+
+* Hilbert
+** O Último Matemático Universal
+  [[file:./ETEM/hilbert.jpg]]
+  
+* Gödel
+
+* Turing
