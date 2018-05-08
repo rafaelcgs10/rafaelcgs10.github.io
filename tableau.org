@@ -13,4 +13,4 @@
 | 6 | \( p_1 \vee q_1, ((p_1 \vee q_1) \rightarrow p_2) \vee ((p_1 \vee q_1) \rightarrow q_2) \vdash p_2 \vee q_2 \)                                                                                                                       |                                                                      | Si      |
 | 7 | \( p_1 \vee q_1, ((p_1 \vee q_1) \rightarrow p_2) \vee ((p_1 \vee q_1) \rightarrow q_2), (((p_1 \vee q_1) \wedge (p_2 \vee q_2)) \rightarrow p_3) \vee (((p_1 \vee q_1) \vee (p_2 \vee q_2)) \rightarrow q_3) \vdash p_3 \vee q_3 \) |                                                                      | Da      |
 
-*Notifica erros para: rafaelcgs10@gmail.com*
+*Notificar erros para: rafaelcgs10@gmail.com*
