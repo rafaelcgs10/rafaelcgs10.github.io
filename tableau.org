@@ -1,3 +1,4 @@
+#+TITLE: Sequentes para testes
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
 #+STYLE: <SCRIPT SRC="./jsMath/easy/load.js"></SCRIPT>
 #+OPTIONS:   H:2 toc:nil
