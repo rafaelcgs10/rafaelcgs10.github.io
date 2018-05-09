@@ -33,7 +33,35 @@
 * Hilbert
 ** O Último Matemático Universal
   [[file:./ETEM/hilbert.jpg]]
+** O Programa de Hilbert
+
+*** Todos esses paradoxos levaram a matemática para uma crise de fundamentos.
+*** O Programa de Hilbert tinha como objetivo criar uma fundação sólida (consistente) a qual todo a matemática iria se apoaiar:
+    1. A matemática deve ser toda escrita de uma linguagem formal, sem ambiguidade.
+    2. A formalização precisa ser completa: toda as verdades matemáticas podem ser provadas nesse formalismo.
+    3. A formalização precisa ser consistente: não deve ser posssível provar uma contradição nesse formalismo, por exemplo \(0 = 1\).
+    4. A formalização precisa ser decidível: há um algoritmo que decide se uma proposição é verdadeira ou falsa.
   
 * Gödel
+** O Melhor amigo de Albert Einstein
+  [[file:./ETEM/godel.jpg]]
+ 
+** O Teorema da Incompletude de Gödel
+*** Gödel demonstrou que qualquer formalização da matemática com poder suficiente realizar aritmética básica é incompleta.
+*** Gödel criou uma codificação numérica (enumeração) para todas as fórmulas da matemática (em seu sistema).
+**** Uma proposição somente é demonstrável se a sua codificação for divisivel pelas codificações das regras do sistema.
+*** A prova consiste em mostrar a existência de uma proposição \(G\) que é verdade se, e somente se, não for possível prova-la.
+*** \( G \) é uma proposição que fala sobre si mesma, algo similar ao paradoxo do mentiroso:
 
+   *Esta afirmação é falsa.*
+**** Se a frase é verdadeira, então é falsa.
+**** Se a frase é falsa, então deveria ser verdadeira.
+
+*** Há uma lacuna entre verdades e provas.
+*** Isso é um resultado muito preocupante, pois diz que há coisas verdadeiras que talvez jamais podemos provar.
+    
 * Turing
+** O Pai da Ciência da Computação
+  [[file:./ETEM/turing.jpg]]
+  
+** Indecibilidade do Problema da Decisão (Parada)
