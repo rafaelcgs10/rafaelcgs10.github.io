@@ -27,15 +27,18 @@ Qed.
 Theorem minus_diag : forall n,
   minus n n = 0.
 Proof.
-  (* WORKED IN CLASS *)
   intros n. induction n as [| n' IHn'].
   - (* n = 0 *)
     simpl. reflexivity.
   - (* n = S n' *)
-    simpl. rewrite -> IHn'. reflexivity.
+    simpl.  rewrite -> IHn'. reflexivity.
 Qed.
 
 Theorem mult_0_r : forall n:nat,
   n * 0 = 0.
 Proof.
-Admitted.
+  intros n.
+  induction n as [ | n' IHn'].
+  - simpl. reflexivity.
+  - simpl. assumption.
+Qed.

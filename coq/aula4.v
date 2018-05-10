@@ -2,7 +2,7 @@ Require Import aula3.
 
 Theorem plus_O_n : forall n : nat, 0 + n = n.
 Proof.
-  intros n. simpl. reflexivity.  Qed.
+  intros pareira. simpl. reflexivity.  Qed.
   
 Theorem plus_1_l : forall n:nat, 1 + n = S n.
 Proof.
@@ -26,13 +26,20 @@ Theorem mult_0_plus : forall n m : nat,
   (0 + n) * m = n * m.
 Proof.
   intros n m.
-Admitted.
+  rewrite plus_O_n.
+  reflexivity.
+Qed.
 
 Theorem mult_S_1 : forall n m : nat,
   m = S n ->
   m * (1 + n) = m * m.
 Proof.
-Admitted.
+  intros n m H.
+  rewrite -> H.
+  rewrite <- plus_1_l.
+  reflexivity.
+  Qed.
+  
 
 Theorem plus_1_neq_0_firsttry : forall n : nat,
   beq_nat (n + 1) 0 = false.

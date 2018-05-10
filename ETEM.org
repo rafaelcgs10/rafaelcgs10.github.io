@@ -1,11 +1,18 @@
-#+TITLE: Este Título está Mentindo! (ou O Jogo da Contradição)
-#+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
+#+TITLE: Este Título está Mentindo!
+#+AUTHOR: Rafael Castro
 #+EMAIL: rafaelcgs10@gmail.com
 #+startup: beamer
 #+LaTeX_CLASS: beamer
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
 #+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
-#+OPTIONS:   H:2 toc:nil
+#+OPTIONS:   H:2 toc:nil org-export-with-date:nil
+#+REVEAL_TRANS: linear
+#+REVEAL_THEME: beige
+#+REVEAL_SLIDE_HEADER:
+#+REVEAL_MIN_SCALE: 0.2
+#+REVEAL_MAX_SCALE: 1.0
+#+ATTR_REVEAL: :frag frag-style
+#+REVEAL_MARGIN: 0.0
 #+DATE: 14/05/2018
 
 
@@ -28,21 +35,26 @@
 
 ** Argumento da Diagonalização de Cantor
 *** Por facilidade, vamos representar os números do segumento de reta em base binária.
+    
+   #+attr_html: :height 400
   [[file:./ETEM/diagonal.png]]
 
 * Russel
 ** O Pai da Teoria dos Tipos
 *** Bertrand Russell
+  #+attr_html: :height 400
   [[file:./ETEM/russel.png]]
 ** O Paradoxo de Russel
-   \[ M = {A | A \not \in A} \]
+   \[ M = \{A | A \not \in A\} \]
 *** M contém a si mesmo?
 *** Se sim, então pela deveria ser pela sua própria definição.
 *** Se não, então deveria pela sua própria definição.
 
 * Hilbert
 ** O Último Matemático Universal
+  #+attr_html: :height 400
   [[file:./ETEM/hilbert.jpg]]
+
 ** O Programa de Hilbert
 
 *** Todos esses paradoxos levaram a matemática para uma crise de fundamentos.
@@ -54,6 +66,7 @@
   
 * Gödel
 ** O Melhor amigo de Albert Einstein
+  #+attr_html: :height 400
   [[file:./ETEM/godel.jpg]]
  
 ** O Teorema da Incompletude de Gödel
@@ -73,6 +86,7 @@
     
 * Turing
 ** O Pai da Ciência da Computação
+  #+attr_html: :height 400
   [[file:./ETEM/turing.jpg]]
   
 ** Indecibilidade do Problema da Decisão (Parada)

@@ -64,13 +64,23 @@ Notation "x * y" := (mult x y)
 Check ((0 + 1) + 1).
 
 
-Fixpoint factorial (n:nat) : nat
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+Fixpoint factorial (n:nat) : nat :=
+  match n with
+  | 0 => 1
+  | S n' => n * factorial n'
+  end.
+                             
 
 Example test_factorial1: (factorial 3) = 6.
-(* FILL IN HERE *) Admitted.
+Proof.
+  simpl.
+  reflexivity.
+Qed.
+
 Example test_factorial2: (factorial 5) = (mult 10 12).
-(* FILL IN HERE *) Admitted.
+  simpl.
+  reflexivity.
+Qed.
 
 Fixpoint beq_nat (n m : nat) : bool :=
  match n with
@@ -101,12 +111,18 @@ Proof. simpl. reflexivity. Qed.
 Example test_leb3: (leb_nat 4 2) = false.
 Proof. simpl. reflexivity. Qed.
 
-Definition ltb_nat (n m : nat) : bool
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+Definition ltb_nat (n m : nat) : bool :=
+  leb_nat (S n) m.
+                                 
 
 Example test_ltb_nat1: (ltb_nat 2 2) = false.
-(* FILL IN HERE *) Admitted.
+Proof.
+  reflexivity.
+Qed.
+
 Example test_ltb_nat2: (ltb_nat 2 4) = true.
-(* FILL IN HERE *) Admitted.
+reflexivity.
+Qed.
+
 Example test_ltb_nat3: (ltb_nat 4 2) = false.
 (* FILL IN HERE *) Admitted.
