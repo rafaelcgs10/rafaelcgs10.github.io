@@ -60,9 +60,9 @@
 *** Todos esses paradoxos levaram a matemática para uma crise de fundamentos.
 *** O Programa de Hilbert tinha como objetivo criar uma fundação sólida (consistente) a qual todo a matemática iria se apoaiar:
     1. A matemática deve ser toda escrita de uma linguagem formal, sem ambiguidade.
-    2. A formalização precisa ser completa: toda as verdades matemáticas podem ser provadas nesse formalismo.
-    3. A formalização precisa ser consistente: não deve ser posssível provar uma contradição nesse formalismo, por exemplo \(0 = 1\).
-    4. A formalização precisa ser decidível: há um algoritmo que decide se uma proposição é verdadeira ou falsa.
+    2. Completa: toda as verdades matemáticas podem ser provadas nesse formalismo.
+    3. Consistente: não deve ser posssível provar uma contradição nesse formalismo, por exemplo \(0 = 1\).
+    4. Decidível: há um algoritmo que decide se uma proposição é verdadeira ou falsa.
   
 * Gödel
 ** O Melhor amigo de Albert Einstein
@@ -70,12 +70,13 @@
   [[file:./ETEM/godel.jpg]]
  
 ** O Teorema da Incompletude de Gödel
-*** Gödel demonstrou que qualquer formalização da matemática com poder suficiente realizar aritmética básica é incompleta.
-*** Gödel criou uma codificação numérica (enumeração) para todas as fórmulas da matemática (em seu sistema).
+*** Qualquer formalização da matemática com poder suficiente realizar aritmética básica é incompleta.
+*** Codificação numérica (enumeração) para todas as fórmulas da matemática (em seu sistema).
 **** Uma proposição somente é demonstrável se a sua codificação for divisivel pelas codificações das regras do sistema.
 *** A prova consiste em mostrar a existência de uma proposição \(G\) que é verdade se, e somente se, não for possível prova-la.
 *** \( G \) é uma proposição que fala sobre si mesma, algo similar ao paradoxo do mentiroso:
 
+** A Proposição \(G\)
    *Esta afirmação é falsa.*
 **** Se a frase é verdadeira, então é falsa.
 **** Se a frase é falsa, então deveria ser verdadeira.
@@ -100,3 +101,47 @@
 *** A ideia é mostrar que *não existe* máquina abstrata que decida se uma outra máquina para com uma dada entrada.
    
 ** Prova da Indecibilidade do Problema da Parada por Diagonalização
+
+*** Máquinas de Turing são programas que podem receber entradas.
+*** A máquina decisora se chama \(h\).
+*** O objetivo é mostrar que não há máquina \(h\).
+*** Programas e entradas são apenas números naturais.
+
+([H(p, e) = 1 \) se \(p\) para com a entrada \(e\)
+
+([H(p, e) = 0 \) caso contrário
+
+| h(i, j) |  M1 |  M2 |  M3 |  M4 | ... |
+|---------+-----+-----+-----+-----+-----|
+| M1      | *1* |   0 |   1 |   0 | ... |
+| M2      |   0 | *0* |   1 |   1 | ... |
+| M3      |   1 |   1 | *1* |   0 | ... |
+| M4      |   0 |   1 |   1 | *1* | ... |
+| ...     | ... | ... | ... | ... | ... |
+
+| H(i, i) |  *1*| *0* | *1* | *1* | ... |
+
+D(p) = 1  se H(p, p) = 0
+
+D(p) = 0  se H(p, p) = 1
+
+|   | M1 | M2 | M3 | M4 | ... |
+|---+----+----+----+----+-----|
+| D |  0 |  1 |  0 |  0 | ... |
+
+** Alimentando o Demônio com o Demônio
+
+|   | M1 | M2 | M3 | M4 | ... | D | ... |
+|---+----+----+----+----+-----+---+-----|
+| D |  0 |  1 |  0 |  0 | ... | 1 | ... |
+
+| h(i, j) | <M1> | <M2> | <M3> | <M4> | ... | D | ... |
+|---------+------+------+------+------+-----+---+-----|
+| M1      |  *1* |    0 |    1 |    0 | ... | 1 | ... |
+| M2      |    0 |  *0* |    1 |    1 | ... | 0 | ... |
+| M3      |    1 |    1 |  *1* |    0 | ... | 1 | ... |
+| M4      |    0 |    1 |    1 |  *1* | ... | 1 | ... |
+| ...     |  ... |  ... |  ... |  ... | ... | 0 | ... |
+| D       |    0 |    1 |    0 |    0 | ... | 0 | ... |
+
+H permitiu criar uma contradição, então H não existe.
