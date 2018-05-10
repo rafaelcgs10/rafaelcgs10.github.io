@@ -1,3 +1,13 @@
+#+TITLE: Este Título está Mentindo! (ou O Jogo da Contradição)
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
+#+EMAIL: rafaelcgs10@gmail.com
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
+#+OPTIONS:   H:2 toc:nil
+#+DATE: 14/05/2018
+
 
 * Cantor
 ** O Pai da Teoria dos Conjuntos
@@ -59,9 +69,20 @@
 
 *** Há uma lacuna entre verdades e provas.
 *** Isso é um resultado muito preocupante, pois diz que há coisas verdadeiras que talvez jamais podemos provar.
+*** Não seria ao menos possível um procedimento que decida todas as proposições que podem ser provadas?
     
 * Turing
 ** O Pai da Ciência da Computação
   [[file:./ETEM/turing.jpg]]
   
 ** Indecibilidade do Problema da Decisão (Parada)
+
+*** Programas, assim como fórmulas matemáticas, podem ser representadas como números. São enumeráveis.
+
+*** O problema da decisão pede um procedimento (programa) que decida se um dada proposição é verdadeira ou falsa.
+
+*** Turing criou o conceito de uma máquina abstrata: um humano com papel e caneta fazendo computações/contas/provas.
+
+*** A ideia é mostrar que *não existe* máquina abstrata que decida se uma outra máquina para com uma dada entrada.
+   
+** Prova da Indecibilidade do Problema da Parada por Diagonalização
