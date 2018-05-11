@@ -2,6 +2,7 @@ Require Export aula3 aula4 aula5.
 
 Module NatProd.
 
+
 Inductive natprod : Type :=
 | pair : nat -> nat -> natprod.
 
