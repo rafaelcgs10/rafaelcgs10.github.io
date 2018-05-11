@@ -1,0 +1,88 @@
+#+TITLE: Aula 6 - Duplas de Naturais
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
+#+EMAIL: rafaelcgs10@gmail.com
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
+#+OPTIONS:   H:2 toc:nil
+#+DATE: 14/05/2018
+
+#+LANGUAGE: pt
+
+* Tipo Produto de Naturais
+** Produto
+  - Produto, par ordenado, dupla etc....
+  - Uma sequência finita de elementos, cuja ordem importa.
+
+** Tipo Produdo de Naturais em Coq
+
+#+BEGIN_SRC coq
+Inductive natprod : Type :=
+| pair : nat -> nat -> natprod.
+
+Check (pair 3 5).
+#+END_SRC
+
+** Projeções do Produto
+  - Definimos duas funções que projetam o primeiro e o segundo elemento do par.
+
+#+BEGIN_SRC coq
+Definition fst (p : natprod) : nat :=
+  match p with
+  | pair x y => x
+  end.
+
+Definition snd (p : natprod) : nat :=
+  match p with
+  | pair x y => y
+  end.
+
+Compute (fst (pair 3 5)).
+(* ===> 3 *)
+#+END_SRC
+
+** Uma notação para facilitar a vida
+  - Definimos uma notação para duplas.
+
+#+BEGIN_SRC coq
+Notation "( x , y )" := (pair x y).
+#+END_SRC
+
+* Função /swap/
+ - Definimos uma função que troca os elementos de uma dupla.
+
+#+BEGIN_SRC coq
+Definition swap_pair (p : natprod) : natprod :=
+  match p with
+  | (x,y) => (y,x)
+  end.
+#+END_SRC
+
+** Alguns fatos sobre duplas
+   - Vamos demonstrar alguns fatos simples sobre o tipo dupla de naturais.
+#+BEGIN_SRC coq
+Theorem surjective_pairing' : forall (n m : nat),
+  (n,m) = (fst (n,m), snd (n,m)).
+Proof.
+  reflexivity.  Qed.
+#+END_SRC
+
+
+** Um caso que a simplificação não funciona
+   - Se tentarmos utilizar a simplificação aqui não vai ser possível.
+   - Ainda que /p/ seja um /natprod/ para fazer o casamento de padrão é necessário expor a sua estrutura para fazer o casamento de padrão.
+#+BEGIN_SRC coq
+Theorem surjective_pairing_stuck : forall (p : natprod),
+  p = (fst p, snd p).
+Proof.
+  simpl. (* Doesn't reduce anything! *)
+Abort.
+#+END_SRC
+
+#+BEGIN_SRC coq
+Theorem surjective_pairing : forall (p : natprod),
+  p = (fst p, snd p).
+Proof.
+  intros p.  destruct p as [n m].  simpl.  reflexivity.  Qed.
+#+END_SRC

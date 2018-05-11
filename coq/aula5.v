@@ -1,4 +1,4 @@
-Require Import aula3 aula4.
+Require Export aula3 aula4.
 
 Theorem plus_n_O_firsttry : forall n:nat,
   n = n + 0.
