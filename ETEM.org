@@ -151,4 +151,5 @@ H permitiu criar uma contradição, então H não existe.
 ** Conclusão
  - Paradoxos e contradições motivaram a criação de diversas novas teorias: novas Teoria do Conjuntos, Teoria dos Tipos, Teoria da Prova... 
  - O programa de Hilbert motivou a criação de modelos de computação: Máquinas de Turing, Cálculo Lambda, Funções Recursivas...
- - A incompletude enterrou o determinismo para a matemática em geral.
+ - A incompletude enterrou o determinismo para a matemática.
+ - A existência de proposições indecidíveis motivou a criação de uma matemática sem o axioma do terceiro excluído.
