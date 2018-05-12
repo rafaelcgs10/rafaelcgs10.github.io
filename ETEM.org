@@ -10,7 +10,7 @@
 #+DATE: 14/05/2018
 
 
-* Cantor
+* Cantor; Russel
 ** O Pai da Teoria dos Conjuntos
  - Georg Cantor
    #+attr_latex: :height 150
@@ -30,13 +30,12 @@
  - Se ambos tem o mesmo número de elementos, então há uma correspodência de 1 para 1.
 
 ** Argumento da Diagonalização de Cantor
- - Por facilidade, vamos representar os números do segumento de reta em base binária.
+ - Por facilidade, vamos representar os números do segmento de reta em *base binária*.
     
    #+attr_latex: :height 150
    #+attr_html: :height 400
   [[file:./ETEM/diagonal.png]]
 
-* Russel
 ** O Pai da Teoria dos Tipos
  - Bertrand Russell
    #+attr_latex: :height 150
@@ -48,11 +47,11 @@
  - Se sim, então pela deveria ser pela sua própria definição.
  - Se não, então deveria pela sua própria definição.
 
-* Hilbert
+* Hilbert; Godel; Turing
 ** O Último Matemático Universal
   - David Hilbert
-   #+attr_latex: :height 150
   #+attr_html: :height 400
+  #+attr_latex: :height 150
   [[file:./ETEM/hilbert.jpg]]
 
 ** O Programa de Hilbert
@@ -64,7 +63,6 @@
     3. Consistente: não deve ser posssível provar uma contradição nesse formalismo, por exemplo \(0 = 1\).
     4. Decidível: há um algoritmo que decide se uma proposição é verdadeira ou falsa.
   
-* Gödel
 ** O Melhor amigo de Albert Einstein
    - Kurt Gödel
    #+attr_latex: :height 150
@@ -74,20 +72,22 @@
 ** O Teorema da Incompletude de Gödel
  - Qualquer formalização da matemática com poder suficiente realizar aritmética básica é incompleta.
  - Codificação numérica (enumeração) para todas as fórmulas da matemática (em seu sistema).
- - Uma proposição somente é demonstrável se a sua codificação for divisivel pelas codificações das regras do sistema.
+ - Uma proposição somente é demonstrável se a sua codificação for divisível pelas codificações das regras do sistema.
  - A prova consiste em mostrar a existência de uma proposição \(G\) que é verdade se, e somente se, não for possível prova-la.
  - \( G \) é uma proposição que fala sobre si mesma, algo similar ao paradoxo do mentiroso:
 
 ** A Proposição \(G\)
-   *Esta afirmação é falsa.*
- - Se a frase é verdadeira, então é falsa.
- - Se a frase é falsa, então deveria ser verdadeira.
+ A proposição \(G\) é como o paradoxo de mentiroso:
+
+ *Esta afirmação é falsa.*
+
+  1. Se a frase é verdadeira, então é falsa.
+  2. Se a frase é falsa, então deveria ser verdadeira.
 
  - Há uma lacuna entre verdades e provas.
  - Isso é um resultado muito preocupante, pois diz que há coisas verdadeiras que talvez jamais podemos provar.
  - Não seria ao menos possível um procedimento que decida todas as proposições que podem ser provadas?
     
-* Turing
 ** O Pai da Ciência da Computação
    - Alan Turing
    #+attr_latex: :height 150
@@ -147,3 +147,8 @@ D(p) = 0  se H(p, p) = 1
 | D       |   0 |   1 |   0 |   0 | ... | 0 | ... |
 
 H permitiu criar uma contradição, então H não existe.
+
+** Conclusão
+ - Paradoxos e contradições motivaram a criação de diversas novas teorias: novas Teoria do Conjuntos, Teoria dos Tipos, Teoria da Prova... 
+ - O programa de Hilbert motivou a criação de modelos de computação: Máquinas de Turing, Cálculo Lambda, Funções Recursivas...
+ - A incompletude enterrou o determinismo para a matemática em geral.
