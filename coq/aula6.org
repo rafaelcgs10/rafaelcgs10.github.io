@@ -14,7 +14,7 @@
 ** Produto
   - Produto, par ordenado, dupla etc....
   - Uma sequência finita de elementos, cuja ordem importa.
-  - Os elementos de uma dupla podem ser de tipos diferentes: /(1, 'a'\). Mas não por hora.
+  - Os elementos de uma dupla podem ser de tipos diferentes: (1, 'a'). Mas não por hora.
 
 ** Tipo Produdo de Naturais em Coq
 
