@@ -1,6 +1,7 @@
 #+TITLE: Entrevista
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
 #+STYLE: <SCRIPT SRC="./jsMath/easy/load.js"></SCRIPT>
+#+OPTIONS: html-postamble:nil
 #+OPTIONS:   H:2 toc:nil
 
 *AGENDE O HORÁRIO DA SUA ENTREVISTA AQUI*
