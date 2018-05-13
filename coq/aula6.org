@@ -50,7 +50,7 @@ Compute (fst (pair 3 5)).
 Notation "( x , y )" := (pair x y).
 #+END_SRC
 
-* Função /swap/
+** Função /swap/
  - Definimos uma função que troca os elementos de uma dupla.
 
 #+BEGIN_SRC coq

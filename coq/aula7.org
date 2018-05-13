@@ -31,7 +31,7 @@ Definition mylist := cons 1 (cons 2 (cons 3 nil)).
 #+END_SRC
 
 ** Algumas notações para listas
-  - O operador :: é associativo para a direita.
+  - O operador (::) é associativo para a direita.
   - Todos os exemplos de listas abaixo significam a mesma coisa.
 
 #+BEGIN_SRC coq
