@@ -28,17 +28,18 @@
 | Prova prática Coq | 13/06/2018 |
 
 *Primeiro Torneio de Artes em Coq da UDESC (Coq's Art Tournament)* 
-| Posição  | Nome              | Pontos adicionais na prova prática | Estrelas |
-| Primeiro | Commander Shepard |                                  3 |       33 |
-| Segundo  | Fredie Mercury    |                                  2 |       29 |
-| Terceiro | MC Carvão         |                                  1 |      ___ |
+| Posição  | Nome                     | Pontos adicionais na prova prática | Estrelas |
+| Primeiro | Commander Shepard, Bugs, |                                  3 |       47 |
+| Segundo  | Fredie Mercury           |                                  2 |       43 |
+| Terceiro | Ekvl-Sinister            |                                  1 |       29 |
 
-| Enviar arquivos doit*.v para *rafaelcgs10@gmail.com*.                             |
-| Assunto do email: [OPAT001][CoqArTour][SeuNome]-DOIT*.                            |
-| Fim do torneio: dia 12/06/2018.                                                   |
-| Colar zera as suas estrelas                                                       |
-| Utilizar teoremas da biblioteca padrão inválida o exercício.                      |
-| Os três melhores colocados deverão defender suas provas numa entrevista agendada. |
+| Enviar arquivos doit*.v para *rafaelcgs10@gmail.com*.                        |
+| Assunto do email: [OPAT001][CoqArTour][SeuNome]-DOIT*.                       |
+| Fim do torneio: dia 12/06/2018.                                              |
+| Colar zera as suas estrelas                                                  |
+| Utilizar teoremas da biblioteca padrão inválida o exercício.                 |
+| Cada posição pode ser ocupada por vários empatados.                          |
+| Os melhores colocados deverão defender suas provas numa entrevista agendada. |
 
 | Referência                           |
 | Software Foundations: [[https://softwarefoundations.cis.upenn.edu/][Livro]] e [[https://deepspec.org/event/dsss17/coq_intensive.html][vídeos]] |
