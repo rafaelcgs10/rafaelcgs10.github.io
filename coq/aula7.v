@@ -1,7 +1,5 @@
 Require Export aula3 aula4 aula5 aula6.
 
-Module NatList.
-
 Inductive natlist : Type :=
   | nil  : natlist
   | cons : nat -> natlist -> natlist.
@@ -69,5 +67,3 @@ Example test_hd2:             hd 0 [] = 0.
 Proof. reflexivity.  Qed.
 Example test_tl:              tl [1;2;3] = [2;3].
 Proof. reflexivity.  Qed.
-
-End NatList.
