@@ -1,4 +1,4 @@
-#+TITLE: Aula 7 - Mais provas sobre listas de naturais 
+#+TITLE: Aula 8 - Mais provas sobre listas de naturais 
 #+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
 #+EMAIL: rafaelcgs10@gmail.com
 #+startup: beamer
@@ -10,7 +10,7 @@
 
 #+LANGUAGE: pt
 
-* Análise de csao sobre listas de naturais
+* Análise de caso sobre listas de naturais
 
 ** Fatos simples sobre listas de naturais
   - Simplificação pela reflexividade é suficiente para provar fatos simples sobre listas de naturais.

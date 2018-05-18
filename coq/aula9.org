@@ -1,0 +1,136 @@
+#+TITLE: Aula 9 - Polimorfismo 
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
+#+EMAIL: rafaelcgs10@gmail.com
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
+#+OPTIONS:   H:2 toc:nil
+#+DATE: 23/05/2018
+
+#+LANGUAGE: pt
+
+* Polimorfismo
+
+** Lista de booleanos
+  - Programas reais podem manipular listas não só de números, mas também de booleanos, strings, listas...
+  - Poderíamos simplemente definir um novo tipo de lista para cada tipo que desejassemos, como a lista de booleanos abaixo.
+  - Obviamente, isso seria um grande gasto de tempo e linhas de código.
+
+#+BEGIN_SRC coq
+Inductive boollist : Type :=
+  | bool_nil : boollist
+  | bool_cons : bool -> boollist -> boollist.
+#+END_SRC
+  
+** Tipo lista polimórfica
+   - Coq tem suporte a polimorfismo paramétrico em suas definições indutivas.
+   - No polimorfismo paramétrico especifica-se uma variável de tipo que pode ser especializada (substituida) para os demais tipos.
+   - No tipo /list/ abaixo, a variável de tipo é o /X/.
+   - Observe a existência de um argumento na definição do tipo!!!11!1!
+   - A definição pode ser entendida com uma função entre tipos: do tipos /X/ para o tipo /list X/.
+     
+#+BEGIN_SRC coq
+Inductive list (X:Type) : Type :=
+  | nil : list X
+  | cons : X -> list X -> list X.
+
+Check list.
+(* ===> list : Type -> Type *)
+#+END_SRC
+   
+** Utilizando tipos polimórficos (jeito ruim)
+   - Os construtores /nil/ e /cons/ recebem um primeiro argumento que é o tipo ao qual o tipo /X/ deve ser especializado.
+   - O tipo de /nil/ sem o argumento de tipo é um tipo quantificado para todo /X/. Idem /cons/.
+
+#+BEGIN_SRC coq
+
+Check (nil nat).
+(* ===> nil nat : list nat *)
+
+Check (cons nat 3 (nil nat)).
+(* ===> cons nat 3 (nil nat) : list nat *)
+
+Check nil.
+(* ===> nil : forall X : Type, list X *)
+#+END_SRC
+
+** Função /repeat/ novamente!
+   - Podemos definir as mesmas funções de lista de naturais, mas de maneira polimórfica.
+   - Note que há um novo argumento /(X : Type)/!
+
+#+BEGIN_SRC coq
+Fixpoint repeat (X : Type) (x : X) (count : nat) : list X :=
+  match count with
+  | 0 => nil X
+  | S count' => cons X x (repeat X x count')
+  end.
+
+Example test_repeat1 :
+  repeat nat 4 2 = cons nat 4 (cons nat 4 (nil nat)).
+Proof. reflexivity.  Qed.
+#+END_SRC
+
+* Inferência de tipos
+** A função /repeat/ de novo novamente.
+   - Vamos definir /repeat'/ sem assinar o tipo de /X/ com /Type/.
+   - Coq é capaz de inferir os tipos.
+   - É recomendável assinar os tipos, apesar de não ser necessário sempre. Pois, assinaturas de tipos servem como um documentação do uso da função e /sanity check/.
+
+#+BEGIN_SRC coq
+Fixpoint repeat' X x count : list X :=
+  match count with
+  | 0        => nil X
+  | S count' => cons X x (repeat' X x count')
+  end.
+#+END_SRC
+   
+** Inferência no corpo da definição
+   - A inferência de tipos pode ser utilizada no corpo da definição.
+
+#+BEGIN_SRC coq
+Fixpoint repeat'' X x count : list X :=
+  match count with
+  | 0        => nil _
+  | S count' => cons _ x (repeat'' _ x count')
+  end.
+#+END_SRC
+   
+** Inferência no uso da função
+   - Coq pode inferir o tipo da função com base no tipo dos argumentos utilizados.
+
+#+BEGIN_SRC coq
+Definition list123' :=
+  cons _ 1 (cons _ 2 (cons _ 3 (nil _))).
+#+END_SRC
+   
+* Argumentos implícitos
+  
+** Argumentos implícitos
+   - Ter que escrever, mesmo que não especificando, o argumento referente ao tipo faz Coq parecer verboso.
+   - Há como não escrever os argumentos refentes aos tipos, para isso é necessário especifica-los como implícitos.
+   - O comando /Arguments/ recebe uma função (ou construtor) e, entre chaves, os seus argumentos que serão feitos implícitos
+   - Assim, não é necessário mencionar tipos durante o uso da função (ou construtor).
+
+#+BEGIN_SRC coq
+Arguments nil {X}.
+Arguments cons {X} _ _.
+Arguments repeat {X} x count.
+
+Definition list123'' := cons 1 (cons 2 (cons 3 nil)).
+#+END_SRC
+
+** Definições com argumentos implícitos
+   - Alternativamente, podemos declarar argumentos como implícitos marca-los entre chaves.
+     
+#+BEGIN_SRC coq
+Inductive list' {X:Type} : Type :=
+  | nil' : list'
+  | cons' : X -> list' -> list'.
+
+Fixpoint repeat''' {X : Type} (x : X) (count : nat) : list X :=
+  match count with
+  | 0        => nil
+  | S count' => cons x (repeat''' x count')
+  end.
+#+END_SRC
