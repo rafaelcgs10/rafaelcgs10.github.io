@@ -112,8 +112,8 @@ Proof.
     simpl. rewrite -> IHl1'. reflexivity.  Qed.
 #+END_SRC
 
-** Segunda tentativa de /rev_length/ 
-   - Usando rewrite com app_length podemos finalizar a prova anterior!
+** Segunda tentativa de rev _length 
+   - Usando rewrite com app _length podemos finalizar a prova anterior!
      
 #+BEGIN_SRC coq
 Theorem rev_length : forall l : natlist,

@@ -1,3 +1,5 @@
+Require Import doit3 doit5 aula5 aula6 aula7 aula8.
+
 (** **** Exercise: 3 stars (list_exercises)  *)
 (** More practice with lists: *)
 

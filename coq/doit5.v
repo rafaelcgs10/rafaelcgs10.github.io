@@ -1,4 +1,4 @@
-Require Import aula3 aula4 aula5 aula6.
+Require Import aula3 aula4 aula5 aula6 aula7.
 
 (** Complete the definitions of [nonzeros], [oddmembers] and
     [countoddmembers] below. Have a look at the tests to understand

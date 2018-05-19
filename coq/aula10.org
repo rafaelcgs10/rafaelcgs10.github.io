@@ -49,7 +49,6 @@ Fixpoint filter {X:Type} (test: X->bool) (l:list X)
   | h :: t => if test h then h :: (filter test t)
                         else       filter test t
   end.
-  
 Example test_filter1: filter evenb [1;2;3;4] = [2;4].
 Proof. reflexivity.  Qed.
 #+END_SRC

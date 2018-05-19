@@ -1,3 +1,5 @@
+Require Import doit3 aula5 aula6 aula7.
+
 Theorem nil_app : forall l:natlist,
   [] ++ l = l.
 Proof. reflexivity. Qed.
