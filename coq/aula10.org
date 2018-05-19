@@ -1,0 +1,101 @@
+#+TITLE: Aula 10 - Funções de ordem superior
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
+#+EMAIL: rafaelcgs10@gmail.com
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
+#+OPTIONS:   H:2 toc:nil
+#+DATE: 23/05/2018
+
+#+LANGUAGE: pt
+
+* Funções como dados
+
+** Funções como dados
+   - Muitas linguagens de programação funcional (como ML, OCaml, Haskell, Scheme, Scala...) tratam funções como /first-class citizens/ (ou valores de primeira classe), permitindo que sejam tratados como quaisquer outros valores. Portanto, podem ser passados como argumentos e ser retorno de funçẽos.
+   - Analogamente, em C é possível passar uma função por referência e retornar um endereço de uma função.
+   - Em coq, funções de ordem superior são simples de definir:
+
+#+BEGIN_SRC coq
+Definition doit3times {X:Type} (f:X->X) (n:X) : X :=
+  f (f (f n)).
+
+Check @doit3times.
+(* ===> doit3times : forall X : Type, (X -> X) -> X -> X *)
+#+END_SRC
+
+** Funções anônimas
+   - Funções anônimas estão cada vez mais presentes em linguagens de programação. São geralmente úteis quando queremos fazer uma pequena definição local, sem ter que dar um nome.
+   - Funções anônimas são reclaradas com o termo /fun/, seguido do seus argumentos, uma seta /=>/ e por fim o corpo da sua definição.
+   - Funções anônimas geralmente são usadas para fornecer um argumento para uma função de ordem superior.
+
+
+#+BEGIN_SRC coq
+Example test_anon_fun':
+  doit3times (fun n => n * n) 2 = 256.
+Proof. reflexivity.  Qed.
+#+END_SRC
+
+** A função de ordem superior /filter/
+   - A função /filter/ recebe uma lista (/list X/) e um predicado sobre /X/ (uma função de /X/ para /bool/), e retorna uma nova lista contendo somente os elementos os quais o predicado vale /true/.
+   - A sintaxe do /if/ retorna o termo do /then/ caso a condição seja avaliada para o primeiro valor do seu tipo indutivo, caso seja o segundo então retorna o termo do /else/. O tipo indutivo precisa ter exatamente dois valores (sem argumentos).
+
+#+BEGIN_SRC coq
+Fixpoint filter {X:Type} (test: X->bool) (l:list X)
+                : (list X) :=
+  match l with
+  | []     => []
+  | h :: t => if test h then h :: (filter test t)
+                        else       filter test t
+  end.
+  
+Example test_filter1: filter evenb [1;2;3;4] = [2;4].
+Proof. reflexivity.  Qed.
+#+END_SRC
+
+** A função de ordem superior /map/
+   - A função /map/ é outra função de ordem superior muito comum: recebe uma função /f : X -> Y/ e uma lista /l : list X/ e retorna uma lista /list Y/ a qual /f/ foi aplicada a cada elemento de /l/.
+     
+#+BEGIN_SRC coq
+Fixpoint map {X Y:Type} (f:X->Y) (l:list X) : (list Y) :=
+  match l with
+  | []     => []
+  | h :: t => (f h) :: (map f t)
+  end.
+
+Example test_map1: map (fun x => plus 3 x) [2;0;2] = [5;3;5].
+Proof. reflexivity.  Qed.
+#+END_SRC
+
+** A função de ordem superior /fold/
+   - A função /fold/ é o reduce do modelo de computação map/reduce.
+   - Intuitivamente o comportamento da função /fold/ é inserir um operador binários /f/ entre os elementos de uma lista. Por exemplo, /fold plus [1;2;3]/ significa /1 + 2 + 3/. Para ser preciso é necessário considerar um elemento inicial /b/, então /fold plus [1;2;3] 0/ siginifica 1 + 2 + 3 + 0. 
+   - Como /f/ é aplicado da direita pra esquerda, então este /fold/ é  um /foldr/!
+     
+#+BEGIN_SRC coq
+Fixpoint fold {X Y:Type} (f: X->Y->Y) (l:list X) (b:Y)
+                         : Y :=
+  match l with
+  | nil => b
+  | h :: t => f h (fold f t b)
+  end.
+  
+Example fold_example1 :
+  fold mult [1;2;3;4] 1 = 24.
+Proof. reflexivity. Qed.
+#+END_SRC
+
+** Funções que retornam funções
+   - Vimos funções que recebem funções e retornam valores, mas o oposto também é possível!
+   - A função abaixo recebe um valor do tipo /X/ e retorna uma uma função que recebe qualquer número natural e retorna esse valor, ou seja uma função de tipo /nat -> X/. 
+     
+#+BEGIN_SRC coq
+Definition constfun {X: Type} (x: X) : nat->X :=
+  fun (k:nat) => x.
+
+Definition ftrue := constfun true.
+
+Example constfun_example1 : ftrue 0 = true.
+Proof. reflexivity. Qed.
+#+END_SRC
