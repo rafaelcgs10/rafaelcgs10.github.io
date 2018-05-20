@@ -16,9 +16,9 @@
 | [[./coq/aula5.html][5 - Prova por indução]]                                    | 09/05/2018 | [[./coq/doit3.v][file:./coq/doit3.gif]] | [[./coq/aula5.v][aula5.v]]  |
 | [[./coq/aula6.html][6 - Duplas de Naturais]]                                   | 14/05/2018 | [[./coq/doit4.v][file:./coq/doit4.gif]] | [[./coq/aula6.v][aula6.v]]  |
 | [[./coq/aula7.html][7 - Listas de Naturais]]                                   | 16/05/2018 | [[./coq/doit5.v][file:./coq/doit5.gif]] | [[./coq/aula7.v][aula7.v]]  |
-| [[./coq/aula8.html][8 - Mais provas sobre listas de naturais]]                 | 21/05/2018 |  [[./coq/doit6.v][file:./coq/doit7.gif]]                    | [[./coq/aula8.v][aula8.v]]  |
-| [[./coq/aula9.html][9 - Polimorfismo em Coq]]  		                | 21/05/2018 |   [[./coq/doit7.v][file:./coq/doit6.gif]]                   | [[./coq/aula9.v][aula9.v]]  |
-| [[./coq/aula10.html][10 - Funções de ordem superior]] 		          | 23/05/2018 |  [[./coq/doit8.v][file:./coq/doit8.gif]]                    | [[./coq/aula10.v][aula10.v]] |
+| [[./coq/aula8.html][8 - Mais provas sobre listas de naturais]]                 | 21/05/2018 | [[./coq/doit6.v][file:./coq/doit7.gif]] | [[./coq/aula8.v][aula8.v]]  |
+| [[./coq/aula9.html][9 - Polimorfismo em Coq]]  		                | 21/05/2018 | [[./coq/doit7.v][file:./coq/doit6.gif]] | [[./coq/aula9.v][aula9.v]]  |
+| [[./coq/aula10.html][10 - Funções de ordem superior]] 		          | 23/05/2018 | [[./coq/doit8.v][file:./coq/doit8.gif]] | [[./coq/aula10.v][aula10.v]] |
 | 11 - Táticas apply e inversion 		          | 28/05/2018 |                      |          |
 | 12 - Lógica em Coq 1 		                    | 30/06/2018 |                      |          |
 | 13 - Lógicas em Coq 2 	                           | 04/06/2018 |                      |          |
@@ -29,10 +29,10 @@
 | Prova prática Coq | 13/06/2018 |
 
 *Primeiro Torneio de Artes em Coq da UDESC (Coq's Art Tournament)* 
-| Posição  | Nome                                             | Pontos adicionais na prova prática | Estrelas |
-| Primeiro | Commander Shepard, Bugs, Fredie Mercury, Marmita |                                  3 |       47 |
-| Segundo  | Ekvl-Sinister                                    |                                  2 |       33 |
-| Terceiro | João-sem-ponto                                   |                                  1 |        0 |
+| Posição  | Nome                                      | Pontos adicionais na prova prática | Estrelas |
+| Primeiro | Commander Shepard                         |                                  3 |       70 |
+| Segundo  | Bugs, Fredie Mercury, Marmita, Feliperama |                                  2 |       47 |
+| Terceiro | Ekvl-Sinister                             |                                  1 |       33 |
 
 | Enviar arquivos doit*.v para *rafaelcgs10@gmail.com*.                        |
 | Assunto do email: [OPAT001][CoqArTour][SeuNome]-DOIT*.                       |
