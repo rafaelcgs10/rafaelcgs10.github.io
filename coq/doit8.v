@@ -1,3 +1,5 @@
+Require Import aula3 aula8 aula9 aula10.
+
 (** **** Exercise: 2 stars (filter_even_gt7)  *)
 (** Use [filter] (instead of [Fixpoint]) to write a Coq function
     [filter_even_gt7] that takes a list of natural numbers as input
