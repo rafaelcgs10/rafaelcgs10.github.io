@@ -32,7 +32,7 @@
 | Posição  | Nome                          | Pontos adicionais na prova prática | Estrelas |
 | Primeiro | Feliperama                    |                                  3 |       95 |
 | Segundo  | Commander Shepard             |                                  2 |       68 |
-| Terceiro | Bugs, Fredie Mercury, Marmita |                                  1 |       47 |
+| Terceiro | Bugs, Fredie Mercury, Marmita, Soró Lanches |                                  1 |       47 |
 
 | Enviar arquivos doit*.v para *rafaelcgs10@gmail.com*.                        |
 | Assunto do email: [OPAT001][CoqArTour][SeuNome]-DOIT*.                       |
