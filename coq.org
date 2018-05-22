@@ -30,9 +30,9 @@
 
 *Primeiro Torneio de Artes em Coq da UDESC (Coq's Art Tournament)* 
 | Posição  | Nome                              | Pontos adicionais na prova prática | Estrelas |
-| Primeiro | Feliperama, Marmita               |                                  3 |       97 |
-| Segundo  | Soró Lanches                      |                                  2 |       85 |
-| Terceiro | Commander Shepard, Fredie Mercury |                                  1 |       70 |
+| Primeiro | Feliperama, Marmita, Soró Lanches |                                  3 |       97 |
+| Segundo  | Commander Shepard, Fredie Mercury |                                  2 |       70 |
+| Terceiro | Bugs                              |                                  1 |       47 |
 
 | Enviar arquivos doit*.v para *rafaelcgs10@gmail.com*.                        |
 | Assunto do email: [OPAT001][CoqArTour][SeuNome]-DOIT*.                       |
