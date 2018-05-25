@@ -1,0 +1,177 @@
+#+TITLE: Aula 12 - Variações de táticas e outras táticas
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
+#+EMAIL: rafaelcgs10@gmail.com
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
+#+OPTIONS:   H:2 toc:nil
+#+DATE: 28/05/2018
+
+#+LANGUAGE: pt
+
+* Táticas em hipóteses
+
+** Aplicando /simpl/ em hipóteses
+   - As táticas que vimos funcionam todas modificando o contexto, sem modificar hipóteses do contexto. Algumas adicionam hipóteses ao contexto, é claro.
+   - A cláusula /in/ especifica premissa do contexto a tática será aplicada.
+#+BEGIN_SRC coq
+Theorem S_inj : forall (n m : nat) (b : bool),
+     beq_nat (S n) (S m) = b  ->
+     beq_nat n m = b.
+Proof.
+  intros n m b H. simpl in H. apply H.  Qed.
+#+END_SRC
+
+** Aplicando /apply/ em hipóteses
+   - Similarmente, /apply/ numa hipótese também pode ser aplicado com /in/.
+   - Porém, ao contrário de /apply H/ (sem /in/) que requer que a conclusão da hipótese /H/ seja unificável com o objetivo, /apply H1 in H2/ requer que a premissa da hipótese /H1/ unifique com /H2/.  
+#+BEGIN_SRC coq
+Theorem silly3' : forall (n : nat),
+  (beq_nat n 5 = true -> beq_nat (S (S n)) 7 = true) ->
+  true = beq_nat n 5  ->
+  true = beq_nat (S (S n)) 7.
+Proof.
+  intros n eq H.
+  symmetry in H. apply eq in H. symmetry in H.
+  apply H.  Qed.
+#+END_SRC
+
+** Quando a hipótese não é exatamente a que queremos!
+   - Na prova abaixo a conclusão da hipótese de indução /IHn'/ não é igual ao objetivo.
+   - O problema é que quando demos /intros/ em /m/, nós consideramos a prova para um /m/ em particular.
+#+BEGIN_SRC coq
+Theorem double_injective_FAILED : forall n m,
+     double n = double m -> n = m.
+Proof.
+  intros n m. induction n as [| n'].
+  - (* n = O *) simpl. intros eq. destruct m as [| m'].
+    + reflexivity. +  inversion eq.
+  - (* n = S n' *) intros eq. destruct m as [| m'].
+    + inversion eq. + apply f_equal.
+      Abort.
+#+END_SRC
+
+** Como provar o teorema anterior
+   - Algumas vezes precisamos de hipóteses quantificadas!
+   - Utilizamos /intros/ apenas em /n/.
+   - Observe que a hipotese de indução vai estar quantificada em /m/. E que isso permite utilizar /apply/ no último caso.
+
+#+BEGIN_SRC coq
+ Theorem double_injective : forall n m,
+     double n = double m -> n = m.
+Proof.
+  intros n. induction n as [| n'].
+  - (* n = O *) simpl. intros m eq. destruct m as [| m'].
+    +  reflexivity. + inversion eq.
+  - (* n = S n' *) simpl.
+    intros m eq.
+    destruct m as [| m'].
+    +  simpl. inversion eq. + apply f_equal.
+      apply IHn'. inversion eq. reflexivity. Qed.
+#+END_SRC
+
+** A mesma prova, mas com indução em /m/
+   - Algumas vezes utilizar menos variáveis em /intros/ não é possível.
+   - Se utilizarmos /induction/ em /m/, teremos o mesmo problema de antes e agora não pode utilizar menos variáveis em /intros/, pois /m/ ocorre depois de /n/ na quantificação.
+#+BEGIN_SRC coq
+Theorem double_injective_take2_FAILED : forall n m,
+     double n = double m -> n = m.
+Proof.
+  intros n m. induction m as [| m'].
+  - (* m = O *) simpl. intros eq. destruct n as [| n'].
+    + (* n = O *) reflexivity. + (* n = S n' *) inversion eq.
+  - (* m = S m' *) intros eq. destruct n as [| n'].
+    + (* n = O *) inversion eq. + (* n = S n' *) apply f_equal.
+Abort.
+#+END_SRC
+
+** A tática /generalize dependent/
+   - A tática /generalize dependent/ permite re-quantificar uma dada variável. 
+#+BEGIN_SRC coq
+Theorem double_injective_take2 : forall n m,
+     double n = double m -> n = m.
+Proof.
+  intros n m.
+  generalize dependent n.
+  induction m as [| m'].
+  - (* m = O *) simpl. intros n eq. destruct n as [| n'].
+    + (* n = O *) reflexivity.
+    + (* n = S n' *) inversion eq.
+  - (* m = S m' *) intros n eq. destruct n as [| n'].
+    + (* n = O *) inversion eq.
+    + (* n = S n' *) apply f_equal.
+      apply IHm'. inversion eq. reflexivity. Qed.
+#+END_SRC
+
+** A tática unfold
+   - Algumas vezes quando tentanto fazer simplificação com /simpl/ nada acontece.
+   - A tática /unfold/ substitui um termo pelo lado direito da sua definição.
+   - Sabemos que multiplicação é comutativa e associativa. Isso irá nos ajudar avançar na prova.
+#+BEGIN_SRC coq
+Definition square n := n * n.
+Lemma square_mult : forall n m, square (n * m) = 
+                            square n * square m.
+Proof.
+  intros n m. simpl.
+  unfold square. rewrite mult_assoc.
+  assert (H : n * m * n = n * n * m).
+  { rewrite mult_comm. apply mult_assoc. }
+  rewrite H. rewrite mult_assoc. reflexivity. Qed.
+#+END_SRC
+
+* Análise de caso em expressões compostas
+
+** Análise de caso em expressões compostas
+   - Vimos como utilizar /destruct/ numa variável para fazer análise de caso na mesma.
+   - Porém, algumas vezes queremos (e podemos) fazer a análise de caso no resultado de alguma computação de alguma expressão.
+     
+** Exemplo de análise de caso de expressão composta
+#+BEGIN_SRC coq
+Definition sillyfun (n : nat) : bool :=
+  if beq_nat n 3 then false
+  else if beq_nat n 5 then false
+  else false.
+
+Theorem sillyfun_false : forall (n : nat),
+  sillyfun n = false.
+Proof.
+  intros n. unfold sillyfun.
+  destruct (beq_nat n 3).
+    - (* beq_nat n 3 = true *) reflexivity.
+    - (* beq_nat n 3 = false *) destruct (beq_nat n 5).
+      + (* beq_nat n 5 = true *) reflexivity.
+      + (* beq_nat n 5 = false *) reflexivity.  Qed.
+#+END_SRC
+
+** Um problema com análise de caso em expressão composta
+   - A análise de caso em expressão composta não mantem no contexto as substituições realizadas.
+   - No exemplo abaixo é considerado /beq _nat n 3 = true/, mas essa informação útil não ocorre no contexto.
+#+BEGIN_SRC coq
+Theorem sillyfun1_odd_FAILED : forall (n : nat),
+     sillyfun1 n = true ->
+     oddb n = true.
+Proof.
+  intros n eq. unfold sillyfun1 in eq.
+  destruct (beq_nat n 3).
+  (* stuck... *)
+Abort.
+#+END_SRC
+
+** O qualificador /eqn/
+   - O qualificador /eqn/ permite que a informação da igualdade seja adicionada ao contexto.
+#+BEGIN_SRC coq
+Theorem sillyfun1_odd : forall (n : nat),
+     sillyfun1 n = true ->
+     oddb n = true.
+Proof.
+  intros n eq. unfold sillyfun1 in eq.
+  destruct (beq_nat n 3) eqn:Heqe3.
+    - (* e3 = true *) apply beq_nat_true in Heqe3.
+      rewrite -> Heqe3. reflexivity.
+    - (* e3 = false *)
+      destruct (beq_nat n 5) eqn:Heqe5.
+        + (* e5 = true *)
+          apply beq_nat_true in Heqe5. rewrite -> Heqe5. reflexivity.
+        + (* e5 = false *) inversion eq.  Qed.
+#+END_SRC

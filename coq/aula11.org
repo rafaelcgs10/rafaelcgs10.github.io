@@ -1,0 +1,201 @@
+#+TITLE: Aula 11 - Táticas Apply e Inversion
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
+#+EMAIL: rafaelcgs10@gmail.com
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
+#+OPTIONS:   H:2 toc:nil
+#+DATE: 28/05/2018
+
+#+LANGUAGE: pt
+
+* A Tática /apply/
+
+** Uso de /apply/ quando o objetivo é uma hipótese.
+   - Algumas vezes o objetivo que queremos provar é exatamente algumas das hipóteses.
+   - Na prova abaixo poderíamos apenas ter utilizado /rewrite -> eq2/ após o primeiro /rewrite/ e, então, /reflexivity.
+   - Porém, podemos atingir o mesmo objetivo utilizando /apply eq2/.
+#+BEGIN_SRC coq
+Theorem silly1 : forall (n m o p : nat),
+     n = m  ->
+     [n;o] = [n;p] ->
+     [n;o] = [m;p].
+Proof.
+  intros n m o p eq1 eq2.
+  rewrite <- eq1.
+  apply eq2.  Qed.
+#+END_SRC
+     
+** Uso de /apply/ quando a conclusão de uma hipótese unifica com o objetivo
+   - Na prova abaixo temos uma hipótese /eq2/ quantificada com um /forall/ sobre /q/ e /r/.
+   - A conclusão dessa hipótese /eq2/ pode ser especializada/instanciada no objetivo.  
+   - A especialização irá trocar as variáveis (quantificadas) /q/ por /n/ e /r/ por /m/. 
+   - A premissa da implicação /eq2/ é adicionada como objetivo.
+#+BEGIN_SRC coq
+Theorem silly2 : forall (n m o p : nat),
+     n = m  ->
+     (forall (q r : nat), q = r -> [q;o] = [r;p]) ->
+     [n;o] = [m;p].
+Proof.
+  intros n m o p eq1 eq2.
+  apply eq2. apply eq1.  Qed.
+#+END_SRC
+
+** Mais um exemplo!
+
+#+BEGIN_SRC coq
+Theorem silly2a : forall (n m : nat),
+     (n,n) = (m,m)  ->
+     (forall (q r : nat), (q,q) = (r,r) -> [q] = [r]) ->
+     [n] = [m].
+Proof.
+  intros n m eq1 eq2.
+  apply eq2. apply eq1.  Qed.
+#+END_SRC
+
+** Exemplo em sala de aula
+   
+#+BEGIN_SRC coq
+Theorem silly_ex :
+     (forall n, evenb n = true -> oddb (S n) = true) ->
+     evenb 3 = true ->
+     oddb 4 = true.
+Proof.
+  (* FILL IN HERE *) Admitted.
+(** [] *)
+#+END_SRC
+
+** A tática /symmetry/
+   - A tática /symmetry/ inverte os lados da igualdade.
+   - Aplicar /simpl/ é opcional, pois /apply/ iria realizar as simplificações se necessário.
+
+#+BEGIN_SRC coq
+ Theorem silly3_firsttry : forall (n : nat),
+     true = beq_nat n 5  ->
+     beq_nat (S (S n)) 7 = true.
+Proof.
+  intros n H.
+  symmetry.
+  simpl. 
+  apply H.  Qed.
+#+END_SRC
+
+** Teorema: igualdade é transitiva
+   - O teorema abaixo nos ajudará numa próxima prova.
+#+BEGIN_SRC coq
+Theorem trans_eq : forall (X:Type) (n m o : X),
+  n = m -> m = o -> n = o.
+Proof.
+  intros X n m o eq1 eq2. rewrite -> eq1. rewrite -> eq2.
+  reflexivity.  Qed.
+#+END_SRC
+
+
+** A Tática /apply ... with .../
+   - Podemos aplicar (/apply/) o teorema /trans _eq/ para prova o teorema abaixo.
+   - A tática /apply/ pode receber, além de hipóteses, teoremas anteriores.
+   - /apply/ gera a substituição de /n/ para /[a;b]/ e /o/ para /[e;f]/.
+   - Nota-se que coq não seria capaz de adivinhar como a variável /m/ do teorema /trans _eq/ devem ser especializada.
+   - A cláusula /with/ permite especificar como uma variável quantificada deve ser especializada.
+   - A atribuição /(m:=[c;d])/ diz que a variável /m/ do teorema /trans _eq/ deve ser trocada pela lista /[c;d]/.
+#+BEGIN_SRC coq
+Example trans_eq_example : forall (a b c d e f : nat),
+     [a;b] = [c;d] ->
+     [c;d] = [e;f] ->
+     [a;b] = [e;f].
+Proof.
+  intros a b c d e f eq1 eq2.
+  apply trans_eq with (m:=[c;d]).
+  apply eq1. apply eq2.   Qed.
+#+END_SRC
+
+* A Tática /inversion/
+  
+** Construtores de tipos indutivos
+   - O construtor do tipo indutivo /nat/ define que ou um número natural é zero ou é um sucessor de um número natural.
+   - Há fatos sobre essa definição que estão implícitos:  
+     1. O construtor /S/ é injetivo: Se /S n = S m/, então /n = m/.
+     2. Os construtores /0/ e /S/ são disjuntos: /0/ não é igual a /S n/ para qualquer /n/.
+   - Ser injetivo significa que uma função mapea diferentes argumentos em diferentes resultados!
+   - Na realidade, isso se aplica para todos os tipos definidos indutivamente! 
+#+BEGIN_SRC coq
+(** 
+     Inductive nat : Type :=
+       | O : nat
+       | S : nat -> nat.
+*)
+#+END_SRC
+
+** A Tática /inversion/
+   - A tática /inversion/ permite explorar esses dois fatos sobre os tipos indutivos.
+   - Para msotrar como /inversion/ funciona vamos demonstrar que /S/ é injetivo.
+   - A utilizar /inversion H/ estamos pedindo para o Coq gerar todas as equações que podem ser inferidas de /H/ e reescrevendo as mesmas no objetivo ao longo disso.
+   - No caso abaixo, Coq inferiu /n = m/ e fez a reescrita no objetivo.
+#+BEGIN_SRC coq
+Theorem S_injective : forall (n m : nat),
+  S n = S m ->
+  n = m.
+Proof.
+  intros n m H. inversion H. reflexivity.
+Qed.
+#+END_SRC
+
+** Mais um exemplo de /inversion/
+   - O exemplo abaixo mostra como o /inversion/ consegue derivar novas equações analisando a definição do tipo indutivo de listas.  
+   - /inversion/ cria equações que satisfazem a igualdade de /H/.
+#+BEGIN_SRC coq
+Theorem inversion_ex1 : forall (n m o : nat),
+  [n; m] = [o; o] ->
+  [n] = [m].
+Proof.
+  intros n m o H. inversion H. reflexivity. Qed.
+#+END_SRC
+
+** Cláusula /as/ 
+   - Podemos especificar os nomes das equações com a cláusula /as/.
+#+BEGIN_SRC coq
+Theorem inversion_ex2 : forall (n m : nat),
+  [n] = [m] ->
+  n = m.
+Proof.
+  intros n m H. inversion H as [Hnm]. reflexivity.  Qed.
+#+END_SRC
+
+** Hipóteses falsas
+   - Quando há uma hipótese com uma igualade entre dos construtores diferentes, por exemplo /S n = 0/, /inversion/ resolve o objetivo imediatamente.
+   - No exemplo abaixo temos uma clara contradição ou falsidade na hipótese /H/ do segundo caso.
+   - O principio da explosão diz que do falso tudo se segue. Então quando tem-se uma hipótese falsa, qualquer objetivo é imediatamente provado. Ex: Se 0 = 1, então P = NP.
+#+BEGIN_SRC coq
+Theorem beq_nat_0_l : forall n,
+   beq_nat 0 n = true -> n = 0.
+Proof.
+  intros n.
+  destruct n as [| n'].
+  - (* n = 0 *) intros H. reflexivity.
+  - (* n = S n' *) simpl.
+    intros H. inversion H. Qed.
+#+END_SRC
+
+** Mais exemplos de explosões
+   - Supondo premissas falsas, tudo é verdade!
+
+#+BEGIN_SRC coq
+Theorem inversion_ex4 : forall (n : nat),
+  S n = O ->
+  2 + 2 = 5.
+Proof.
+  intros n contra. inversion contra. Qed.
+
+Theorem inversion_ex5 : forall (n m : nat),
+  false = true ->
+  [n] = [m].
+Proof.
+  intros n m contra. inversion contra. Qed.
+#+END_SRC 
+
+** Como /inversion/ funciona de maneira geral (para igualdades)
+  - Numa hipótese /H/ da forma /c a1 a2 ... an = d b1 b2 b3 ... bm/:
+    1. Se /c = b/, então por injetividade sabemos que /a1 = b1, a2 = b2.../. /inversion/ adicona esses fatos ao contexto.
+    2. Se /c/ e /b/ são diferentes, então a hipótese /H/ é uma contradição. Neste caso o objetivo é imediatamente provado por /inversion/.
+

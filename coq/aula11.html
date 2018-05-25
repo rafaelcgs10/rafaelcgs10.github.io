@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt">
+<head>
+<!-- 2018-05-25 sex 20:06 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aula 11 - Táticas Apply e Inversion</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Rafael Castro - rafaelcgs10.github.io/coq" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Aula 11 - Táticas Apply e Inversion</h1>
+
+<div id="outline-container-orga8a3fff" class="outline-2">
+<h2 id="orga8a3fff"><span class="section-number-2">1</span> A Tática <i>apply</i></h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-orgd5a34f8" class="outline-3">
+<h3 id="orgd5a34f8"><span class="section-number-3">1.1</span> Uso de <i>apply</i> quando o objetivo é uma hipótese.</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>Algumas vezes o objetivo que queremos provar é exatamente algumas das hipóteses.</li>
+<li>Na prova abaixo poderíamos apenas ter utilizado <i>rewrite -&gt; eq2</i> após o primeiro <i>rewrite</i> e, então, /reflexivity.</li>
+<li>Porém, podemos atingir o mesmo objetivo utilizando <i>apply eq2</i>.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">silly1</span> : <span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">n m o p</span> : nat),
+     n = m  -&gt;
+     [n;o] = [n;p] -&gt;
+     [n;o] = [m;p].
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n m o p eq1 eq2.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">rewrite</span> &lt;- eq1.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> eq2.  <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3238ea9" class="outline-3">
+<h3 id="org3238ea9"><span class="section-number-3">1.2</span> Uso de <i>apply</i> quando a conclusão de uma hipótese unifica com o objetivo</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>Na prova abaixo temos uma hipótese <i>eq2</i> quantificada com um <i>forall</i> sobre <i>q</i> e <i>r</i>.</li>
+<li>A conclusão dessa hipótese <i>eq2</i> pode ser especializada/instanciada no objetivo.</li>
+<li>A especialização irá trocar as variáveis (quantificadas) <i>q</i> por <i>n</i> e <i>r</i> por <i>m</i>.</li>
+<li>A premissa da implicação <i>eq2</i> é adicionada como objetivo.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">silly2</span> : <span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">n m o p</span> : nat),
+     n = m  -&gt;
+     (<span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">q r</span> : nat), q = r -&gt; [q;o] = [r;p]) -&gt;
+     [n;o] = [m;p].
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n m o p eq1 eq2.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> eq2. <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> eq1.  <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdfd3996" class="outline-3">
+<h3 id="orgdfd3996"><span class="section-number-3">1.3</span> Mais um exemplo!</h3>
+<div class="outline-text-3" id="text-1-3">
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">silly2a</span> : <span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">n m</span> : nat),
+     (n,n) = (m,m)  -&gt;
+     (<span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">q r</span> : nat), (q,q) = (r,r) -&gt; [q] = [r]) -&gt;
+     [n] = [m].
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n m eq1 eq2.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> eq2. <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> eq1.  <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge3596fd" class="outline-3">
+<h3 id="orge3596fd"><span class="section-number-3">1.4</span> Exemplo em sala de aula</h3>
+<div class="outline-text-3" id="text-1-4">
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">silly_ex</span> :
+     (<span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">n</span>, evenb n = true -&gt; oddb (S n) = true) -&gt;
+     evenb 3 = true -&gt;
+     oddb 4 = true.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">FILL IN HERE </span><span style="color: #5F7F5F;">*)</span> <span style="background-color: #ff0000;">Admitted</span>.
+<span style="color: #9FC59F;">(** [] *)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org19415f0" class="outline-3">
+<h3 id="org19415f0"><span class="section-number-3">1.5</span> A tática <i>symmetry</i></h3>
+<div class="outline-text-3" id="text-1-5">
+<ul class="org-ul">
+<li>A tática <i>symmetry</i> inverte os lados da igualdade.</li>
+<li>Aplicar <i>simpl</i> é opcional, pois <i>apply</i> iria realizar as simplificações se necessário.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-coq"> <span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">silly3_firsttry</span> : <span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">n</span> : nat),
+     true = beq_nat n 5  -&gt;
+     beq_nat (S (S n)) 7 = true.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n H.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">symmetry</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">simpl</span>. 
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> H.  <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf09f260" class="outline-3">
+<h3 id="orgf09f260"><span class="section-number-3">1.6</span> Teorema: igualdade é transitiva</h3>
+<div class="outline-text-3" id="text-1-6">
+<ul class="org-ul">
+<li>O teorema abaixo nos ajudará numa próxima prova.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">trans_eq</span> : <span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">X</span>:<span style="color: #7CB8BB;">Type</span>) (<span style="color: #DFAF8F;">n m o</span> : X),
+  n = m -&gt; m = o -&gt; n = o.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> X n m o eq1 eq2. <span style="color: #BFEBBF; background-color: #3F3F3F;">rewrite</span> -&gt; eq1. <span style="color: #BFEBBF; background-color: #3F3F3F;">rewrite</span> -&gt; eq2.
+  <span style="color: #BFEBBF;">reflexivity</span>.  <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org60525f3" class="outline-3">
+<h3 id="org60525f3"><span class="section-number-3">1.7</span> A Tática <i>apply &#x2026; with &#x2026;</i></h3>
+<div class="outline-text-3" id="text-1-7">
+<ul class="org-ul">
+<li>Podemos aplicar (<i>apply</i>) o teorema <i>trans _eq</i> para prova o teorema abaixo.</li>
+<li>A tática <i>apply</i> pode receber, além de hipóteses, teoremas anteriores.</li>
+<li><i>apply</i> gera a substituição de <i>n</i> para <i>[a;b]</i> e <i>o</i> para <i>[e;f]</i>.</li>
+<li>Nota-se que coq não seria capaz de adivinhar como a variável <i>m</i> do teorema <i>trans _eq</i> devem ser especializada.</li>
+<li>A cláusula <i>with</i> permite especificar como uma variável quantificada deve ser especializada.</li>
+<li>A atribuição <i>(m:=[c;d])</i> diz que a variável <i>m</i> do teorema <i>trans _eq</i> deve ser trocada pela lista <i>[c;d]</i>.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Example</span> <span style="color: #93E0E3;">trans_eq_example</span> : <span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">a b c d e f</span> : nat),
+     [a;b] = [c;d] -&gt;
+     [c;d] = [e;f] -&gt;
+     [a;b] = [e;f].
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> a b c d e f eq1 eq2.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> trans_eq <span style="color: #7CB8BB;">with</span> (m:=[c;d]).
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> eq1. <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> eq2.   <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5cf3af9" class="outline-2">
+<h2 id="org5cf3af9"><span class="section-number-2">2</span> A Tática <i>inversion</i></h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orga96796c" class="outline-3">
+<h3 id="orga96796c"><span class="section-number-3">2.1</span> Construtores de tipos indutivos</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>O construtor do tipo indutivo <i>nat</i> define que ou um número natural é zero ou é um sucessor de um número natural.</li>
+<li>Há fatos sobre essa definição que estão implícitos:  
+<ol class="org-ol">
+<li>O construtor <i>S</i> é injetivo: Se <i>S n = S m</i>, então <i>n = m</i>.</li>
+<li>Os construtores <i>0</i> e <i>S</i> são disjuntos: <i>0</i> não é igual a <i>S n</i> para qualquer <i>n</i>.</li>
+</ol></li>
+<li>Ser injetivo significa que uma função mapea diferentes argumentos em diferentes resultados!</li>
+<li>Na realidade, isso se aplica para todos os tipos definidos indutivamente!</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #9FC59F;">(** </span>
+<span style="color: #9FC59F;">     Inductive nat : Type :=</span>
+<span style="color: #9FC59F;">       | O : nat</span>
+<span style="color: #9FC59F;">       | S : nat -&gt; nat.</span>
+<span style="color: #9FC59F;">*)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaf91556" class="outline-3">
+<h3 id="orgaf91556"><span class="section-number-3">2.2</span> A Tática <i>inversion</i></h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>A tática <i>inversion</i> permite explorar esses dois fatos sobre os tipos indutivos.</li>
+<li>Para msotrar como <i>inversion</i> funciona vamos demonstrar que <i>S</i> é injetivo.</li>
+<li>A utilizar <i>inversion H</i> estamos pedindo para o Coq gerar todas as equações que podem ser inferidas de <i>H</i> e reescrevendo as mesmas no objetivo ao longo disso.</li>
+<li>No caso abaixo, Coq inferiu <i>n = m</i> e fez a reescrita no objetivo.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">S_injective</span> : <span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">n m</span> : nat),
+  S n = S m -&gt;
+  n = m.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n m H. <span style="color: #BFEBBF; background-color: #3F3F3F;">inversion</span> H. <span style="color: #BFEBBF;">reflexivity</span>.
+<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org27ee17d" class="outline-3">
+<h3 id="org27ee17d"><span class="section-number-3">2.3</span> Mais um exemplo de <i>inversion</i></h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>O exemplo abaixo mostra como o <i>inversion</i> consegue derivar novas equações analisando a definição do tipo indutivo de listas.</li>
+<li><i>inversion</i> cria equações que satisfazem a igualdade de <i>H</i>.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">inversion_ex1</span> : <span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">n m o</span> : nat),
+  [n; m] = [o; o] -&gt;
+  [n] = [m].
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n m o H. <span style="color: #BFEBBF; background-color: #3F3F3F;">inversion</span> H. <span style="color: #BFEBBF;">reflexivity</span>. <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org21e3bbb" class="outline-3">
+<h3 id="org21e3bbb"><span class="section-number-3">2.4</span> Cláusula <i>as</i></h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>Podemos especificar os nomes das equações com a cláusula <i>as</i>.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">inversion_ex2</span> : <span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">n m</span> : nat),
+  [n] = [m] -&gt;
+  n = m.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n m H. <span style="color: #BFEBBF; background-color: #3F3F3F;">inversion</span> H <span style="color: #7CB8BB;">as</span> [Hnm]. <span style="color: #BFEBBF;">reflexivity</span>.  <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2b79c31" class="outline-3">
+<h3 id="org2b79c31"><span class="section-number-3">2.5</span> Hipóteses falsas</h3>
+<div class="outline-text-3" id="text-2-5">
+<ul class="org-ul">
+<li>Quando há uma hipótese com uma igualade entre dos construtores diferentes, por exemplo <i>S n = 0</i>, <i>inversion</i> resolve o objetivo imediatamente.</li>
+<li>No exemplo abaixo temos uma clara contradição ou falsidade na hipótese <i>H</i> do segundo caso.</li>
+<li>O principio da explosão diz que do falso tudo se segue. Então quando tem-se uma hipótese falsa, qualquer objetivo é imediatamente provado. Ex: Se 0 = 1, então P = NP.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">beq_nat_0_l</span> : <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">n</span>,
+   beq_nat 0 n = true -&gt; n = 0.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">destruct</span> n <span style="color: #7CB8BB;">as</span> [| n'].
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">n = 0 </span><span style="color: #5F7F5F;">*)</span> <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> H. <span style="color: #BFEBBF;">reflexivity</span>.
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">n = S n' </span><span style="color: #5F7F5F;">*)</span> <span style="color: #BFEBBF; background-color: #3F3F3F;">simpl</span>.
+    <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> H. <span style="color: #BFEBBF; background-color: #3F3F3F;">inversion</span> H. <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org78bbae7" class="outline-3">
+<h3 id="org78bbae7"><span class="section-number-3">2.6</span> Mais exemplos de explosões</h3>
+<div class="outline-text-3" id="text-2-6">
+<ul class="org-ul">
+<li>Supondo premissas falsas, tudo é verdade!</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">inversion_ex4</span> : <span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">n</span> : nat),
+  S n = O -&gt;
+  2 + 2 = 5.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n contra. <span style="color: #BFEBBF; background-color: #3F3F3F;">inversion</span> contra. <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+
+<span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">inversion_ex5</span> : <span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">n m</span> : nat),
+  false = true -&gt;
+  [n] = [m].
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n m contra. <span style="color: #BFEBBF; background-color: #3F3F3F;">inversion</span> contra. <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org07d56ba" class="outline-3">
+<h3 id="org07d56ba"><span class="section-number-3">2.7</span> Como <i>inversion</i> funciona de maneira geral (para igualdades)</h3>
+<div class="outline-text-3" id="text-2-7">
+<ul class="org-ul">
+<li>Numa hipótese <i>H</i> da forma <i>c a1 a2 &#x2026; an = d b1 b2 b3 &#x2026; bm</i>:
+<ol class="org-ol">
+<li>Se <i>c = b</i>, então por injetividade sabemos que <i>a1 = b1, a2 = b2&#x2026;</i>. <i>inversion</i> adicona esses fatos ao contexto.</li>
+<li>Se <i>c</i> e <i>b</i> são diferentes, então a hipótese <i>H</i> é uma contradição. Neste caso o objetivo é imediatamente provado por <i>inversion</i>.</li>
+</ol></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 28/05/2018</p>
+<p class="author">Author: Rafael Castro - rafaelcgs10.github.io/coq</p>
+<p class="date">Created: 2018-05-25 sex 20:06</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
