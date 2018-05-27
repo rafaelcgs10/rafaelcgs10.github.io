@@ -1,0 +1,65 @@
+#+TITLE: Aula 13 - Lógica em Coq 1
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io/coq
+#+EMAIL: rafaelcgs10@gmail.com
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, udesc, url}
+#+OPTIONS:   H:2 toc:nil
+#+DATE: 30/05/2018
+
+#+LANGUAGE: pt
+
+* Proposições em Coq
+
+** Revisão dos elementos de lógica vistos
+   - Implicação (/->/).
+   - Quantificação universal (/forall/).
+   - Operador de igualdade (/=/).
+   - Operadores booleanos (/orb/, /andb/).
+     
+** Proposições em Coq
+   - Coq é uma linguagem tipada: toda expressão (bem tipada) tem um tipo.
+   - Proposições são expressões!
+   - Qual é o tipo de uma proposição como /3 = 3/?
+   - O tipo /Prop/ é o tipo das proposições!
+#+BEGIN_SRC coq
+Check 3 = 3.
+(* ===> Prop *)
+
+Check forall n m : nat, n + m = m + n.
+(* ===> Prop *)
+
+Check 3 = 4.
+(* ===> Prop *)
+#+END_SRC
+
+** Proposições são /first class citizens/!
+   - Proposições são /first class citizens/ (valores de primeira classe).
+   - Podem ser argumentos e retornos de funções.
+   - A função abaixo retorna uma proposição.
+#+BEGIN_SRC coq
+Definition plus_fact : Prop := 2 + 2 = 4.
+Check plus_fact.
+(* ===> plus_fact : Prop *)
+#+END_SRC
+
+** Proposições parametrizadas
+   - Podemos escrever funções com argumentos e que retornam uma proposição sobre os mesmos.
+   - Em Coq, chamamos funções essas funções de propriedades.
+   - A função abaixo define a propriedade de /f/ ser injetiva.
+#+BEGIN_SRC coq
+Definition injective {A B} (f : A -> B) :=
+  forall x y : A, f x = f y -> x = y.
+#+END_SRC
+
+** O operador de igualdade
+   - O operador de igualdade (/=/) também é uma função. 
+#+BEGIN_SRC coq
+Check @eq.
+(* ===> forall A : Type, A -> A -> Prop *)
+#+END_SRC
+
+* Conectivos lógicos de proposições
+  
+** Conjunção de proposições
