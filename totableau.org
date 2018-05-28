@@ -1,0 +1,35 @@
+#+TITLE: Notas trabalho prático OPAT001
+#+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+OPTIONS: toc:nil num:nil H:4 ^:nil pri:t
+#+OPTIONS: html-postamble:nil
+#+AUTHOR: Rafael Castro
+#+LANGUAGE: pt
+#+EMAIL: rafaelcgs10@gmail.com
+
+
+| Equipe                                               |    g12 | g13   | g14   | g15   |   s8 |    s9 |   s10 |   s11 |    s12 |    s13 | s14    | s15     |
+| 1) Gabriela Moreira                                  |   8190 | 16382 | 32766 | 65534 | 3332 |  7684 | 17412 | 38916 |  86020 | 188420 | 409604 | SR      |
+| 2) Vinicius Zuchi                                    |     ER | ER    | ER    | ER    | 6407 | 14855 | 33799 | 75783 | 167943 |     SR | SR     | SR      |
+| 3) Ramon Artner                                      |   8186 | SR    | SR    | SR    | 1920 |  4352 |    SR |    SR |     SR |     SR | SR     | SR      |
+| 4) Willian Pereira, Andressa Umetsu e Victor Carriço |    124 | 136   | 148   | 160   | 3332 |  7684 | 17412 | 38916 |  86020 | 188420 | 409604 | 884740  |
+| 5) Adilson Jonck e Felipe Marchi                     | 853946 | SR    | SR    | SR    | 6408 | 14856 | 33800 | 75784 | 167944 | 368648 | 802824 | 1736712 |
+| 6) Diogo e Alexandre                                 |     SR | SR    | SR    | SR    | 3332 |  7684 | 17412 | 38916 |     SR |     SR | SR     | SR      |
+| 7) Christopher Renkavieski                           |     ER | ER    | ER    | ER    | 3847 |  9863 | 23239 | 55623 | 126215 | 289031 | SR     | SR      |
+A tabela informa o número de ramos que são informados pelas respectivas implementações.
+
+gn : Fórmula Gamma de tamanho n.
+
+sn : Fórmula Statman de tamanho n.
+
+SR: Sem resposta em menos de cinco minutos num Core I5 3550.
+
+ER: Resultado inconsiste ou algum erro de leitura.
+
+Equipes que não forneceram resposta para o s8 em menos de cinco minutos não participaram da competição.
+
+
+*Vencedor: Equipe Willian, Andressa e Victor*
+
+
+Parabéns também para as equipes 1, 2, 5 e 7, as quais também tiveram bons resultados!
