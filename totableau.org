@@ -1,4 +1,4 @@
-#+TITLE: Notas trabalho prático OPAT001
+#+TITLE: Resultado competição tableuax
 #+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
 #+OPTIONS: toc:nil num:nil H:4 ^:nil pri:t
