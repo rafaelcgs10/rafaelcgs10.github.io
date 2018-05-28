@@ -16,7 +16,7 @@
 | 5) Adilson Jonck e Felipe Marchi                     | 853946 | SR    | SR    | SR    | 6408 | 14856 | 33800 | 75784 | 167944 | 368648 | 802824 | 1736712 |
 | 6) Diogo e Alexandre                                 |     SR | SR    | SR    | SR    | 3332 |  7684 | 17412 | 38916 |     SR |     SR | SR     | SR      |
 | 7) Christopher Renkavieski                           |     ER | ER    | ER    | ER    | 3847 |  9863 | 23239 | 55623 | 126215 | 289031 | SR     | SR      |
-A tabela informa o número de ramos que são informados pelas respectivas implementações.
+A tabela informa o número de ramos que são fornecidos pelas respectivas implementações.
 
 gn : Fórmula Gamma de tamanho n.
 
