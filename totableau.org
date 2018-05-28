@@ -11,7 +11,7 @@
 | Equipe                                               |    g12 | g13   | g14   | g15   |   s8 |    s9 |   s10 |   s11 |    s12 |    s13 | s14    | s15     |
 | 1) Gabriela Moreira                                  |   8190 | 16382 | 32766 | 65534 | 3332 |  7684 | 17412 | 38916 |  86020 | 188420 | 409604 | SR      |
 | 2) Vinicius Zuchi                                    |     ER | ER    | ER    | ER    | 6407 | 14855 | 33799 | 75783 | 167943 |     SR | SR     | SR      |
-| 3) Ramon Artner                                      |   8186 | SR    | SR    | SR    | 1920 |  4352 |  9728 |    SR |     SR |     SR | SR     | SR      |
+| 3) Ramon Artner                                      |   8186 | 16378 | SR    | SR    | 1920 |  4352 |  9728 |    SR |     SR |     SR | SR     | SR      |
 | 4) Willian Pereira, Andressa Umetsu e Victor Carriço |    124 | 136   | 148   | 160   | 3332 |  7684 | 17412 | 38916 |  86020 | 188420 | 409604 | 884740  |
 | 5) Adilson Jonck e Felipe Marchi                     | 853946 | SR    | SR    | SR    | 6408 | 14856 | 33800 | 75784 | 167944 | 368648 | 802824 | 1736712 |
 | 6) Diogo e Alexandre                                 |     SR | SR    | SR    | SR    | 3332 |  7684 | 17412 | 38916 |     SR |     SR | SR     | SR      |
