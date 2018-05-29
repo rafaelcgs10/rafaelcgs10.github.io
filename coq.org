@@ -7,7 +7,9 @@
 #+LANGUAGE: pt
 #+EMAIL: rafaelcgs10@gmail.com
 
-
+| *Como eu fico sem dar aula para vocês* |
+| [[file:./coq/sad.jpg]]                     |
+ 
 | Aula                                                     | Data       | Exercícios            | Fonte    |
 | [[./coq/aula1.html][1 - Introdução à introdução de Coq]]                       | 02/05/2018 |                       | [[./coq/aula1.v][aula1.v]]  |
 | [[./coq/aula2.html][2 - Programação Funcional em Coq]]                         | 02/05/2018 | [[./coq/doit1.v][file:./coq/doit.gif]]   | [[./coq/aula2.v][aula2.v]]  |
@@ -19,12 +21,12 @@
 | [[./coq/aula8.html][8 - Mais provas sobre listas de naturais]]                 | 21/05/2018 | [[./coq/doit6.v][file:./coq/doit7.gif]]  | [[./coq/aula8.v][aula8.v]]  |
 | [[./coq/aula9.html][9 - Polimorfismo em Coq]]                                  | 21/05/2018 | [[./coq/doit7.v][file:./coq/doit6.gif]]  | [[./coq/aula9.v][aula9.v]]  |
 | [[./coq/aula10.html][10 - Funções de ordem superior]]                           | 23/05/2018 | [[./coq/doit8.v][file:./coq/doit8.gif]]  | [[./coq/aula10.v][aula10.v]] |
-| [[./coq/aula11.html][11 - Táticas Apply e Inversion]]                           | 28/05/2018 | [[./coq/doit9.v][file:./coq/doit9.gif]]  | [[./coq/aula11.v][aula11.v]] |
-| [[./coq/aula12.html][12 - Aula 12 - Variações de táticas e outras táticas]]     | 28/05/2018 | [[./coq/doit10.v][file:./coq/doit10.gif]] | [[./coq/aula12.v][aula12.v]] |
-| 13 - Lógica em Coq 1                                     | 30/06/2018 |                       |          |
-| 14 - Lógica em Coq 2                                     | 04/06/2018 |                       |          |
-| 15 - Automação em Coq                                    | 06/06/2018 |                       |          |
-| 16 - Revisão                                             | 11/06/2018 |                       |          |
+| [[./coq/aula11.html][11 - Táticas Apply e Inversion]]                           | ??/??/20?? | [[./coq/doit9.v][file:./coq/doit9.gif]]  | [[./coq/aula11.v][aula11.v]] |
+| [[./coq/aula12.html][12 - Aula 12 - Variações de táticas e outras táticas]]     | ??/??/20?? | [[./coq/doit10.v][file:./coq/doit10.gif]] | [[./coq/aula12.v][aula12.v]] |
+| 13 - Lógica em Coq 1                                     | ??/??/20?? |                       |          |
+| 14 - Lógica em Coq 2                                     | ??/??/20?? |                       |          |
+| 15 - Automação em Coq                                    | ??/??/20?? |                       |          |
+| 16 - Revisão                                             | ??/??/20?? |                       |          |
 *Sujeito a alterações!*
 
 | Prova prática Coq | 13/06/2018 |
