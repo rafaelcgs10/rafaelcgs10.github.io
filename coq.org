@@ -7,7 +7,7 @@
 #+LANGUAGE: pt
 #+EMAIL: rafaelcgs10@gmail.com
 
-| *Como eu fico sem dar aula para vocês* |
+| *Fico tisti quando não posso dar aula para vocês. Veja:* |
 | [[file:./coq/sad.jpg]]                     |
  
 | Aula                                                     | Data       | Exercícios            | Fonte    |
