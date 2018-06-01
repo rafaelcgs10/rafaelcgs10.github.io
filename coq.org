@@ -41,5 +41,15 @@
 | Cada posição pode ser ocupada por vários empatados.                          |
 | Os melhores colocados deverão defender suas provas numa entrevista agendada. |
 
+| *Desafio supremo em Coq*                                                                                                       |
+| Quem resolver este desafio tira, automaticamente, 10 na prova prática.                                                         |
+| Somente será aceito um vencedor do desafio.                                                                                    |
+| Para concorrer é preciso estar na primeira colocação do torneio quando o mesmo for finalizado (dia 12/06).                     |
+| Deve-se marcar a entrevista para defender as soluções do torneio e deste desafio no dia 13/06 antes da prova.                  |
+| Como somente há um vencedor, então o primeiro a entregar a solução do desafio para *rafaelcgs10@gmail.com* vence.              |
+| Consultar na internet a prova informal do [[https://en.wikipedia.org/wiki/Euclidean_division#Statement_of_the_theorem][teorema]] é permitido, mas obviamente não é permitido copiar uma solução feita em Coq. |
+| Utilizar as bibliotecas do Coq é permitido (e necessário).                                                                     |
+| [[./coq/div_euclidean.v][Desafio]]                                                                                                                        |
+
 | Referência                           |
 | Software Foundations: [[https://softwarefoundations.cis.upenn.edu/][Livro]] e [[https://deepspec.org/event/dsss17/coq_intensive.html][vídeos]] |
