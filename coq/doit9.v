@@ -13,15 +13,6 @@ Proof.
   (* FILL IN HERE *) Admitted.
 (** [] *)
 
-(** **** Exercise: 1 star, optional (apply_rewrite)  *)
-(** Briefly explain the difference between the tactics [apply] and
-    [rewrite].  What are the situations where both can usefully be
-    applied?
-
-(* FILL IN HERE *)
-*)
-(** [] *)
-
 (** **** Exercise: 3 stars, optional (apply_with_exercise)  *)
 Example trans_eq_exercise : forall (n m o p : nat),
      m = (minustwo o) ->
