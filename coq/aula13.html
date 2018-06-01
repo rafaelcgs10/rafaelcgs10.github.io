@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt">
+<head>
+<!-- 2018-06-01 sex 14:18 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aula 13 - Lógica em Coq 1</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Rafael Castro - rafaelcgs10.github.io/coq" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Aula 13 - Lógica em Coq 1</h1>
+
+<div id="outline-container-orgc4cd701" class="outline-2">
+<h2 id="orgc4cd701"><span class="section-number-2">1</span> Proposições em Coq</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org58c27e6" class="outline-3">
+<h3 id="org58c27e6"><span class="section-number-3">1.1</span> Revisão dos elementos de lógica vistos</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>Implicação (<i>-&gt;</i>).</li>
+<li>Quantificação universal (<i>forall</i>).</li>
+<li>Operador de igualdade (<i>=</i>).</li>
+<li>Operadores booleanos (<i>orb</i>, <i>andb</i>).</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgafde3e1" class="outline-3">
+<h3 id="orgafde3e1"><span class="section-number-3">1.2</span> Proposições em Coq</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>Coq é uma linguagem tipada: toda expressão (bem tipada) tem um tipo.</li>
+<li>Proposições são expressões!</li>
+<li>Qual é o tipo de uma proposição como <i>3 = 3</i>?</li>
+<li>O tipo <i>Prop</i> é o tipo das proposições!</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Check</span> 3 = 3.
+<span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">===&gt; Prop </span><span style="color: #5F7F5F;">*)</span>
+
+<span style="color: #F0DFAF; font-weight: bold;">Check</span> <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">n m</span> : nat, n + m = m + n.
+<span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">===&gt; Prop </span><span style="color: #5F7F5F;">*)</span>
+
+<span style="color: #F0DFAF; font-weight: bold;">Check</span> 3 = 4.
+<span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">===&gt; Prop </span><span style="color: #5F7F5F;">*)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orged9ff08" class="outline-3">
+<h3 id="orged9ff08"><span class="section-number-3">1.3</span> Proposições são <i>first class citizens</i>!</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>Proposições são <i>first class citizens</i> (valores de primeira classe).</li>
+<li>Podem ser argumentos e retornos de funções.</li>
+<li>A função abaixo retorna uma proposição.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Definition</span> <span style="color: #93E0E3;">plus_fact</span> : <span style="color: #7CB8BB;">Prop</span> := 2 + 2 = 4.
+<span style="color: #F0DFAF; font-weight: bold;">Check</span> plus_fact.
+<span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">===&gt; plus_fact : Prop </span><span style="color: #5F7F5F;">*)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org62ea608" class="outline-3">
+<h3 id="org62ea608"><span class="section-number-3">1.4</span> Proposições parametrizadas</h3>
+<div class="outline-text-3" id="text-1-4">
+<ul class="org-ul">
+<li>Podemos escrever funções com argumentos e que retornam uma proposição sobre os mesmos.</li>
+<li>Em Coq, chamamos funções essas funções de propriedades.</li>
+<li>A função abaixo define a propriedade de <i>f</i> ser injetiva.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Definition</span> <span style="color: #93E0E3;">injective</span> {A B} (<span style="color: #DFAF8F;">f</span> : A -&gt; B) :=
+  <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">x y</span> : A, f x = f y -&gt; x = y.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6e94fcf" class="outline-3">
+<h3 id="org6e94fcf"><span class="section-number-3">1.5</span> O operador de igualdade</h3>
+<div class="outline-text-3" id="text-1-5">
+<ul class="org-ul">
+<li>O operador de igualdade (<i>=</i>) também é uma função.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Check</span> <span style="color: #BFEBBF;">@</span>eq.
+<span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">===&gt; forall A : Type, A -&gt; A -&gt; Prop </span><span style="color: #5F7F5F;">*)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org84ecd0d" class="outline-2">
+<h2 id="org84ecd0d"><span class="section-number-2">2</span> Conectivos lógicos de proposições</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org4c9dd7d" class="outline-3">
+<h3 id="org4c9dd7d"><span class="section-number-3">2.1</span> Conjunção de proposições</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>A conjunção entre duas proprosições <i>A</i> e <i>B</i> é escrita como A /\ B .</li>
+<li><i>\ é apenas açúcar sintático para /and</i>.</li>
+<li>Para provar um objetivo com uma conjunção é necessário provar ambas as proposições.</li>
+<li>A tática <i>split</i> separa uma conjunção no objetivo em dois sub-objetivos.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Example</span> <span style="color: #93E0E3;">and_example</span> : 3 + 4 = 7 /\ 2 * 2 = 4.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">split</span>.
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">3 + 4 = 7 </span><span style="color: #5F7F5F;">*)</span> <span style="color: #BFEBBF;">reflexivity</span>.
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">2 + 2 = 4 </span><span style="color: #5F7F5F;">*)</span> <span style="color: #BFEBBF;">reflexivity</span>.
+<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+
+<span style="color: #F0DFAF; font-weight: bold;">Check</span> and.
+<span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">===&gt; and : Prop -&gt; Prop -&gt; Prop </span><span style="color: #5F7F5F;">*)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgccc93be" class="outline-3">
+<h3 id="orgccc93be"><span class="section-number-3">2.2</span> Introdução da conjunção</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>Se assumirmos as proposições <i>A</i> e <i>B</i>, então podemos concluir A /\ B.</li>
+<li>Onde você já viu isso antes?</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Lemma</span> <span style="color: #93E0E3;">and_intro</span> : <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">A B</span> : <span style="color: #7CB8BB;">Prop</span>, A -&gt; B -&gt; A /\ B.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> A B HA HB. <span style="color: #BFEBBF; background-color: #3F3F3F;">split</span>.
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> HA.
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> HB.
+<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0f6577d" class="outline-3">
+<h3 id="org0f6577d"><span class="section-number-3">2.3</span> Conjunção numa das hipóteses</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>Uma conjunção numa das hipóteses pode ser separada em duas hipóteses.</li>
+<li>A tática <i>destruct</i> na hipótese faz exatamente isso.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Lemma</span> <span style="color: #93E0E3;">and_example2</span> :
+  <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">n m</span> : nat, n = 0 /\ m = 0 -&gt; n + m = 0.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n m H.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">destruct</span> H <span style="color: #7CB8BB;">as</span> [Hn Hm].
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">rewrite</span> Hn. <span style="color: #BFEBBF; background-color: #3F3F3F;">rewrite</span> Hm.
+  <span style="color: #BFEBBF;">reflexivity</span>.
+<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org05efdfe" class="outline-3">
+<h3 id="org05efdfe"><span class="section-number-3">2.4</span> Conjunção é comutativa</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>Algumas vezes pode ser necessário rearranjar a ordem de uma conjunção.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">and_commut</span> : <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">P Q</span> : <span style="color: #7CB8BB;">Prop</span>,
+  P /\ Q -&gt; Q /\ P.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> P Q [HP HQ].
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">split</span>.
+    <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">left </span><span style="color: #5F7F5F;">*)</span> <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> HQ.
+    <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">right </span><span style="color: #5F7F5F;">*)</span> <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> HP.  <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org803c01a" class="outline-3">
+<h3 id="org803c01a"><span class="section-number-3">2.5</span> Disjunção de proposições</h3>
+<div class="outline-text-3" id="text-2-5">
+<ul class="org-ul">
+<li>Uma disjunção de proposições A \/ B é verdadeira quando ao menos uma delas é verdadeira.</li>
+<li>\/ é açúcar sintático para <i>or</i>.</li>
+<li>Se uma hipótese é uma disjução, então pode-se fazer análise de caso nela por meio de <i>destruct</i>.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Lemma</span> <span style="color: #93E0E3;">or_example</span> :
+  <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">n m</span> : nat, n = 0 \/ m = 0 -&gt; n * m = 0.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n m Hnm.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">destruct</span> Hnm <span style="color: #7CB8BB;">as</span> [Hn | Hm].
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">Here, [n = 0] </span><span style="color: #5F7F5F;">*)</span>
+    <span style="color: #BFEBBF; background-color: #3F3F3F;">rewrite</span> Hn. <span style="color: #BFEBBF;">reflexivity</span>.
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">Here, [m = 0] </span><span style="color: #5F7F5F;">*)</span>
+    <span style="color: #BFEBBF; background-color: #3F3F3F;">rewrite</span> Hm. <span style="color: #BFEBBF; background-color: #3F3F3F;">rewrite</span> &lt;- mult_n_O.
+    <span style="color: #BFEBBF;">reflexivity</span>.
+<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+
+<span style="color: #F0DFAF; font-weight: bold;">Check</span> or.
+<span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">===&gt; or : Prop -&gt; Prop -&gt; Prop </span><span style="color: #5F7F5F;">*)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7d56a15" class="outline-3">
+<h3 id="org7d56a15"><span class="section-number-3">2.6</span> O objetivo é uma disjunção</h3>
+<div class="outline-text-3" id="text-2-6">
+<ul class="org-ul">
+<li>Para provar uma disjunção é preciso demostrar apenas um lado da mesma.</li>
+<li>As táticas <i>left</i> e <i>right</i> servem para fazer essa escolha.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Lemma</span> <span style="color: #93E0E3;">or_intro</span> : <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">A B</span> : <span style="color: #7CB8BB;">Prop</span>, A -&gt; A \/ B.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> A B HA.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">left</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> HA.
+<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfc8eba2" class="outline-3">
+<h3 id="orgfc8eba2"><span class="section-number-3">2.7</span> Exemplo com left e right</h3>
+<div class="outline-text-3" id="text-2-7">
+<ul class="org-ul">
+<li>O exemplo abaixo faz uma análise de caso em <i>n</i>.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Lemma</span> <span style="color: #93E0E3;">zero_or_succ</span> :
+  <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">n</span> : nat, n = 0 \/ n = S (pred n).
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">WORKED IN CLASS </span><span style="color: #5F7F5F;">*)</span>
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">destruct</span> n <span style="color: #7CB8BB;">as</span> [|n'].
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #BFEBBF; background-color: #3F3F3F;">left</span>. <span style="color: #BFEBBF;">reflexivity</span>.
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #BFEBBF; background-color: #3F3F3F;">right</span>. <span style="color: #BFEBBF;">reflexivity</span>.
+<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd408fc1" class="outline-2">
+<h2 id="orgd408fc1"><span class="section-number-2">3</span> Negação</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgd515782" class="outline-3">
+<h3 id="orgd515782"><span class="section-number-3">3.1</span> Negação e falsidade</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li>Até o momento provamos coisas serem verdadeiras.</li>
+<li>Em Coq também é possível provar que coisas são falsidades.</li>
+<li>A negação é representada pelo operador unário <i>~</i>, que é um açucar sintático para <i>not</i>.</li>
+<li>Coq define <i>not</i> como uma função de Prop para o tipo bottom. O tipo bottom (<i>False</i>) é definido como sempre falso, nada é uma prova do mesmo .</li>
+<li>O tipo bottom também pode ser visto como uma contradição <i>0 = 1</i>.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Module</span> <span style="color: #93E0E3;">MyNot</span>.
+
+<span style="color: #F0DFAF; font-weight: bold;">Definition</span> <span style="color: #93E0E3;">not</span> (<span style="color: #DFAF8F;">P</span>:<span style="color: #7CB8BB;">Prop</span>) := P -&gt; <span style="color: #7CB8BB;">False</span>.
+
+<span style="color: #F0DFAF; font-weight: bold;">Notation</span> <span style="color: #CC9393;">"~ x"</span> := (not x) : type_scope.
+
+<span style="color: #F0DFAF; font-weight: bold;">Check</span> not.
+<span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">===&gt; Prop -&gt; Prop </span><span style="color: #5F7F5F;">*)</span>
+
+<span style="color: #F0DFAF; font-weight: bold;">End</span> <span style="color: #93E0E3;">MyNot</span>.
+
+<span style="color: #F0DFAF; font-weight: bold;">Print</span> <span style="color: #7CB8BB;">False</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8c04d69" class="outline-3">
+<h3 id="org8c04d69"><span class="section-number-3">3.2</span> Do falso tudo se prova</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li>A teorema abaixo afirma que do falso segue-se que qualquer proposição <i>P</i> é verdade.</li>
+<li><i>destruct</i> pode ser utilizado como <i>inversion</i> na hipótese falsa.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">ex_falso_quodlibet</span> : <span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">P</span>:<span style="color: #7CB8BB;">Prop</span>),
+  <span style="color: #7CB8BB;">False</span> -&gt; P.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> P contra.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">destruct</span> contra.  <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf9cb13d" class="outline-3">
+<h3 id="orgf9cb13d"><span class="section-number-3">3.3</span> Exemplo de coisa falsa</h3>
+<div class="outline-text-3" id="text-3-3">
+<ul class="org-ul">
+<li>Como bem estabelicido pela ciência: zero e um são diferentes!</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">zero_not_one</span> : ~(0 = 1).
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> contra. <span style="color: #BFEBBF; background-color: #3F3F3F;">inversion</span> contra.
+<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org56eafde" class="outline-3">
+<h3 id="org56eafde"><span class="section-number-3">3.4</span> Desigualdade em Coq</h3>
+<div class="outline-text-3" id="text-3-4">
+<ul class="org-ul">
+<li>Ao invés de negar uma igualdade, pode-se utilizar o operador de desigualdade &lt;&gt;.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Check</span> (0 &lt;&gt; 1).
+<span style="color: #F0DFAF; font-weight: bold;">Locate</span> <span style="color: #CC9393;">"&lt;&gt;"</span> .
+<span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">===&gt; Prop </span><span style="color: #5F7F5F;">*)</span>
+
+<span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">zero_not_one'</span> : 0 &lt;&gt; 1.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> H. <span style="color: #BFEBBF; background-color: #3F3F3F;">inversion</span> H.
+<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8e8f59d" class="outline-3">
+<h3 id="org8e8f59d"><span class="section-number-3">3.5</span> Negação é apenas uma função para falso!</h3>
+<div class="outline-text-3" id="text-3-5">
+<ul class="org-ul">
+<li>Negação é apenas uma função para falso. Podemos utilizar <i>unfold</i> em funções.</li>
+<li>Falso implica em Falso:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">not_False</span> :
+  ~ <span style="color: #7CB8BB;">False</span>.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">unfold</span> not. <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> H. <span style="color: #BFEBBF; background-color: #3F3F3F;">destruct</span> H. <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2acc99a" class="outline-3">
+<h3 id="org2acc99a"><span class="section-number-3">3.6</span> Introdução da dupla negação</h3>
+<div class="outline-text-3" id="text-3-6">
+<ul class="org-ul">
+<li>Introdução da dupla negação pode ser provado.</li>
+<li>Tente fazer a eliminação da dupla negação!</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">double_neg</span> : <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">P</span> : <span style="color: #7CB8BB;">Prop</span>,
+  P -&gt; ~~P.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> P H. <span style="color: #BFEBBF; background-color: #3F3F3F;">unfold</span> not. <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> G. <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> G. <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> H.  <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8906fef" class="outline-3">
+<h3 id="org8906fef"><span class="section-number-3">3.7</span> Tipo verdade em Coq</h3>
+<div class="outline-text-3" id="text-3-7">
+<ul class="org-ul">
+<li>O tipo verdade (True) é a constante verdadeira de tipo <i>Prop</i>.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Lemma</span> <span style="color: #93E0E3;">True_is_true</span> : <span style="color: #7CB8BB;">True</span>.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>. <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> I. <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+
+<span style="color: #F0DFAF; font-weight: bold;">Print</span> <span style="color: #7CB8BB;">True</span>.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 30/05/2018</p>
+<p class="author">Author: Rafael Castro - rafaelcgs10.github.io/coq</p>
+<p class="date">Created: 2018-06-01 sex 14:18</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

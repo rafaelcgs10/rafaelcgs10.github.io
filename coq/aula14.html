@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-06-01 sex 14:24 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aula 14 - Lógica em Coq 2</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Rafael Castro - rafaelcgs10.github.io/coq" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Aula 14 - Lógica em Coq 2</h1>
+
+
+<div id="outline-container-org4fe6753" class="outline-2">
+<h2 id="org4fe6753"><span class="section-number-2">1</span> Equivalência lógica</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-orgeaf2cad" class="outline-3">
+<h3 id="orgeaf2cad"><span class="section-number-3">1.1</span> Equivalência lógica</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>Uma equivalência lógica acontece quando duas proposições são verdadeiras para a mesma valoração.</li>
+<li>Conhecido como "se, e somente se,".</li>
+<li>É apenas uma conjunção de implicações</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Module</span> <span style="color: #93E0E3;">MyIff</span>.
+
+<span style="color: #F0DFAF; font-weight: bold;">Definition</span> <span style="color: #93E0E3;">iff</span> (<span style="color: #DFAF8F;">P Q</span> : <span style="color: #7CB8BB;">Prop</span>) := (P -&gt; Q) /\ (Q -&gt; P).
+
+<span style="color: #F0DFAF; font-weight: bold;">Notation</span> <span style="color: #CC9393;">"P &lt;-&gt; Q"</span> := (iff P Q)
+                      (<span style="color: #7CB8BB;">at</span> level 95, no associativity)
+                      : type_scope.
+
+<span style="color: #F0DFAF; font-weight: bold;">End</span> <span style="color: #93E0E3;">MyIff</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0cdc60c" class="outline-3">
+<h3 id="org0cdc60c"><span class="section-number-3">1.2</span> Exemplo de equivalência</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>Se <i>P</i> e <i>Q</i> são equivalentes, então <i>Q</i> e <i>P</i> são equivalentes.</li>
+<li>Como a bi-implicação é apenas uma conjunção, utiliza-se <i>split</i>.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">iff_sym</span> : <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">P Q</span> : <span style="color: #7CB8BB;">Prop</span>,
+  (P &lt;-&gt; Q) -&gt; (Q &lt;-&gt; P).
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> P Q [HAB HBA].
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">split</span>.
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">-&gt; </span><span style="color: #5F7F5F;">*)</span> <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> HBA.
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">&lt;- </span><span style="color: #5F7F5F;">*)</span> <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> HAB.  <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7a9ce5e" class="outline-2">
+<h2 id="org7a9ce5e"><span class="section-number-2">2</span> Quantificação Existencial</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org1678950" class="outline-3">
+<h3 id="org1678950"><span class="section-number-3">2.1</span> Quantificação existencial no objetivo</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>Para dizer que existe um <i>x</i> de tipo <i>T</i>, tal que alguma propriedade <i>P</i> é verdade para <i>x</i>, escreve-se: <i>exist x : T, P</i>.</li>
+<li>Utiliza-se o quantificador <i>exists</i> de maneira similar ao <i>forall</i>.</li>
+<li>A tática <i>exists</i> escolhe qual elemento existe.</li>
+<li>Exemplo de prova de existência:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Lemma</span> <span style="color: #93E0E3;">four_is_even</span> : <span style="color: #BFEBBF; background-color: #3F3F3F;">exists</span> <span style="color: #DFAF8F;">n</span> : nat, 4 = n + n.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">exists</span> 2. 
+  <span style="color: #BFEBBF;">reflexivity</span>.
+<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4cdc8f6" class="outline-3">
+<h3 id="org4cdc8f6"><span class="section-number-3">2.2</span> Quantificação existencial nas hipóteses</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>Se há uma hipótese que afirma uma existencia <i>exists x, Px</i>, pode-se utilizar <i>destruct</i> para obter as hipóteses <i>x</i> e <i>P</i> sobre <i>x</i>.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">exists_example_2</span> : <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">n</span>,
+  (<span style="color: #BFEBBF; background-color: #3F3F3F;">exists</span> <span style="color: #DFAF8F;">m</span>, n = 4 + m) -&gt;
+  (<span style="color: #BFEBBF; background-color: #3F3F3F;">exists</span> <span style="color: #DFAF8F;">o</span>, n = 2 + o).
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> n Hm.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">destruct</span> Hm <span style="color: #7CB8BB;">as</span> [m H].
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">exists</span> (2 + m).
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> H.  <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8d8e9b0" class="outline-3">
+<h3 id="org8d8e9b0"><span class="section-number-3">2.3</span> Definição do tipo existencial</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>O tipo existencial é uma proposição definida indutivamente.</li>
+<li>O tipo existencial é parametrizado por um tipo <i>A</i> (implicíto) e uma função <i>P : A -&gt; Prop</i> que é proposição quantificada.</li>
+<li>O <i>forall</i> é um parâmetro do construtor, não do tipo.</li>
+<li>A tática <i>exists</i> é apenas um <i>apply</i> com o construtor.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Section</span> <span style="color: #93E0E3;">MyEx</span>.
+   <span style="color: #F0DFAF; font-weight: bold;">Inductive</span> <span style="color: #93E0E3;">ex</span> {<span style="color: #DFAF8F;">A</span> : <span style="color: #7CB8BB;">Type</span>} (<span style="color: #DFAF8F;">P</span> : A -&gt; <span style="color: #7CB8BB;">Prop</span>) : <span style="color: #7CB8BB;">Prop</span> :=
+    ex_intro : <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">x</span> : A, P x -&gt; ex P. 
+
+   <span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">exemple_ex</span> : ex (<span style="color: #7CB8BB;">fun</span> <span style="color: #DFAF8F;">n</span> : nat =&gt; n = n).
+     <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> ex_intro <span style="color: #7CB8BB;">with</span> (x:=1).
+     <span style="color: #BFEBBF;">reflexivity</span>.
+    <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org81e1df9" class="outline-3">
+<h3 id="org81e1df9"><span class="section-number-3">2.4</span> Notação do tipo existencial</h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Notation</span> <span style="color: #CC9393;">"'existss' x .. y , p"</span> := (ex (<span style="color: #7CB8BB;">fun</span> <span style="color: #DFAF8F;">x</span> =&gt; .. (ex (<span style="color: #7CB8BB;">fun</span> <span style="color: #DFAF8F;">y</span> =&gt; p)) ..))
+  (<span style="color: #7CB8BB;">at</span> level 200, x binder, <span style="color: #BFEBBF; background-color: #3F3F3F;">right</span> associativity,
+   format <span style="color: #CC9393;">"'[' 'existss' '/ ' x .. y , '/ ' p ']'"</span>).
+
+   <span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">exemple_ex2</span> : existss n : nat, n = n.
+     <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> ex_intro <span style="color: #7CB8BB;">with</span> (x:=1).
+     <span style="color: #BFEBBF;">reflexivity</span>.
+   <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+<span style="color: #F0DFAF; font-weight: bold;">End</span> <span style="color: #93E0E3;">MyEx</span>.
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4a2d9ef" class="outline-2">
+<h2 id="org4a2d9ef"><span class="section-number-2">3</span> Coq vs Teoria dos Conjuntos</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgbf709d5" class="outline-3">
+<h3 id="orgbf709d5"><span class="section-number-3">3.1</span> Coq vs Teoria dos Conjuntos</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li>A fundação da matemática tradocional, com papel e cante, é a Teoria dos Conjuntos (ZFC).</li>
+<li>Um objeto matemática pode ser membro de vários conjuntos em ZFC, porém em Coq um termo é membro de no máximo um tipo.</li>
+<li>Isso, em geral, não é um problema: em ZFC o número dois é membro do conjuntos do naturais em do números pares; em Coq o número dois é membro do tipo <i>nat</i> e tem-se que <i>ev 2</i> é verdade, onde <i>ev : nat -&gt; Prop</i> é uma propriedade que descreve números pares.</li>
+<li>Mas há situações onde é interessante adiconar axiomas.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org59322d7" class="outline-3">
+<h3 id="org59322d7"><span class="section-number-3">3.2</span> Princípio da Extensionalidade</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li>Duas funções são iguais se tem o mesmo mapeamento (forall x, f x = g x) -&gt; f = g.</li>
+<li>Esse princípio não faz parte do Coq. Se desejamos, precisamos adicionar.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Example</span> <span style="color: #93E0E3;">function_equality_ex2</span> :
+  (<span style="color: #7CB8BB;">fun</span> <span style="color: #DFAF8F;">x</span> =&gt; plus x 1) = (<span style="color: #7CB8BB;">fun</span> <span style="color: #DFAF8F;">x</span> =&gt; plus 1 x).
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+   <span style="color: #5F7F5F;">(* </span><span style="color: #7F9F7F;">Stuck </span><span style="color: #5F7F5F;">*)</span>
+<span style="color: #F0DFAF; font-weight: bold;">Abort</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0b9fa6e" class="outline-3">
+<h3 id="org0b9fa6e"><span class="section-number-3">3.3</span> Princípio da Extensionalidade</h3>
+<div class="outline-text-3" id="text-3-3">
+<ul class="org-ul">
+<li>Utilizar o comando <i>Axiom</i> tem o mesmo efeito de enunciar um teorema e pular a prova com <i>Admitted</i>.</li>
+<li>Obviamente deve-se ser cuidadoso ao adicionar axiomas ao Coq, pois deixar o sistema inconsistente.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Axiom</span> <span style="color: #DFAF8F;">functional_extensionality</span> : <span style="color: #7CB8BB;">forall</span> {<span style="color: #DFAF8F;">X Y</span>: <span style="color: #7CB8BB;">Type</span>}
+                                    {<span style="color: #DFAF8F;">f g</span> : X -&gt; Y},
+  (<span style="color: #7CB8BB;">forall</span> (<span style="color: #DFAF8F;">x</span>:X), f x = g x) -&gt; f = g.
+
+<span style="color: #F0DFAF; font-weight: bold;">Example</span> <span style="color: #93E0E3;">function_equality_ex2</span> :
+  (<span style="color: #7CB8BB;">fun</span> <span style="color: #DFAF8F;">x</span> =&gt; plus x 1) = (<span style="color: #7CB8BB;">fun</span> <span style="color: #DFAF8F;">x</span> =&gt; plus 1 x).
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> functional_extensionality. <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> x.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> plus_comm.
+<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org97c3c10" class="outline-2">
+<h2 id="org97c3c10"><span class="section-number-2">4</span> Lógica Clássica vs Lógica Construtivista</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org88ef316" class="outline-3">
+<h3 id="org88ef316"><span class="section-number-3">4.1</span> Lógica Clássica vs Lógica Construtivista</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>A Lógica Clássica tem como tautologia P \/ ~P, conhecido como Axioma do Terceiro Excluído.</li>
+<li>E se não for possível demonstrar P e nem ~P? Ex: e se P for verdade, mas sem prova (proposição indecídivel).</li>
+<li>A Lógica Construtivista não toma como sempre verdade o terceiro excluído.</li>
+<li>Não há como provar o terceiro excluído em Coq!</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Definition</span> <span style="color: #93E0E3;">excluded_middle</span> := <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">P</span> : <span style="color: #7CB8BB;">Prop</span>,
+  P \/ ~ P.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge1f9cd0" class="outline-3">
+<h3 id="orge1f9cd0"><span class="section-number-3">4.2</span> Terceiro excluído pode ser verdade</h3>
+<div class="outline-text-3" id="text-4-2">
+<ul class="org-ul">
+<li>Há casos onde o terceiro excluído é verdade em Coq:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Theorem</span> <span style="color: #93E0E3;">restricted_excluded_middle</span> : <span style="color: #7CB8BB;">forall</span> <span style="color: #DFAF8F;">P b</span>,
+  (P &lt;-&gt; b = true) -&gt; P \/ ~ P.
+<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
+  <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> P [] H.
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #BFEBBF; background-color: #3F3F3F;">left</span>. <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> H. <span style="color: #BFEBBF;">reflexivity</span>.
+  <span style="color: #F0DFAF; font-weight: bold; text-decoration: underline;">-</span> <span style="color: #BFEBBF; background-color: #3F3F3F;">right</span>. <span style="color: #BFEBBF; background-color: #3F3F3F;">unfold</span> not. <span style="color: #BFEBBF; background-color: #3F3F3F;">intros</span> HP. <span style="color: #BFEBBF; background-color: #3F3F3F;">apply</span> H <span style="color: #7CB8BB;">in</span> HP <span style="color: #7CB8BB;">as</span> contra. 
+    <span style="color: #BFEBBF; background-color: #3F3F3F;">inversion</span> contra.
+<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 06/06/2018</p>
+<p class="author">Author: Rafael Castro - rafaelcgs10.github.io/coq</p>
+<p class="date">Created: 2018-06-01 sex 14:24</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
