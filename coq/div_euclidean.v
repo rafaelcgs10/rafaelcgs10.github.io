@@ -8,7 +8,7 @@ Proof.
   intros.
   apply le_lt_or_eq.
   omega. (** A tática omega é um procedimento de decisão para a arimética de Presburger: https://en.wikipedia.org/wiki/Presburger_arithmetic *)
-  omeg
 Qed.
  
 Theorem div_euclidean : forall n m : nat, 0 < n -> exists r q, m = (q * n) + r /\ r < n.
+Admitted.
