@@ -63,3 +63,184 @@ Check @eq.
 * Conectivos lógicos de proposições
   
 ** Conjunção de proposições
+   - A conjunção entre duas proprosições /A/ e /B/ é escrita como A /\ B .
+   - /\ é apenas açúcar sintático para /and/.
+   - Para provar um objetivo com uma conjunção é necessário provar ambas as proposições.
+   - A tática /split/ separa uma conjunção no objetivo em dois sub-objetivos.
+#+BEGIN_SRC coq
+Example and_example : 3 + 4 = 7 /\ 2 * 2 = 4.
+Proof.
+  split.
+  - (* 3 + 4 = 7 *) reflexivity.
+  - (* 2 + 2 = 4 *) reflexivity.
+Qed.
+
+Check and.
+(* ===> and : Prop -> Prop -> Prop *)
+#+END_SRC
+
+** Introdução da conjunção
+   - Se assumirmos as proposições /A/ e /B/, então podemos concluir A /\ B.
+   - Onde você já viu isso antes?
+#+BEGIN_SRC coq
+Lemma and_intro : forall A B : Prop, A -> B -> A /\ B.
+Proof.
+  intros A B HA HB. split.
+  - apply HA.
+  - apply HB.
+Qed.
+#+END_SRC
+
+** Conjunção numa das hipóteses
+   - Uma conjunção numa das hipóteses pode ser separada em duas hipóteses.
+   - A tática /destruct/ na hipótese faz exatamente isso.
+#+BEGIN_SRC coq
+Lemma and_example2 :
+  forall n m : nat, n = 0 /\ m = 0 -> n + m = 0.
+Proof.
+  intros n m H.
+  destruct H as [Hn Hm].
+  rewrite Hn. rewrite Hm.
+  reflexivity.
+Qed.
+#+END_SRC
+
+** Conjunção é comutativa
+   - Algumas vezes pode ser necessário rearranjar a ordem de uma conjunção.
+#+BEGIN_SRC coq
+Theorem and_commut : forall P Q : Prop,
+  P /\ Q -> Q /\ P.
+Proof.
+  intros P Q [HP HQ].
+  split.
+    - (* left *) apply HQ.
+    - (* right *) apply HP.  Qed.
+#+END_SRC
+
+** Disjunção de proposições 
+   - Uma disjunção de proposições A \/ B é verdadeira quando ao menos uma delas é verdadeira.
+   - \/ é açúcar sintático para /or/.
+   - Se uma hipótese é uma disjução, então pode-se fazer análise de caso nela por meio de /destruct/.
+#+BEGIN_SRC coq
+Lemma or_example :
+  forall n m : nat, n = 0 \/ m = 0 -> n * m = 0.
+Proof.
+  intros n m Hnm.
+  destruct Hnm as [Hn | Hm].
+  - (* Here, [n = 0] *) rewrite Hn. reflexivity.
+  - (* Here, [m = 0] *) rewrite Hm. rewrite <- mult_n_O.
+    reflexivity.
+Qed.
+Check or. (* ===> or : Prop -> Prop -> Prop *)
+#+END_SRC
+
+** O objetivo é uma disjunção
+   - Para provar uma disjunção é preciso demostrar apenas um lado da mesma.
+   - As táticas /left/ e /right/ servem para fazer essa escolha.
+#+BEGIN_SRC coq
+Lemma or_intro : forall A B : Prop, A -> A \/ B.
+Proof.
+  intros A B HA.
+  left.
+  apply HA.
+Qed.
+#+END_SRC
+
+** Exemplo com left e right
+   - O exemplo abaixo faz uma análise de caso em /n/.
+#+BEGIN_SRC coq
+Lemma zero_or_succ :
+  forall n : nat, n = 0 \/ n = S (pred n).
+Proof.
+  (* WORKED IN CLASS *)
+  intros n.
+  destruct n as [|n'].
+  - left. reflexivity.
+  - right. reflexivity.
+Qed.
+#+END_SRC
+
+* Negação
+
+** Negação e falsidade
+   - Até o momento provamos coisas serem verdadeiras.
+   - Em Coq também é possível provar que coisas são falsidades.
+   - A negação é representada pelo operador unário /~/, que é um açucar sintático para /not/.
+   - Coq define /not/ como uma função de Prop para o tipo bottom. O tipo bottom (/False/) é definido como sempre falso, nada é uma prova do mesmo .
+   - O tipo bottom também pode ser visto como uma contradição /0 = 1/.
+#+BEGIN_SRC coq
+Module MyNot.
+
+Definition not (P:Prop) := P -> False.
+
+Notation "~ x" := (not x) : type_scope.
+
+Check not.
+(* ===> Prop -> Prop *)
+
+End MyNot.
+
+Print False.
+#+END_SRC
+
+** Do falso tudo se prova
+   - A teorema abaixo afirma que do falso segue-se que qualquer proposição /P/ é verdade.
+   - /destruct/ pode ser utilizado como /inversion/ na hipótese falsa.
+#+BEGIN_SRC coq
+Theorem ex_falso_quodlibet : forall (P:Prop),
+  False -> P.
+Proof.
+  intros P contra.
+  destruct contra.  Qed.
+#+END_SRC 
+
+** Exemplo de coisa falsa
+   - Como bem estabelicido pela ciência: zero e um são diferentes!
+#+BEGIN_SRC coq
+Theorem zero_not_one : ~(0 = 1).
+Proof.
+  intros contra. inversion contra.
+Qed.
+#+END_SRC
+
+** Desigualdade em Coq
+   - Ao invés de negar uma igualdade, pode-se utilizar o operador de desigualdade <>.
+#+BEGIN_SRC coq
+Check (0 <> 1).
+Locate "<>" .
+(* ===> Prop *)
+
+Theorem zero_not_one' : 0 <> 1.
+Proof.
+  intros H. inversion H.
+Qed.
+#+END_SRC
+
+** Negação é apenas uma função para falso!
+   - Negação é apenas uma função para falso. Podemos utilizar /unfold/ em funções.
+   - Falso implica em Falso:
+#+BEGIN_SRC coq
+Theorem not_False :
+  ~ False.
+Proof.
+  unfold not. intros H. destruct H. Qed.
+#+END_SRC
+
+** Introdução da dupla negação
+   - Introdução da dupla negação pode ser provado.
+   - Tente fazer a eliminação da dupla negação!
+#+BEGIN_SRC coq
+Theorem double_neg : forall P : Prop,
+  P -> ~~P.
+Proof.
+  intros P H. unfold not. intros G. apply G. apply H.  Qed.
+#+END_SRC
+
+** Tipo verdade em Coq 
+   - O tipo verdade (True) é a constante verdadeira de tipo /Prop/.
+#+BEGIN_SRC coq
+Lemma True_is_true : True.
+Proof. apply I. Qed.
+
+Print True.
+#+END_SRC 
