@@ -33,10 +33,10 @@
 | Prova prática Coq | 13/06/2018 |
 
 *Primeiro Torneio de Artes em Coq da UDESC (Coq's Art Tournament)* 
-| Posição  | Nome                                                    | Pontos adicionais na prova prática | Estrelas |
-| Primeiro | Commander Shepard                                       |                                  3 |      111 |
-| Segundo  | Feliperama, Marmita, Soró Lanches, Bugs, Fredie Mercury |                                  2 |       97 |
-| Terceiro | Ekvl-Sinister                                           |                                  1 |       47 |
+| Posição  | Nome                                                | Pontos adicionais na prova prática | Estrelas |
+| Primeiro | Commander Shepard, Bugs, Fredie Mercury             |                                  3 |      111 |
+| Segundo  | Feliperama, Marmita, Soró Lanches, mangusto_alado35 |                                  2 |       97 |
+| Terceiro | Ekvl-Sinister                                       |                                  1 |       47 |
 
 | Enviar arquivos doit*.v para *rafaelcgs10@gmail.com*.                        |
 | Assunto do email: [OPAT001][CoqArTour][SeuNome]-DOIT*.                       |
