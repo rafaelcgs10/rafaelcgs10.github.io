@@ -1,0 +1,29 @@
+#+TITLE: Notas prova 1 OPAT001
+#+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+OPTIONS: toc:nil num:nil H:4 ^:nil pri:t
+#+OPTIONS: html-postamble:nil
+#+AUTHOR: Rafael Castro
+#+LANGUAGE: pt
+#+EMAIL: rafaelcgs10@gmail.com
+
+
+| Nome                    | Nota |
+| Gabriel Conejo          |  5.5 |
+| Gabriela Moreira        |  9.7 |
+| Carlos Cuzik            |    - |
+| Flávio Bayer            |  7.0 |
+| Karl Heinning           |    - |
+| João Vitor              |  6.2 |
+| Vinicius Zuchi          |  4.8 |
+| Lucas Meneghelli        |  4.0 |
+| Lucas Seidel            |  1.5 |
+| Ramon Artner            |  7.4 |
+| Willian Pereira         |  5.0 |
+| Andressa Umetsu         |  3.8 |
+| Victor Carriço          |  5.0 |
+| Adilson Jonck           |  9.6 |
+| Felipe Marchi           |  9.5 |
+| Diogo Antelo            |  8.0 |
+| Alexandre Heiden        |  8.4 |
+| Christopher Renkavieski |  9.4 |
