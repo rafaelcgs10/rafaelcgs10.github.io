@@ -1,0 +1,13 @@
+#+TITLE: Tabela táticas em Coq
+#+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+OPTIONS: toc:nil num:nil H:4 ^:nil pri:t
+#+OPTIONS: html-postamble:nil
+#+AUTHOR: Rafael Castro
+#+LANGUAGE: pt
+#+EMAIL: rafaelcgs10@gmail.com
+
+|          | A -> B | forall x:T, A | and A B  | False     | ~ A           | or A B      | A a1 = B b1 |
+| Hipótese | apply  | apply         | destruct | inversion | unfold, apply | destruct    | inversion   |
+| Objetivo | intros | intros        | split    |           | intros        | left, right |             |
+

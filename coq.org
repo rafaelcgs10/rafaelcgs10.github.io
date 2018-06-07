@@ -11,6 +11,7 @@
 | [[./notas1.html][*Notas trabalho tableux*]]        |
 | [[./notas2.html][*Notas prova 1*]]                 |
 
+[[./taticas.html][*Tabela de táticas*]]
 
 | Aula                                                     | Data       | Exercícios            | Fonte    |
 | [[./coq/aula1.html][1 - Introdução à introdução de Coq]]                       | 02/05/2018 |                       | [[./coq/aula1.v][aula1.v]]  |
