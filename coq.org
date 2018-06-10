@@ -35,8 +35,8 @@
 
 *Primeiro Torneio de Artes em Coq da UDESC (Coq's Art Tournament)* 
 | Posição  | Nome                                    | Pontos adicionais na prova prática | Estrelas |
-| Primeiro | Feliperama                              |                                  3 |      111 |
-| Segundo  | Commander Shepard, Bugs, Fredie Mercury |                                  2 |       11 |
+| Primeiro | Feliperama                              |                                  3 |      142 |
+| Segundo  | Commander Shepard, Bugs, Fredie Mercury |                                  2 |      111 |
 | Terceiro | Marmita, Soró Lanches, mangusto_alado35 |                                  1 |       97 |
 
 | Enviar arquivos doit*.v para *rafaelcgs10@gmail.com*.                        |
