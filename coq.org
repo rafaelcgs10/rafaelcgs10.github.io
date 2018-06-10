@@ -7,6 +7,11 @@
 #+LANGUAGE: pt
 #+EMAIL: rafaelcgs10@gmail.com
 
+| *Prova prática Coq*           | 13/06/2018   |
+| Sala F302                                   |
+| Início: 14:30hs               | Fim: 17:00hs |
+| Tolerância atraso até 15:40hs              |
+
 | [[./totableau.html][*Resultado competição tableaux*]] |
 | [[./notas1.html][*Notas trabalho tableux*]]        |
 | [[./notas2.html][*Notas prova 1*]]                 |
@@ -29,9 +34,7 @@
 | [[./coq/aula13.html][13 - Lógica em Coq 1]]                                     | 06/06/2018 | [[./coq/doit11.v][file:./coq/doit11.gif]] | [[./coq/aula13.v][aula13.v]] |
 | [[./coq/aula14.html][14 - Lógica em Coq 2]]                                     | 06/06/2018 | [[./coq/doit12.v][file:./coq/doit12.gif]] | [[./coq/aula14.v][aula14.v]] |
 | 15 - Aula para tirar dúvidas                             | 11/06/2018 |                       |          |
-*Sujeito a alterações!*
 
-| Prova prática Coq | 13/06/2018 |
 
 *Primeiro Torneio de Artes em Coq da UDESC (Coq's Art Tournament)* 
 | Posição  | Nome                                    | Pontos adicionais na prova prática | Estrelas |
