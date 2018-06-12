@@ -37,6 +37,8 @@
 
 
 *Primeiro Torneio de Artes em Coq da UDESC (Coq's Art Tournament)* 
+| [[file:./coq/game.gif]] |
+
 | Posição  | Nome                                               | Pontos adicionais na prova prática | Estrelas |
 | Primeiro | Feliperama                                         |                                  3 |      142 |
 | Segundo  | Commander Shepard                                  |                                  2 |      127 |
