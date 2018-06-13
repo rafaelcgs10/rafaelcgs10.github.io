@@ -8,9 +8,9 @@
 #+EMAIL: rafaelcgs10@gmail.com
 
 | *Prova prática Coq*           | 13/06/2018   |
-| Sala F302                                   |
+| Sala F302                     |              |
 | Início: 14:30hs               | Fim: 17:00hs |
-| Tolerância atraso até 15:40hs              |
+| Tolerância atraso até 15:40hs |              |
 
 | [[./totableau.html][*Resultado competição tableaux*]] |
 | [[./notas1.html][*Notas trabalho tableux*]]        |
@@ -37,12 +37,13 @@
 
 
 *Primeiro Torneio de Artes em Coq da UDESC (Coq's Art Tournament)* 
-| [[file:./coq/game.gif]] |
 
-| Posição  | Nome                                               | Pontos adicionais na prova prática | Estrelas |
-| Primeiro | Feliperama                                         |                                  3 |      142 |
-| Segundo  | Commander Shepard                                  |                                  2 |      127 |
-| Terceiro | Bugs, Fredie Mercury, Shmebulock, mangusto_alado35 |                                  1 |      111 |
+*Resultado final:*
+
+| Posição  | Nome                            | Pontos adicionais na prova prática | Estrelas |
+| Primeiro | Commander Shepard, Soró Lanches |                                  3 |      145 |
+| Segundo  | Shmebulock                      |                                  2 |      144 |
+| Terceiro | Marmita                         |                                  1 |      143 |
 
 | Enviar arquivos doit*.v para *rafaelcgs10@gmail.com*.                        |
 | Assunto do email: [OPAT001][CoqArTour][SeuNome]-DOIT*.                       |
