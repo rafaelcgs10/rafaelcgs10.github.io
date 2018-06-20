@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt">
 <head>
-<!-- 2018-06-20 qua 19:43 -->
+<!-- 2018-06-20 qua 19:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Curso de Coq da disciplina OPAT001</title>
+<title>Notas prova 2 OPAT001</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Rafael Castro" />
 <style type="text/css">
@@ -230,315 +230,109 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Curso de Coq da disciplina OPAT001</h1>
+<h1 class="title">Notas prova 2 OPAT001</h1>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
 <col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left"><a href="./totableau.html"><b>Resultado competição tableaux</b></a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./notas1.html"><b>Notas trabalho tableux</b></a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./notas2.html"><b>Notas prova 1</b></a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./notas3.html"><b>Notas prova 2</b></a> - <a href="./coq/provacoq_respostas.v">Respostas</a></td>
-</tr>
-</tbody>
-</table>
-
-<p>
-<a href="./taticas.html"><b>Tabela de táticas</b></a>
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">Aula</td>
-<td class="org-left">Data</td>
-<td class="org-left">Exercícios</td>
-<td class="org-left">Fonte</td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula1.html">1 - Introdução à introdução de Coq</a></td>
-<td class="org-left">02/05/2018</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left"><a href="./coq/aula1.v">aula1.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula2.html">2 - Programação Funcional em Coq</a></td>
-<td class="org-left">02/05/2018</td>
-<td class="org-left"><a href="./coq/doit1.v"><img src="./coq/doit.gif" alt="doit.gif" /></a></td>
-<td class="org-left"><a href="./coq/aula2.v">aula2.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula3.html">3 - Recursão Primitiva em Coq</a></td>
-<td class="org-left">07/05/2018</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left"><a href="./coq/aula3.v">aula3.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula4.html">4 - Prova por simplificação, reescrita e análise de caso</a></td>
-<td class="org-left">07/05/2018</td>
-<td class="org-left"><a href="./coq/doit2.v"><img src="./coq/doit2.gif" alt="doit2.gif" /></a></td>
-<td class="org-left"><a href="./coq/aula4.v">aula4.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula5.html">5 - Prova por indução</a></td>
-<td class="org-left">09/05/2018</td>
-<td class="org-left"><a href="./coq/doit3.v"><img src="./coq/doit3.gif" alt="doit3.gif" /></a></td>
-<td class="org-left"><a href="./coq/aula5.v">aula5.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula6.html">6 - Duplas de Naturais</a></td>
-<td class="org-left">14/05/2018</td>
-<td class="org-left"><a href="./coq/doit4.v"><img src="./coq/doit4.gif" alt="doit4.gif" /></a></td>
-<td class="org-left"><a href="./coq/aula6.v">aula6.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula7.html">7 - Listas de Naturais</a></td>
-<td class="org-left">16/05/2018</td>
-<td class="org-left"><a href="./coq/doit5.v"><img src="./coq/doit5.gif" alt="doit5.gif" /></a></td>
-<td class="org-left"><a href="./coq/aula7.v">aula7.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula8.html">8 - Mais provas sobre listas de naturais</a></td>
-<td class="org-left">21/05/2018</td>
-<td class="org-left"><a href="./coq/doit6.v"><img src="./coq/doit7.gif" alt="doit7.gif" /></a></td>
-<td class="org-left"><a href="./coq/aula8.v">aula8.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula9.html">9 - Polimorfismo em Coq</a></td>
-<td class="org-left">21/05/2018</td>
-<td class="org-left"><a href="./coq/doit7.v"><img src="./coq/doit6.gif" alt="doit6.gif" /></a></td>
-<td class="org-left"><a href="./coq/aula9.v">aula9.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula10.html">10 - Funções de ordem superior</a></td>
-<td class="org-left">23/05/2018</td>
-<td class="org-left"><a href="./coq/doit8.v"><img src="./coq/doit8.gif" alt="doit8.gif" /></a></td>
-<td class="org-left"><a href="./coq/aula10.v">aula10.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula11.html">11 - Táticas Apply e Inversion</a></td>
-<td class="org-left">04/06/2018</td>
-<td class="org-left"><a href="./coq/doit9.v"><img src="./coq/doit9.gif" alt="doit9.gif" /></a></td>
-<td class="org-left"><a href="./coq/aula11.v">aula11.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula12.html">12 - Variações de táticas e outras táticas</a></td>
-<td class="org-left">04/06/2018</td>
-<td class="org-left"><a href="./coq/doit10.v"><img src="./coq/doit10.gif" alt="doit10.gif" /></a></td>
-<td class="org-left"><a href="./coq/aula12.v">aula12.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula13.html">13 - Lógica em Coq 1</a></td>
-<td class="org-left">06/06/2018</td>
-<td class="org-left"><a href="./coq/doit11.v"><img src="./coq/doit11.gif" alt="doit11.gif" /></a></td>
-<td class="org-left"><a href="./coq/aula13.v">aula13.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="./coq/aula14.html">14 - Lógica em Coq 2</a></td>
-<td class="org-left">06/06/2018</td>
-<td class="org-left"><a href="./coq/doit12.v"><img src="./coq/doit12.gif" alt="doit12.gif" /></a></td>
-<td class="org-left"><a href="./coq/aula14.v">aula14.v</a></td>
-</tr>
-
-<tr>
-<td class="org-left">15 - Aula para tirar dúvidas</td>
-<td class="org-left">11/06/2018</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-</tbody>
-</table>
-
-
-<p>
-<b>Primeiro Torneio de Artes em Coq da UDESC (Coq's Art Tournament)</b> 
-</p>
-
-<p>
-<b>Resultado final mesmo!:</b>
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-right" />
 
 <col  class="org-right" />
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">Posição</td>
 <td class="org-left">Nome</td>
-<td class="org-right">Pontos adicionais na prova prática</td>
-<td class="org-right">Estrelas</td>
+<td class="org-right">Nota</td>
 </tr>
 
 <tr>
-<td class="org-left">Primeiro</td>
-<td class="org-left">Feliperama</td>
-<td class="org-right">3</td>
-<td class="org-right">145</td>
+<td class="org-left">Gabriel Conejo</td>
+<td class="org-right">5.3</td>
 </tr>
 
 <tr>
-<td class="org-left">Segundo</td>
-<td class="org-left">F U T U R E</td>
-<td class="org-right">2</td>
-<td class="org-right">117</td>
+<td class="org-left">Gabriela Moreira</td>
+<td class="org-right">10.0</td>
 </tr>
 
 <tr>
-<td class="org-left">Terceiro</td>
-<td class="org-left">Flavio</td>
-<td class="org-right">1</td>
-<td class="org-right">111</td>
-</tr>
-</tbody>
-</table>
-
-<p>
-Algumas pessoas foram legais e resoveram não validar suas estrelas, o que ajudou alguns necessitados de nota.
-Resolvi batizar esses de anjos! <b>Anjos</b>: Commander Shepard, Shmebulock, Marmita, Bugs, Feliperama, Fredie Mercury, mangusto_alado35 e JuroQueNãoColei. 
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">Enviar arquivos doit*.v para <b>rafaelcgs10@gmail.com</b>.</td>
+<td class="org-left">Carlos Cuzik</td>
+<td class="org-right">-</td>
 </tr>
 
 <tr>
-<td class="org-left">Assunto do email: [OPAT001][CoqArTour][SeuNome]-DOIT*.</td>
+<td class="org-left">Flávio Bayer</td>
+<td class="org-right">7.0</td>
 </tr>
 
 <tr>
-<td class="org-left">Fim do torneio: dia 12/06/2018.</td>
+<td class="org-left">Karl Heinning</td>
+<td class="org-right">-</td>
 </tr>
 
 <tr>
-<td class="org-left">Colar zera as suas estrelas</td>
+<td class="org-left">João Vitor</td>
+<td class="org-right">-</td>
 </tr>
 
 <tr>
-<td class="org-left">Utilizar teoremas da biblioteca padrão inválida o exercício.</td>
+<td class="org-left">Vinicius Zuchi</td>
+<td class="org-right">10.0</td>
 </tr>
 
 <tr>
-<td class="org-left">Cada posição pode ser ocupada por vários empatados.</td>
+<td class="org-left">Lucas Meneghelli</td>
+<td class="org-right">7.8</td>
 </tr>
 
 <tr>
-<td class="org-left">Os melhores colocados deverão defender suas provas numa entrevista agendada.</td>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left"><b>Desafio supremo em Coq</b></td>
+<td class="org-left">Lucas Seidel</td>
+<td class="org-right">-</td>
 </tr>
 
 <tr>
-<td class="org-left">Quem resolver este desafio tira, automaticamente, 10 na prova prática.</td>
+<td class="org-left">Ramon Artner</td>
+<td class="org-right">7.8</td>
 </tr>
 
 <tr>
-<td class="org-left">Somente será aceito um vencedor do desafio.</td>
+<td class="org-left">Willian Pereira</td>
+<td class="org-right">3.6</td>
 </tr>
 
 <tr>
-<td class="org-left">Para concorrer é preciso estar na primeira colocação do torneio quando o mesmo for finalizado (dia 12/06).</td>
+<td class="org-left">Andressa Umetsu</td>
+<td class="org-right">1.5</td>
 </tr>
 
 <tr>
-<td class="org-left">Deve-se marcar a entrevista para defender as soluções do torneio e deste desafio no dia 13/06 antes da prova.</td>
+<td class="org-left">Victor Carriço</td>
+<td class="org-right">10.0</td>
 </tr>
 
 <tr>
-<td class="org-left">Como somente há um vencedor, então o primeiro a entregar a solução do desafio para <b>rafaelcgs10@gmail.com</b> vence.</td>
+<td class="org-left">Adilson Jonck</td>
+<td class="org-right">10.0</td>
 </tr>
 
 <tr>
-<td class="org-left">Consultar na internet a prova informal do <a href="https://en.wikipedia.org/wiki/Euclidean_division#Statement_of_the_theorem">teorema</a> é permitido, mas obviamente não é permitido copiar uma solução feita em Coq.</td>
+<td class="org-left">Felipe Marchi</td>
+<td class="org-right">10.0</td>
 </tr>
 
 <tr>
-<td class="org-left">Utilizar as bibliotecas do Coq é permitido (e necessário).</td>
+<td class="org-left">Diogo Antelo</td>
+<td class="org-right">9.2</td>
 </tr>
 
 <tr>
-<td class="org-left"><a href="./coq/div_euclidean.v">Desafio</a></td>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">Referência</td>
+<td class="org-left">Alexandre Heiden</td>
+<td class="org-right">7.2</td>
 </tr>
 
 <tr>
-<td class="org-left">Software Foundations: <a href="https://softwarefoundations.cis.upenn.edu/">Livro</a> e <a href="https://deepspec.org/event/dsss17/coq_intensive.html">vídeos</a></td>
+<td class="org-left">Christopher Renkavieski</td>
+<td class="org-right">9.2</td>
 </tr>
 </tbody>
 </table>

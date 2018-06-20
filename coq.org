@@ -7,14 +7,10 @@
 #+LANGUAGE: pt
 #+EMAIL: rafaelcgs10@gmail.com
 
-| *Prova prática Coq*           | 13/06/2018   |
-| Sala F302                     |              |
-| Início: 14:30hs               | Fim: 17:00hs |
-| Tolerância atraso até 15:40hs |              |
-
 | [[./totableau.html][*Resultado competição tableaux*]] |
 | [[./notas1.html][*Notas trabalho tableux*]]        |
 | [[./notas2.html][*Notas prova 1*]]                 |
+| [[./notas3.html][*Notas prova 2*]] - [[./coq/provacoq_respostas.v][Respostas]]     |
 
 [[./taticas.html][*Tabela de táticas*]]
 
@@ -38,12 +34,15 @@
 
 *Primeiro Torneio de Artes em Coq da UDESC (Coq's Art Tournament)* 
 
-*Resultado final:*
+*Resultado final mesmo!:*
 
-| Posição  | Nome                            | Pontos adicionais na prova prática | Estrelas |
-| Primeiro | Commander Shepard, Soró Lanches |                                  3 |      145 |
-| Segundo  | Shmebulock                      |                                  2 |      144 |
-| Terceiro | Marmita                         |                                  1 |      143 |
+| Posição  | Nome        | Pontos adicionais na prova prática | Estrelas |
+| Primeiro | Feliperama  |                                  3 |      145 |
+| Segundo  | F U T U R E |                                  2 |      117 |
+| Terceiro | Flavio      |                                  1 |      111 |
+
+Algumas pessoas foram legais e resoveram não validar suas estrelas, o que ajudou alguns necessitados de nota.
+Resolvi batizar esses de anjos! *Anjos*: Commander Shepard, Shmebulock, Marmita, Bugs, Feliperama, Fredie Mercury, mangusto_alado35 e JuroQueNãoColei. 
 
 | Enviar arquivos doit*.v para *rafaelcgs10@gmail.com*.                        |
 | Assunto do email: [OPAT001][CoqArTour][SeuNome]-DOIT*.                       |
