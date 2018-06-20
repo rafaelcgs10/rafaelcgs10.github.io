@@ -7,6 +7,8 @@
 #+LANGUAGE: pt
 #+EMAIL: rafaelcgs10@gmail.com
 
+*Exame final dia 04/07/2018*
+
 | [[./totableau.html][*Resultado competição tableaux*]] |
 | [[./notas1.html][*Notas trabalho tableux*]]        |
 | [[./notas2.html][*Notas prova 1*]]                 |
