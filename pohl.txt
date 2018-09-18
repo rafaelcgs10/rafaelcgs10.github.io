@@ -1,0 +1,8 @@
+@book{pohl,
+  title={First Results on the Effect of Error in Heuristic Search},
+  author={Pohl,},
+  series={MIP-R-},
+  url={https://books.google.com.br/books?id=6TcKcgAACAAJ},
+  year={1969},
+  publisher={Edinburgh University, Department of Machine Intelligence and Perception}
+}
