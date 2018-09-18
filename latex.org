@@ -8,6 +8,7 @@
 #+EMAIL: rafaelcgs10@gmail.com
 
 
-| [[./slides.pdf][*Slides*]]  |
-| [[./artigo.pdf][*Artigo*]]  |
-| [[./figures.zip][*Figuras*]] |
+| [[./slides.pdf][*Slides*]]            |
+| [[./artigo.pdf][*Artigo*]]            |
+| [[./figures.zip][*Figuras*]]           |
+| [[./latexsheet.pdf][*LaTeX cheat sheet*]] |
