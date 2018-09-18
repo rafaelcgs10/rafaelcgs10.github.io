@@ -28,15 +28,17 @@ Proof.
   apply eq2. apply eq1.
 Qed.
 
-(** **** Exercise: 2 stars, optional (silly_ex)  *)
-(** Complete the following proof without using [simpl]. *)
-
 Theorem silly_ex :
      (forall n, evenb n = true -> oddb (S n) = true) ->
      evenb 3 = true ->
      oddb 4 = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros H0 H1.
+  apply H0.
+  apply H1.
+Qed.
+
+  (* FILL IN HERE *) 
 (** [] *)
 
 Theorem silly3_firsttry : forall (n : nat),
@@ -45,15 +47,13 @@ Theorem silly3_firsttry : forall (n : nat),
 Proof.
   intros n H.
   symmetry.
-  simpl.
   apply H.
 Qed.
 
 Theorem trans_eq : forall (X:Type) (n m o : X),
   n = m -> m = o -> n = o.
 Proof.
-  intros X n m o eq1 eq2. rewrite -> eq1. rewrite -> eq2.
-  reflexivity.
+  intros X n m o eq1 eq2. rewrite -> eq1. apply eq2. 
 Qed.
 
 Example trans_eq_example : forall (a b c d e f : nat),

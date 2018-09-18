@@ -10,5 +10,6 @@
 
 | [[./slides.pdf][*Slides*]]            |
 | [[./artigo.pdf][*Artigo*]]            |
+| [[./artigo.txt][*Artigo txt*]]            |
 | [[./figures.zip][*Figuras*]]           |
 | [[./latexsheet.pdf][*LaTeX cheat sheet*]] |

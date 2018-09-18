@@ -1,4 +1,4 @@
-Require Import doit3 aula3 aula9 aula10 aula11.
+Require Import doit3 aula3 aula9 aula10 aula11 Arith.
 
 Theorem S_inj : forall (n m : nat) (b : bool),
      beq_nat (S n) (S m) = b  ->
@@ -105,10 +105,13 @@ Proof.
       Qed.
 
 Theorem sillyfun1_odd_FAILED : forall (n : nat),
-     sillyfun1 n = true ->
+     sillyfun n = true ->
      oddb n = true.
 Proof.
-  intros n eq. unfold sillyfun1 in eq.
-  destruct (beq_nat n 3).
-  (* stuck... *)
-Abort.
+  intros n eq. unfold sillyfun in eq.
+  destruct (beq_nat n 3) eqn:Heqe3.
+  + inversion eq.
+  + destruct (beq_nat n 5).
+    inversion eq.
+    inversion eq.
+Qed.
