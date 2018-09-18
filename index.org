@@ -12,6 +12,7 @@
 
 * [[./coq.html][Curso de Coq]]
   
+* [[./latex.html][Curso de Latex]]
 * [[https://github.com/rafaelcgs10][GitHub]]
 
 * [[https://twitter.com/rafaelcgs101][Twitter]]

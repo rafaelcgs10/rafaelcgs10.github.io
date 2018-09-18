@@ -1,0 +1,13 @@
+#+TITLE: Curso de Latex
+#+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+OPTIONS: toc:nil num:nil H:4 ^:nil pri:t
+#+OPTIONS: html-postamble:nil
+#+AUTHOR: Rafael Castro
+#+LANGUAGE: pt
+#+EMAIL: rafaelcgs10@gmail.com
+
+
+| [[./slides.pdf][*Slides*]]  |
+| [[./artigo.pdf][*Artigo*]]  |
+| [[./figuras.zip][*Figuras*]] |
