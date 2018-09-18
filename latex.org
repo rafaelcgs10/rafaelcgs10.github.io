@@ -10,4 +10,4 @@
 
 | [[./slides.pdf][*Slides*]]  |
 | [[./artigo.pdf][*Artigo*]]  |
-| [[./figuras.zip][*Figuras*]] |
+| [[./figures.zip][*Figuras*]] |
