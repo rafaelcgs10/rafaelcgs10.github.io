@@ -10,10 +10,13 @@
 
 | I'm a working computer scientist at the Santa Catarina State University | file:eu.jpg |
 
-* [[./coq.html][Curso de Coq]]
-  
-* [[./latex.html][Curso de Latex]]
-* [[https://github.com/rafaelcgs10][GitHub]]
+* [[./qualificacao.pdf][Apresentação da qualificação]]
 
+* [[https://github.com/rafaelcgs10][GitHub]]
 * [[https://twitter.com/rafaelcgs101][Twitter]]
 * email: rafaelcgs10@gmail.com
+
+
+| Cursos e aulas          |
+| [[./coq.html][Curso de Coq (2018/1)]]   |
+| [[./latex.html][Curso de Latex (2018/1)]] |
