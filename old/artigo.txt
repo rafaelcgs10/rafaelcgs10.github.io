@@ -1,0 +1,185 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+     
+
+
+
+
+Rafael Castro G. Silva1, Rafael S.  Parpinelli1
+
+
+
+
+Análise do Desempenho de Algoritmos Clássicos de Busca de Caminho em Ambiente de Navegação
+Departamento de Ciência da Computação
+ Universidade do Estado de Santa Catarina (UDESC) - Joinville - SC - Brasil
+
+  rafaelcgs10@gmail.com, rafael.parpinelli@udesc.br
+  
+
+
+ 
+
+
+
+
+The literature shows a wide variety of pathfinding algorithms for navigation environments. These algorithms are widely used in games, robotics, GPS and many other applications. This paper aims to analyze how the classics algorithms Breadth-First Search, Search with Uniform Cost,  and Weighted A  behave in an environment with various costs. It presents an analysis of the objectives of minimizing the path cost and amount of expanded nodes.
+
+     
+
+A literatura apresenta uma grande variedade de algoritmos de busca de caminho em ambientes de navegação. Esses algoritmos são amplamente utilizados em jogos, robôs, GPS e diversas outras aplicações. Este trabalho visa analisar como os algoritmos clássicos Busca Cega em Largura, Busca com Custo Uniforme, A e Weighted A desempenham em um cenário com diversos custos. Apresenta-se uma análise nos objetivos de minimização do custo do caminho e de quantidade de nós expandidos.
+
+
+Introdução
+
+O problema de encontrar o menor caminho em um ambiente é recorrente em diversas aplicações e problemas cotidianos, por exemplo, a menor rota até o destino que deve ser encontrada por um GPS, um robô
+que deve procurar um caminho para sair de um labirinto e um personagem em um jogo que deve se aproximar de um inimigo.
+
+As abordagens clássicas como Busca Cega em Largura e Busca com Custo Uniforme são bem conhecidas para busca em grafos. A ideia é expandir os nós da árvore de decisão com base em algum critério. No caso da Busca Cega em Largura os nós são explorados seguindo o conceito de FIFO (First In First Out), ou seja, os primeiros nós a chegarem são os primeiros a serem explorados. A Busca com Custo Uniforme é uma variação que considera o custo acumulado durante a expansões dos nós, de maneira a dar preferência para os nós com menor custo até então. O algoritmo A  é similar a Busca com Custo Uniforme, porém se diferencia pelo uso de uma heurística que poda a árvore de expansão.
+
+Quatro décadas depois do surgimento do A, os algoritmos sofreram diversos avanços e frequentemente são apresentadas novas abordagens.  apresenta uma revisão sobre o estado da arte dos algoritmos de busca e demonstram que há uma grande variedade de abordagens. 
+Cada abordagem costuma lidar com um caso específico do problema, como espaços de busca tridimensionais, ambientes dinâmicos, variadas topologias de terreno, ponto destino em movimento, tempo limitado de processamento e espaços de busca complexos. Esses tratamentos de casos geralmente são otimizações do A que aproveitam características em particular do cenário.
+
+O que faz o A ser uma busca mais direcionada é a função heurística, a qual permite a eliminação de caminhos julgados não promissores. Na procura por reduzir ainda mais o espaço de busca é possível modificar a função heurística por meio de pesos  , como apresentado por .
+Um ponto negativo a abordagem de pesos é não ser sempre ótima. O custo é limitado por , ou seja, será no máximo  vezes pior que o caminho ótimo .
+
+O peso na função heurística pode ser usado em algoritmos Anytime, os quais encontram uma primeira solução sub-ótima rapidamente e continuam trabalhando até que o tempo disponível acabe.  apresenta o algoritmo ARA, uma versão Anytime do A que calcula o primeiro caminho usando um valor alto para o peso  e gradualmente reduz esse valor, assim cada vez encontra um caminho melhor que o anterior. Se o tempo for suficiente, então o caminho ótimo pode ser provadamente encontrado.
+
+Este trabalho apresenta uma avaliação de como o valor  influencia na qualidade do resultado, ou seja, quão longe é do ótimo. Essa avaliação é feita com duas métricas: a quantidade de nós expandidos na árvore de decisão e o custo do caminho encontrado. Espera-se que os resultados desta avaliação demonstrem o quão eficiente a função modificada pode ser. Os algoritmos analisados foram o algoritmo de Busca Cega em Largura, Busca com Custo Uniforme, A* e Weighted A. O cenário escolhido para os testes é uma matriz x com cada célula contendo um valor de custo. O objetivo é verificar o desempenho de algoritmos clássicos de busca em um ambiente que simula diferentes tipos de terrenos.
+
+Este trabalho apresenta a seguinte estrutura: na seção 2 são apresentados os algoritmos e as características para o problema a ser resolvido. Na seção 3, apresenta-se a problemática e o cenário onde os experimentos serão realizados. Por fim, na seção 4 os experimentos são apresentados e discutidos.
+
+Algoritmos de Busca
+Apresenta-se quatro algoritmos de busca de caminho: Busca Cega em Largura (bfs), Busca com Custo Uniforme (bfs), A (astar) e  Weighted A (astar) . Todos esses algoritmos apresentam a característica de serem completos, isto é, sempre encontram uma solução para o problema. Entretanto, apenas o bfs encontra sempre a solução ótima e o A encontra a ótima se certas restrições forem satisfeitas.
+
+Uma simples otimização é evitar a exploração de nós já explorados. Considera-se que todos os algoritmos em discussão utilizam a não repetição de nós.
+
+Busca Cega em Largura
+A Busca Cega em Largura (bfs) é um algoritmo básico que é comumente utilizado para busca de caminho em grafos. Primeiro o nó raiz é visitado, então todos os sucessores da raiz são visitados e todos os sucessores desses nós, e assim por diante. A exploração dos nós acontece como uma fila. Na árvore de expansão, os nós a serem explorados são sempre as folhas (nós de fronteira).
+
+Busca com Custo Uniforme
+A Busca Cega com Custo Uniforme (bfs) é  uma variação do algoritmo bfs, porém considera o custo acumulado, dado por , até o nó  de fronteira e sempre escolhe explorar primeiro o nó com o menor custo acumulado até o momento. Como consequência, a primeira vez que o nó objetivo for encontrado, esse nó também será o nó com menor custo. Isso garante que este algoritmo é ótimo, logo sempre encontra o caminho de menor custo. O custo utilizado é o valor associado a cada célula no cenário.
+
+A
+O algorimto A é o resultado da junção de um algoritmo guloso, o qual escolhe primeiro a melhor solução aparente no momento e o algoritmo de Busca com Custo Uniforme cuja solução é sempre ótima. O que define a melhor escolha aparente é uma estimativa  do custo até o objetivo. No caso que será tratado, uma estimativa da distância até o nó alvo. A função heurística  garante uma redução na quantidade de nós explorados, pois direciona a busca até o objetivo.
+
+Ainda que bfs seja ótimo, isso não implica que o A também seja. Como dito anteriormente, há algumas condições para o A ser ótimo. Primeiro, a estimativa deve ser admissível, que significa nunca ser superior ao valor real do custo ótimo. Este é o ponto que diferencia o A do Weighted A. Segundo, a estimativa deve ser consistente. De acordo com  uma heurística  é consistente se, para todo nó  e para todo nó  de  gerado por qualquer ação , o custo estimado de alcançar o objetivo a partir de  nunca é maior que o custo de chegar até  mais o custo de alcançar o objetivo a partir de ".
+
+A função heurística utilizada é uma estimativa da distância do nó atual até o nó objetivo. Pode-se utilizar qualquer distância neste algoritmo, o importante é que a distância escolhida não superestime o real valor do custo ótimo. Como o robô não pode movimentar-se diagonalmente, então foi escolhido utilizar a distância de manhattan, utilizada no astar e astar, dada pela equação . 
+
+
+
+
+
+
+Weighted A
+Superestimar o custo da distância é uma maneira de direcionar ainda mais a busca, uma vez que o o algoritmo passa a prestar menos atenção no custo já acumulado e mais nos nós que tem uma menor distância até o objetivo .
+
+Ainda que o uso do peso quebre a condição de ser admissível, existe um limite para quão distante do ótimo a solução encontrada está. Se o peso for um valor , então o custo será no máximo  vezes pior que o custo ótimo .
+
+Problemática 
+O problema consiste em encontrar o melhor caminho entre dois pontos arbitrários em uma matriz x, onde há diversos tipos de terrenos com diferentes custos. Os tipos de terrenos são:
+
+Sólido e plano (verde) – Custo: 1
+Montanhoso (marrom) – Custo: 5
+Pântano (azul) – Custo: 10
+Fogo (vermelho) – Custo: 15
+
+
+A Figura  é um exemplo de cenário de dimensão x e é o que será utilizado nos testes.
+
+
+
+
+
+
+
+
+O objeto que irá se deslocar pelo cenário é um robô que pode apenas se movimentar na horizontal e na vertical. Ou seja, não é permitido movimentos diagonais.
+A exploração dos nós vizinhos ao robô acontece seguindo a seguinte ordem: norte, leste, sul e oeste.
+O objetivo é encontrar o melhor caminho possível, se não o próprio caminho ótimo.
+
+Experimentos e Resultados
+O hardware utilizado nos experimentos foi um Intel Core i- GHz, Kingston xGB DDR MHz e os algoritmos foram todos implementados na linguagem Python .
+
+Por meio de testes empíricos determinou-se que o melhor valor de , para o cenário apresentado, é . Assim, a função heurística do Weighted A (astar) é , sendo  o custo estimado fornecido pela distância de manhattan.
+
+Ilustrações dos algoritmos bfs, bfs, astar e astar podem ser observada nas Figuras  e .Em todas as figuras a posição de partida é o ponto superior esquerdo  e o de chegada é o centro do cenário (21, 21). Em branco podem ser observados os nós expandidos e em preto está ressaltado o caminho final gerado por cada abordagem. A figura  mostra que as buscas não heurísticas não são direcionadas e expandem muitos caminhos não improváveis. Por outro lado, os algoritmos A da figura  são bem mais direcionados, por causa da função heurística. Especialmente o astar, o qual expande poucos nós além dos que fazem parte do caminho obtido.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Outros experimentos foram realizados para analisar como os custos e a quantidade de nós expandidos crescem conforme a distância entre as posições de início e fim é ampliada. Uma sequência de pares de posições foi gerada da seguinte maneira: a sequência começa com  pares aleatórios e únicos de posições cuja distância de manhattan é , os próximos  pares de posições têm distância de manhattan  e assim por diante. A distância cresce com passo  de  até . Logo, ao todo são  pares de pontos aleatórios e únicos utilizados nos testes.
+
+A Figura  apresenta as médias dos custos com desvio padrão (eixo-) e a distância (eixo-). As curvas bfs e astar aparecem sobrepostas pois ambos algoritmos são ótimos, possuindo sempre o mesmo custo. O fato interessante que este gráfico apresenta é que o Weighted A (astar) se distancia cada vez mais do custo ótimo, mas em média nunca chega a ser  vezes maior que o ótimo, indicando que é possível direcionar mais a busca sem prejudicar muito o custo.
+
+
+
+
+
+
+
+
+Algo que se espera do Weighted A (astar) é que ele sempre explore poucos nós, já que é mais direcionado. A figura  mostra no eixo- a quantidade média de nós explorados e o desvio padrão, e a distância no eixo-, confirma essa expectativa e mostra que há pouca variação de nós explorados para uma mesma distância. A discrepância do astar em relação aos demais é bastante grande, pois em média sempre a mesma quantidade de nós são visitados.
+
+
+
+
+
+
+
+
+Uma outra maneira de analisar os testes é por meio do gráfico de Pareto apresentado na figura , o qual relaciona a média de nós explorados (eixo-) com a média dos custos (eixo-) para uma distância de valor . Diz-se que um algoritmo domina outro se o primeiro for melhor do que o segundo em todos os objetivos considerados. Na Figura  os objetivos considerados são minimizar o custo do caminho (eixo-) e minimizar a quantidade de nós expandidos (eixo-). Sendo assim, é possível visualizar que, dentre os algoritmos que utilizam alguma informação para guiar a busca, não existe algum que domine todos os outros em ambos objetivos. Desta forma, o conjunto ótimo de Pareto é formado pelos algoritmos bfs, astar e  astar. O único algoritmo dominado por todos os outros é o bfs. Dentre os algoritmos não-dominados, o astar se mostrou com o melhor compromisso em atender ambos objetivos.
+
+
+
+
+
+
+
+
+Conclusão
+Este trabalho explicou as principais características de quatro algoritmos clássicos de busca, apresentou uma problemática comum a diversas aplicações e avaliou os algoritmos nos objetivos de minimização de custo e quantidade de nós expandidos.
+
+Os testes mostraram dois resultados importantes. O primeiro, que não há um único algoritmo, dos apresentados neste artigo, que domine todos os outros em ambos objetivos. E segundo, que a função heurística é um ponto chave para a otimização dos algoritmos de busca. A melhor estimativa da distância está relacionada com o cenário do problema a ser tratado. Ainda que o uso do peso na função heurística tenha o efeito colateral de resultados sub-ótimos, é visível que  para os teste realizados os caminhos encontrados eram bastante satisfatórios e o baixo custo computacional pode justificar o seu uso.
+
+Como trabalhos futuros pode-se citar a aplicação do algoritmo A como determinante do comportamento de um agente em jogos e a plicação em cenários mais complexos, por exemplo, com a existência de obstáculos.
+
+sbc
+
+
+
