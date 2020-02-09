@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt">
 <head>
-<!-- 2018-05-12 sáb 11:45 -->
+<!-- 2020-02-09 Sun 15:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Aula 2 - Programação Funcional em Coq</title>
@@ -180,13 +180,13 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="style.css"/>
+<link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -254,12 +254,12 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">Aula 2 - Programação Funcional em Coq</h1>
 
-<div id="outline-container-orgf5ec7a3" class="outline-2">
-<h2 id="orgf5ec7a3"><span class="section-number-2">1</span> Programação Funcional</h2>
+<div id="outline-container-org6e3e319" class="outline-2">
+<h2 id="org6e3e319"><span class="section-number-2">1</span> Programação Funcional</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org0d5e326" class="outline-3">
-<h3 id="org0d5e326"><span class="section-number-3">1.1</span> O que é Programação Funcional?</h3>
+<div id="outline-container-orga0075b1" class="outline-3">
+<h3 id="orga0075b1"><span class="section-number-3">1.1</span> O que é Programação Funcional?</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
 <li>O paradigma de programação funcional é baseado no simples conceito: se funções não têm efeitos colaterais, então tudo o que precisamos saber sobre funções são os seus mapeamentos. - (se ignorarmos propriedades não funcionais como a eficiência!).</li>
@@ -268,8 +268,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbb41e10" class="outline-3">
-<h3 id="orgbb41e10"><span class="section-number-3">1.2</span> Baby's First Functional Program</h3>
+<div id="outline-container-orgac4b9e5" class="outline-3">
+<h3 id="orgac4b9e5"><span class="section-number-3">1.2</span> Baby's First Functional Program</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
 <li>Um programa funcional é apenas um mapeamento!</li>
@@ -277,8 +277,8 @@ for the JavaScript code in this tag.
 <li>Casamento de padrão desconstroi um identificador em seus possíveis termos. A seta <i>=&gt;</i> informa o respectivo resultado.</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Definition</span> <span style="color: #93E0E3;">next_weekday</span> (<span style="color: #DFAF8F;">d</span>:day) : day :=
-  <span style="color: #7CB8BB;">match</span> d <span style="color: #7CB8BB;">with</span>
+<pre class="src src-coq"><span class="org-keyword">Definition</span> <span class="org-function-name">next_weekday</span> (<span class="org-variable-name">d</span>:day) : day :=
+  <span class="org-type">match</span> d <span class="org-type">with</span>
   | monday =&gt; tuesday
   | tuesday =&gt; wednesday
   | wednesday =&gt; thursday
@@ -286,14 +286,14 @@ for the JavaScript code in this tag.
   | friday =&gt; monday
   | saturday =&gt; monday
   | sunday =&gt; monday
-  <span style="color: #7CB8BB;">end</span>.
+  <span class="org-type">end</span>.
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org70200da" class="outline-3">
-<h3 id="org70200da"><span class="section-number-3">1.3</span> Executando computações em Coq</h3>
+<div id="outline-container-orgf9a1c96" class="outline-3">
+<h3 id="orgf9a1c96"><span class="section-number-3">1.3</span> Executando computações em Coq</h3>
 <div class="outline-text-3" id="text-1-3">
 <div class="org-src-container">
 <pre class="src src-coq">Compute (next_weekday friday).
@@ -304,32 +304,32 @@ Compute (next_weekday (next_weekday saturday)).
 </div>
 </div>
 
-<div id="outline-container-org01bbfde" class="outline-3">
-<h3 id="org01bbfde"><span class="section-number-3">1.4</span> Baby's First Proof about some Function</h3>
+<div id="outline-container-org5b2c017" class="outline-3">
+<h3 id="org5b2c017"><span class="section-number-3">1.4</span> Baby's First Proof about some Function</h3>
 <div class="outline-text-3" id="text-1-4">
 <ul class="org-ul">
 <li><i>Example</i> é o mesmo que <i>Theorem</i>, que também é o mesmo que <i>Lemma</i>.</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Example</span> <span style="color: #93E0E3;">test_next_weekday</span>:
+<pre class="src src-coq"><span class="org-keyword">Example</span> <span class="org-function-name">test_next_weekday</span>:
   (next_weekday (next_weekday saturday)) = tuesday.
-<span style="color: #F0DFAF; font-weight: bold;">Proof</span>.
-  <span style="color: #BFEBBF; background-color: #3F3F3F;">simpl</span>.
-  <span style="color: #BFEBBF;">reflexivity</span>.
-<span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+<span class="org-keyword">Proof</span>.
+  <span class="org-proof-tactics-name">simpl</span>.
+  <span class="org-coq-solve-tactics">reflexivity</span>.
+<span class="org-keyword">Qed</span>.
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7f6075e" class="outline-3">
-<h3 id="org7f6075e"><span class="section-number-3">1.5</span> Tipo booleano</h3>
+<div id="outline-container-orgcf8bf78" class="outline-3">
+<h3 id="orgcf8bf78"><span class="section-number-3">1.5</span> Tipo booleano</h3>
 <div class="outline-text-3" id="text-1-5">
 <ul class="org-ul">
 <li>O tipo padrão booleano é definido em Coq por:</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Inductive</span> <span style="color: #93E0E3;">bool</span> : <span style="color: #7CB8BB;">Type</span> :=
+<pre class="src src-coq"><span class="org-keyword">Inductive</span> <span class="org-function-name">bool</span> : <span class="org-type">Type</span> :=
   | true : bool
   | false : bool.
 </pre>
@@ -341,66 +341,66 @@ Compute (next_weekday (next_weekday saturday)).
 </div>
 </div>
 
-<div id="outline-container-org0d2f6a8" class="outline-3">
-<h3 id="org0d2f6a8"><span class="section-number-3">1.6</span> Funções sobre booleanos</h3>
+<div id="outline-container-org0cf8c62" class="outline-3">
+<h3 id="org0cf8c62"><span class="section-number-3">1.6</span> Funções sobre booleanos</h3>
 <div class="outline-text-3" id="text-1-6">
 <div class="org-src-container">
-<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Definition</span> <span style="color: #93E0E3;">negb</span> (<span style="color: #DFAF8F;">b</span>:bool) : bool :=
-  <span style="color: #7CB8BB;">match</span> b <span style="color: #7CB8BB;">with</span>
+<pre class="src src-coq"><span class="org-keyword">Definition</span> <span class="org-function-name">negb</span> (<span class="org-variable-name">b</span>:bool) : bool :=
+  <span class="org-type">match</span> b <span class="org-type">with</span>
   | true =&gt; false
   | false =&gt; true
-  <span style="color: #7CB8BB;">end</span>.
-<span style="color: #F0DFAF; font-weight: bold;">Definition</span> <span style="color: #93E0E3;">andb</span> (<span style="color: #DFAF8F;">b1</span>:bool) (<span style="color: #DFAF8F;">b2</span>:bool) : bool :=
-  <span style="color: #7CB8BB;">match</span> b1 <span style="color: #7CB8BB;">with</span>
+  <span class="org-type">end</span>.
+<span class="org-keyword">Definition</span> <span class="org-function-name">andb</span> (<span class="org-variable-name">b1</span>:bool) (<span class="org-variable-name">b2</span>:bool) : bool :=
+  <span class="org-type">match</span> b1 <span class="org-type">with</span>
   | true =&gt; b2
   | false =&gt; false
-  <span style="color: #7CB8BB;">end</span>.
-<span style="color: #F0DFAF; font-weight: bold;">Definition</span> <span style="color: #93E0E3;">orb</span> (<span style="color: #DFAF8F;">b1</span>:bool) (<span style="color: #DFAF8F;">b2</span>:bool) : bool :=
-  <span style="color: #7CB8BB;">match</span> b1 <span style="color: #7CB8BB;">with</span>
+  <span class="org-type">end</span>.
+<span class="org-keyword">Definition</span> <span class="org-function-name">orb</span> (<span class="org-variable-name">b1</span>:bool) (<span class="org-variable-name">b2</span>:bool) : bool :=
+  <span class="org-type">match</span> b1 <span class="org-type">with</span>
   | true =&gt; true
   | false =&gt; b2
-  <span style="color: #7CB8BB;">end</span>.
+  <span class="org-type">end</span>.
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org041c00a" class="outline-3">
-<h3 id="org041c00a"><span class="section-number-3">1.7</span> Pequenas provas como testes</h3>
+<div id="outline-container-orgd971edd" class="outline-3">
+<h3 id="orgd971edd"><span class="section-number-3">1.7</span> Pequenas provas como testes</h3>
 <div class="outline-text-3" id="text-1-7">
 <ul class="org-ul">
 <li>Apenas alguns testes de nossas funções.</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Example</span> <span style="color: #93E0E3;">test_orb1</span>: (orb true false) = true.
-<span style="color: #F0DFAF; font-weight: bold;">Proof</span>. <span style="color: #BFEBBF;">reflexivity</span>. <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
-<span style="color: #F0DFAF; font-weight: bold;">Example</span> <span style="color: #93E0E3;">test_orb2</span>: (orb false false) = false.
-<span style="color: #F0DFAF; font-weight: bold;">Proof</span>. <span style="color: #BFEBBF;">reflexivity</span>. <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
-<span style="color: #F0DFAF; font-weight: bold;">Example</span> <span style="color: #93E0E3;">test_orb3</span>: (orb false true) = true.
-<span style="color: #F0DFAF; font-weight: bold;">Proof</span>. <span style="color: #BFEBBF;">reflexivity</span>. <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
-<span style="color: #F0DFAF; font-weight: bold;">Example</span> <span style="color: #93E0E3;">test_orb4</span>: (orb true true) = true.
-<span style="color: #F0DFAF; font-weight: bold;">Proof</span>. <span style="color: #BFEBBF;">reflexivity</span>. <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+<pre class="src src-coq"><span class="org-keyword">Example</span> <span class="org-function-name">test_orb1</span>: (orb true false) = true.
+<span class="org-keyword">Proof</span>. <span class="org-coq-solve-tactics">reflexivity</span>. <span class="org-keyword">Qed</span>.
+<span class="org-keyword">Example</span> <span class="org-function-name">test_orb2</span>: (orb false false) = false.
+<span class="org-keyword">Proof</span>. <span class="org-coq-solve-tactics">reflexivity</span>. <span class="org-keyword">Qed</span>.
+<span class="org-keyword">Example</span> <span class="org-function-name">test_orb3</span>: (orb false true) = true.
+<span class="org-keyword">Proof</span>. <span class="org-coq-solve-tactics">reflexivity</span>. <span class="org-keyword">Qed</span>.
+<span class="org-keyword">Example</span> <span class="org-function-name">test_orb4</span>: (orb true true) = true.
+<span class="org-keyword">Proof</span>. <span class="org-coq-solve-tactics">reflexivity</span>. <span class="org-keyword">Qed</span>.
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org159dcbe" class="outline-3">
-<h3 id="org159dcbe"><span class="section-number-3">1.8</span> Notações para definições</h3>
+<div id="outline-container-org1c1c8a8" class="outline-3">
+<h3 id="org1c1c8a8"><span class="section-number-3">1.8</span> Notações para definições</h3>
 <div class="outline-text-3" id="text-1-8">
 <div class="org-src-container">
-<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Notation</span> <span style="color: #CC9393;">"x &amp;&amp; y"</span> := (andb x y).
-<span style="color: #F0DFAF; font-weight: bold;">Notation</span> <span style="color: #CC9393;">"x || y"</span> := (orb x y).
+<pre class="src src-coq"><span class="org-keyword">Notation</span> <span class="org-string">"x &amp;&amp; y"</span> := (andb x y).
+<span class="org-keyword">Notation</span> <span class="org-string">"x || y"</span> := (orb x y).
 
-<span style="color: #F0DFAF; font-weight: bold;">Example</span> <span style="color: #93E0E3;">test_orb5</span>: false || false || true = true.
-<span style="color: #F0DFAF; font-weight: bold;">Proof</span>. <span style="color: #BFEBBF; background-color: #3F3F3F;">simpl</span>. <span style="color: #BFEBBF;">reflexivity</span>. <span style="color: #F0DFAF; font-weight: bold;">Qed</span>.
+<span class="org-keyword">Example</span> <span class="org-function-name">test_orb5</span>: false || false || true = true.
+<span class="org-keyword">Proof</span>. <span class="org-proof-tactics-name">simpl</span>. <span class="org-coq-solve-tactics">reflexivity</span>. <span class="org-keyword">Qed</span>.
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd402210" class="outline-3">
-<h3 id="orgd402210"><span class="section-number-3">1.9</span> Módulos em Coq</h3>
+<div id="outline-container-org8087305" class="outline-3">
+<h3 id="org8087305"><span class="section-number-3">1.9</span> Módulos em Coq</h3>
 <div class="outline-text-3" id="text-1-9">
 <ul class="org-ul">
 <li>Coq tem um sistema de módulos para organizar o desenvolvimento de sistemas grandes.</li>
@@ -411,12 +411,12 @@ Compute (next_weekday (next_weekday saturday)).
 </div>
 </div>
 
-<div id="outline-container-org276103b" class="outline-2">
-<h2 id="org276103b"><span class="section-number-2">2</span> Números Naturais</h2>
+<div id="outline-container-orgf43cac4" class="outline-2">
+<h2 id="orgf43cac4"><span class="section-number-2">2</span> Números Naturais</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org17365c2" class="outline-3">
-<h3 id="org17365c2"><span class="section-number-3">2.1</span> Números Naturais</h3>
+<div id="outline-container-org482caa5" class="outline-3">
+<h3 id="org482caa5"><span class="section-number-3">2.1</span> Números Naturais</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li>A definição é como na Aritmética de Peano. Todos os 8 axiomas são contemplados pela definição indutiva abaixo. <i>~ Falaremos mais disso depois!</i></li>
@@ -425,9 +425,9 @@ Compute (next_weekday (next_weekday saturday)).
 <li>Cuidado! <i>S</i> é uma função que apenas define (indutivamente) os elementos de nat e não representa uma computação. <i>S</i> define o sucessor, ele não computa o sucessor (não é (+1)).</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Module</span> <span style="color: #93E0E3;">NatPlayground</span>.
+<pre class="src src-coq"><span class="org-keyword">Module</span> <span class="org-function-name">NatPlayground</span>.
 
- <span style="color: #F0DFAF; font-weight: bold;">Inductive</span> <span style="color: #93E0E3;">nat</span> : <span style="color: #7CB8BB;">Type</span> :=
+ <span class="org-keyword">Inductive</span> <span class="org-function-name">nat</span> : <span class="org-type">Type</span> :=
   | O : nat
   | S : nat -&gt; nat.
 </pre>
@@ -435,24 +435,24 @@ Compute (next_weekday (next_weekday saturday)).
 </div>
 </div>
 
-<div id="outline-container-orgfbc0941" class="outline-3">
-<h3 id="orgfbc0941"><span class="section-number-3">2.2</span> Primeira função sobre naturais</h3>
+<div id="outline-container-orgba443a3" class="outline-3">
+<h3 id="orgba443a3"><span class="section-number-3">2.2</span> Primeira função sobre naturais</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
-<pre class="src src-coq"><span style="color: #F0DFAF; font-weight: bold;">Definition</span> <span style="color: #93E0E3;">pred</span> (<span style="color: #DFAF8F;">n</span> : nat) : nat :=
-  <span style="color: #7CB8BB;">match</span> n <span style="color: #7CB8BB;">with</span>
+<pre class="src src-coq"><span class="org-keyword">Definition</span> <span class="org-function-name">pred</span> (<span class="org-variable-name">n</span> : nat) : nat :=
+  <span class="org-type">match</span> n <span class="org-type">with</span>
     | O =&gt; O
     | S n' =&gt; n'
-  <span style="color: #7CB8BB;">end</span>.
+  <span class="org-type">end</span>.
 
-<span style="color: #F0DFAF; font-weight: bold;">End</span> <span style="color: #93E0E3;">NatPlayground</span>.
+<span class="org-keyword">End</span> <span class="org-function-name">NatPlayground</span>.
 
-<span style="color: #F0DFAF; font-weight: bold;">Check</span> (S (S (S (S O)))).
+<span class="org-keyword">Check</span> (S (S (S (S O)))).
 
 Compute (pred 4).
 
-<span style="color: #F0DFAF; font-weight: bold;">Check</span> S.
-<span style="color: #F0DFAF; font-weight: bold;">Check</span> pred.
+<span class="org-keyword">Check</span> S.
+<span class="org-keyword">Check</span> pred.
 </pre>
 </div>
 </div>
@@ -462,7 +462,7 @@ Compute (pred 4).
 <div id="postamble" class="status">
 <p class="date">Date: 02/05/2018</p>
 <p class="author">Author: Rafael Castro - rafaelcgs10.github.io/coq</p>
-<p class="date">Created: 2018-05-12 sáb 11:45</p>
+<p class="date">Created: 2020-02-09 Sun 15:34</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

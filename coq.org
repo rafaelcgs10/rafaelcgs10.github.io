@@ -1,6 +1,6 @@
 #+TITLE: Curso de Coq da disciplina OPAT001
 #+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 #+OPTIONS: toc:nil num:nil H:4 ^:nil pri:t
 #+OPTIONS: html-postamble:nil
 #+AUTHOR: Rafael Castro
