@@ -9,7 +9,7 @@
 
 
 | I'm a working computer scientist at the Santa Catarina State University. | file:eu.jpg |
-| At the moment I'm finishing my master's thesis.                                        |
+| At the moment I'm finishing my master's thesis.                          |             |
 
 * [[https://github.com/rafaelcgs10][GitHub]]
 * [[https://twitter.com/rafaelcgs101][Twitter]]
