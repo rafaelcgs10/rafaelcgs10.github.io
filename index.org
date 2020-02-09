@@ -1,6 +1,6 @@
 #+TITLE: Rafael Castro's home page
 #+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 #+OPTIONS: toc:nil num:nil H:4 ^:nil pri:t
 #+OPTIONS: html-postamble:nil
 #+AUTHOR: Rafael Castro
@@ -8,7 +8,7 @@
 #+EMAIL: rafaelcgs10@gmail.com
 
 
-| I'm a working computer scientist and developer. | file:eu.jpg |
+| I'm a working computer scientist and a developer. | file:eu.jpg |
 
 * [[https://github.com/rafaelcgs10][GitHub]]
 * [[https://twitter.com/rafaelcgs101][Twitter]]
