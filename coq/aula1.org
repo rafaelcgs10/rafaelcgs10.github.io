@@ -82,7 +82,7 @@ realizáveis somente com papel e caneta: Four Color Theorem
  - Emacs + ProofGeneral + Company-coq = a maneira mais eficiente de usar Coq.
 
 ** Baby's First Type
- - Coq não tem um conjunto de dados básicos /build-in/. Todos os tipos de Coq são definidos em Coq.
+ - Coq não tem um conjunto de dados básicos /build-in/. Todos os tipos de Coq são definidos em Coq (/mentirinha/).
  - Tipos são definidos com /Inductive/, seguido do identificador, o tipo desse tipo e a sua definição em /| termo : tipo/.
 #+BEGIN_SRC coq
 Inductive day : Type :=
