@@ -1,4 +1,4 @@
-#+TITLE: Perguntas para se fazer numa entrevista de emprego
+#+TITLE: Uma lista de perguntas para se fazer numa entrevista de emprego
 #+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 #+OPTIONS: toc:nil num:nil H:4 ^:nil pri:t
