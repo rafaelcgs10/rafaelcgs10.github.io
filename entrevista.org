@@ -28,3 +28,5 @@ Algumas perguntas que podem ser boas de se fazer numa entrevista de emprego:
 * Como é a cobrança sobre os funcionários?
 * Como é funciona o aumento dos funcionários?
 ** Vocês negocioam salário caso o funcionário receba uma outra proposta?
+* De um ano para cá, quantos funcionários sairam e quantos entraram nesta empresa?
+* Esta empresa dá lucro? Depende de investimento externo?
