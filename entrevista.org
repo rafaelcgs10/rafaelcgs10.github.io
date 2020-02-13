@@ -23,9 +23,8 @@ Algumas perguntas que podem ser boas de se fazer numa entrevista de emprego:
 * Como e com que frequência vocês adotam novas tecnologias?
 * Com que frequência dívidas técnicas nos softwares são criadas e pagas?
 * Como funciona o onboarding?
-* O quão sistematicamente questões relacionadas a [[https://pt.wikipedia.org/wiki/Doutrina][doutrina]] da empresa 
-  são repetidas para os funcionários?
-* O que pode fazer um funcionário ser demitido? Quais as causas mais comuns?
+* O quão sistematicamente questões relacionadas a [[https://pt.wikipedia.org/wiki/Doutrina][doutrina]] da empresa são repetidas para os funcionários?
+* O que pode fazer um funcionário ser demitido? Quais foram as causas mais comuns?
 * Como é a cobrança sobre os funcionários?
 * Como é funciona o aumento dos funcionários?
 ** Vocês negocioam salário caso o funcionário receba uma outra proposta?
