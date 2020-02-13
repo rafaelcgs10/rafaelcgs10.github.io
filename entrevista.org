@@ -16,7 +16,7 @@ Algumas perguntas que podem ser boas de se fazer numa entrevista de emprego:
 - Qual (aproximadamente) é porcentagem de cobertura dos testes nos projetos?
 - Fazem postmortem de dos problemas?
 - Tamanho do time(s)?
-- Qntos seniors/plenos/dinossauros tem?
+- Quantos seniors/plenos/dinossauros tem?
 - Fazem code review? É obrigatorio?
 - Tem tempo pago pra aprender?
 - Tem home office / trabalho remoto?
