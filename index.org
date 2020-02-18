@@ -13,3 +13,10 @@
 * [[https://github.com/rafaelcgs10][GitHub]]
 * [[https://twitter.com/rafaelcgs101][Twitter]]
 * email: rafaelcgs10@gmail.com
+
+* CVs and Cover Letters
+ - Academic
+  - [[https://github.com/rafaelcgs10/My-CV/raw/master/cv_academic.pdf][CV]]
+ - Professional
+  - [[https://github.com/rafaelcgs10/My-CV/raw/master/cv_profissional.pdf][CV]]
+  - [[https://github.com/rafaelcgs10/My-CV/raw/master/cover_letter_professional.pdf][Cover Letter]]
