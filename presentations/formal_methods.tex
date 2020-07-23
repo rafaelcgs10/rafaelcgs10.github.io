@@ -1,0 +1,161 @@
+% Created 2020-07-22 Wed 12:03
+% Intended LaTeX compiler: pdflatex
+\documentclass[presentation]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{graphicx, hyperref, url}
+\mode<beamer>{\usetheme{Madrid}}
+\usetheme{default}
+\author{Rafael Castro - rafaelcgs10.github.io/coq}
+\date{22/07/2020}
+\title{Formal Methods in the Real World}
+\hypersetup{
+ pdfauthor={Rafael Castro - rafaelcgs10.github.io/coq},
+ pdftitle={Formal Methods in the Real World},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.3 (Org mode 9.1.9)}, 
+ pdflang={Portuguese}}
+\begin{document}
+
+\maketitle
+
+\section{Introdução}
+\label{sec:orgfc9fbc9}
+
+\begin{frame}[label={sec:orgd122416}]{Softwares causam desastres}
+\begin{itemize}
+\item Therac-25: máquina de radioterapia. 6 pessoas morreram.
+\item Ariane 5: Foguete fez curso errado e se auto-destruiu. Colocaram um valore de 64bits num variável de 16bits.
+\item Knight Capital Group: perdeu 460 milhões de dólares no mercado de ações americano.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org6a0a6b4}]{Métodos formais}
+\begin{itemize}
+\item Engenharia de Software
+\item Confiança de software:
+\begin{enumerate}
+\item Especificação: modelos/lógicas/tipos
+\item Desenvolvimento: baseado na espeficiação
+\item Verificação: mostrar que o desenvolvimento atende a especificação
+\end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org67cc214}]{O que é um software correto?}
+\begin{itemize}
+\item Navegador
+\item Software de usina nuclear
+\item Compilador
+\item Linguagem de Programação (uma linguagem também segue uma especificação formal)
+\end{itemize}
+\end{frame}
+
+\section{Os Métodos}
+\label{sec:org3705e81}
+
+\begin{frame}[label={sec:orgf1ed021}]{Confiança em software}
+\begin{itemize}
+\item Testes vs Verficiação formal
+\item Para o que cada um serve?
+\item "Testes não provam a ausência de bugs, somente a presença deles"
+\item Provas substituem testes?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org49c86fd}]{Verificações automáticas}
+\begin{itemize}
+\item Verificação automática por sistemas de tipos
+\item Analisadores estáticos (linters) - Rubocop não é linter
+\item Rust: Tipos lineares, sem mutabilidade, facilita a concorrência
+\item Haskell: Sistema de tipos DM, sem efeitos colaterais
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:orgac8c9f3}]{Model Checking}
+\begin{itemize}
+\item (não manjo)
+\item Redes de Petri, Cadeias de Markov, Sistema de Eventos (modelos finitos)
+\item Muito utilizado na verificação de hardware
+\item Definina em modelo matemático para especificar o comportamento de alto nível
+\item O model check realiza verificações sobre o modelo e identifica problemas/estados indesejados
+\item TLA+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orga608c83}]{Linguagens com Sistemas de Tipos Dependentes}
+ \begin{itemize}
+\item O que são sistemas de tipos dependentes
+\item Idris, Agda, Epigram, F*
+\end{itemize}
+\begin{verbatim}
+app : Vect n a -> Vect m a -> Vect (n + m) a
+app Nil       ys = ys
+app (x :: xs) ys = x :: app xs ys
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:org2acab98}]{Assistentes de Provas}
+ \begin{itemize}
+\item São ferramentas que permitem o desenvolvimento de provas matemáticas
+\item Programas verificados podem ser extraídos
+\item Coq, Isabelle, Twelf
+\end{itemize}
+\begin{verbatim}
+Theorem plus_id_example : forall n m:nat,
+  n = m -> n + n = m + m.
+Proof.
+  intros n m.
+  intros H.
+  rewrite -> H.
+  reflexivity.
+Qed.
+\end{verbatim}
+\end{frame}
+
+\section{Exemplos}
+\label{sec:org0ddce3a}
+
+\begin{frame}[label={sec:org69d1e04}]{Compcert}
+\begin{itemize}
+\item Compilador de C sem bugs!
+\item Desenvolvido em Coq
+\item \url{http://compcert.inria.fr/}
+\item \url{https://www.absint.com/compcert/index.htm}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:orgf85fc76}]{Sel4}
+\begin{itemize}
+\item Micro-Kernel sem (certas) falhas de segurança
+\item Garante o isolamento entre aplicações do sistema
+\item \url{https://sel4.systems/}
+\item Provas em Isabelle
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org2d579af}]{Linguagens para BlockChain/SmartContracts}
+\begin{itemize}
+\item É importante garantir que o programa compute dentro de uma expectativa de tempo
+\item Garantir questões de segurança: o contrato não pode ser quebrado
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org16916b1}]{Projeto DeepSpec}
+\begin{itemize}
+\item \url{https://deepspec.org/main}
+\end{itemize}
+\end{frame}
+\end{document}
