@@ -1,0 +1,16 @@
+#+TITLE: BBL sobre Nix
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io
+#+EMAIL: rafaelcgs10@gmail.com
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, url}
+#+latex_header: \mode<beamer>{\usetheme{Madrid}}
+#+OPTIONS:   H:2 toc:nil
+#+LANGUAGE: pt
+#+DATE: 14/07/2021
+
+* Introdução
+
+** O que é Nix?
+- Um gerenciador de pacotes *puramente funciona*
