@@ -1,0 +1,54 @@
+#+TITLE: BBL sobre Nix
+#+AUTHOR: Rafael Castro - rafaelcgs10.github.io
+#+EMAIL: rafaelcgs10@gmail.com
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, url}
+#+latex_header: \mode<beamer>{\usetheme{Madrid}}
+#+OPTIONS:   H:2 toc:nil
+#+LANGUAGE: pt
+#+DATE: 14/07/2021
+
+* Introdução
+
+** O que é cada coisa?
+- Nix: Um gerenciador de pacotes *puramente funcional*
+  - Nix Expression Language: Uma linguagem pura, funcio  nal e lazy
+  - NixOS: Uma distro Linux feita envolta do Nix
+  - Home Manager: Um Manager (gerenciador) para esp    aço de usuário   envolta do Nix
+
+* Show of:
+
+** Show of:
+- Instalando o meu ambiente numa VM de forma semi-automática
+
+* Como usar Nix?
+
+** Como usar Nix?
+- Basta instalar e usar!
+- Também podemos ter arquivos .nix para definirmos nossos shells.
+
+* Como usar Home Manager?
+
+** Como usar Home Manager?
+- Basta editar os arquivos .nix
+
+* Como usar NixOS?
+
+** Como usar NixOS?
+- Basta editar os arquivos .nix em /etc/nix!
+
+* Nix vs Docker
+** Nix vs Docker
+- Nix não é um substituto para o Docker, ele faz coisas a mais e coisas a menos.
+
+* Vantagems e desvantagens do NixOS
+** Vantagems e desvantagens do NixOS
+- Vantagens:
+  1. Seu sistema é reproduzível em qualquer lugar
+  2. Declarativo
+  2. Modular
+  2. Modular
+- Desvantagens:
+  1. É uma distro pouco usada

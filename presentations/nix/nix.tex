@@ -1,0 +1,92 @@
+% Created 2021-07-12 seg 20:08
+% Intended LaTeX compiler: pdflatex
+\documentclass[presentation]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{graphicx, hyperref, url}
+\mode<beamer>{\usetheme{Madrid}}
+\usetheme{default}
+\author{Rafael Castro - rafaelcgs10.github.io}
+\date{14/07/2021}
+\title{BBL sobre Nix}
+\hypersetup{
+ pdfauthor={Rafael Castro - rafaelcgs10.github.io},
+ pdftitle={BBL sobre Nix},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.2 (Org mode 9.4.6)}, 
+ pdflang={Portuguese}}
+\begin{document}
+
+\maketitle
+
+\section{Introdução}
+\label{sec:org8436435}
+
+\begin{frame}[label={sec:org235ec10}]{O que é cada coisa?}
+\begin{itemize}
+\item Nix: Um gerenciador de pacotes \alert{puramente funcional}
+\begin{itemize}
+\item Nix Expression Language: Uma linguagem pura, funcio  nal e lazy
+\item NixOS: Uma distro Linux feita envolta do Nix
+\item Home Manager: Um Manager (gerenciador) para esp    aço de usuário   envolta do Nix
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Show of:}
+\label{sec:orgf655336}
+
+\begin{frame}[label={sec:org1629316}]{Show of:}
+\begin{itemize}
+\item Instalando o meu ambiente numa VM de forma semi-automática
+\end{itemize}
+\end{frame}
+
+\section{Como usar Nix?}
+\label{sec:orged75924}
+
+\begin{frame}[label={sec:org6c9e8aa}]{Como usar Nix?}
+\begin{itemize}
+\item Basta instalar e usar!
+\item Também podemos ter arquivos .nix para definirmos nossos shells.
+\end{itemize}
+\end{frame}
+
+\section{Como usar Home Manager?}
+\label{sec:orgc4270f1}
+
+\begin{frame}[label={sec:org66bd9c8}]{Como usar Home Manager?}
+\begin{itemize}
+\item Basta editar os arquivos .nix
+\end{itemize}
+\end{frame}
+
+\section{Como usar NixOS?}
+\label{sec:org6070528}
+
+\begin{frame}[label={sec:orgdaacce4}]{Como usar NixOS?}
+\begin{itemize}
+\item Basta editar os arquivos .nix em /etc/nix!
+\end{itemize}
+\end{frame}
+
+\section{Nix vs Docker}
+\label{sec:org41c430c}
+\begin{frame}[label={sec:orgafd8edf}]{Nix vs Docker}
+\begin{itemize}
+\item Nix não é um substituto para o Docker, ele faz coisas a mais e coisas a menos.
+\end{itemize}
+\end{frame}
+\end{document}
