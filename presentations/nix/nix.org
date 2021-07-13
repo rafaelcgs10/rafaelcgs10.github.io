@@ -45,7 +45,8 @@
 * Nix vs Docker
 ** Nix vs Docker
 - Nix não é um substituto para o Docker, ele faz coisas a mais e coisas a menos.
-- Coisas a mais:
+- Coisas a mais: gerenciamento de dependências do sistema
+- Coisas a menos: não é um ambiente de container, não gerencia recurso do sistema...
 
 * Vantagems e desvantagens do NixOS
 ** Vantagems e desvantagens do NixOS
