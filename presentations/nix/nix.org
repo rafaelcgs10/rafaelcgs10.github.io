@@ -28,14 +28,12 @@
 - Também podemos ter arquivos .nix para definirmos nossos shells.
 
 * Como usar Home Manager?
-
 ** Como usar Home Manager?
 - Basta editar os arquivos .nix
 - O que colocar aqui?
   - Tudo que for relativo a algo específico de um usuário. Ex: vim.
 
 * Como usar NixOS?
-
 ** Como usar NixOS?
 - Basta editar os arquivos .nix em /etc/nix!
 - Esse eu fizer :poop:? é só dar rollback!
