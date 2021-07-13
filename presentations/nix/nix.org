@@ -62,6 +62,7 @@
 ** Conclusão
 - IMHO é a melhor distro para desenvolvedores
 - Facilita a minha vida ao lidar com vários computadores
+- Uma boa ferramenta para auxiliar o desenvolvimento e distribuição de software
 - Considero esse ambiente mais confiável, pois eu posso dar rollback
 - A transição demora, mas é feita de forma suave
 - Como tudo é arquivo é mais fácil compartilhar coisas
