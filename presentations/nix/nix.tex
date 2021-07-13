@@ -1,4 +1,4 @@
-% Created 2021-07-13 ter 17:37
+% Created 2021-07-13 ter 18:00
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
@@ -32,9 +32,8 @@
 \maketitle
 
 \section{Introdução}
-\label{sec:orgd7ee997}
-
-\begin{frame}[label={sec:org38e288e}]{O que é cada coisa?}
+\label{sec:org31fa441}
+\begin{frame}[label={sec:orgea77b0d}]{O que é cada coisa?}
 \begin{itemize}
 \item Nix: Um gerenciador de pacotes \alert{puramente funcional}
 \begin{itemize}
@@ -46,9 +45,8 @@
 \end{frame}
 
 \section{Show of:}
-\label{sec:orge2bd539}
-
-\begin{frame}[label={sec:orgdd40639}]{Show of:}
+\label{sec:org5293d55}
+\begin{frame}[label={sec:org0403419}]{Show of:}
 \begin{itemize}
 \item Instalando o meu ambiente numa VM de forma semi-automática
 \begin{center}
@@ -58,9 +56,8 @@
 \end{frame}
 
 \section{Como usar Nix?}
-\label{sec:org64c53cb}
-
-\begin{frame}[label={sec:org4413226}]{Como usar Nix?}
+\label{sec:orga8abfea}
+\begin{frame}[label={sec:org5e4da66}]{Como usar Nix?}
 \begin{itemize}
 \item Basta instalar e usar!
 \item Também podemos ter arquivos .nix para definirmos nossos shells.
@@ -68,9 +65,9 @@
 \end{frame}
 
 \section{Como usar Home Manager?}
-\label{sec:org7bab2b0}
+\label{sec:org541084d}
 
-\begin{frame}[label={sec:orgc1a0a1c}]{Como usar Home Manager?}
+\begin{frame}[label={sec:orgd46e7b7}]{Como usar Home Manager?}
 \begin{itemize}
 \item Basta editar os arquivos .nix
 \item O que colocar aqui?
@@ -81,17 +78,18 @@
 \end{frame}
 
 \section{Como usar NixOS?}
-\label{sec:org543318b}
+\label{sec:orgf8a0c0e}
 
-\begin{frame}[label={sec:org3ca2df8}]{Como usar NixOS?}
+\begin{frame}[label={sec:orgad9c757}]{Como usar NixOS?}
 \begin{itemize}
 \item Basta editar os arquivos .nix em /etc/nix!
+\item Esse eu fizer :poop:? é só dar rollback!
 \end{itemize}
 \end{frame}
 
 \section{Nix vs Docker}
-\label{sec:org277f354}
-\begin{frame}[label={sec:org4530758}]{Nix vs Docker}
+\label{sec:org577b73e}
+\begin{frame}[label={sec:org19e1682}]{Nix vs Docker}
 \begin{itemize}
 \item Nix não é um substituto para o Docker, ele faz coisas a mais e coisas a menos.
 \item Coisas a mais: gerenciamento de dependências do sistema
@@ -100,8 +98,8 @@
 \end{frame}
 
 \section{Vantagems e desvantagens do NixOS}
-\label{sec:org7757f4a}
-\begin{frame}[label={sec:orgd0d84f1}]{Vantagems e desvantagens do NixOS}
+\label{sec:orga81393d}
+\begin{frame}[label={sec:org8da6f29}]{Vantagems e desvantagens do NixOS}
 \begin{itemize}
 \item Vantagens:
 \begin{enumerate}
@@ -118,6 +116,18 @@
 \item Usa bastante CPU para instalar pacotes
 \item Curva de apredizado pesada
 \end{enumerate}
+\end{itemize}
+\end{frame}
+
+\section{Conclusão}
+\label{sec:org1348505}
+\begin{frame}[label={sec:orgffffbc7}]{Conclusão}
+\begin{itemize}
+\item IMHO é a melhor distro para desenvolvedores
+\item Facilita a minha vida ao lidar com vários computadores
+\item Considero esse ambiente mais confiável, pois eu posso dar rollback
+\item A transição demora, mas é feita de forma suave
+\item Como tudo é arquivo é mais fácil compartilhar coisas
 \end{itemize}
 \end{frame}
 \end{document}

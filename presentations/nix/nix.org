@@ -11,7 +11,6 @@
 #+DATE: 14/07/2021
 
 * Introdução
-
 ** O que é cada coisa?
 - Nix: Um gerenciador de pacotes *puramente funcional*
   - Nix Expression Language: Uma linguagem pura, funcional e lazy
@@ -19,13 +18,11 @@
   - Home Manager: Um Manager (gerenciador) para espaço de usuário envolta do Nix
 
 * Show of:
-
 ** Show of:
 - Instalando o meu ambiente numa VM de forma semi-automática
  [[file:./meme1.jpg]]
 
 * Como usar Nix?
-
 ** Como usar Nix?
 - Basta instalar e usar!
 - Também podemos ter arquivos .nix para definirmos nossos shells.
@@ -41,6 +38,7 @@
 
 ** Como usar NixOS?
 - Basta editar os arquivos .nix em /etc/nix!
+- Esse eu fizer :poop:? é só dar rollback!
 
 * Nix vs Docker
 ** Nix vs Docker
@@ -61,3 +59,11 @@
   2. Usa mais espaço
   3. Usa bastante CPU para instalar pacotes
   4. Curva de apredizado pesada
+
+* Conclusão
+** Conclusão
+- IMHO é a melhor distro para desenvolvedores
+- Facilita a minha vida ao lidar com vários computadores
+- Considero esse ambiente mais confiável, pois eu posso dar rollback
+- A transição demora, mas é feita de forma suave
+- Como tudo é arquivo é mais fácil compartilhar coisas
