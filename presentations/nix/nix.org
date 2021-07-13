@@ -22,6 +22,7 @@
 
 ** Show of:
 - Instalando o meu ambiente numa VM de forma semi-automática
+  [[me][file:./meme1.jpg]]
 
 * Como usar Nix?
 
