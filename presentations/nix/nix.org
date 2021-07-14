@@ -13,9 +13,9 @@
 * Introdução
 ** O que é cada coisa?
 - Nix: Um gerenciador de pacotes *puramente funcional*
-  - Nix Expression Language: Uma linguagem pura, funcional e lazy
-  - NixOS: Uma distro Linux feita envolta do Nix
-  - Home Manager: Um Manager (gerenciador) para espaço de usuário envolta do Nix
+- Nix Expression Language: Uma linguagem pura, funcional e lazy
+- NixOS: Uma distro Linux feita envolta do Nix
+- Home Manager: Um Manager (gerenciador) para espaço de usuário envolta do Nix
 
 * Show of:
 ** Show of:
