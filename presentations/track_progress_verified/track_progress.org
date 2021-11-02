@@ -6,60 +6,63 @@
 
 * What this presentation is about?
 ** Paper: Verified Progress Tracking for Timely Dataflow by Matthias Brun, Sára Decova, Andrea Lattuada, Dmitriy Traytel
-** Core concepets and contributions
+** Core concepts and contributions
 ** Possible next steps
 
 * What is the Timely Dataflow program model?
-** It is programming framework and a model of computation (is it?)
+** It is a programming framework and a model of computation (is it?)
 ** A program defined by a graph model: edges (channels) and vertex (operators)
 *** Channels: move data (messages) between operators
 *** Operators: per tuple data transformation
-**** Input and output ports of a operator are called locations
+**** Input and output ports of an operator are called locations
 *** Messages tagged with a timestamp (logical/temporal grouping)
-*** Timestamps are used to coodernate the iterations of the program with the new incoming input (aka incremental computing)
+*** Timestamps coordinate the iterations itself of the program and the new incoming input (aka incremental computing)
 *** Pointstamps: a pointstamp /(l, t)/ refers to a location /l/ in the dataflow and a timestamp /t/
 *** Frontier of a location:
-**** Informal idea: it informs each of the operators the timestamp lower bound they may still receive, so they can decide if they already seen all the data for a certain timestamp
-    [[./dataflow.png]]
+**** Informal idea: it informs each of the operators the timestamp lower bound they may still receive, so they can decide if they have already seen all the data for a certain timestamp
+#+ATTR_ORG: :width 800
+[[./dataflow.png]]
 
-* Paralellism with Timefly Dataflow and Progress Tracking
-** Worker paralellism: distributed instances of the program (the entire dataflow graph)
+* Parallelism with Timely Dataflow and Progress Tracking
+** Worker parallelism: distributed instances of the program (the entire dataflow graph)
+[[./workers.png]]
 ** The problems:
-1. How do we coodernate the iterations of the program within the instance itself and the other instances?
-2. How do we keep track of the entire system progress?
+1. How do we coordinate the iterations of the program within the instance itself and the other instances?
+2. How do we keep track of the entire system's progress?
 ** Progress tracking (the solution):
 *** Three parts:
 1. Distributed component
 2. Local component
-3. The combinantion of both
+3. The combination of both
 
 * Progress Tracking (Local)
-** Progress Tracking
-*** Highlights of formalization in Isabelle:
-**** Weighted direc: vertex are input and outputs, weights are timestamps increments
-**** Dataflow consth as: cycles must have a strictly increase path summary
-**** Frontier: the et incomparable elements the occur at least once in a mulitset
-**** Implied frontitex: calculated by using the (minimal) path summary from each other vertex timestamp
-**** Local propagation formalized in a state-machine fashion
-***** Messages beinuses timestamp propagation
-
+** Highlights of formalization in Isabelle:
+*** Weighted directed graph: vertex are input and outputs, weights are timestamps increments
+*** Dataflow constraints as: cycles must have a strictly increase path summary
+*** Frontier: the et incomparable elements the occur at least once in a mulitset
+*** Implied frontitex: calculated by using the (minimal) path summary from each other vertex timestamp
+*** Local propagation formalized in a state-machine fashion:
+**** Each location propagates its timestamps to other immediately connected locations
+** The Safe Property
 * Progress Tracking (Distributed)
 ** The Clocks Protocol
-- Presented by
-- Port TLA+ \rightarrow Isabelle
+*** Presented by
+*** Port TLA+ \rightarrow Isabelle
 
 ** Exhanging Progress
 - item
 
-* Combining Distributed and Local
+* The Combined Protocols
 ** Combining Distributed and Local
-- item
+*** item
 
 * Conclusion and Next Steps
 ** Conclusion
 *** Timely Dataflow is a model of (distributed) computation
 *** We know that both protocols are enough:
-**** Safe frontier for local
-
+**** Safe frontier for the local protocol
+**** Safe share of timestamps between workers for the distributed protocol
+*** This work is an essential step towards an verified executable code that could be used in the real world
 ** Possible next Steps
-- item
+**** Already mentioned in the work:
+**** My own ideas:
