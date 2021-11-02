@@ -1,0 +1,65 @@
+#+TITLE: Verified Progress Tracking for Timely Dataflow
+#+AUTHOR: Rafael Castro
+#+EMAIL: rafaelcgs10@gmail.com
+#+LANGUAGE: en
+#+DATE: 11/09/2021
+
+* What this presentation is about?
+** Paper: Verified Progress Tracking for Timely Dataflow by Matthias Brun, Sára Decova, Andrea Lattuada, Dmitriy Traytel
+** Core concepets and contributions
+** Possible next steps
+
+* What is the Timely Dataflow program model?
+** It is programming framework and a model of computation (is it?)
+** A program defined by a graph model: edges (channels) and vertex (operators)
+*** Channels: move data (messages) between operators
+*** Operators: per tuple data transformation
+**** Input and output ports of a operator are called locations
+*** Messages tagged with a timestamp (logical/temporal grouping)
+*** Timestamps are used to coodernate the iterations of the program with the new incoming input (aka incremental computing)
+*** Pointstamps: a pointstamp /(l, t)/ refers to a location /l/ in the dataflow and a timestamp /t/
+*** Frontier of a location:
+**** Informal idea: it informs each of the operators the timestamp lower bound they may still receive, so they can decide if they already seen all the data for a certain timestamp
+    [[./dataflow.png]]
+
+* Paralellism with Timefly Dataflow and Progress Tracking
+** Worker paralellism: distributed instances of the program (the entire dataflow graph)
+** The problems:
+1. How do we coodernate the iterations of the program within the instance itself and the other instances?
+2. How do we keep track of the entire system progress?
+** Progress tracking (the solution):
+*** Three parts:
+1. Distributed component
+2. Local component
+3. The combinantion of both
+
+* Progress Tracking (Local)
+** Progress Tracking
+*** Highlights of formalization in Isabelle:
+**** Weighted direc: vertex are input and outputs, weights are timestamps increments
+**** Dataflow consth as: cycles must have a strictly increase path summary
+**** Frontier: the et incomparable elements the occur at least once in a mulitset
+**** Implied frontitex: calculated by using the (minimal) path summary from each other vertex timestamp
+**** Local propagation formalized in a state-machine fashion
+***** Messages beinuses timestamp propagation
+
+* Progress Tracking (Distributed)
+** The Clocks Protocol
+- Presented by
+- Port TLA+ \rightarrow Isabelle
+
+** Exhanging Progress
+- item
+
+* Combining Distributed and Local
+** Combining Distributed and Local
+- item
+
+* Conclusion and Next Steps
+** Conclusion
+*** Timely Dataflow is a model of (distributed) computation
+*** We know that both protocols are enough:
+**** Safe frontier for local
+
+** Possible next Steps
+- item
