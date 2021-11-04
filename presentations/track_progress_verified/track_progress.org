@@ -49,47 +49,77 @@
 ** The Safety Property
 *** We expect the propagation protocol to:
 1. eventualy informs the new timestamps to all locations and;
-2. all implied frontiers converges
+2. all implied frontiers converges based on the new timestamps
 *** Lets call /worklist/ of a location its not yet propagated timestamps
 *** Then safety is:
-**** If a timestamp /t/ is no longer present in any worklist, then all frontiers are updated in respect a /t/
+**** If a timestamp /t/ is no longer present in any /worklist/, then all frontiers are updated in respect a /t/
+***** Formally:
+#+BEGIN_SRC
+definition safe :: "('loc, 't) configuration ⇒ bool" where
+  "safe c ≡ ∀loc1 loc2 t s. zcount (c_pts c loc1) t > 0 ∧ s ∈_A path_summary loc1 loc2
+                ⟶ (∃t'≤results_in t s. t' ∈_A frontier (c_imp c loc2))"
+#+END_SRC
 * Progress Tracking (Distributed)
 ** The Clocks Protocol
 *** Presented by Abadi et al. in TLA+ with the usual state-machine formalization
 *** Port TLA+ \rightarrow Isabelle
 *** State-machine:
-#+BEGIN_SRC c
-record (p'w :: finite, 'p :: orderq) conf =
-  rec :: 'p zmset
-  msg :: 'w => 'w => 'p zmset list
-  temp :: 'w => 'p zmset
-  glob :: 'w => 'p zmset
+#+BEGIN_SRC
+record ('p, 't) configuration =
+  c_records :: "'t delta_vec" # Global multiset of pointstamps
+  c_temp    :: "'p ⇒ 't delta_vec"
+  c_msg     :: "'p ⇒ 'p ⇒ 't delta_vec list"
+  c_glob    :: "'p ⇒ 't delta_vec" # The local aproximation of rec
+#+END_SRC
+*** Safety: if a pointstamp is vacant in one worker (now), then it is vacant for the global system state (for now and forever)
+**** Formally:
+#+BEGIN_SRC
+definition SafeGlobVacantUptoImpliesStickyNrec :: "('p :: finite, 't :: order) computation ⇒ bool" where
+  "SafeGlobVacantUptoImpliesStickyNrec s =
+     (let c = shd s in ∀t q. GlobVacantUpto c q t ⟶ alw (holds (λc. NrecVacantUpto c t)) s)"
 #+END_SRC
 *** Two problems:
 1. Transitions operations can access a global state
+#+BEGIN_SRC
+definition next_performop' :: "('p, 't :: order) configuration ⇒ ('p, 't) configuration ⇒ 'p ⇒ 't count_vec ⇒ 't count_vec ⇒ bool" where
+  "next_performop' c0 c1 p c r =
+   (let Δ = zmset_of r - zmset_of c in
+      (∀t. int (count c t) ≤ zcount (c_records c0) t) # only pointstamps in the global state may be dropped
+    ∧ upright Δ
+    ∧ c1 = c0⦇c_records := c_records c0 + Δ,
+              c_temp := (c_temp c0)(p := c_temp c0 p + Δ)⦈)"
+#+END_SRC
 2. Some restrictions on transition operations are too strong for a real implementation
+***** Uprightness: Timestamps can only be added if there is following up remove of smaller timestamps
+***** Formally:
+#+BEGIN_SRC
+definition supported :: "'t delta_vec ⇒ 't :: order ⇒ bool" where
+  "supported a t = (∃s. s < t ∧ zcount a s < 0)"
+
+definition upright :: "'t :: order delta_vec ⇒ bool" where
+  "upright a = (∀t. zcount a t > 0 ⟶ supported a t)"
+#+END_SRC
 ** Exhanging Progress
 - item
 * The Combined Protocols
 ** Combining Distributed and Local
 *** item
-
 * Conclusion and Next Steps
 ** Conclusion
-*** Timely Dataflow is a model of (distributed) computation
 *** We know that both protocols are enough:
 **** Safe frontier for the local protocol
 **** Safe share of timestamps between workers for the distributed protocol
-*** This work is an essential step towards an verified executable code that could be used in the real world
+*** We know the combination of protocols work
 ** Possible next Steps
-**** Already mentioned in the work:
+**** Already mentioned in the paper:
 ***** Termination of the local propagation
 ***** Extract executable code from the formalization
 ****** Local propagation already is executable
 ****** Experimental testing comparing it with the Rust implementation
-**** Ideas mentioned in the ITP presentation:
+**** Ideas suggested in the ITP presentation:
 ***** Consider failure models
 **** My own ideas:
 ***** Consider deployment and scaling scenarios
 ***** Define correctness and prove it
+***** Prove the equivalence with some other model of computation
 ***** Prove input-output order preservation
