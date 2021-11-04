@@ -8,50 +8,68 @@
 ** Paper: Verified Progress Tracking for Timely Dataflow by Matthias Brun, Sára Decova, Andrea Lattuada, Dmitriy Traytel
 ** Core concepts and contributions
 ** Possible next steps
-
 * What is the Timely Dataflow program model?
 ** It is a programming framework and a model of computation (is it?)
 ** A program defined by a graph model: edges (channels) and vertex (operators)
+#+ATTR_ORG: :width 600
+     [[./dataflow.png]]
 *** Channels: move data (messages) between operators
 *** Operators: per tuple data transformation
 **** Input and output ports of an operator are called locations
+**** Summary is the increment made by an internal edge of the operator over the message's timestamp
 *** Messages tagged with a timestamp (logical/temporal grouping)
 *** Timestamps coordinate the iterations itself of the program and the new incoming input (aka incremental computing)
 *** Pointstamps: a pointstamp /(l, t)/ refers to a location /l/ in the dataflow and a timestamp /t/
 *** Frontier of a location:
 **** Informal idea: it informs each of the operators the timestamp lower bound they may still receive, so they can decide if they have already seen all the data for a certain timestamp
-#+ATTR_ORG: :width 800
-[[./dataflow.png]]
 
-* Parallelism with Timely Dataflow and Progress Tracking
 ** Worker parallelism: distributed instances of the program (the entire dataflow graph)
 [[./workers.png]]
+* What this paper is about?
 ** The problems:
 1. How do we coordinate the iterations of the program within the instance itself and the other instances?
 2. How do we keep track of the entire system's progress?
+3. How do propagate timestamps between workers and keep the frontiers correctly updated?
+4. How do we ensure to always have a consistent result no matter how many workers we use?
 ** Progress tracking (the solution):
 *** Three parts:
-1. Distributed component
-2. Local component
+1. Local component
+2. Distributed component
 3. The combination of both
-
 * Progress Tracking (Local)
+** Specification of the Timely Dataflow
 ** Highlights of formalization in Isabelle:
 *** Weighted directed graph: vertex are input and outputs, weights are timestamps increments
-*** Dataflow constraints as: cycles must have a strictly increase path summary
-*** Frontier: the et incomparable elements the occur at least once in a mulitset
-*** Implied frontitex: calculated by using the (minimal) path summary from each other vertex timestamp
-*** Local propagation formalized in a state-machine fashion:
+*** Dataflow constraints: cycles must have a strictly increase path summary
+*** Frontier: the set of incomparable elements the occur at least once in a multiset
+*** Implied frontier: calculated by using the (minimal) path summary from each other vertex timestamp
+*** Local propagation:
 **** Each location propagates its timestamps to other immediately connected locations
-** The Safe Property
+**** Formalized in a state-machine fashion
+** The Safety Property
+*** We expect the propagation protocol to:
+1. eventualy informs the new timestamps to all locations and;
+2. all implied frontiers converges
+*** Lets call /worklist/ of a location its not yet propagated timestamps
+*** Then safety is:
+**** If a timestamp /t/ is no longer present in any worklist, then all frontiers are updated in respect a /t/
 * Progress Tracking (Distributed)
 ** The Clocks Protocol
-*** Presented by
+*** Presented by Abadi et al. in TLA+ with the usual state-machine formalization
 *** Port TLA+ \rightarrow Isabelle
-
+*** State-machine:
+#+BEGIN_SRC c
+record (p'w :: finite, 'p :: orderq) conf =
+  rec :: 'p zmset
+  msg :: 'w => 'w => 'p zmset list
+  temp :: 'w => 'p zmset
+  glob :: 'w => 'p zmset
+#+END_SRC
+*** Two problems:
+1. Transitions operations can access a global state
+2. Some restrictions on transition operations are too strong for a real implementation
 ** Exhanging Progress
 - item
-
 * The Combined Protocols
 ** Combining Distributed and Local
 *** item
@@ -65,4 +83,13 @@
 *** This work is an essential step towards an verified executable code that could be used in the real world
 ** Possible next Steps
 **** Already mentioned in the work:
+***** Termination of the local propagation
+***** Extract executable code from the formalization
+****** Local propagation already is executable
+****** Experimental testing comparing it with the Rust implementation
+**** Ideas mentioned in the ITP presentation:
+***** Consider failure models
 **** My own ideas:
+***** Consider deployment and scaling scenarios
+***** Define correctness and prove it
+***** Prove input-output order preservation
