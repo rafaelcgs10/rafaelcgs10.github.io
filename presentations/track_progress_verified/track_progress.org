@@ -9,7 +9,7 @@
 ** Core concepts and contributions
 ** Possible next steps
 * What is the Timely Dataflow program model?
-** It is a programming framework and a model of computation (is it?)
+** It is a programming framework and a model of computation
 ** A program defined by a graph model: edges (channels) and vertex (operators)
 #+ATTR_ORG: :width 600
      [[./dataflow.png]]
@@ -18,18 +18,17 @@
 **** Input and output ports of an operator are called locations
 **** Summary is the increment made by an internal edge of the operator over the message's timestamp
 *** Messages tagged with a timestamp (logical/temporal grouping)
-*** Timestamps coordinate the iterations itself of the program and the new incoming input (aka incremental computing)
+*** Timestamps coordinate the iterations itself of the program and the new incoming input (allows incremental computing)
 *** Pointstamps: a pointstamp /(l, t)/ refers to a location /l/ in the dataflow and a timestamp /t/
 *** Frontier of a location:
 **** Informal idea: it informs each of the operators the timestamp lower bound they may still receive, so they can decide if they have already seen all the data for a certain timestamp
-
 ** Worker parallelism: distributed instances of the program (the entire dataflow graph)
 [[./workers.png]]
 * What this paper is about?
-** The problems:
+** The questions:
 1. How do we coordinate the iterations of the program within the instance itself and the other instances?
 2. How do we keep track of the entire system's progress?
-3. How do propagate timestamps between workers and keep the frontiers correctly updated?
+3. How do we propagate timestamps between workers and keep the frontiers correctly updated?
 4. How do we ensure to always have a consistent result no matter how many workers we use?
 ** Progress tracking (the solution):
 *** Three parts:
@@ -40,79 +39,47 @@
 ** Specification of the Timely Dataflow
 ** Highlights of formalization in Isabelle:
 *** Weighted directed graph: vertex are input and outputs, weights are timestamps increments
-*** Dataflow constraints: cycles must have a strictly increase path summary
-*** Frontier: the set of incomparable elements the occur at least once in a multiset
-*** Implied frontier: calculated by using the (minimal) path summary from each other vertex timestamp
+*** Dataflow constraints: cycles must have a strictly increasing path summary
 *** Local propagation:
 **** Each location propagates its timestamps to other immediately connected locations
 **** Formalized in a state-machine fashion
 ** The Safety Property
 *** We expect the propagation protocol to:
-1. eventualy informs the new timestamps to all locations and;
+1. eventually informs the new timestamps to all locations and;
 2. all implied frontiers converges based on the new timestamps
-*** Lets call /worklist/ of a location its not yet propagated timestamps
+*** Lets call /worklist/ the set of timestamps of a location that was not propagated yet
 *** Then safety is:
 **** If a timestamp /t/ is no longer present in any /worklist/, then all frontiers are updated in respect a /t/
-***** Formally:
-#+BEGIN_SRC
-definition safe :: "('loc, 't) configuration ⇒ bool" where
-  "safe c ≡ ∀loc1 loc2 t s. zcount (c_pts c loc1) t > 0 ∧ s ∈_A path_summary loc1 loc2
-                ⟶ (∃t'≤results_in t s. t' ∈_A frontier (c_imp c loc2))"
-#+END_SRC
 * Progress Tracking (Distributed)
-** The Clocks Protocol
+** The Clocks Protocol (aka Exchange protocol)
 *** Presented by Abadi et al. in TLA+ with the usual state-machine formalization
-*** Port TLA+ \rightarrow Isabelle
-*** State-machine:
-#+BEGIN_SRC
-record ('p, 't) configuration =
-  c_records :: "'t delta_vec" # Global multiset of pointstamps
-  c_temp    :: "'p ⇒ 't delta_vec"
-  c_msg     :: "'p ⇒ 'p ⇒ 't delta_vec list"
-  c_glob    :: "'p ⇒ 't delta_vec" # The local aproximation of rec
-#+END_SRC
+*** Port TLA+ \rightarrow Isabelle (using co-induction as a trick to encode temporal logic)
+*** State-machine
 *** Safety: if a pointstamp is vacant in one worker (now), then it is vacant for the global system state (for now and forever)
-**** Formally:
-#+BEGIN_SRC
-definition SafeGlobVacantUptoImpliesStickyNrec :: "('p :: finite, 't :: order) computation ⇒ bool" where
-  "SafeGlobVacantUptoImpliesStickyNrec s =
-     (let c = shd s in ∀t q. GlobVacantUpto c q t ⟶ alw (holds (λc. NrecVacantUpto c t)) s)"
-#+END_SRC
 *** Two problems:
-1. Transitions operations can access a global state
-#+BEGIN_SRC
-definition next_performop' :: "('p, 't :: order) configuration ⇒ ('p, 't) configuration ⇒ 'p ⇒ 't count_vec ⇒ 't count_vec ⇒ bool" where
-  "next_performop' c0 c1 p c r =
-   (let Δ = zmset_of r - zmset_of c in
-      (∀t. int (count c t) ≤ zcount (c_records c0) t) # only pointstamps in the global state may be dropped
-    ∧ upright Δ
-    ∧ c1 = c0⦇c_records := c_records c0 + Δ,
-              c_temp := (c_temp c0)(p := c_temp c0 p + Δ)⦈)"
-#+END_SRC
+1. Transitions operations can access a global state (the /rec/ multiset)
 2. Some restrictions on transition operations are too strong for a real implementation
-***** Uprightness: Timestamps can only be added if there is following up remove of smaller timestamps
-***** Formally:
-#+BEGIN_SRC
-definition supported :: "'t delta_vec ⇒ 't :: order ⇒ bool" where
-  "supported a t = (∃s. s < t ∧ zcount a s < 0)"
-
-definition upright :: "'t :: order delta_vec ⇒ bool" where
-  "upright a = (∀t. zcount a t > 0 ⟶ supported a t)"
-#+END_SRC
-** Exhanging Progress
-- item
+***** Uprightness: Timestamps can only be added if there is following up removal of a smaller timestamp
+** The New Exhanging Protocol
+*** Presented in this paper as a solution to both problems
+**** Problem 1: split /rec/ into:
+***** /cap/ as the set of pointstamps that a worker is capable to send
+***** /data/ the set of messages (worker \times pointstamp) that were sent and are in-flight to the receiver workers
+***** /rec/ = (\sum /caps c w/) + (map snd (data c))
+**** Problem 2:
+***** Substitute uprightness:
+****** To send positive change of /cap/, the worker must hold positive capability for strictly smaller timestamps
+*** Same safety property was proved
 * The Combined Protocols
 ** Combining Distributed and Local
-*** item
-* Conclusion and Next Steps
+*** Safety: Frontiers reflect timestamps that may arive both locally (dataflow) and across different workers
+*** Not proven: termination
+* Conclusion and Possible Next Steps
 ** Conclusion
-*** We know that both protocols are enough:
-**** Safe frontier for the local protocol
-**** Safe share of timestamps between workers for the distributed protocol
-*** We know the combination of protocols work
+*** Safety was proved for both protocols and its combination
 ** Possible next Steps
 **** Already mentioned in the paper:
-***** Termination of the local propagation
+***** Termination of the propagation
 ***** Extract executable code from the formalization
 ****** Local propagation already is executable
 ****** Experimental testing comparing it with the Rust implementation
@@ -121,5 +88,5 @@ definition upright :: "'t :: order delta_vec ⇒ bool" where
 **** My own ideas:
 ***** Consider deployment and scaling scenarios
 ***** Define correctness and prove it
-***** Prove the equivalence with some other model of computation
+***** Investigate relations with other models of computation
 ***** Prove input-output order preservation
