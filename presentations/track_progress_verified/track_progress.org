@@ -38,7 +38,7 @@
 * Progress Tracking (Local)
 ** Specification of the Timely Dataflow
 ** Highlights of formalization in Isabelle:
-*** Weighted directed graph: vertex are input and outputs, weights are timestamps increments
+*** Weighted directed graph: vertexes are inputs and outputs, weights are timestamps increments
 *** Dataflow constraints: cycles must have a strictly increasing path summary
 *** Local propagation:
 **** Each location propagates its timestamps to other immediately connected locations
@@ -46,10 +46,10 @@
 ** The Safety Property
 *** We expect the propagation protocol to:
 1. eventually informs the new timestamps to all locations and;
-2. all implied frontiers converges based on the new timestamps
+2. all implied frontiers converge based on the new timestamps
 *** Lets call /worklist/ the set of timestamps of a location that was not propagated yet
 *** Then safety is:
-**** If a timestamp /t/ is no longer present in any /worklist/, then all frontiers are updated in respect a /t/
+**** If a timestamp /t/ is no longer present in any /worklist/, then all frontiers are updated in respect to /t/
 * Progress Tracking (Distributed)
 ** The Clocks Protocol (aka Exchange protocol)
 *** Presented by Abadi et al. in TLA+ with the usual state-machine formalization
@@ -81,7 +81,7 @@
 **** Already mentioned in the paper:
 ***** Termination of the propagation
 ***** Extract executable code from the formalization
-****** Local propagation already is executable
+****** Local propagation is already executable
 ****** Experimental testing comparing it with the Rust implementation
 **** Ideas suggested in the ITP presentation:
 ***** Consider failure models
