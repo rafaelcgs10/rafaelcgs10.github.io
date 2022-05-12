@@ -13,7 +13,7 @@ unstable.mkShell {
     unstable.languagetool
     unstable.editorconfig-core-c
     unstable.texlab
-    (unstable.texlive.combine { inherit (unstable.texlive) scheme-small wrapfig capt-of; })
+    (unstable.texlive.combine { inherit (unstable.texlive) scheme-small wrapfig capt-of preview import enumitem; })
   ];
   paths = [aspell aspellDicts.en];
 }

@@ -1,0 +1,20 @@
+﻿\begin{tikzpicture}[node distance = 0.8cm, auto]
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc,shapes.callouts,shapes.arrows}
+
+\tikzstyle{operator} = [rectangle, draw, fill=blue!60, text width=4.5em, text centered, rounded corners = 8pt, minimum height=30pt, line width=1pt]
+\tikzstyle{callout} = [draw, rectangle callout, callout relative pointer={#1}, line width=1pt]
+
+    \node [operator] at (0, 0) (reader) {reader};
+    \node [operator, right = of reader] (filter) {bearFilter};
+    \node [operator, right = of filter] (count) {count}; 
+    \node [operator, right = of count] (writer) {db writer};
+    \node[draw,cloud callout,callout relative pointer={(0.2cm,-0.7cm)},  text width=13em, aspect=2.5,fill=black!10, above = of count] (hello) {Oh boy, I don't know if there are more words coming.\\I can't send the results yet.};
+
+    \draw [thick,->,shorten >=1pt, line width=2pt] (reader) -- (filter); 
+    \draw [thick,->,shorten >=1pt, line width=2pt] (filter) -- (count);
+     \draw [thick,->,shorten >=1pt, line width=2pt] (count) -- (writer); 
+
+
+\end{tikzpicture}
