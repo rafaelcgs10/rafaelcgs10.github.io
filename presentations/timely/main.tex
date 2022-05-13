@@ -1,7 +1,7 @@
-\documentclass{beamer}
+\documentclass[aspectratio=169,10pt]{beamer}
 \usetheme{Madrid}
 
-\usepackage{graphicx,hyperref,url}
+\usepackage{fancybox,graphicx,hyperref,url}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows}
 \usetikzlibrary{positioning}
@@ -112,7 +112,17 @@
           \pause
     \item Stream and batch processing
           \pause
-    \item Automatic data parallelism
+    \item \  \begin{columns}
+      \begin{column}{.4\textwidth}
+        Automatic data parallelism
+      \end{column}
+      \begin{column}{.45\textwidth}
+        \resizebox{0.85\textwidth}{!}
+        {
+          \input{dataflow}
+        }
+      \end{column}
+      \end{columns}
           \pause
     \item No support for cycles (iteration)
   \end{itemize}
@@ -246,17 +256,17 @@
 
 \begin{frame}
   \frametitle{Timely Dataflow}
+  \begin{figure}
+    \shadowbox{\includegraphics[width=0.5\textwidth]{naiad.jpg}}
+  \end{figure}
+  \pause
   \begin{itemize}
     \item Iterative computation (cycles)
           \pause
     \item Reports on the presence of data instead of the absence
           \pause
-    \item Two implementations: Rust and C\# (Naiad)
+    \item Two implementations: C\# (Naiad) and Rust
   \end{itemize}
-  \pause
-  \begin{figure}
-    \includegraphics[width=\textwidth]{naiad.jpg}
-  \end{figure}
 \end{frame}
 
 \section{Progress Tracking}
@@ -357,26 +367,51 @@
 \section{Verified Progress Tracking}
 
 \begin{frame}
-  \frametitle{Verified Progress Tracking Protocol}
-  \begin{itemize}
-    \item Exchange Protocol Verification:
-          \begin{itemize}
-            \item Presented by Abadi et al. in TLA+
-            \item Refined version in Isabelle by M. Brun, S. Decova, A. Lattuada, and D. Traytel
-            \item \textbf{Safety}: If a timestamp is vacant in one worker (now), then it is vacant for the global system state (now and forever)
-          \end{itemize}
-          \pause
-    \item Local Propagation Verification:
-          \begin{itemize}
-            \item In Isabelle by M. Brun, S. Decova, A. Lattuada, and D. Traytel
-            \item \textbf{Safety}:
-                  \begin{itemize}
-                    \item Lets call \textit{P} the set of timestamps observed in a location (node)
-                    \item Lets call \textit{W} the set of timestamps not propagated yet of a location
-                    \item Then safety is: For a given \textit{t} present in some \textit{P}, if \textit{t} is no longer present in any \textit{W}, then all frontiers are updated in respect to \textit{t}
-                  \end{itemize}
-          \end{itemize}
-  \end{itemize}
+  \frametitle{Abadi et al.’s exchange protocol}
+  \begin{columns}
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item Exchange Protocol Verification:
+              \begin{itemize}
+                \item Presented by Abadi et al. in TLA+
+              \end{itemize}
+              \pause
+      \end{itemize}
+      \begin{block}{Distribute \textbf{Safety}}
+        If a timestamp is vacant in one worker (now), then that timestamp and any lesser it is vacant for the global system state (now and forever)
+      \end{block}
+    \end{column}
+    \begin{column}{.45\textwidth}
+      \begin{figure}
+        \shadowbox{\includegraphics[width=0.95\textwidth]{tla+.jpg}}
+      \end{figure}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Verified Progress Tracking for Timely Dataflow}
+  \begin{columns}
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item Exchange Protocol Verification:
+              \begin{itemize}
+                \item Refined version
+                \item Same safety property
+              \end{itemize}
+              \pause
+        \item Local Propagation Verification
+      \end{itemize}
+              \begin{block}{Local \textbf{Safety}}
+                If all worklists neither contain timestamp $t$ nor smaller timestamps, then all locations know whether they may encounter $t$ in the future.
+              \end{block}
+    \end{column}
+    \begin{column}{.45\textwidth}
+      \begin{figure}
+        \shadowbox{\includegraphics[width=0.95\textwidth]{isabelle.jpg}}
+      \end{figure}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \section{Verified Timely Dataflow}
@@ -416,9 +451,9 @@
   \begin{itemize}
     \item The propagation protocol is already executable (Sara Decova's master thesis)
     \item The Exchange protocol also should be made executable
-          \begin{item}
+          \begin{itemize}
             \item Prove that the functions are consistent with the relational counterparties
-          \end{item}
+          \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -433,6 +468,12 @@
     \item Low level operator constructors (define operators for any amount of inputs and outputs)
     \item A set of generally useful built-in operators: filter, filter partition, count, aggregate, etc
     \item The Safety properties again!
+          \begin{itemize}
+            \item Use safety to show properties of operators and dataflows
+                  \begin{itemize}
+                          \item Ex: show that \textit{count} doesn't mix the results of different (comparable) timestamps
+                  \end{itemize}
+          \end{itemize}
     \item Executable from the start
   \end{itemize}
 \end{frame}
