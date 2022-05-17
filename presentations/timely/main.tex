@@ -65,28 +65,38 @@
 
 \begin{frame}[fragile]
   \frametitle{What is this PhD about?}
-  \begin{itemize}
-    \item Distributed Systems
-          \begin{itemize}
-            \item Stream processing frameworks
-                  \begin{itemize}
-                    \item Dataflow models
-                          \begin{itemize}
-                            \item Timely Dataflow
-                          \end{itemize}
-                  \end{itemize}
-          \end{itemize}
-    \item Formal Methods
-          \begin{itemize}
-            \item Verification using proof assistants
-                  \begin{itemize}
-                    \item Isabelle proofs
-                          \begin{itemize}
-                            \item Verified and executable code
-                          \end{itemize}
-                  \end{itemize}
-          \end{itemize}
-  \end{itemize}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \begin{itemize}
+        \item Distributed Systems
+              \begin{itemize}
+                \item Stream processing frameworks
+                      \begin{itemize}
+                        \item Dataflow models
+                              \begin{itemize}
+                                \item Timely Dataflow
+                              \end{itemize}
+                      \end{itemize}
+              \end{itemize}
+        \item Formal Methods
+              \begin{itemize}
+                \item Verification using proof assistants
+                      \begin{itemize}
+                        \item Isabelle proofs
+                              \begin{itemize}
+                                \item Verified and executable code
+                              \end{itemize}
+                      \end{itemize}
+              \end{itemize}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.55\textwidth}
+      \begin{figure}
+      \includegraphics[width=1\textwidth]{map.jpg}
+      \caption{From Map of Computer Science: \url{https://youtu.be/SzJ46YA_RaA}}
+      \end{figure}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Contents}
@@ -122,7 +132,7 @@
           \input{dataflow}
         }
       \end{column}
-      \end{columns}
+    \end{columns}
           \pause
     \item No support for cycles (iteration)
   \end{itemize}
@@ -402,9 +412,9 @@
               \pause
         \item Local Propagation Verification
       \end{itemize}
-              \begin{block}{Local \textbf{Safety}}
-                If all worklists neither contain timestamp $t$ nor smaller timestamps, then all locations know whether they may encounter $t$ in the future.
-              \end{block}
+      \begin{block}{Local \textbf{Safety}}
+        If all worklists neither contain timestamp $t$ nor smaller timestamps, then all locations know whether they may encounter $t$ in the future.
+      \end{block}
     \end{column}
     \begin{column}{.45\textwidth}
       \begin{figure}
@@ -471,7 +481,7 @@
           \begin{itemize}
             \item Use safety to show properties of operators and dataflows
                   \begin{itemize}
-                          \item Ex: show that \textit{count} doesn't mix the results of different (comparable) timestamps
+                    \item Ex: show that \textit{count} doesn't mix the results of different (comparable) timestamps
                   \end{itemize}
           \end{itemize}
     \item Executable from the start
