@@ -1,0 +1,16 @@
+﻿\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+
+\begin{tikzpicture}[node distance = 2cm, auto]
+\tikzstyle{operator} = [rectangle, draw, fill=blue!60, text width=5em, text centered, rounded corners = 8pt, minimum height=30pt, line width=1pt]
+\tikzstyle{callout} = [draw, rectangle callout, callout relative pointer={#1}, line width=1pt]
+
+    \node [operator] at (0, 0) (reader) {Reader};
+    \node [operator, right = of reader] (map) {map x . bearFilter x};
+    \node [operator, right = of map] (count) {count};
+
+    \draw [thick,->,shorten >=1pt, line width=2pt] (reader) -- (map) 
+       node[callout={(-0.8,-40pt)}, midway,above = 45pt] {"WorD2"} node[midway,above= 45pt, shift={(2.5,-0.1)}] {@ (file1, version1)}
+       node[callout={(-0.5,-0.5)}, midway,above= 15pt, shift={(1.0,0.3)}] {"WORD1"} node[midway,above= 15pt, shift={(3.5,0.2)}] {@ (file2, version1)};
+    \draw [thick,->,shorten >=1pt, line width=2pt] (map) -- (count); 
+\end{tikzpicture}

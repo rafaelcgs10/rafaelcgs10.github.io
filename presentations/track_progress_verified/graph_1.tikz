@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=red, label={left:blue}] (1) at (0.5, 1.5) {};
+		\node [style=red, label={left:green}] (4) at (-1.5, 1.5) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow, bend left=45, looseness=1.50] (4) to (1);
+	\end{pgfonlayer}
+\end{tikzpicture}
