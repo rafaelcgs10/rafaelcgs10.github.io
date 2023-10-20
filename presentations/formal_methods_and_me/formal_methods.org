@@ -1,0 +1,180 @@
+* Introdução
+** Prólogo
+  - Sempre gostei de computadores
+  - Queria fazer jogos
+  - Eu fiz um jogo
+
+** Entrei na Computação em 2012/2
+  - Só estudava pra passar em cálculo
+  - Eu gostava muito da parte de Computação Gráfica, como as coisas são desenhadas, como funciona ray tracing, shading etc.
+  - Fiz uma IC na física
+
+** IC na física
+  - Melhorei minhas habilidades de programação
+  - Melhorei a minha matemática básica
+
+* Momentos legais
+** Campus Party
+***
+#+ATTR_ORG: :width 600
+[[./campus_party.jpg]]
+
+***
+#+ATTR_ORG: :width 1000
+[[./campus_party_2.jpg]]
+
+** Cacic
+***
+#+A TTR_ORG: :width 900
+[[./cacic_1.jpg]]
+***
+#+ATTR_ORG: :width 900
+[[./cacic_2.jpg]]
+***
+#+ATTR_ORG: :width 900
+[[./cacic_3.jpg]]
+***
+#+ATTR_ORG: :width 1000
+[[./cacic_4.jpg]]
+***
+#+ATTR_ORG: :width 800
+[[./compu_pizza.jpg]]
+***
+#+ATTR_ORG: :width 100  0
+[[./compu_pizza_2.jpg]]
+
+** Colóquios
+***
+#+ATTR_ORG: :width 1000
+[[./coloquios_1.jpg]]
+***
+#+ATTR_ORG: :width 1000
+[[./coloquios_2.jpg]]
+***
+#+ATTR_ORG: :width 1000
+[[./coloquios_3.jpg]]
+***
+#+ATTR_ORG: :width 1000
+[[./coloquios_4.jpg]]
+***
+#+ATTR_ORG: :width 1000
+[[./coloquios_5.jpg]]
+***
+#+ATTR_ORG: :width 1000
+[[./coloquios_6.jpg]]
+***
+#+ATTR_ORG: :width 1000
+[[./coloquios_7.jpg]]
+** Maratona
+***
+#+ATTR_ORG: :width 1000
+[[./maratona.jpg]]
+** Semana da Computação
+***
+#+ATTR_ORG: :width 1000
+[[./semama_computacao.jpg]]
+***
+#+ATTR_ORG: :width 1000
+[[./semana_computacao.jpg]]
+***
+#+ATTR_ORG: :width 1000
+[[./pirula.jpg]]
+** Grupo Função
+***
+#+ATTR_ORG: :width 1000
+[[./grupo_funcao.jpg]]
+****
+#+ATTR_ORG: :width 600
+[[./grupo_funcao_2.jpg]]
+* Como entrei nessa
+** Linguagens Formais
+- Especificação Formal: Um comportamento/propriedade matematicamente definido
+- Programas poderiam ser baseados em especificações
+- Algoritmos interessantes
+- Hierarquia de Chomsky
+- Provas interessantes (lema do bombeamento)
+
+** Teoria da Computação
+- Máquinas de Turing
+- Indecibilidade
+- Computabilidade
+
+** Programação Funcional
+- Cálculo Lambda
+- Sistemas de tipos
+- Haskell (maior poder de abstração)
+- Sistemas de tipos Dependentes
+
+** Métodos Formais
+- Assistentes de provas
+
+** Mestrado
+- Coq
+- Inferência de tipos
+
+* Métodos Formais
+** Confiança em software
+  - Testes vs Verficiação formal
+  - Para o que cada um serve?
+  - "Testes não provam a ausência de bugs, somente a presença deles"
+  - Provas substituem testes?
+
+** Verificações automáticas
+  - Verificação automática por sistemas de tipos
+  - Analisadores estáticos (linters) - Rubocop não é linter
+  - Rust: Tipos lineares, sem mutabilidade, facilita a concorrência
+  - Haskell: Sistema de tipos DM, sem efeitos colaterais 
+
+** Model Checking
+  - (não manjo)
+  - Redes de Petri, Cadeias de Markov, Sistema de Eventos (modelos finitos)
+  - Muito utilizado na verificação de hardware
+  - Definina em modelo matemático para especificar o comportamento de alto nível
+  - O model checker realiza verificações sobre o modelo e identifica problemas/estados indesejados
+  - TLA+
+    
+** Linguagens com Sistemas de Tipos Dependentes
+  - O que são sistemas de tipos dependentes
+  - Idris, Agda, Epigram, F*
+#+BEGIN_SRC haskell
+app : Vect n a -> Vect m a -> Vect (n + m) a
+app Nil       ys = ys
+app (x :: xs) ys = x :: app xs ys
+#+END_SRC
+
+** Assistentes de Provas
+  - São ferramentas que permitem o desenvolvimento de provas matemáticas
+  - Programas verificados podem ser extraídos
+  - Coq, Isabelle, Twelf
+#+BEGIN_SRC coq
+Theorem plus_id_example : forall n m:nat,
+  n = m -> n + n = m + m.
+Proof.
+  intros n m.
+  intros H.
+  rewrite -> H.
+  reflexivity.
+Qed.
+#+END_SRC
+   
+* Revolução em software
+** Compcert
+  - Compilador de C sem bugs!
+  - Desenvolvido em Coq
+  - http://compcert.inria.fr/
+  - https://www.absint.com/compcert/index.htm
+
+** Sel4
+  - Micro-Kernel sem (certas) falhas de segurança
+  - Garante o isolamento entre aplicações do sistema
+  - https://sel4.systems/
+  - Provas em Isabelle
+    
+** Projeto DeepSpec
+  - https://deepspec.org/main
+
+* Meu doutorado
+** Isabelle (HOL)
+** Timely Dataflow
+** Framework para paralelismo de dados (bigdata)
+** Verificação completa e executável do framework
