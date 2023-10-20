@@ -1,0 +1,88 @@
+#+TITLE: How to Write Better Programs
+#+AUTHOR: Rafael Castro
+#+EMAIL: rasi@di.ku.dk
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+#+LATEX_HEADER: \usepackage{graphicx, hyperref, url}
+#+latex_header: \mode<beamer>{\usetheme{Madrid}}
+#+OPTIONS:   H:2 toc:nil
+#+LANGUAGE: en
+#+DATE: 27/10/2023
+
+* Introduction
+** Bugs are annoying
+[[./blue_screem.png]]
+- why they happen?
+
+* Software bugs are catastrophic
+** Therac-25: The killing radiation therapy machine
+[[./therac25.png]]
+
+# - Therac-25: The killing radiation therapy machine used treat cancer in the 80s
+#   - The first radiation machine to be mainly controlled by software
+#   - They hired programmer... coding hobbyist, who was never identified. The manufacturer simply had no to record who the person was.
+#     - 100.000 lines of code
+#     - Operators became accustomed with those error messages
+#     - Malfunction 54 was the one killing people
+#   - Overdose of radiation
+** People got hurt
+- At least 6 accidents between 1985 and 1987, 3 died later
+
+#+ATTR_LATEX: :width 0.6\textwidth
+  [[./radiation.png]]
+
+** Malfunction messages
+- Malfunction messages from 1 to 64, with no extra information
+
+#+ATTR_LATEX: :width 0.8\textwidth
+[[./error54.png]]
+
+** The machine a bug
+- The machine had three modes: field light, direct electron beam, x-ray
+
+#+ATTR_LATEX: :width 0.6\textwidth
+  [[./beam.png]]
+
+** The machine a bug
+
+#+ATTR_LATEX: :width 0.7\textwidth
+[[./change.png]]
+
+** How to cause the bug
+
+#+ATTR_LATEX: :width 0.8\textwidth
+[[./mistake.png]]
+
+* Formal Methods
+** How to write software that don't cause catastrophic failures?
+- Formal Methods!
+- There are many techniques: type systems, model checking and formal proving
+
+** What is to prove something?
+- Establishing mathematical facts that are universally true
+- You know some: Pythoragoras theorem: $\forall a b c. c^2 = a^2 + b^2$
+#+ATTR_LATEX: :width 0.2\textwidth
+  [[./pythagoras.png]]
+
+Two ways to calculate this area:
+ 1. $(a + b)(a + b) = a^2 + ab + ab + b^2$
+ 2. $4(ab)/2 + c^2$
+
+    they should be the same!
+
+    $a^2 + ab + ab + b^2 = 4(ab)/2 + c^2$
+
+    $a^2 + b^2 = c^2$
+
+- How can you be sure that there is no mistake in the proof?
+
+** Proof assistants
+- Programs that verify if your proof is correct!
+- We trust the verifier!
+
+- I use a proof assistant called Isabelle/HOL to verify programs
+- How my research works:
+  1. I write a specification of the program: what it should do, and what it should *not* do
+  2. I write the program
+  3. I write a proof that the program respects the specification
