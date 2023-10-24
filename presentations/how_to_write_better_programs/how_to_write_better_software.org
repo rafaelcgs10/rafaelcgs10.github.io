@@ -30,7 +30,7 @@
 - At least 6 accidents between 1985 and 1987, 3 died later
 
 #+ATTR_LATEX: :width 0.6\textwidth
-  [[./radiation.png]]
+[[./radiation.png]]
 
 ** Malfunction messages
 - Malfunction messages from 1 to 64, with no extra information
@@ -42,15 +42,13 @@
 - The machine had three modes: field light, direct electron beam, x-ray
 
 #+ATTR_LATEX: :width 0.6\textwidth
-  [[./beam.png]]
+[[./beam.png]]
 
 ** The machine a bug
-
 #+ATTR_LATEX: :width 0.7\textwidth
 [[./change.png]]
 
 ** How to cause the bug
-
 #+ATTR_LATEX: :width 0.8\textwidth
 [[./mistake.png]]
 
@@ -63,19 +61,19 @@
 - Establishing mathematical facts that are universally true
 - You know some: Pythoragoras theorem: $\forall a b c. c^2 = a^2 + b^2$
 #+ATTR_LATEX: :width 0.2\textwidth
-  [[./pythagoras.png]]
+[[./pythagoras.png]]
 
 Two ways to calculate this area:
- 1. $(a + b)(a + b) = a^2 + ab + ab + b^2$
- 2. $4(ab)/2 + c^2$
+  1. $(a + b)(a + b) = a^2 + ab + ab + b^2$
+  2. $4(ab)/2 + c^2$
 
-    they should be the same!
+     they should be the same!
 
-    $a^2 + ab + ab + b^2 = 4(ab)/2 + c^2$
+     $a^2 + ab + ab + b^2 = 4(ab)/2 + c^2$
 
-    $a^2 + b^2 = c^2$
+     $a^2 + b^2 = c^2$
 
-- How can you be sure that there is no mistake in the proof?
+  - How can you be sure that there is no mistake in the proof?
 
 ** Proof assistants
 - Proof assistants: programs that verify if your proof is correct!
@@ -86,10 +84,11 @@ Two ways to calculate this area:
   1. I write a specification of the program: what it should do, and what it should *not* do
   2. I write the program
   3. I write a proof that the program respects the specification
+     - Usually this requires writing many other auxiliary proofs
 
 ** Examples!
-- Division algorithm
-  https://www.reddit.com/r/learnprogramming/comments/428t8x/eli5_what_is_an_algorithm_and_how_is_it_related/
+- Pythagoras
+- Sorting 
 
 ** This is a real job!
 - TLA+/TLC: Amazon AWS, Intel, Microsoft...
@@ -97,3 +96,6 @@ Two ways to calculate this area:
 - Isabelle/HOL (seL4): Defense Advanced Research Projects Agency (DARPA)
 - Formal methods companies: Absint, Trustworthy Systems
 - Apple: https://jobs.apple.com/en-us/details/200343072/formal-verification-engineer
+
+** Thank you! 
+- Questions?
