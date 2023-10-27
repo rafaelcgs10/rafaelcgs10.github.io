@@ -13,7 +13,7 @@
 * Introduction
 ** Bugs are annoying
 #+ATTR_LATEX: :width 0.8\textwidth
-[[./blue_screem.png]]
+[[./blue_screem_new.png]]
   
 ** Bugs are annoying
 #+ATTR_LATEX: :width 0.8\textwidth
