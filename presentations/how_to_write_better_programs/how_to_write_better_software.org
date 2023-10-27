@@ -12,20 +12,17 @@
 
 * Introduction
 ** Bugs are annoying
+#+ATTR_LATEX: :width 0.8\textwidth
 [[./blue_screem.png]]
-- why they happen?
+  
+** Bugs are annoying
+#+ATTR_LATEX: :width 0.8\textwidth
+[[./harry.png]]
 
 * Software bugs are catastrophic
 ** Therac-25: The killing radiation therapy machine
 [[./therac25.png]]
 
-# - Therac-25: The killing radiation therapy machine used treat cancer in the 80s
-#   - The first radiation machine to be mainly controlled by software
-#   - They hired programmer... coding hobbyist, who was never identified. The manufacturer simply had no to record who the person was.
-#     - 100.000 lines of code
-#     - Operators became accustomed with those error messages
-#     - Malfunction 54 was the one killing people
-#   - Overdose of radiation
 ** People got hurt
 - At least 6 accidents between 1985 and 1987, 3 died later
 
