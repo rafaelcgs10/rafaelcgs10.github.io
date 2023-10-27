@@ -1,0 +1,492 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+\usetheme{Madrid}
+
+\usepackage{fancybox,graphicx,hyperref,url}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+%\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\setbeamercovered{transparent}
+
+\setlistdepth{9}
+\setlist[itemize,1]{label=$\bullet$}
+\setlist[itemize,2]{label=$\bullet$}
+\setlist[itemize,3]{label=$\bullet$}
+\setlist[itemize,4]{label=$\bullet$}
+\setlist[itemize,5]{label=$\bullet$}
+\setlist[itemize,6]{label=$\bullet$}
+\setlist[itemize,7]{label=$\bullet$}
+\setlist[itemize,8]{label=$\bullet$}
+\setlist[itemize,9]{label=$\bullet$}
+\renewlist{itemize}{itemize}{9}
+
+\setlist[enumerate,1]{label=$\arabic*.$}
+\setlist[enumerate,2]{label=$\alph*.$}
+\setlist[enumerate,3]{label=$\roman*.$}
+\setlist[enumerate,4]{label=$\arabic*.$}
+\setlist[enumerate,5]{label=$\alpha*$}
+\setlist[enumerate,6]{label=$\roman*.$}
+\setlist[enumerate,7]{label=$\arabic*.$}
+\setlist[enumerate,8]{label=$\alph*.$}
+\setlist[enumerate,9]{label=$\roman*.$}
+\renewlist{enumerate}{enumerate}{9}
+
+\AtBeginSection[]{
+  \begin{frame}[noframenumbering]
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title[Verified Time-Aware Stream Processing]{Verified Time-Aware Stream Processing}
+
+\author[Rafael Castro]{
+  Rafael Castro G. Silva\\\medskip
+  {\small \url{rafaelcgs10@gmail.com}}}
+
+\date{02/11/2023}
+
+\institute[UCPH]{
+  Department of Computer Science \\
+  University of Copenhagen}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{What is this PhD about?}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \begin{itemize}
+        \item Distributed Systems
+              \begin{itemize}
+                \item Stream processing frameworks
+                      \begin{itemize}
+                        \item Dataflow models
+                              \begin{itemize}
+                                \item Timely Dataflow
+                              \end{itemize}
+                      \end{itemize}
+              \end{itemize}
+        \item Formal Methods
+              \begin{itemize}
+                \item Verification using proof assistants
+                      \begin{itemize}
+                        \item Isabelle proofs
+                              \begin{itemize}
+                                \item Verified and executable code
+                              \end{itemize}
+                      \end{itemize}
+              \end{itemize}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.55\textwidth}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Contents}
+  \begin{itemize}
+    \item Timely Dataflow
+    \item Progress Tracking
+    \item Verified Progress Tracking
+    \item Verified Timely Dataflow
+    \item Questions, comments and suggestions
+  \end{itemize}
+\end{frame}
+
+\section{Timely Dataflow}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow}
+  \begin{center}
+    \input{example_1_frame_1}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow}
+  \begin{center}
+    \input{example_1_frame_2}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow}
+  \begin{center}
+    \input{example_1_frame_3}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow}
+  \begin{center}
+    \input{example_1_frame_4}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow}
+  \begin{center}
+    \input{example_1_frame_5}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow}
+  \begin{center}
+    \input{example_1_frame_6}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow}
+  \begin{center}
+    \input{example_1_frame_7}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow}
+  \begin{center}
+    \input{example_1_frame_8}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow}
+  \begin{center}
+    \input{example_1_frame_9}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example of a conventional Dataflow with a cycle}
+  \begin{center}
+    \input{example_2_1_frame_1}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow with a cycle}
+  \begin{center}
+    \input{example_2_1_frame_2}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow with a cycle}
+  \begin{center}
+    \input{example_2_1_frame_3}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow with a cycle}
+  \begin{center}
+    \input{example_2_1_frame_4}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow with a cycle}
+  \begin{center}
+    \input{example_2_1_frame_5}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow with a cycle}
+  \begin{center}
+    \input{example_2_1_frame_6}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow with a cycle}
+  \begin{center}
+    \input{example_2_1_frame_7}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow with a cycle}
+  \begin{center}
+    \input{example_2_1_frame_8}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example of a conventional Dataflow with a cycle}
+  \begin{center}
+    \input{example_2_1_frame_9}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Timely Dataflow}
+  \begin{figure}
+    \shadowbox{\includegraphics[width=0.5\textwidth]{naiad.jpg}}
+  \end{figure}
+  \pause
+  \begin{itemize}
+    \item Iterative computation (cycles)
+          \pause
+    \item Reports on the presence of data instead of the absence
+          \pause
+    \item Two implementations: C\# (Naiad) and Rust
+  \end{itemize}
+\end{frame}
+
+\section{Progress Tracking}
+
+\begin{frame}
+  \frametitle{Progress Tracking Protocolllll}
+  \begin{itemize}
+    \item Two core components: Local Propagation and Distributed Exchange
+          \begin{itemize}
+            \item Local: localy compute the frontiers
+                  \begin{itemize}
+                    \item \textit{A frontier is a lower bound on the timestamps that may appear at the operator instance inputs}
+                  \end{itemize}
+            \item Exchange the timestamps between workers
+          \end{itemize}
+          \pause
+    \item For every worker and for every location of the graph a conservative approximation of which timestamps may still arrive (a.ka. frontier)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Local Propagation Example}
+  \begin{center}
+    \input{example_3_frame_1}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Local Propagation Example}
+  \begin{center}
+    \input{example_3_frame_2}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Local Propagation Example}
+  \begin{center}
+    \input{example_3_frame_3}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Local Propagation Example}
+  \begin{center}
+    \input{example_3_frame_4}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Local Propagation Example}
+  \begin{center}
+    \input{example_3_frame_5}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Local Propagation Example}
+  \begin{center}
+    \input{example_3_frame_6}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Local Propagation Example}
+  \begin{center}
+    \input{example_3_frame_7}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Local Propagation Example}
+  \begin{center}
+    \input{example_3_frame_8}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Local Propagation Example}
+  \begin{center}
+    \input{example_3_frame_9}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Local Propagation Example}
+  \begin{center}
+    \input{example_3_frame_10}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Local Propagation Example}
+  \begin{center}
+    \input{example_3_frame_11}
+  \end{center}
+\end{frame}
+
+\section{Verified Progress Tracking}
+
+\begin{frame}
+  \frametitle{Abadi et al.’s exchange protocol}
+  \begin{columns}
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item Exchange Protocol Verification:
+              \begin{itemize}
+                \item Presented by Abadi et al. in TLA+
+              \end{itemize}
+              \pause
+      \end{itemize}
+      \begin{block}{Distribute \textbf{Safety}}
+        If a timestamp is vacant in one worker (now), then that timestamp and any lesser it is vacant for the global system state (now and forever)
+      \end{block}
+    \end{column}
+    \begin{column}{.45\textwidth}
+      \begin{figure}
+        \shadowbox{\includegraphics[width=0.95\textwidth]{tla+.jpg}}
+      \end{figure}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Verified Progress Tracking for Timely Dataflow}
+  \begin{columns}
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item Exchange Protocol Verification:
+              \begin{itemize}
+                \item Refined version
+                \item Same safety property
+              \end{itemize}
+              \pause
+        \item Local Propagation Verification
+      \end{itemize}
+      \begin{block}{Local \textbf{Safety}}
+        If all worklists neither contain timestamp $t$ nor smaller timestamps, then all locations know whether they may encounter $t$ in the future.
+      \end{block}
+    \end{column}
+    \begin{column}{.45\textwidth}
+      \begin{figure}
+        \shadowbox{\includegraphics[width=0.95\textwidth]{isabelle.jpg}}
+      \end{figure}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Verified Timely Dataflow}
+
+\begin{frame}
+  \frametitle{Verified Timely Dataflow}
+  \begin{block}{General goal}
+    Contribute to an ongoing formalization effort using the Isabelle proof assistant towards the first formally verified system for the analysis of big data.
+  \end{block}
+  \pause
+  \begin{block}{Specific goals}
+    \begin{enumerate}
+      \item Termination of the propagation protocol
+      \item Executable Progress Tracking Protocol
+      \item Data plane
+      \item Scopes
+      \item DSL
+      \item Experiments
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Termination of the propagation protocol}
+  \begin{itemize}
+    \item \textit{propagate} is a relation between two system configurations and also parameterized by location and a timestamp:
+          \begin{itemize}
+            \item Propagating the timestamp \textit{t} in location \textit{loc} the configuration \textit{c1} turns into \textit{c2}
+          \end{itemize}
+    \item We aim to show that it's impossible cannot propagate forever
+    \item We've already managed to show that for a fixed timestamp it cannot be propagate forever
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Executable Progress Tracking Protocol}
+  \begin{itemize}
+    \item The propagation protocol is already executable (Sara Decova's master thesis)
+    \item The Exchange protocol also should be made executable
+          \begin{itemize}
+            \item Prove that the functions are consistent with the relational counterparties
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Data plane}
+  \begin{itemize}
+    \item Nodes must be real operators: they execute user defined functions over the data
+    \item Edges must be channels: they are streams with push and pull API
+          \begin{itemize}
+            \item Must exchange data between different workers
+          \end{itemize}
+    \item Low level operator constructors (define operators for any amount of inputs and outputs)
+    \item A set of generally useful built-in operators: filter, filter partition, count, aggregate, etc
+    \item The Safety properties again!
+          \begin{itemize}
+            \item Use safety to show properties of operators and dataflows
+                  \begin{itemize}
+                    \item Ex: show that \textit{count} doesn't mix the results of different (comparable) timestamps
+                  \end{itemize}
+          \end{itemize}
+    \item Executable from the start
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Scopes}
+  \begin{itemize}
+    \item Hierarchal dataflows: an operator can also be a sub-dataflow inside of a dataflow
+    \item This is designed as scopes
+          \begin{itemize}
+            \item An additional timestamp dimension
+          \end{itemize}
+    \item Another propagation (upwards and downwards)
+    \item The Safety properties once again!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{DSL}
+  \begin{itemize}
+    \item Writting dataflow programs in Isabelle is quite inconvenient
+    \item A suitable domain-specific language (DSL)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Experiments}
+  \begin{enumerate}
+    \item How faithful is the verified model to the Rust implementation?
+    \item Are there any bugs in the Rust implementation not present in the verified code?
+    \item How does the performance of the verified code compares to the Rust implementation?
+  \end{enumerate}
+\end{frame}
+
+\section{Questions, comments and suggestions}
+
+\end{document}
