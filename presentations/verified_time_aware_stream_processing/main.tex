@@ -1,5 +1,6 @@
 \documentclass[aspectratio=169,10pt]{beamer}
 \usetheme{Madrid}
+\usepackage[T1]{fontenc}
 
 \usepackage{fancybox,graphicx,hyperref,url}
 \usepackage{tikz}
@@ -13,6 +14,11 @@
 \input{lstisabelle}
 \usepackage[listings,skins,breakable,xparse]{tcolorbox}
 \tcbuselibrary{theorems}
+\tcbset{highlight math/.append style={boxrule=0pt,
+                                      frame hidden,
+                                      colback=yellow!40!white,
+                                      sharp corners}}
+
 \usepackage{xpatch}
 \usepackage{xcolor}
 \usepackage{realboxes}
@@ -21,12 +27,18 @@
 \xpretocmd\lstinline{\Colorbox{yellow!10!white}\bgroup\appto\lst@DeInit{\egroup}}{}{}
 \makeatother
 
-\definecolor{yourcolor}{RGB}{128, 0, 0}
+\definecolor{my_red}{RGB}{128, 0, 0}
 
 \lstset{captionpos=b}
 \lstset{numberbychapter=false}
 \lstset{autogobble}
 % \lstset{breaklines=true}
+
+\usepackage{tikz}
+\usepackage{subcaption}
+\usetikzlibrary{calc, chains, decorations.pathmorphing}
+\usetikzlibrary{shapes,arrows,backgrounds}
+\usetikzlibrary{positioning,fit,shapes.geometric,shapes}
 
 \setbeamercovered{transparent}
 
@@ -125,32 +137,97 @@
 
 \begin{frame}[fragile]
   \frametitle{Dataflow Models}
+  \begin{itemize}
+    \item Stream Processing
+    \item Dataflow Model
+    \item Time-Aware Computations
+    \item Bugs in Stream Processing
+  \end{itemize}
 \end{frame}
 
 \section{Preliminaries}
-
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL}
   \begin{itemize}
-    \item Datatypes
-    \item Codatatypes
-    \item Induction
-    \item Coinduction
+    \item HOL
+    \item Isabelle/HOL
   \end{itemize}
+\end{frame}
 
-  \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-    codatatype enat = EZero | ESucc enat
-  \end{tcblisting}
+\begin{frame}[fragile]
+  \frametitle{Isabelle/HOL: (Co)datatypes}
+  \begin{itemize}
+    \item Datatypes and Codatatypes
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
+  for map: lmap where "ltl LNil = LNil"
+          \end{tcblisting}
 
-  \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=yourcolor]
+    \item Induction principle for \is{lset} membership:
+  \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red, top=0pt, arc=0pt, size=fbox,boxrule=1pt]
     \begin{array}{@{}l@{}}
       \text{\is{x \\in lset lxs --> (!! x lxs. P x (LCons x lxs)) -->}}
       \\
-      \text{\is{(!!x lxs y . y \\in lset lxs --> P y lxs --> P y (LCons x lxs)) -->>}}
-      \\
-      \text{\is{P x lxs}}
+      \text{\is{(!!x lxs y . y \\in lset lxs --> P y lxs --> P y (LCons x lxs)) -->> P x lxs}}
     \end{array}
   \end{tcolorbox}
+
+    \item Coinductive principle for lazy list equality:
+          \begin{itemize}
+            \item Show a \emph{bisimulation} \is{R} that relates the lazy lists:
+\begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red, top=0pt, arc=0pt, size=fbox,boxrule=1pt]
+  \hspace*{-0.7cm}
+  \begin{array}{@{}l@{}}
+  \text{\is{R lxs lys --> !!lxs lys . R lxs lys --> lnull lxs <--> lnull lys \\and}}
+  \\
+  \quad\text{\is{\\<not>lnull lxs --> \\<not>lnull lys --> lhd lxs = lhd lys \\and R (ltl lxs) (ltl lys)) -->> lxs = lys}}
+  \end{array}
+\end{tcolorbox}
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Isabelle/HOL: Recursion and While Combinator}
+  \begin{itemize}
+    \item Recursion
+
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+fun lshift :: "'a list => 'a llist => 'a llist" (infixr @@ 65) where
+  "lshift [] lxs = lxs"
+| "lshift (x # xs) lxs = LCons x (lshift xs lxs)"
+\end{tcblisting}
+  \item While Combinator
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+definition while_option :: "('a => bool) => ('a => 'a) => 'a => 'a option" where
+"while_option b c s = (if (?k. \<not> b ((c ^^ k) s))
+   then Some ((c ^^ (LEAST k. \<not> b ((c ^^ k) s))) s)
+   else None)"
+\end{tcblisting}
+    \item While rule
+\begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red, top=0pt, arc=0pt, size=fbox,boxrule=1pt]\label{while_option_rule}
+  \begin{array}{@{}l@{}}
+    \text{{\is{Q s --> while_option t b s = Some s' --> (!!s. Q s --> t s --> Q (b s)) -->> Q s'}}}
+  \end{array}
+\end{tcolorbox}
+          \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Isabelle/HOL: Corecursion and Friends}
+  \begin{itemize}
+    \item Corec
+    \item Friend
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Isabelle/HOL: (Co)inductive Predicates}
+  \begin{itemize}
+    \item Inductive
+    \item Coinductive
+    \item Coinduction
+  \end{itemize}
 
 \end{frame}
 
@@ -163,6 +240,72 @@
     \item Produce \lstinline{produce}
     \item Example
   \end{itemize}
+
+  \begin{figure}[!t]
+    \begin{subfigure}{.5\textwidth}
+      \raggedright
+      \begin{tabular}{@{}l@{}}
+        \text{\is{stream_1 =}}
+        \\
+        \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9},background rectangle/.style={fill=yellow!10!white},show background rectangle]
+          \tikzset{tape/.style={minimum size=.6cm, draw}}
+          \begin{scope}[start chain=0 going right, node distance=0mm]
+            \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_5 **c**}} {
+              \ifnum\i=5
+                \node [on chain=0, tape, outer sep=0pt] (n\i) {\x};
+                \draw (n\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(n\i.south east)+(+.1,0)$)} -- (n\i.south east) -- cycle;
+              \else
+                \node [on chain=0, tape] (n\i) {\x};
+              \fi
+            }
+          \end{scope}
+        \end{tikzpicture}
+        \vspace*{-1.3ex}
+        \\
+        \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9},background rectangle/.style={fill=yellow!10!white},show background rectangle]
+          \tikzset{tape/.style={minimum size=.6cm, draw}}
+          \begin{scope}[start chain=0 going right, node distance=0mm]
+            \foreach \x [count=\i] in {\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_2},\is{WM t_5},\is{DT t_2 **b**}} {
+              \ifnum\i=5
+                \node [on chain=0, tape, outer sep=0pt] (n\i) {\x};
+                \draw (n\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(n\i.south east)+(+.1,0)$)} -- (n\i.south east) -- cycle;
+              \else
+                \node [on chain=0, tape] (n\i) {\x};
+              \fi
+              \ifnum\i=1
+                \draw (n\i.north west) -- ++(-0.1,0) decorate [decoration={zigzag, segment length=0.12cm, amplitude=.02cm}] {-- ($(n\i.south west)+(-.1,0)$)} -- (n\i.south west) -- cycle;
+              \fi
+            }
+            \node [right=.05cm of n5] {$\cdots$};
+          \end{scope}
+        \end{tikzpicture}
+      \end{tabular}
+      \caption{Prefix of $stream_1$}
+      \label{fig:stream_example_1}
+    \end{subfigure}
+    \begin{subfigure}{.38\textwidth}
+      \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm,background rectangle/.style={fill=yellow!10!white},show background rectangle]
+        \node (t0) at (-0.8,0) {$C_{t_{0}}$: \{\is{**a**}\}};
+        \node (t1) at (-2.5,1) {$C_{t_{1}}$: \{\is{**c**}\}};
+        \node (t2) at (-0.8,1) {$C_{t_{2}}$: \{\is{**b**}\}};
+        \node (t3) at (0.8,1) {$C_{t_{3}}$: \{\is{**a**}\}};
+        \node (t4) at (-2.5,2) {$C_{t_{4}}$: \{\is{**d**}\}};
+        \node (t5) at (0.0,2) {$C_{t_{5}}$: \{\is{**a**,**c**}\}};
+
+        \path [->] (t0) edge node {} (t1);
+        \path [->] (t0) edge node {} (t2);
+        \path [->] (t0) edge node {} (t3);
+        \path [->] (t3) edge node {} (t5);
+        \path [->] (t1) edge node {} (t4);
+        \path [->] (t2) edge node {} (t5);
+      \end{tikzpicture}
+      \caption{Corresponding set of collections}
+      \label{fig:diamond_order}
+    \end{subfigure}
+    \vspace*{-3ex}
+    \caption{An example stream and its collections (ordered by their time-stamps)}
+    \vspace*{-2ex}
+  \end{figure}
 \end{frame}
 
 \begin{frame}
@@ -184,7 +327,73 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Building Blocks: }
+  \frametitle{Building Blocks: Batch Operator}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Batch Operator: Soundness}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Batch Operator: Completeness}
+  \begin{itemize}
+    \item Uses soundness of \is{batch_op}
+    \item Proof by induction over n
+  \end{itemize}
+
+  \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red]
+    \hspace*{-0.6cm}
+  \begin{array}{@{}l@{}}
+    \text{\is{mono_prod lxs W --> (?i d. enat i < llength lxs \\<and> lnth lxs i = DT t d \\<and> n = Suc i) \\<or>}}
+    \\
+    \text{\is{n = 0 \\<and> t \\in set_t buf --> (\\<forall>t' \\in set_t buf. lfinite lxs \\<or> ?wm >= t' . WM wm \\in lset lxs) -->>}}
+    \\
+    \text{\is{?wm batch. DT wm batch \\in lset (produce (batch_op buf) lxs) \\<and> t \\in set_t batch \\<or>}}
+    \\
+    \text{\is{(\\<forall>k  \\in \{n ..< the_enat (llength lxs)\} . \\<not> (?t' >= t. lnth lxs k = WM t')) \\<and> lfinite lxs}}
+  \end{array}
+  \end{tcolorbox}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Batch Operator: Monotone}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Batch Operator: Productive}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Building Blocks: Incremental Operator}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Batch Operator: Soundness}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Batch Operator: Completeness}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Batch Operator: Monotone}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Batch Operator: Productive}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Compositional Reasoning}
 
 \end{frame}
 
@@ -195,13 +404,50 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Histogram: Soundness}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Histogram: Completeness}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Histogram: Monotone}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Histogram: Productive}
+\end{frame}
+
+\begin{frame}
   \frametitle{Efficient Histogram}
   \begin{itemize}
     \item Foo
   \end{itemize}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Join}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Join: Soundness}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Join: Completeness}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Join: Monotone}
+\end{frame}
+
 \section{Next Steps}
+
+\begin{frame}
+  \frametitle{Next Steps}
+\end{frame}
 
 \section{Questions, comments and suggestions}
 
