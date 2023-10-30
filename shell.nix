@@ -8,7 +8,7 @@ mkShell {
     languagetool
     editorconfig-core-c
     texlab
-    (texlive.combine { inherit (texlive) scheme-small wrapfig capt-of preview import enumitem; })
+    texlive.combined.scheme-full
   ];
   paths = [aspell aspellDicts.en];
 }
