@@ -197,8 +197,8 @@
   \begin{itemize}
     \item Datatypes and Codatatypes
           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-            codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
-            for map: lmap where "ltl LNil = LNil"
+codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
+  for map: lmap where "ltl LNil = LNil"
           \end{tcblisting}
     \item Examples:
           \begin{itemize}
@@ -228,8 +228,8 @@
   \begin{itemize}
     \item Datatypes and Codatatypes
           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-            codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
-            for map: lmap where "ltl LNil = LNil"
+codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
+  for map: lmap where "ltl LNil = LNil"
           \end{tcblisting}
     \item Examples:
           \begin{itemize}
@@ -260,8 +260,8 @@
   \begin{itemize}
     \item Datatypes and Codatatypes
           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-            codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
-            for map: lmap where "ltl LNil = LNil"
+codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
+  for map: lmap where "ltl LNil = LNil"
           \end{tcblisting}
     \item Examples:
           \begin{itemize}
@@ -377,8 +377,7 @@ codatatype ('o, 'i) op = Logic ("apply": "('i => ('o, 'i) op $\times$ 'o list)")
             \item Infinite trees: applying the selector \is{apply} ``walks'' a branch of the tree
           \end{itemize}
     \item Produce function: applies the logic (co)recursively throughout a lazy list
-          \begin{itemize}
-            \item The recursive part:
+\vspace*{-1ex}
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 definition "produce_1' op lxs = while_option
   ($\lambda$(op, lxs). \<not> lnull lxs \<and> snd (apply op (lhd lxs)) = [])
@@ -387,66 +386,71 @@ definition "produce_1 op lxs =
   (case produce_1' op lxs of None => None
   | Some (op', lxs') => if lnull lxs' then None else
     let (op'', out) = apply op' (lhd lxs') in Some (op'', hd out, tl out, ltl lxs'))"
+corec produce where
+  "produce op lxs = (case produce_1 op lxs of None => LNil
+    | Some (op', x, xs, lxs') => LCons x (xs @@ produce op' lxs'))"
 \end{tcblisting}
-          \end{itemize}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Operators: Example}
   \begin{itemize}
-    \item Example: counts elements satisfying \is{P}:
+    \item Example:
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 corec count_op where "count_op P n =
   Logic ($\lambda$e. if P e then (count_op P (n + 1), [n+1]) else (count_op P n, []))"
 \end{tcblisting}
   \end{itemize}
+  \begin{figure}[!t]
+    \centering
+    \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9}]
+      \begin{scope}[local bounding box=scope1]
+        \node[] (0,0) (s1) {\text{\is{stream_2}}};
+        \node[right = 0.0cm of s1] (eq) {$=$};
+      \end{scope}
+      \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
+        \tikzset{tape/.style={minimum size=.6cm, draw}}
+        \begin{scope}[start chain=0 going right, node distance=0mm]
+          \foreach \x [count=\i] in {\is{0},\is{3},\is{3},\is{6}, \is{24}} {
+            \node [on chain=0, tape] (a\i) {\x};
+          }
+        \end{scope}
+      \end{scope}
 
-\begin{figure}[!t]
-    \raggedright
-        \begin{tabular}{@{}l@{}}
-          \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9}]
-            \begin{scope}[local bounding box=scope1]
-              \node[] (0,0) (s1) {\text{\is{stream_2}}};
-              \node[right = 0.0cm of s1] (eq) {$=$};
-            \end{scope}
-            \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
-              \tikzset{tape/.style={minimum size=.6cm, draw}}
-              \begin{scope}[start chain=0 going right, node distance=0mm]
-                \foreach \x [count=\i] in {\is{0},\is{3},\is{3},\is{6}, \is{24}} {
-                  \node [on chain=0, tape] (n\i) {\x};
-                }
-              \end{scope}
-            \end{scope}
-          \end{tikzpicture}
-          \\
-
-          \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9}]
-            \begin{scope}[local bounding box=scope3]
-              \node[] (0,0) (prod) {\text{\is{produce (count_op is_even 0)}}};
-              \node[right = 0.0cm of prod] (s1) {\text{\is{stream_2}}};
-              \node[right = 0.0cm of s1] (eq) {$=$};
-            \end{scope}
-            \begin{scope}[shift={($(scope3.east)+(0.9cm,0)$)}]
-              \tikzset{tape/.style={minimum size=.6cm, draw}}
-              \begin{scope}[start chain=0 going right, node distance=0mm]
-                \foreach \x [count=\i] in {\is{1},\is{2}, \is{3}} {
-                  \node [on chain=0, tape] (n\i) {\x};
-                }
-              \end{scope}
-            \end{scope}
-          \end{tikzpicture}
-        \end{tabular}
-
-    \caption{Difference between \is{incr_hist_op'} and \is{incr_hist_op}}
-    \label{fig:diff_hist_op_multi_hist_op}
-\end{figure}
+      \begin{scope}[shift={($(scope1.center)+(-2.2cm,-1cm)$)},local bounding box=scope3]
+        \node[] (0,0) (prod) {\text{\is{produce (count_op is_even 0)}}};
+        \node[right = 0.0cm of prod] (s1) {\text{\is{stream_2}}};
+        \node[right = 0.0cm of s1] (eq) {$=$};
+      \end{scope}
+      \begin{scope}[shift={($(scope3.east)+(0.9cm,0)$)}]
+        \tikzset{tape/.style={minimum size=.6cm, draw}}
+        \begin{scope}[start chain=0 going right, node distance=0mm]
+          \foreach \x [count=\i] in {\is{1},\is{2}, \is{3}} {
+            \node [on chain=0, tape] (b\i) {\x};
+          }
+        \end{scope}
+      \end{scope}
+      \draw[->, thick]  (a1.south) -- (b1.north);
+      \draw[->, thick]  (a4.south) -- (b2.north);
+      \draw[->, thick]  (a5.south) -- (b3.north);
+    \end{tikzpicture}
+  \end{figure}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Sequential Composition}
   \begin{itemize}
-    \item Composition
+    \item Sequential composition: take the output of the first operator and give it as input to the second operator.
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+definition "fproduce op xs = fold ($\lambda$e (op, out).
+  let (op', out') = apply op e in (op', out @ out')) xs (op, [])"
+
+corec comp_op where
+  "comp_op op_1 op_2 = Logic ($\lambda$ev.
+     let (op_1', out) = apply op_1 ev;  (op_2', out') = fproduce op_2 out
+     in (comp_op op_1' op_2', out'))"
+\end{tcblisting}
     \item Skip n
   \end{itemize}
 \end{frame}
