@@ -109,6 +109,7 @@
 \begin{frame}[fragile]
   \frametitle{What is this PhD/Status seminar about?}
   \begin{itemize}
+          \pause
     \item Distributed Systems
           \begin{itemize}
             \item Stream processing frameworks
@@ -119,6 +120,7 @@
                           \end{itemize}
                   \end{itemize}
           \end{itemize}
+          \pause
     \item Formal Methods
           \begin{itemize}
             \item Verification using proof assistants
@@ -152,6 +154,9 @@
     \item Stream Processing
     \item Dataflow Model
     \item Time-Aware Computations
+          \begin{itemize}
+            \item Explain watermarks
+          \end{itemize}
     \item Bugs in Stream Processing
   \end{itemize}
 \end{frame}
@@ -206,6 +211,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
             \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
             \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
           \end{itemize}
+          \pause
     \item Induction principle assuming membership in the lazy list
     \item Coinductive principle for lazy list equality:
           \begin{itemize}
@@ -301,7 +307,7 @@ fun lshift :: "'a list => 'a llist => 'a llist" (infixr @@ 65) where
 definition while_option :: "('a => bool) => ('a => 'a) => 'a => 'a option" where
 "while_option b c s = $\ldots$"
 \end{tcblisting}
-    \item While rule for invariant reasoning:
+    \item While rule for invariant reasoning (hoare-style):
           \begin{itemize}
             \item There is something that holds before a step; that thing still holds after the step
           \end{itemize}
@@ -312,16 +318,20 @@ definition while_option :: "('a => bool) => ('a => 'a) => 'a => 'a option" where
   \frametitle{Isabelle/HOL: Corecursion and Friends}
   \begin{itemize}
           \item Corecursion is like recursion, but instead of always eventually reducing an argument it always eventually produces something
+          \pause
     \item Corec:
+\vspace*{-1ex}
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 corec lapp :: "'a llist => 'a llist => 'a llist" where
   "lapp lxs lys = case lxs of LNil => lys | LCons x lxs' => LCons x (lapp lxs' lys)"
 \end{tcblisting}
-
+\vspace*{-1ex}
+          \pause
     \item Friendly function
           \begin{itemize}
             \item Preserves productivity: it may consume at most one constructor to produce one constructor.
           \end{itemize}
+\vspace*{-1ex}
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 friend_of_corec lshift where
   "xs @@ lxs = (case xs of
@@ -331,6 +341,9 @@ friend_of_corec lshift where
 
 lconcat lxs = case lxs of LNil => LNil | LCons xs lxs' => lshift xs (lconcat lxs')
 \end{tcblisting}
+\vspace*{-1ex}
+          \pause
+          \item Coinduction up to congruence: Coinduction for Lazy list equality can be extended to compare an entire finite prefix through a congruence relation
   \end{itemize}
 \end{frame}
 
@@ -346,8 +359,9 @@ inductive in_llist :: "'a => 'a llist => bool" where
     In_llist: "in_llist x (LCons x lxs)"
   | Next_llist: "in_llist x lxs => in_llist x (LCons y lxs)"
 
-in_llist (2::nat) (LCons 1 (LCons (2 (...))))
+in_llist 2 (LCons 1 (LCons (2 (...))))
 \end{tcblisting}
+          \pause
     \item Coinductive predicate
           \begin{itemize}
             \item Infinite number of introduction rule applications
@@ -359,25 +373,37 @@ coinductive lprefix :: "'a llist => 'a llist => bool" where
 
 lprefix (LCons 1 (LCons (2 (...)))) (LCons 1 (LCons (2 (...))))
 \end{tcblisting}
+          \pause
     \item Coinduction principle
+    \item But not coinduction up to congruence for free
   \end{itemize}
 \end{frame}
 
 \section{Lazy Lists Processors}
 
 \begin{frame}[fragile]
-  \frametitle{Operators}
+  \frametitle{Operator formalization}
   \begin{itemize}
     \item Operator as a codatatype
           \begin{itemize}
             \item Taking \is{'i} as the input type, and \is{'o} as the output type:
+\vspace*{-1.5ex}
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 codatatype ('o, 'i) op = Logic ("apply": "('i => ('o, 'i) op $\times$ 'o list)")
 \end{tcblisting}
+\vspace*{-1.5ex}
+          \pause
             \item Infinite trees: applying the selector \is{apply} ``walks'' a branch of the tree
           \end{itemize}
+  \end{itemize}
+\end{frame}
+
+% TODO add some figure showing the tree
+\begin{frame}[fragile]
+  \frametitle{Execution formalization}
+  \begin{itemize}
     \item Produce function: applies the logic (co)recursively throughout a lazy list
-\vspace*{-1ex}
+\vspace*{-1.5ex}
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 definition "produce_1' op lxs = while_option
   ($\lambda$(op, lxs). \<not> lnull lxs \<and> snd (apply op (lhd lxs)) = [])
@@ -390,11 +416,14 @@ corec produce where
   "produce op lxs = (case produce_1 op lxs of None => LNil
     | Some (op', x, xs, lxs') => LCons x (xs @@ produce op' lxs'))"
 \end{tcblisting}
+\vspace*{-1.5ex}
+          \pause
+          \item \is{produce_1} has an induction principle based on the while invariant rule
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Operators: Example}
+  \frametitle{Operators: Count}
   \begin{itemize}
     \item Example:
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
@@ -442,33 +471,91 @@ corec count_op where "count_op P n =
   \frametitle{Sequential Composition}
   \begin{itemize}
     \item Sequential composition: take the output of the first operator and give it as input to the second operator.
+\vspace*{-1ex}
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 definition "fproduce op xs = fold ($\lambda$e (op, out).
   let (op', out') = apply op e in (op', out @ out')) xs (op, [])"
-
 corec comp_op where
   "comp_op op_1 op_2 = Logic ($\lambda$ev.
      let (op_1', out) = apply op_1 ev;  (op_2', out') = fproduce op_2 out
      in (comp_op op_1' op_2', out'))"
 \end{tcblisting}
-    \item Skip n
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Sequential Composition: Correctness}
+  \begin{itemize}
+    \item Correctness:
+\vspace*{-1ex}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+"produce (comp_op op_1 op_2) lxs = produce op_2 (produce op_1 lxs)"
+\end{tcblisting}
+\vspace*{-1ex}
+          \pause
+            \item Proof: coinduction principle for lazy list equality and \is{produce_1} induction principle
+                  \begin{itemize}
+          \pause
+                    \item Generalization: we must be able to reason about elements in arbitrary positions
+\vspace*{-1ex}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+corec skip_op where
+  "skip_op op n = Logic ($\lambda$ev. let (op', out) = apply op ev in
+     if length out < n then (skip_op op' (n - length out), [])
+     else (op', drop n out))"
+\end{tcblisting}
+\vspace*{-1ex}
+          \pause
+                    \item Correctness: Coinduction up to congruence for lazy list equality
+  \end{itemize}
   \end{itemize}
 \end{frame}
 
 \section{Time-Aware Operators}
 
-\begin{frame}
-  \frametitle{Monotone and Productive Time-Aware Streams}
+\begin{frame}[fragile]
+  \frametitle{Time-Aware Streams}
   \begin{itemize}
-    \item Monotone
-    \item Productive
+    \item Time-Aware lazy lists
+\vspace*{-1ex}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+datatype ('t::order, 'd) event = DT (tmp: 't) (data: 'd) | WM (wmk: 't)
+\end{tcblisting}
+\vspace*{-1ex}
+          \pause
+    \item Generalization to partial orders
+          \begin{itemize}
+            \item Cycles
+            \item Operators with multiple inputs
+          \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Monotone Time-Aware Streams}
+  \begin{itemize}
+    \item Monotone: watermarks do not go back in time
+\vspace*{-1ex}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+coinductive monotone :: "('t::order, 'd) event llist => 't set => bool" where
+  LNil: "monotone LNil W"
+| LConsR: "($\forall$wm' $\in$ W. \<not> wm' >= wm) --> monotone lxs ({wm} $\cup$ W) -->
+   monotone (LCons (WM wm) lxs) W"
+| LConsL: "($\forall$wm $\in$ W. \<not> wm >= t) --> monotone lxs W -->
+   monotone (LCons (DT t d) lxs) W"
+\end{tcblisting}
+\vspace*{-1ex}
+          \pause
+          \item Up to congruence coinduction principle
+          \pause
+    \item Example:
   \end{itemize}
 
   \begin{figure}[!t]
     \begin{subfigure}{.5\textwidth}
       \raggedright
       \begin{tabular}{@{}l@{}}
-        \text{\is{stream_1 =}}
+        \text{\is{stream_3 =}}
         \\
         \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9},background rectangle/.style={fill=yellow!10!white},show background rectangle]
           \tikzset{tape/.style={minimum size=.6cm, draw}}
@@ -503,7 +590,6 @@ corec comp_op where
           \end{scope}
         \end{tikzpicture}
       \end{tabular}
-      \caption{Prefix of $stream_1$}
       \label{fig:stream_example_1}
     \end{subfigure}
     \begin{subfigure}{.38\textwidth}
@@ -522,13 +608,36 @@ corec comp_op where
         \path [->] (t1) edge node {} (t4);
         \path [->] (t2) edge node {} (t5);
       \end{tikzpicture}
-      \caption{Corresponding set of collections}
       \label{fig:diamond_order}
-    \end{subfigure}
-    \vspace*{-3ex}
-    \caption{An example stream and its collections (ordered by their time-stamps)}
     \vspace*{-2ex}
+  \end{subfigure}
   \end{figure}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Productive Time-Aware Streams}
+  \begin{itemize}
+    \item Productive: always eventually allows the production
+          \pause
+          \begin{itemize}
+            \item Batching operators: accumulate data until its completion
+          \pause
+            \item Data is always eventually completed by some watermark
+\vspace*{-1ex}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+coinductive productive where
+  LFinite: "lfinite lxs --> productive lxs"
+| EnvWM: "\<not> lfinite lxs --> (?u $\in$ vimage WM (lset lxs). u >= t) -->
+   productive lxs --> productive (LCons (DT t d) lxs)"
+| SkipWM: "\<not> lfinite lxs --> productive lxs -->
+   productive (LCons (WM t) lxs)"
+\end{tcblisting}
+\vspace*{-1ex}
+          \pause
+          \item Up to congruence coinduction principle
+          \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
