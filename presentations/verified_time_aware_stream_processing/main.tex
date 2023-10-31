@@ -22,6 +22,17 @@
 \usepackage{xpatch}
 \usepackage{xcolor}
 \usepackage{realboxes}
+\usetikzlibrary{shadings}
+\usetikzlibrary{shapes.arrows,shadows.blur}
+
+
+\pgfdeclarefunctionalshading{Hermite-Gaussian modes}{\pgfpoint{-25bp}{-25bp}}{\pgfpoint{25bp}{25bp}}{}{
+    10 atan sin 1000 mul cos 1 add
+    exch
+    10 atan sin 1000 mul cos 1 add
+    mul 4 div
+    dup dup
+}
 
 \makeatletter
 \xpretocmd\lstinline{\Colorbox{yellow!10!white}\bgroup\appto\lst@DeInit{\egroup}}{}{}
@@ -154,37 +165,125 @@
   \end{itemize}
 \end{frame}
 
+  % \begin{figure}[h]
+  %   \centering
+  %   \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9},background rectangle/.style={fill=yellow!10!white},show background rectangle]
+  %     \begin{scope}[local bounding box=scope1]
+  %       \tikzset{tape/.style={minimum size=.6cm, draw}}
+  %       \begin{scope}[start chain=0 going right, node distance=0mm]
+  %         \foreach \x [count=\i] in {\is{0},\is{0},\is{0},\is{0}} {
+  %           \node [on chain=0, tape] (n\i) {\x};
+  %         }
+  %         \node [right=.05cm of n4] {$\cdots$};
+  %       \end{scope}
+  %     \end{scope}
+  %     \begin{scope}[shift={($(scope1.east)+(0.5cm,0)$)}]
+  %       \node (eq) {$=$};
+  %     \end{scope}
+  %     \begin{scope}[shift={($(scope1.east)+(1.8cm,0)$)}]
+  %       \tikzset{tape/.style={minimum size=.6cm, draw}}
+  %       \begin{scope}[start chain=0 going right, node distance=0mm]
+  %         \foreach \x [count=\i] in {\is{0},\is{0},\is{0},\is{0}} {
+  %           \node [on chain=0, tape] (n\i) {\x};
+  %         }
+  %         \node [right=.05cm of n4] {$\cdots$};
+  %       \end{scope}
+  %     \end{scope}
+  %   \end{tikzpicture}
+  % \end{figure}
+
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL: (Co)datatypes}
   \begin{itemize}
     \item Datatypes and Codatatypes
           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
-  for map: lmap where "ltl LNil = LNil"
+            codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
+            for map: lmap where "ltl LNil = LNil"
           \end{tcblisting}
-
-    \item Induction principle for \is{lset} membership:
-  \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red, top=0pt, arc=0pt, size=fbox,boxrule=1pt]
-    \begin{array}{@{}l@{}}
-      \text{\is{x \\in lset lxs --> (!! x lxs. P x (LCons x lxs)) -->}}
-      \\
-      \text{\is{(!!x lxs y . y \\in lset lxs --> P y lxs --> P y (LCons x lxs)) -->> P x lxs}}
-    \end{array}
-  \end{tcolorbox}
-
+    \item Examples:
+          \begin{itemize}
+            \item \is{LNil}
+            \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
+            \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
+          \end{itemize}
+    \item Induction principle assuming membership in the lazy list
     \item Coinductive principle for lazy list equality:
           \begin{itemize}
-            \item Show a \emph{bisimulation} \is{R} that relates the lazy lists:
-\begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red, top=0pt, arc=0pt, size=fbox,boxrule=1pt]
-  \hspace*{-0.7cm}
-  \begin{array}{@{}l@{}}
-  \text{\is{R lxs lys --> !!lxs lys . R lxs lys --> lnull lxs <--> lnull lys \\and}}
-  \\
-  \quad\text{\is{\\<not>lnull lxs --> \\<not>lnull lys --> lhd lxs = lhd lys \\and R (ltl lxs) (ltl lys)) -->> lxs = lys}}
-  \end{array}
-\end{tcolorbox}
+            \item Show that there is a pair of goggles that makes them to look the same, which implies that:
+                  \begin{itemize}
+                    \item The first lazy list if empty iff second is
+                    \item They have the same head
+                    \item Their tail looks the same
+                  \end{itemize}
           \end{itemize}
   \end{itemize}
+  \begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{equality_1.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Isabelle/HOL: (Co)datatypes}
+  \begin{itemize}
+    \item Datatypes and Codatatypes
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+            codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
+            for map: lmap where "ltl LNil = LNil"
+          \end{tcblisting}
+    \item Examples:
+          \begin{itemize}
+            \item \is{LNil}
+            \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
+            \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
+          \end{itemize}
+    \item Induction principle assuming membership in the lazy list
+    \item Coinductive principle for lazy list equality:
+          \begin{itemize}
+            \item Show that there is a pair of goggles that makes them to look the same, which must imply that:
+                  \begin{itemize}
+                    \item The first lazy list if empty iff second is
+                    \item They have the same head
+                    \item Their tail looks the same
+                  \end{itemize}
+          \end{itemize}
+  \end{itemize}
+  \begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{equality_2.png}
+  \end{figure}
+\end{frame}
+
+% TODO add notes for explaining codatatype command
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Isabelle/HOL: (Co)datatypes}
+  \begin{itemize}
+    \item Datatypes and Codatatypes
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+            codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
+            for map: lmap where "ltl LNil = LNil"
+          \end{tcblisting}
+    \item Examples:
+          \begin{itemize}
+            \item \is{LNil}
+            \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
+            \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
+          \end{itemize}
+    \item Induction principle assuming membership in the lazy list
+    \item Coinductive principle for lazy list equality:
+          \begin{itemize}
+            \item Show that there is a pair of goggles that makes them to look the same, which must imply that:
+                  \begin{itemize}
+                    \item The first lazy list if empty iff second is
+                    \item They have the same head
+                    \item Their tail looks the same
+                  \end{itemize}
+          \end{itemize}
+  \end{itemize}
+  \begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{equality.png}
+  \end{figure}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -200,35 +299,68 @@ fun lshift :: "'a list => 'a llist => 'a llist" (infixr @@ 65) where
   \item While Combinator
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 definition while_option :: "('a => bool) => ('a => 'a) => 'a => 'a option" where
-"while_option b c s = (if (?k. \<not> b ((c ^^ k) s))
-   then Some ((c ^^ (LEAST k. \<not> b ((c ^^ k) s))) s)
-   else None)"
+"while_option b c s = $\ldots$"
 \end{tcblisting}
-    \item While rule
-\begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red, top=0pt, arc=0pt, size=fbox,boxrule=1pt]\label{while_option_rule}
-  \begin{array}{@{}l@{}}
-    \text{{\is{Q s --> while_option t b s = Some s' --> (!!s. Q s --> t s --> Q (b s)) -->> Q s'}}}
-  \end{array}
-\end{tcolorbox}
+    \item While rule for invariant reasoning:
+          \begin{itemize}
+            \item There is something that holds before a step; that thing still holds after the step
+          \end{itemize}
           \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL: Corecursion and Friends}
   \begin{itemize}
-    \item Corec
-    \item Friend
+          \item Corecursion is like recursion, but instead of always eventually reducing an argument it always eventually produces something
+    \item Corec:
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+corec lapp :: "'a llist => 'a llist => 'a llist" where
+  "lapp lxs lys = case lxs of LNil => lys | LCons x lxs' => LCons x (lapp lxs' lys)"
+\end{tcblisting}
+
+    \item Friendly function
+          \begin{itemize}
+            \item Preserves productivity: it may consume at most one constructor to produce one constructor.
+          \end{itemize}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+friend_of_corec lshift where
+  "xs @@ lxs = (case xs of
+    [] => (case lxs of LNil => LNil | LCons x lxs' => LCons x lxs')
+  | x#xs' => LCons x (xs' @@ lxs))"
+  by (auto split: list.splits llist.splits) (transfer_prover)
+
+lconcat lxs = case lxs of LNil => LNil | LCons xs lxs' => lshift xs (lconcat lxs')
+\end{tcblisting}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL: (Co)inductive Predicates}
   \begin{itemize}
-    \item Inductive
-    \item Coinductive
-    \item Coinduction
-  \end{itemize}
+    \item Inductive predicate
+          \begin{itemize}
+            \item Finite number of introduction rule applications
+          \end{itemize}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+inductive in_llist :: "'a => 'a llist => bool" where
+    In_llist: "in_llist x (LCons x lxs)"
+  | Next_llist: "in_llist x lxs => in_llist x (LCons y lxs)"
 
+in_llist (2::nat) (LCons 1 (LCons (2 (...))))
+\end{tcblisting}
+    \item Coinductive predicate
+          \begin{itemize}
+            \item Infinite number of introduction rule applications
+          \end{itemize}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+coinductive lprefix :: "'a llist => 'a llist => bool" where
+    LNil_lprefix: "lprefix LNil lys"
+  | LCons_lprefix: "lprefix lxs lys => lprefix (LCons x lxs) (LCons x lys)"
+
+lprefix (LCons 1 (LCons (2 (...)))) (LCons 1 (LCons (2 (...))))
+\end{tcblisting}
+    \item Coinduction principle
+  \end{itemize}
 \end{frame}
 
 \section{Lazy Lists Processors}
@@ -236,9 +368,96 @@ definition while_option :: "('a => bool) => ('a => 'a) => 'a => 'a option" where
 \begin{frame}[fragile]
   \frametitle{Operators}
   \begin{itemize}
-    \item Operator
-    \item Produce \lstinline{produce}
-    \item Example
+    \item Operator as a codatatype
+          \begin{itemize}
+            \item Taking \is{'i} as the input type, and \is{'o} as the output type:
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+codatatype ('o, 'i) op = Logic ("apply": "('i => ('o, 'i) op $\times$ 'o list)")
+\end{tcblisting}
+            \item Infinite trees: applying the selector \is{apply} ``walks'' a branch of the tree
+          \end{itemize}
+    \item Produce function: applies the logic (co)recursively throughout a lazy list
+          \begin{itemize}
+            \item The recursive part:
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+definition "produce_1' op lxs = while_option
+  ($\lambda$(op, lxs). \<not> lnull lxs \<and> snd (apply op (lhd lxs)) = [])
+  ($\lambda$(op, lxs). (fst (apply op (lhd lxs)), ltl lxs)) (op, lxs)"
+definition "produce_1 op lxs =
+  (case produce_1' op lxs of None => None
+  | Some (op', lxs') => if lnull lxs' then None else
+    let (op'', out) = apply op' (lhd lxs') in Some (op'', hd out, tl out, ltl lxs'))"
+\end{tcblisting}
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Operators: Example}
+  \begin{itemize}
+    \item Example: counts elements satisfying \is{P}:
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+corec count_op where "count_op P n =
+  Logic ($\lambda$e. if P e then (count_op P (n + 1), [n+1]) else (count_op P n, []))"
+\end{tcblisting}
+  \end{itemize}
+
+\begin{figure}[!t]
+    \raggedright
+        \begin{tabular}{@{}l@{}}
+          \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9}]
+            \begin{scope}[local bounding box=scope1]
+              \node[] (0,0) (s1) {\text{\is{stream_2}}};
+              \node[right = 0.0cm of s1] (eq) {$=$};
+            \end{scope}
+            \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
+              \tikzset{tape/.style={minimum size=.6cm, draw}}
+              \begin{scope}[start chain=0 going right, node distance=0mm]
+                \foreach \x [count=\i] in {\is{0},\is{3},\is{3},\is{6}, \is{24}} {
+                  \node [on chain=0, tape] (n\i) {\x};
+                }
+              \end{scope}
+            \end{scope}
+          \end{tikzpicture}
+          \\
+
+          \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9}]
+            \begin{scope}[local bounding box=scope3]
+              \node[] (0,0) (prod) {\text{\is{produce (count_op is_even 0)}}};
+              \node[right = 0.0cm of prod] (s1) {\text{\is{stream_2}}};
+              \node[right = 0.0cm of s1] (eq) {$=$};
+            \end{scope}
+            \begin{scope}[shift={($(scope3.east)+(0.9cm,0)$)}]
+              \tikzset{tape/.style={minimum size=.6cm, draw}}
+              \begin{scope}[start chain=0 going right, node distance=0mm]
+                \foreach \x [count=\i] in {\is{1},\is{2}, \is{3}} {
+                  \node [on chain=0, tape] (n\i) {\x};
+                }
+              \end{scope}
+            \end{scope}
+          \end{tikzpicture}
+        \end{tabular}
+
+    \caption{Difference between \is{incr_hist_op'} and \is{incr_hist_op}}
+    \label{fig:diff_hist_op_multi_hist_op}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Sequential Composition}
+  \begin{itemize}
+    \item Composition
+    \item Skip n
+  \end{itemize}
+\end{frame}
+
+\section{Time-Aware Operators}
+
+\begin{frame}
+  \frametitle{Monotone and Productive Time-Aware Streams}
+  \begin{itemize}
+    \item Monotone
+    \item Productive
   \end{itemize}
 
   \begin{figure}[!t]
@@ -306,24 +525,6 @@ definition while_option :: "('a => bool) => ('a => 'a) => 'a => 'a option" where
     \caption{An example stream and its collections (ordered by their time-stamps)}
     \vspace*{-2ex}
   \end{figure}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Sequential Composition}
-  \begin{itemize}
-    \item Composition
-    \item Skip n
-  \end{itemize}
-\end{frame}
-
-\section{Time-Aware Operators}
-
-\begin{frame}
-  \frametitle{Monotone and Productive Time-Aware Streams}
-  \begin{itemize}
-    \item Monotone
-    \item Productive
-  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
