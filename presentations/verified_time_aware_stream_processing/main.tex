@@ -152,7 +152,7 @@
 % https://www21.in.tum.de/~traytel/
 % TODO finish this
 \begin{frame}[fragile]
-  \frametitle{Dataflow Models}
+  \frametitle{Stream Processing}
   \begin{itemize}
     \item Stream Processing: Abstraction for processing data when the input is not completely presented in the begging of the computation
           \pause
@@ -165,6 +165,31 @@
             \includegraphics[scale=0.15]{all.png}
           \end{figure}
             \item Highly Parallel
+                  \begin{figure}
+                    \centering
+                    \begin{subfigure}[t][\paperheight][t]{1.0\linewidth}
+                      \begin{tikzpicture}[node distance = 0.8cm, auto]
+                        \usetikzlibrary{shapes,arrows}
+                        \usetikzlibrary{positioning}
+
+                        \tikzstyle{operator} = [rectangle, draw, fill=blue!60, text width=3.0em, text centered, rounded corners = 8pt, minimum height=20pt, line width=1pt]
+                        \tikzstyle{callout} = [draw, rectangle callout, callout relative pointer={#1}, line width=1pt]
+
+                        \node at (0, 0.4) (s0) {};
+                        \node at (0, -0.1) (s1) {};
+                        \node [operator, right = of s0]  (concat) {concat};
+                        \node [operator, right = of concat] (map) {map};
+                        \node [operator, right = of map] (filter) {filter};
+                        \node [operator, right = of filter] (count) {count};
+
+                        \draw [thick,->,shorten >=1pt, line width=2pt] (s0) -- (concat);
+                        \draw [thick,->,shorten >=1pt, line width=2pt] (s1) -- (concat);
+                        \draw [thick,->,shorten >=1pt, line width=2pt] (concat) -- (map);
+                        \draw [thick,->,shorten >=1pt, line width=2pt] (map) -- (filter);
+                        \draw [thick,->,shorten >=1pt, line width=2pt] (filter) -- (count);
+                      \end{tikzpicture}
+                    \end{subfigure}
+                  \end{figure}
           \end{itemize}
     \item Time-Aware Computations
           \begin{itemize}
@@ -193,16 +218,20 @@
   \frametitle{Isabelle/HOL: (Co)datatypes}
   \begin{itemize}
     \item Datatypes and Codatatypes
+\vspace*{-1ex}
           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
   for map: lmap where "ltl LNil = LNil"
           \end{tcblisting}
+\vspace*{-1ex}
     \item Examples:
+\vspace*{-1ex}
           \begin{itemize}
             \item \is{LNil}
             \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
             \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
           \end{itemize}
+\vspace*{-1ex}
           \pause
     \item Induction principle assuming membership in the lazy list
     \item Coinductive principle for lazy list equality:
@@ -215,6 +244,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
                   \end{itemize}
           \end{itemize}
   \end{itemize}
+\vspace*{-1ex}
   \begin{figure}
     \centering
     \includegraphics[scale=0.4]{equality_1.png}
@@ -225,16 +255,20 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
   \frametitle{Isabelle/HOL: (Co)datatypes}
   \begin{itemize}
     \item Datatypes and Codatatypes
+\vspace*{-1ex}
           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
   for map: lmap where "ltl LNil = LNil"
           \end{tcblisting}
+\vspace*{-1ex}
     \item Examples:
+\vspace*{-1ex}
           \begin{itemize}
             \item \is{LNil}
             \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
             \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
           \end{itemize}
+\vspace*{-1ex}
     \item Induction principle assuming membership in the lazy list
     \item Coinductive principle for lazy list equality:
           \begin{itemize}
@@ -246,6 +280,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
                   \end{itemize}
           \end{itemize}
   \end{itemize}
+\vspace*{-1ex}
   \begin{figure}
     \centering
     \includegraphics[scale=0.4]{equality_2.png}
@@ -257,11 +292,14 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
   \frametitle{Isabelle/HOL: (Co)datatypes}
   \begin{itemize}
     \item Datatypes and Codatatypes
+\vspace*{-1ex}
           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
   for map: lmap where "ltl LNil = LNil"
           \end{tcblisting}
+\vspace*{-1ex}
     \item Examples:
+\vspace*{-1ex}
           \begin{itemize}
             \item \is{LNil}
             \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
@@ -278,6 +316,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
                   \end{itemize}
           \end{itemize}
   \end{itemize}
+\vspace*{-1ex}
   \begin{figure}
     \centering
     \includegraphics[scale=0.4]{equality.png}
