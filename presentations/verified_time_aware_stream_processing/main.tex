@@ -127,7 +127,7 @@
                   \begin{itemize}
                     \item Isabelle proofs
                           \begin{itemize}
-                            \item Verified and executable code
+                            \item Verified + executable + efficient code
                           \end{itemize}
                   \end{itemize}
           \end{itemize}
@@ -148,11 +148,24 @@
 
 \section{Introduction}
 
+% TODO check Dmitriys page
+% https://www21.in.tum.de/~traytel/
+% TODO finish this
 \begin{frame}[fragile]
   \frametitle{Dataflow Models}
   \begin{itemize}
-    \item Stream Processing
-    \item Dataflow Model
+    \item Stream Processing: Abstraction for processing data when the input is not completely presented in the begging of the computation
+          \pause
+    \item Dataflow Model:
+          \begin{itemize}
+            \item Directed graph of interconnected operators that perform event-wise transformations
+            \item Examples: Apache Flink, Apache Samza, Apache Spark, Google Cloud Dataflow, and Timely Dataflow
+          \begin{figure}
+            \centering
+            \includegraphics[scale=0.15]{all.png}
+          \end{figure}
+            \item Highly Parallel
+          \end{itemize}
     \item Time-Aware Computations
           \begin{itemize}
             \item Explain watermarks
@@ -165,37 +178,16 @@
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL}
   \begin{itemize}
-    \item HOL
-    \item Isabelle/HOL
+    \item Classical higher-order logic (HOL): Simple Typed Lambda Calculus + (Hilbert) axiom of choice + axiom of infiity + rank-1 polymorphism
+    \item Isabelle: A generic proof assistant
+          \begin{figure}
+            \centering
+            \includegraphics[scale=0.15]{isabelle}
+          \end{figure}
+    \item Isabelle/HOL: Isabelle's flavor of HOL
+    \item All functions in Isabelle/HOL must be total
   \end{itemize}
 \end{frame}
-
-  % \begin{figure}[h]
-  %   \centering
-  %   \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9},background rectangle/.style={fill=yellow!10!white},show background rectangle]
-  %     \begin{scope}[local bounding box=scope1]
-  %       \tikzset{tape/.style={minimum size=.6cm, draw}}
-  %       \begin{scope}[start chain=0 going right, node distance=0mm]
-  %         \foreach \x [count=\i] in {\is{0},\is{0},\is{0},\is{0}} {
-  %           \node [on chain=0, tape] (n\i) {\x};
-  %         }
-  %         \node [right=.05cm of n4] {$\cdots$};
-  %       \end{scope}
-  %     \end{scope}
-  %     \begin{scope}[shift={($(scope1.east)+(0.5cm,0)$)}]
-  %       \node (eq) {$=$};
-  %     \end{scope}
-  %     \begin{scope}[shift={($(scope1.east)+(1.8cm,0)$)}]
-  %       \tikzset{tape/.style={minimum size=.6cm, draw}}
-  %       \begin{scope}[start chain=0 going right, node distance=0mm]
-  %         \foreach \x [count=\i] in {\is{0},\is{0},\is{0},\is{0}} {
-  %           \node [on chain=0, tape] (n\i) {\x};
-  %         }
-  %         \node [right=.05cm of n4] {$\cdots$};
-  %       \end{scope}
-  %     \end{scope}
-  %   \end{tikzpicture}
-  % \end{figure}
 
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL: (Co)datatypes}
