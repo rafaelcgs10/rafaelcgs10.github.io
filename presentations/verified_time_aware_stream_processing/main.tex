@@ -824,7 +824,7 @@ corec batch_op where
     \end{tikzpicture}
   \end{figure}
   \begin{itemize}
-    \item Proof: \is{lset} induction, and generalization with \is{skip_op}
+    \item Proof: \is{lset} induction, \is{produce_1} induction, and generalization with \is{skip_op}
   \end{itemize}
 \end{frame}
 
@@ -935,6 +935,7 @@ corec batch_op where
 \begin{frame}[fragile]
   \frametitle{Building Blocks: Incremental Operator}
   \begin{itemize}
+    \item Incremental computations
     \item \is{incr_op}: produces accumulated batches of accumulated data
 \vspace*{-1ex}
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
@@ -949,39 +950,330 @@ corec incr_op where
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Batch Operator: Soundness}
+  \frametitle{Incremental Operator: Soundness}
+  \begin{figure}[!t]
+    \centering
+    \begin{tikzpicture}[scale=0.7, every node/.style={scale=0.7}, transform shape]
+      \begin{scope}[local bounding box=scope1]
+        \node[] (-2cm,0) (s1) {\text{\is{stream_3}}};
+        \node[right = 0.0cm of s1] (eq) {$=$};
+      \end{scope}
+      \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
+        \tikzset{tape/.style={minimum size=.6cm, draw}}
+        \begin{scope}[start chain=0 going right, node distance=0mm]
+          \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**},\is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
+            \ifnum\i=10
+              \node [on chain=0, tape, outer sep=0pt] (a\i) {\x};
+              \draw (a\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(a\i.south east)+(+.1,0)$)} -- (a\i.south east) -- cycle;
+            \else
+              \node [on chain=0, tape] (a\i) {\x};
+            \fi
+          }
+          \node [right=.05cm of a10] {$\cdots$};
+        \end{scope}
+      \end{scope}
 
+      \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
+        \node[] (0,0) (prod) {\text{\is{stream_4 = produce (batch_op [(t_0,**a**)]) stream_3 =}}};
+      \end{scope}
+      \begin{scope}[shift={($(scope3.east)+(1.7cm,0)$)}]
+        \tikzset{tape/.style={minimum size=.8cm, draw}}
+        \begin{scope}[start chain=0 going right, node distance=0mm]
+          \foreach \x [count=\i] in {\is{DT t_1 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{WM t_1},\is{DT t_2 [(t_2,**b**)]},\is{WM t_2},\is{DT t_3 [(t_3,**a**)]},\is{DT t_5 [(t_5,**a**),(t_5,**c**)]},\is{WM t_5}} {
+            \ifnum\i=7
+              \node [on chain=0, tape, outer sep=0pt] (b\i) {\x};
+              \draw (b\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(b\i.south east)+(+.1,0)$)} -- (b\i.south east) -- cycle;
+            \else
+              \node [on chain=0, tape] (b\i) {\x};
+            \fi
+          }
+          \node [right=.05cm of b7] {$\cdots$};
+        \end{scope}
+      \end{scope}
+
+      \begin{scope}[shift={($(scope3.west)+(-0.0cm,-2cm)$)},local bounding box=scope4]
+        \node[] (0,0) (prod2) {\text{\is{produce (incr_op []) stream_4 =}}};
+      \end{scope}
+      \begin{scope}[shift={($(scope4.east)+(1.7cm,0)$)}]
+        \tikzset{tape/.style={minimum size=.8cm, draw}}
+        \begin{scope}[start chain=0 going right, node distance=0mm]
+          \foreach \x [count=\i] in {\is{DT t_0 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{DT t_1 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{WM t_1},\is{DT t_2 [(t_0,**a**),(t_0,**a**),(t_1,**c**),(t_2,**b**)]},\is{WM t_2},\is{DT t_3 [(t_0,**a**),(t_0,**a**),(t_1,**c**),(t_2,**b**),(t_3,**a**)]}} {
+            \ifnum\i=6
+              \node [on chain=0, tape, outer sep=0pt] (c\i) {\x};
+              \draw (c\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(c\i.south east)+(+.1,0)$)} -- (c\i.south east) -- cycle;
+            \else
+              \node [on chain=0, tape] (c\i) {\x};
+            \fi
+          }
+          \node [right=.05cm of c6] {$\cdots$};
+        \end{scope}
+      \end{scope}
+
+      \draw[->, thick]  (c1.north) -- (b1.south);
+      \draw[->, thick]  (c2.north) -- (b1.south);
+      \draw[->, thick]  (c4.north) -- (b3.south);
+      \draw[->, thick]  (c6.north) -- (b5.south);
+    \end{tikzpicture}
+  \end{figure}
+  \begin{itemize}
+    \item Proof: \is{produce_1} induction, and generalization with \is{skip_op}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Batch Operator: Completeness}
+  \frametitle{Incremental Operator: Completeness}
+  \begin{figure}[!t]
+    \centering
+    \begin{tikzpicture}[scale=0.7, every node/.style={scale=0.7}, transform shape]
+      \begin{scope}[local bounding box=scope1]
+        \node[] (-2cm,0) (s1) {\text{\is{stream_3}}};
+        \node[right = 0.0cm of s1] (eq) {$=$};
+      \end{scope}
+      \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
+        \tikzset{tape/.style={minimum size=.6cm, draw}}
+        \begin{scope}[start chain=0 going right, node distance=0mm]
+          \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**},\is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
+            \ifnum\i=10
+              \node [on chain=0, tape, outer sep=0pt] (a\i) {\x};
+              \draw (a\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(a\i.south east)+(+.1,0)$)} -- (a\i.south east) -- cycle;
+            \else
+              \node [on chain=0, tape] (a\i) {\x};
+            \fi
+          }
+          \node [right=.05cm of a10] {$\cdots$};
+        \end{scope}
+      \end{scope}
 
+      \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
+        \node[] (0,0) (prod) {\text{\is{stream_4 = produce (batch_op [(t_0,**a**)]) stream_3 =}}};
+      \end{scope}
+      \begin{scope}[shift={($(scope3.east)+(1.7cm,0)$)}]
+        \tikzset{tape/.style={minimum size=.8cm, draw}}
+        \begin{scope}[start chain=0 going right, node distance=0mm]
+          \foreach \x [count=\i] in {\is{DT t_1 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{WM t_1},\is{DT t_2 [(t_2,**b**)]},\is{WM t_2},\is{DT t_3 [(t_3,**a**)]},\is{DT t_5 [(t_5,**a**),(t_5,**c**)]},\is{WM t_5}} {
+            \ifnum\i=7
+              \node [on chain=0, tape, outer sep=0pt] (b\i) {\x};
+              \draw (b\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(b\i.south east)+(+.1,0)$)} -- (b\i.south east) -- cycle;
+            \else
+              \node [on chain=0, tape] (b\i) {\x};
+            \fi
+          }
+          \node [right=.05cm of b7] {$\cdots$};
+        \end{scope}
+      \end{scope}
+
+      \begin{scope}[shift={($(scope3.west)+(-0.0cm,-2cm)$)},local bounding box=scope4]
+        \node[] (0,0) (prod2) {\text{\is{produce (incr_op []) stream_4 =}}};
+      \end{scope}
+      \begin{scope}[shift={($(scope4.east)+(1.7cm,0)$)}]
+        \tikzset{tape/.style={minimum size=.8cm, draw}}
+        \begin{scope}[start chain=0 going right, node distance=0mm]
+          \foreach \x [count=\i] in {\is{DT t_0 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{DT t_1 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{WM t_1},\is{DT t_2 [(t_0,**a**),(t_0,**a**),(t_1,**c**),(t_2,**b**)]},\is{WM t_2},\is{DT t_3 [(t_0,**a**),(t_0,**a**),(t_1,**c**),(t_2,**b**),(t_3,**a**)]}} {
+            \ifnum\i=6
+              \node [on chain=0, tape, outer sep=0pt] (c\i) {\x};
+              \draw (c\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(c\i.south east)+(+.1,0)$)} -- (c\i.south east) -- cycle;
+            \else
+              \node [on chain=0, tape] (c\i) {\x};
+            \fi
+          }
+          \node [right=.05cm of c6] {$\cdots$};
+        \end{scope}
+      \end{scope}
+
+      \draw[<-, thick]  (c1.north) -- (b1.south);
+      \draw[<-, thick]  (c2.north) -- (b1.south);
+      \draw[<-, thick]  (c4.north) -- (b3.south);
+      \draw[<-, thick]  (c6.north) -- (b5.south);
+    \end{tikzpicture}
+  \end{figure}
+  \begin{itemize}
+    \item Proof: induction over the position (nat) of the element in the input
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Batch Operator: Monotone}
+  \frametitle{Incremental Operator: Monotone and productive preservation}
+  \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red]
+  \begin{array}{@{}l@{}}
+    \text{\is{monotone lxs W --> monotone (produce (incr_op []) lxs) W}}
+  \end{array}
+  \end{tcolorbox}
 
-\end{frame}
+  \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red]
+  \begin{array}{@{}l@{}}
+    \text{\is{productive lxs --> productive (produce (incr_op []) lxs)}}
+  \end{array}
+  \end{tcolorbox}
 
-\begin{frame}[fragile]
-  \frametitle{Batch Operator: Productive}
+  \begin{itemize}
+    \item Proof: coinduction up to congruence
+  \end{itemize}
 
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Compositional Reasoning}
-
+  \begin{itemize}
+    \item \is{batch_op} and \is{incr_op} can be composed
+\vspace*{-1ex}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+definition "incr_batch_op buf1 buf2 = comp_op (batch_op buf1) (incr_op buf2)"
+\end{tcblisting}
+\vspace*{-1ex}
+  \item Soundness, completeness, and monotone and productive preservation
+  \end{itemize}
 \end{frame}
 
 \section{Case Study}
 
 \begin{frame}
   \frametitle{Histogram}
+  \begin{itemize}
+    \item A histogram count the elements of a collection
+    \item Incremental histogram: timestamps smaller or equal
+    \item $H_{t_{5}} = C_{t_{0}} + C_{t_{0}} + C_{t_{1}} + C_{t_{2}} + C_{t_{5}}$
+    \item \is{paths} to $t_{5}$: $\{t_{0},t_{2}\}$ and $\{t_{0},t_{3}\}$
+  \end{itemize}
+
+\begin{figure}[!t]
+  \begin{subfigure}{.4\textwidth}
+    \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm]
+      \node (t0) at (-0.8,0) {$C_{t_{0}}$: \{\is{**a**}\}};
+      \node (t1) at (-2.5,1) {$C_{t_{1}}$: \{\is{**c**}\}};
+      \node (t2) at (-0.8,1) {$C_{t_{2}}$: \{\is{**b**}\}};
+      \node (t3) at (0.8,1) {$C_{t_{3}}$: \{\is{**a**}\}};
+      \node (t4) at (-2.5,2) {$C_{t_{4}}$: \{\is{**d**}\}};
+      \node (t5) at (0.0,2) {$C_{t_{5}}$: \{\is{**a**,**c**}\}};
+
+      \path [->] (t0) edge node {} (t1);
+      \path [->] (t0) edge node {} (t2);
+      \path [->] (t0) edge node {} (t3);
+      \path [->] (t3) edge node {} (t5);
+      \path [->] (t1) edge node {} (t4);
+      \path [->] (t2) edge node {} (t5);
+
+    \end{tikzpicture}
+    \label{fig:collection_diamond_order}
+  \end{subfigure}
+  \begin{subfigure}{.5\textwidth}
+  \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm]
+    \node (t0) at (-2,0) {$H_{t_{0}}$: \{\is{**a**}\}};
+    \node (t1) at (-4,1) {$H_{t_{1}}$: \{\is{**c**, **a**}\}};
+    \node (t2) at (-2,1) {$H_{t_{2}}$: \{\is{**b**, **a**}\}};
+    \node (t3) at (0,1) {$H_{t_{3}}$: \{\is{**a**, **a**}\}};
+    \node (t4) at (-4,2) {$H_{t_{4}}$: \{\is{**a**,**c**,**d**}\}};
+    \node (t5) at (-1,2) {$H_{t_{5}}$: \{\is{**a**,**a**,**a**,**a**,**b**,**c**}\}};
+
+    \path [->] (t0) edge node {} (t1);
+    \path [->] (t0) edge node {} (t2);
+    \path [->] (t0) edge node {} (t3);
+    \path [->] (t3) edge node {} (t5);
+    \path [->] (t1) edge node {} (t4);
+    \path [->] (t2) edge node {} (t5);
+
+  \end{tikzpicture}
+  \label{fig:histograms_diamond_order}
+  \end{subfigure}
+  \label{fig:histograms}
+\end{figure}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Histogram: Soundness}
+\begin{frame}[fragile]
+  \frametitle{Histogram Operator}
+\vspace*{-1ex}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+corec map_op where "map_op f = Logic ($\lambda$ ev. case ev of
+       WM wm => (map_op f, [WM wm]) | DT t d => (map_op f, [DT t (f t d)]))"
 
+abbreviation "data_at_from_list xs t == map snd (filter ($\lambda$ (t', d) . t' = t) xs)"
+definition "coll xs t = mset (data_at_from_list xs t)"
+
+definition "incr_coll t xs = coll xs t + mset (concat (map
+  ($\lambda$ x . concat (map ($\lambda$ t' . coll xs t') x)) (paths (remdups (map fst xs)) t)))"
+
+definition "incr_hist_op buf1 buf2 =
+  comp_op (incr_batch_op buf1 buf2) (map_op incr_coll)"
+\end{tcblisting}
+\vspace*{-1ex}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Histogram Operator: Soundness}
+  \begin{itemize}
+    \item Given a monotone time-aware stream
+  \end{itemize}
+  \begin{figure}[!t]
+    \centering
+      \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm,background rectangle/.style={fill=yellow!10!white},show background rectangle]
+        \node (t0) at (-0.8,0) {$C_{t_{0}}$: \{\is{**a**}\}};
+        \node (t1) at (-2.5,1) {$C_{t_{1}}$: \{\is{**c**}\}};
+        \node (t2) at (-0.8,1) {$C_{t_{2}}$: \{\is{**b**}\}};
+        \node (t3) at (0.8,1) {$C_{t_{3}}$: \{\is{**a**}\}};
+        \node (t4) at (-2.5,2) {$C_{t_{4}}$: \{\is{**d**}\}};
+        \node (t5) at (0.0,2) {$C_{t_{5}}$: \{\is{**a**,**c**}\}};
+
+        \path [->] (t0) edge node {} (t1);
+        \path [->] (t0) edge node {} (t2);
+        \path [->] (t0) edge node {} (t3);
+        \path [->] (t3) edge node {} (t5);
+        \path [->] (t1) edge node {} (t4);
+        \path [->] (t2) edge node {} (t5);
+      \end{tikzpicture}
+
+    \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}, transform shape]
+      \begin{scope}[local bounding box=scope1]
+        \node[] (0,0) (s1) {\text{\is{stream_3}}};
+        \node[right = 0.0cm of s1] (eq) {$=$};
+      \end{scope}
+      \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
+        \tikzset{tape/.style={minimum size=.6cm, draw}}
+        \begin{scope}[start chain=0 going right, node distance=0mm]
+          \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**},\is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
+            \ifnum\i=10
+              \node [on chain=0, tape, outer sep=0pt] (a\i) {\x};
+              \draw (a\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(a\i.south east)+(+.1,0)$)} -- (a\i.south east) -- cycle;
+            \else
+              \node [on chain=0, tape] (a\i) {\x};
+            \fi
+          }
+          \node [right=.05cm of a10] {$\cdots$};
+        \end{scope}
+      \end{scope}
+
+      \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
+        \node[] (0,0) (prod) {\text{\is{produce (incr_hist_op [] []) stream_3 =}}};
+      \end{scope}
+      \begin{scope}[shift={($(scope3.east)+(1.7cm,0)$)}]
+        \tikzset{tape/.style={minimum size=.8cm, draw}}
+        \begin{scope}[start chain=0 going right, node distance=0mm]
+          \foreach \x [count=\i] in {\is{DT t_1 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{WM t_1},\is{DT t_2 [(t_2,**b**)]},\is{WM t_2},\is{DT t_3 [(t_3,**a**)]},\is{DT t_5 [(t_5,**a**),(t_5,**c**)]},\is{WM t_5}} {
+            \ifnum\i=7
+              \node [on chain=0, tape, outer sep=0pt] (b\i) {\x};
+              \draw (b\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(b\i.south east)+(+.1,0)$)} -- (b\i.south east) -- cycle;
+            \else
+              \node [on chain=0, tape] (b\i) {\x};
+            \fi
+          }
+          \node [right=.05cm of b7] {$\cdots$};
+        \end{scope}
+      \end{scope}
+      \draw[->, thick]  (b1.north) -- (a2.south);
+      \draw[->, thick]  (b1.north) -- (a3.south);
+      \draw[->, thick]  (b1.north) -- (a4.south);
+      \draw[->, thick]  (b3.north) -- (a5.south);
+      \draw[->, thick]  (b3.north) -- (a6.south);
+      \draw[->, thick]  (b5.north) -- (a8.south);
+      \draw[->, thick]  (b5.north) -- (a10.south);
+      \draw[->, thick]  (b6.north) -- (a7.south);
+      \draw[->, thick]  (b6.north) -- (a9.south);
+      \draw[->, thick]  (b6.north) -- (a10.south);
+      \draw[->, thick]  (b1.south) to [out=270,in=270]  (prod.south);
+    \end{tikzpicture}
+  \end{figure}
+  \begin{itemize}
+    \item Proof: \is{lset} induction, \is{produce_1} induction, and generalization with \is{skip_op}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
