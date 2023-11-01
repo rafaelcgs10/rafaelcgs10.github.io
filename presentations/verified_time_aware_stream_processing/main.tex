@@ -926,11 +926,26 @@ corec batch_op where
   \end{tcolorbox}
   \end{itemize}
 
+  \begin{itemize}
+    \item Proof: coinduction up to congruence
+  \end{itemize}
+
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Building Blocks: Incremental Operator}
-
+  \begin{itemize}
+    \item \is{incr_op}: produces accumulated batches of accumulated data
+\vspace*{-1ex}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+corec incr_op where
+  "incr_op buf = Logic ($\lambda$ ev. case ev of DT wm batch =>
+      let out = map ($\lambda$t. DT t (buf @ batch)) (remdups (map fst batch))
+      in (incr_op (buf @ batch), out)
+  | WM wm =>  (incr_op buf, [WM wm]))"
+\end{tcblisting}
+\vspace*{-1ex}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
