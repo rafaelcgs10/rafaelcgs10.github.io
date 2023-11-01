@@ -8,6 +8,7 @@
 \usetikzlibrary{positioning}
 \usepackage{booktabs}
 \usepackage{enumitem}
+\setbeamercovered{dynamic}
 
 \usepackage{listings}
 \usepackage{lstautogobble}
@@ -162,11 +163,15 @@
             \item Directed graph of interconnected operators that perform event-wise transformations
             \item Examples: Apache Flink, Apache Samza, Apache Spark, Google Cloud Dataflow, and Timely Dataflow
                   \vspace*{-1ex}
-                  \begin{figure}
+                  \begin{overlayarea}{\textwidth}{.15\textheight}
                     \centering
-                    \includegraphics[scale=0.15]{all.png}
-                  \end{figure}
+                    \begin{figure}
+                      \centering
+                      \only<2->{\includegraphics[scale=0.15]{all.png}}
+                    \end{figure}
+                  \end{overlayarea}
                   \vspace*{-1ex}
+                  \pause
             \item Highly Parallel
                   \vspace*{-1ex}
                   \begin{figure}
@@ -222,17 +227,18 @@
 
                         \node[draw,densely dotted, label={[xshift=2mm]above:{\tiny worker 1}},fit=(concat) (map) (filter) (count)] {};
                         \node[draw,densely dotted, label={[xshift=2mm]above:{\tiny worker 2}},fit=(concat') (map') (filter') (count')] {};
-                        \node[draw,densely dotted, label={[xshift=2mm]above:{\tiny physical workers}},fit=(concat') (concat) (map') (filter') (count')] {};
+                        \node[draw,dotted, label={[xshift=2mm, yshift=0.3cm]above:{\tiny physical workers}},fit=(concat') (concat) (map') (map) (filter) (filter') (count) (count')] {};
                       \end{tikzpicture}
                     \end{subfigure}
                   \end{figure}
           \end{itemize}
                   \vspace*{-1ex}
+          \pause
     \item Time-Aware Computations
           \begin{itemize}
-            \item Explain watermarks
+            \item Timestamps: Metadata associating the data with some data collection
+            \item Watermarks: Metadata indicating the completion of a data collection
           \end{itemize}
-    \item Bugs in Stream Processing
   \end{itemize}
 \end{frame}
 
@@ -241,11 +247,15 @@
   \frametitle{Isabelle/HOL}
   \begin{itemize}
     \item Classical higher-order logic (HOL): Simple Typed Lambda Calculus + (Hilbert) axiom of choice + axiom of infinity + rank-1 polymorphism
+          \pause
     \item Isabelle: A generic proof assistant
-          \begin{figure}
+          \begin{overlayarea}{\textwidth}{.45\textheight}
             \centering
-            \includegraphics[scale=0.15]{isabelle}
-          \end{figure}
+            \begin{figure}
+              \centering
+              \only<2>{\includegraphics[scale=0.15]{isabelle}}
+            \end{figure}
+          \end{overlayarea}
     \item Isabelle/HOL: Isabelle's flavor of HOL
     \item All functions in Isabelle/HOL must be total
   \end{itemize}
@@ -262,7 +272,6 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
           \end{tcblisting}
 \vspace*{-1ex}
     \item Examples:
-\vspace*{-1ex}
           \begin{itemize}
             \item \is{LNil}
             \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
@@ -271,21 +280,24 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
 \vspace*{-1ex}
           \pause
     \item Induction principle assuming membership in the lazy list
+          \pause
     \item Coinductive principle for lazy list equality:
           \begin{itemize}
             \item Show that there is a pair of goggles that makes them to look the same, which implies that:
                   \begin{itemize}
-                    \item The first lazy list if empty iff second is
+                    \item The first lazy list is empty iff second is
                     \item They have the same head
                     \item Their tail looks the same
                   \end{itemize}
           \end{itemize}
   \end{itemize}
 \vspace*{-1ex}
+\begin{overlayarea}{\textwidth}{.45\textheight}
   \begin{figure}
     \centering
-    \includegraphics[scale=0.4]{equality_1.png}
+    \only<3>{\includegraphics[scale=0.4]{equality_1.png}}
   \end{figure}
+\end{overlayarea}
 \end{frame}
 
 \begin{frame}[fragile,noframenumbering]
@@ -299,7 +311,6 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
           \end{tcblisting}
 \vspace*{-1ex}
     \item Examples:
-\vspace*{-1ex}
           \begin{itemize}
             \item \is{LNil}
             \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
@@ -311,17 +322,19 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
           \begin{itemize}
             \item Show that there is a pair of goggles that makes them to look the same, which must imply that:
                   \begin{itemize}
-                    \item The first lazy list if empty iff second is
+                    \item The first lazy list is empty iff second is
                     \item They have the same head
                     \item Their tail looks the same
                   \end{itemize}
           \end{itemize}
   \end{itemize}
 \vspace*{-1ex}
+\begin{overlayarea}{\textwidth}{.45\textheight}
   \begin{figure}
     \centering
     \includegraphics[scale=0.4]{equality_2.png}
   \end{figure}
+\end{overlayarea}
 \end{frame}
 
 % TODO add notes for explaining codatatype command
@@ -336,28 +349,30 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
           \end{tcblisting}
 \vspace*{-1ex}
     \item Examples:
-\vspace*{-1ex}
           \begin{itemize}
             \item \is{LNil}
             \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
             \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
           \end{itemize}
+\vspace*{-1ex}
     \item Induction principle assuming membership in the lazy list
     \item Coinductive principle for lazy list equality:
           \begin{itemize}
-            \item Show that there is a pair of goggles that makes them to look the same, which must imply that:
+            \item Show that there is a pair of goggles that makes them to look the same, which implies that:
                   \begin{itemize}
-                    \item The first lazy list if empty iff second is
+                    \item The first lazy list is empty iff second is
                     \item They have the same head
                     \item Their tail looks the same
                   \end{itemize}
           \end{itemize}
   \end{itemize}
 \vspace*{-1ex}
+\begin{overlayarea}{\textwidth}{.45\textheight}
   \begin{figure}
     \centering
     \includegraphics[scale=0.4]{equality.png}
   \end{figure}
+\end{overlayarea}
 \end{frame}
 
 \begin{frame}[fragile]
