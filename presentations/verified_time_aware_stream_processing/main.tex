@@ -437,6 +437,7 @@ lconcat lxs = case lxs of LNil => LNil | LCons xs lxs' => lshift xs (lconcat lxs
           \begin{itemize}
             \item Finite number of introduction rule applications
           \end{itemize}
+\vspace*{-1ex}
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 inductive in_llist :: "'a => 'a llist => bool" where
     In_llist: "in_llist x (LCons x lxs)"
@@ -444,11 +445,13 @@ inductive in_llist :: "'a => 'a llist => bool" where
 
 in_llist 2 (LCons 1 (LCons (2 (...))))
 \end{tcblisting}
+\vspace*{-1ex}
           \pause
     \item Coinductive predicate
           \begin{itemize}
             \item Infinite number of introduction rule applications
           \end{itemize}
+\vspace*{-1ex}
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 coinductive lprefix :: "'a llist => 'a llist => bool" where
     LNil_lprefix: "lprefix LNil lys"
@@ -456,6 +459,7 @@ coinductive lprefix :: "'a llist => 'a llist => bool" where
 
 lprefix (LCons 1 (LCons (2 (...)))) (LCons 1 (LCons (2 (...))))
 \end{tcblisting}
+\vspace*{-1ex}
           \pause
     \item Coinduction principle
     \item But not coinduction up to congruence for free
