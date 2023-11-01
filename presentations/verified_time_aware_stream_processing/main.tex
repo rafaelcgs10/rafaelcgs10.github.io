@@ -1199,29 +1199,13 @@ definition "incr_hist_op buf1 buf2 =
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Histogram Operator: Soundness}
+  \frametitle{Histogram Operator: Soundness, Completeness, Monotone and Productive Preservation}
   \begin{itemize}
-    \item Given a monotone time-aware stream
+    \item Given a monotone and productive time-aware stream
   \end{itemize}
   \begin{figure}[!t]
     \centering
-      \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm,background rectangle/.style={fill=yellow!10!white},show background rectangle]
-        \node (t0) at (-0.8,0) {$C_{t_{0}}$: \{\is{**a**}\}};
-        \node (t1) at (-2.5,1) {$C_{t_{1}}$: \{\is{**c**}\}};
-        \node (t2) at (-0.8,1) {$C_{t_{2}}$: \{\is{**b**}\}};
-        \node (t3) at (0.8,1) {$C_{t_{3}}$: \{\is{**a**}\}};
-        \node (t4) at (-2.5,2) {$C_{t_{4}}$: \{\is{**d**}\}};
-        \node (t5) at (0.0,2) {$C_{t_{5}}$: \{\is{**a**,**c**}\}};
-
-        \path [->] (t0) edge node {} (t1);
-        \path [->] (t0) edge node {} (t2);
-        \path [->] (t0) edge node {} (t3);
-        \path [->] (t3) edge node {} (t5);
-        \path [->] (t1) edge node {} (t4);
-        \path [->] (t2) edge node {} (t5);
-      \end{tikzpicture}
-
-    \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}, transform shape]
+    \begin{tikzpicture}[scale=0.75, every node/.style={scale=0.75}, transform shape]
       \begin{scope}[local bounding box=scope1]
         \node[] (0,0) (s1) {\text{\is{stream_3}}};
         \node[right = 0.0cm of s1] (eq) {$=$};
@@ -1244,77 +1228,70 @@ definition "incr_hist_op buf1 buf2 =
       \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
         \node[] (0,0) (prod) {\text{\is{produce (incr_hist_op [] []) stream_3 =}}};
       \end{scope}
-      \begin{scope}[shift={($(scope3.east)+(1.7cm,0)$)}]
+      \begin{scope}[shift={($(scope3.east)+(1.2cm,0)$)}]
         \tikzset{tape/.style={minimum size=.8cm, draw}}
         \begin{scope}[start chain=0 going right, node distance=0mm]
-          \foreach \x [count=\i] in {\is{DT t_1 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{WM t_1},\is{DT t_2 [(t_2,**b**)]},\is{WM t_2},\is{DT t_3 [(t_3,**a**)]},\is{DT t_5 [(t_5,**a**),(t_5,**c**)]},\is{WM t_5}} {
-            \ifnum\i=7
+          \foreach \x [count=\i] in {\is{DT t_0 (mset [**a**])},\is{DT t_1 (mset [**a**,**c**])},\is{WM t_1},\is{DT t_2 (mset [**a**,**b**])},\is{WM t_2},\is{DT t_3 (mset [**a**,**a**])},\is{DT t_5 (mset [**a**,**a**,**a**,**b**,**c**])},\is{WM t_5}} {
+            \ifnum\i=8
               \node [on chain=0, tape, outer sep=0pt] (b\i) {\x};
               \draw (b\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(b\i.south east)+(+.1,0)$)} -- (b\i.south east) -- cycle;
             \else
               \node [on chain=0, tape] (b\i) {\x};
             \fi
           }
-          \node [right=.05cm of b7] {$\cdots$};
+          \node [right=.05cm of b8] {$\cdots$};
         \end{scope}
       \end{scope}
-      \draw[->, thick]  (b1.north) -- (a2.south);
-      \draw[->, thick]  (b1.north) -- (a3.south);
-      \draw[->, thick]  (b1.north) -- (a4.south);
-      \draw[->, thick]  (b3.north) -- (a5.south);
-      \draw[->, thick]  (b3.north) -- (a6.south);
-      \draw[->, thick]  (b5.north) -- (a8.south);
-      \draw[->, thick]  (b5.north) -- (a10.south);
-      \draw[->, thick]  (b6.north) -- (a7.south);
-      \draw[->, thick]  (b6.north) -- (a9.south);
-      \draw[->, thick]  (b6.north) -- (a10.south);
-      \draw[->, thick]  (b1.south) to [out=270,in=270]  (prod.south);
     \end{tikzpicture}
   \end{figure}
   \begin{itemize}
-    \item Proof: \is{lset} induction, \is{produce_1} induction, and generalization with \is{skip_op}
+    \item Proof: soundness, completeness, monotone and productive preservation of \is{incr_batch_op}
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Histogram: Completeness}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Histogram: Monotone}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Histogram: Productive}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Efficient Histogram}
+\begin{frame}[fragile]
+  \frametitle{Efficient Histogram Operator}
   \begin{itemize}
-    \item Foo
+    \item We show a equivalent efficient histogram operator for timestamp in total order
+    \item Equivalent only for monotone time-aware stream (equivalence relation)
   \end{itemize}
+\vspace*{-1ex}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+corec incr_hist_op' where
+  "incr_hist_op' H buf = Logic ($\lambda$ ev. case ev of
+    DT (t::_::linorder) d => (incr_hist_op' H (buf @ [(t, d)]), [])
+  | WM wm => if ? (t, d) \in set buf . t <= wm
+    then let out = filter ($\lambda$ (t, _). t <= wm) buf in
+      let buf' = filter ($\lambda$ (t, _). t > wm) buf in
+      let ts = remdups ((map fst out)) in
+      let Hs = map
+        ($\lambda$t. DT t (H + (mset (map snd (filter ($\lambda$(t', _). t' <= t) out)))))
+        ts in
+      (incr_hist_op' (H + (mset (map snd out))) buf', Hs @ [WM wm])
+    else (incr_hist_op' H buf, []))"
+\end{tcblisting}
+\vspace*{-1ex}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Join}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Join: Soundness}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Join: Completeness}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Join: Monotone}
+  \begin{itemize}
+    \item Use the \is{sum} type to represent two stream as one
+    \item Partial order for the \is{sum}: left compares with left, right compares with right
+    \item Defined using \is{incr_batch_op}
+    \item Soundness, Completeness, Monotone
+  \end{itemize}
 \end{frame}
 
 \section{Next Steps}
 
 \begin{frame}
   \frametitle{Next Steps}
+  \begin{itemize}
+    \item Feedback loop
+    \item Exit argument
+    \item connect to the Isabelle-LLVM refinement framework
+  \end{itemize}
 \end{frame}
 
 \section{Questions, comments and suggestions}
