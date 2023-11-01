@@ -752,8 +752,27 @@ corec batch_op where
 
 \begin{frame}[fragile]
   \frametitle{Batch Operator: Soundness}
+  \begin{itemize}
+    \item Given a monotone time-aware stream
+  \end{itemize}
   \begin{figure}[!t]
     \centering
+      \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm,background rectangle/.style={fill=yellow!10!white},show background rectangle]
+        \node (t0) at (-0.8,0) {$C_{t_{0}}$: \{\is{**a**}\}};
+        \node (t1) at (-2.5,1) {$C_{t_{1}}$: \{\is{**c**}\}};
+        \node (t2) at (-0.8,1) {$C_{t_{2}}$: \{\is{**b**}\}};
+        \node (t3) at (0.8,1) {$C_{t_{3}}$: \{\is{**a**}\}};
+        \node (t4) at (-2.5,2) {$C_{t_{4}}$: \{\is{**d**}\}};
+        \node (t5) at (0.0,2) {$C_{t_{5}}$: \{\is{**a**,**c**}\}};
+
+        \path [->] (t0) edge node {} (t1);
+        \path [->] (t0) edge node {} (t2);
+        \path [->] (t0) edge node {} (t3);
+        \path [->] (t3) edge node {} (t5);
+        \path [->] (t1) edge node {} (t4);
+        \path [->] (t2) edge node {} (t5);
+      \end{tikzpicture}
+
     \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}, transform shape]
       \begin{scope}[local bounding box=scope1]
         \node[] (0,0) (s1) {\text{\is{stream_3}}};
@@ -801,39 +820,111 @@ corec batch_op where
       \draw[->, thick]  (b6.north) -- (a7.south);
       \draw[->, thick]  (b6.north) -- (a9.south);
       \draw[->, thick]  (b6.north) -- (a10.south);
-      \draw[->, thick, bend left]  (b1.south) -- (prod.south);
+      \draw[->, thick]  (b1.south) to [out=270,in=270]  (prod.south);
     \end{tikzpicture}
   \end{figure}
+  \begin{itemize}
+    \item Proof: \is{lset} induction, and generalization with \is{skip_op}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Batch Operator: Completeness}
   \begin{itemize}
-    \item Uses soundness of \is{batch_op}
-    \item Proof by induction over n
+    \item Given a monotone and productive time-aware stream
+    \item if not finite
   \end{itemize}
+\vspace*{-1ex}
+  \begin{figure}[!t]
+    \centering
+      \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm,background rectangle/.style={fill=yellow!10!white},show background rectangle]
+        \node (t0) at (-0.8,0) {$C_{t_{0}}$: \{\is{**a**}\}};
+        \node (t1) at (-2.5,1) {$C_{t_{1}}$: \{\is{**c**}\}};
+        \node (t2) at (-0.8,1) {$C_{t_{2}}$: \{\is{**b**}\}};
+        \node (t3) at (0.8,1) {$C_{t_{3}}$: \{\is{**a**}\}};
+        \node (t4) at (-2.5,2) {$C_{t_{4}}$: \{\is{**d**}\}};
+        \node (t5) at (0.0,2) {$C_{t_{5}}$: \{\is{**a**,**c**}\}};
 
+        \path [->] (t0) edge node {} (t1);
+        \path [->] (t0) edge node {} (t2);
+        \path [->] (t0) edge node {} (t3);
+        \path [->] (t3) edge node {} (t5);
+        \path [->] (t1) edge node {} (t4);
+        \path [->] (t2) edge node {} (t5);
+      \end{tikzpicture}
+
+    \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}, transform shape]
+      \begin{scope}[local bounding box=scope1]
+        \node[] (0,0) (s1) {\text{\is{stream_3}}};
+        \node[right = 0.0cm of s1] (eq) {$=$};
+      \end{scope}
+      \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
+        \tikzset{tape/.style={minimum size=.6cm, draw}}
+        \begin{scope}[start chain=0 going right, node distance=0mm]
+          \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**},\is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
+            \ifnum\i=10
+              \node [on chain=0, tape, outer sep=0pt] (a\i) {\x};
+              \draw (a\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(a\i.south east)+(+.1,0)$)} -- (a\i.south east) -- cycle;
+            \else
+              \node [on chain=0, tape] (a\i) {\x};
+            \fi
+          }
+          \node [right=.05cm of a10] {$\cdots$};
+        \end{scope}
+      \end{scope}
+
+      \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
+        \node[] (0,0) (prod) {\text{\is{produce (batch_op [(t_0,**a**)]) stream_3 =}}};
+      \end{scope}
+      \begin{scope}[shift={($(scope3.east)+(1.7cm,0)$)}]
+        \tikzset{tape/.style={minimum size=.8cm, draw}}
+        \begin{scope}[start chain=0 going right, node distance=0mm]
+          \foreach \x [count=\i] in {\is{DT t_1 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{WM t_1},\is{DT t_2 [(t_2,**b**)]},\is{WM t_2},\is{DT t_3 [(t_3,**a**)]},\is{DT t_5 [(t_5,**a**),(t_5,**c**)]},\is{WM t_5}} {
+            \ifnum\i=7
+              \node [on chain=0, tape, outer sep=0pt] (b\i) {\x};
+              \draw (b\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(b\i.south east)+(+.1,0)$)} -- (b\i.south east) -- cycle;
+            \else
+              \node [on chain=0, tape] (b\i) {\x};
+            \fi
+          }
+          \node [right=.05cm of b7] {$\cdots$};
+        \end{scope}
+      \end{scope}
+      \draw[<-, thick]  (b1.north) -- (a2.south);
+      \draw[<-, thick]  (b1.north) -- (a3.south);
+      \draw[<-, thick]  (b1.north) -- (a4.south);
+      \draw[<-, thick]  (b3.north) -- (a5.south);
+      \draw[<-, thick]  (b3.north) -- (a6.south);
+      \draw[<-, thick]  (b5.north) -- (a8.south);
+      \draw[<-, thick]  (b5.north) -- (a10.south);
+      \draw[<-, thick]  (b6.north) -- (a7.south);
+      \draw[<-, thick]  (b6.north) -- (a9.south);
+      \draw[<-, thick]  (b6.north) -- (a10.south);
+      \draw[<-, thick]  (b1.south) to [out=270,in=270]  (prod.south);
+    \end{tikzpicture}
+  \end{figure}
+\vspace*{-2ex}
+  \begin{itemize}
+    \item Proof: induction over the position (nat) of the element in the input, and soundness of \is{batch_op}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Batch Operator: Monotone and productive preservation}
+  \begin{itemize}
+    \item The operators must preserve monotone and productive, so we can compose it with something that needs these properties!
   \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red]
-    \hspace*{-0.6cm}
   \begin{array}{@{}l@{}}
-    \text{\is{mono_prod lxs W --> (?i d. enat i < llength lxs \\<and> lnth lxs i = DT t d \\<and> n = Suc i) \\<or>}}
-    \\
-    \text{\is{n = 0 \\<and> t \\in set_t buf --> (\\<forall>t' \\in set_t buf. lfinite lxs \\<or> ?wm >= t' . WM wm \\in lset lxs) -->>}}
-    \\
-    \text{\is{?wm batch. DT wm batch \\in lset (produce (batch_op buf) lxs) \\<and> t \\in set_t batch \\<or>}}
-    \\
-    \text{\is{(\\<forall>k  \\in \{n ..< the_enat (llength lxs)\} . \\<not> (?t' >= t. lnth lxs k = WM t')) \\<and> lfinite lxs}}
+    \text{\is{monotone lxs W --> monotone (produce (batch_op buf) lxs) W}}
   \end{array}
   \end{tcolorbox}
-\end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Batch Operator: Monotone}
-
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Batch Operator: Productive}
+  \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red]
+  \begin{array}{@{}l@{}}
+    \text{\is{productive lxs --> productive (produce (batch_op buf) lxs)}}
+  \end{array}
+  \end{tcolorbox}
+  \end{itemize}
 
 \end{frame}
 
