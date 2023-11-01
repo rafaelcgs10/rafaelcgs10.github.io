@@ -22,9 +22,9 @@
 \usepackage{xpatch}
 \usepackage{xcolor}
 \usepackage{realboxes}
+\usetikzlibrary{fit}
 \usetikzlibrary{shadings}
 \usetikzlibrary{shapes.arrows,shadows.blur}
-
 
 \pgfdeclarefunctionalshading{Hermite-Gaussian modes}{\pgfpoint{-25bp}{-25bp}}{\pgfpoint{25bp}{25bp}}{}{
     10 atan sin 1000 mul cos 1 add
@@ -161,37 +161,73 @@
           \begin{itemize}
             \item Directed graph of interconnected operators that perform event-wise transformations
             \item Examples: Apache Flink, Apache Samza, Apache Spark, Google Cloud Dataflow, and Timely Dataflow
-          \begin{figure}
-            \centering
-            \includegraphics[scale=0.15]{all.png}
-          \end{figure}
-            \item Highly Parallel
+                  \vspace*{-1ex}
                   \begin{figure}
                     \centering
-                    \begin{subfigure}[t][\paperheight][t]{1.0\linewidth}
-                      \begin{tikzpicture}[node distance = 0.8cm, auto]
-                        \usetikzlibrary{shapes,arrows}
-                        \usetikzlibrary{positioning}
+                    \includegraphics[scale=0.15]{all.png}
+                  \end{figure}
+                  \vspace*{-1ex}
+            \item Highly Parallel
+                  \vspace*{-1ex}
+                  \begin{figure}
+                    \begin{subfigure}{0.45\linewidth}
+                      \begin{tikzpicture}[node distance = 0.6cm, scale=0.6, transform shape]]
+                        \tikzstyle{operator} = [rectangle, draw, fill=blue!60, text width=3.0em, text centered, minimum height=20pt, line width=1pt]
 
-                        \tikzstyle{operator} = [rectangle, draw, fill=blue!60, text width=3.0em, text centered, rounded corners = 8pt, minimum height=20pt, line width=1pt]
-                        \tikzstyle{callout} = [draw, rectangle callout, callout relative pointer={#1}, line width=1pt]
-
-                        \node at (0, 0.4) (s0) {};
-                        \node at (0, -0.1) (s1) {};
-                        \node [operator, right = of s0]  (concat) {concat};
+                        \node [operator] at (0,0)  (concat) {concat};
                         \node [operator, right = of concat] (map) {map};
                         \node [operator, right = of map] (filter) {filter};
                         \node [operator, right = of filter] (count) {count};
 
-                        \draw [thick,->,shorten >=1pt, line width=2pt] (s0) -- (concat);
-                        \draw [thick,->,shorten >=1pt, line width=2pt] (s1) -- (concat);
-                        \draw [thick,->,shorten >=1pt, line width=2pt] (concat) -- (map);
-                        \draw [thick,->,shorten >=1pt, line width=2pt] (map) -- (filter);
-                        \draw [thick,->,shorten >=1pt, line width=2pt] (filter) -- (count);
+                        \draw[<-,thick,shorten >=1pt] ([yshift=5pt]concat.west)  -- node[above]{} ++(-2em,0em);
+                        \draw[<-,thick,shorten >=1pt] ([yshift=-5pt]concat.west)  -- node[above]{} ++(-2em,0em);
+                        \draw [thick,->,shorten >=1pt] (concat) -- (map);
+                        \draw [thick,->,shorten >=1pt] (map) -- (filter);
+                        \draw [thick,->,shorten >=1pt] (filter) -- (count);
+                        \draw[->,thick,shorten >=1pt] (count.east)  -- node[above]{} ++(2em,0em);
+
+                        \node[draw,densely dotted, label={[xshift=2mm]above:{\tiny logical dataflow}},fit=(concat) (map) (filter) (count)] {};
+
+                      \end{tikzpicture}
+                    \end{subfigure}
+                    \begin{subfigure}{0.45\linewidth}
+                      \begin{tikzpicture}[node distance = 0.6cm,auto, scale=0.6, transform shape]]
+                        \tikzstyle{operator} = [rectangle, draw, fill=blue!60, text width=3.0em, text centered, minimum height=20pt, line width=1pt]
+
+                        \node [operator] at (0,0)  (concat) {concat};
+                        \node [operator, right = of concat] (map) {map};
+                        \node [operator, right = of map] (filter) {filter};
+                        \node [operator, right = of filter] (count) {count};
+
+                        \draw[<-,thick,shorten >=1pt] ([yshift=5pt]concat.west)  -- node[above]{} ++(-2em,0em);
+                        \draw[<-,thick,shorten >=1pt] ([yshift=-5pt]concat.west)  -- node[above]{} ++(-2em,0em);
+                        \draw [thick,->,shorten >=1pt] (concat) -- (map);
+                        \draw [thick,->,shorten >=1pt] (map) -- (filter);
+                        \draw [thick,->,shorten >=1pt] (filter) -- (count);
+                        \draw[->,thick,shorten >=1pt] (count.east)  -- node[above]{} ++(2em,0em);
+
+                        \node[draw,densely dotted, label={[xshift=2mm]above:{\tiny worker 1}},fit=(concat) (map) (filter) (count)] {};
+
+                        \node [operator, below=0.7cm of concat]  (concat') {concat};
+                        \node [operator, right = of concat'] (map') {map};
+                        \node [operator, right = of map'] (filter') {filter};
+                        \node [operator, right = of filter'] (count') {count};
+
+                        \draw[<-,thick,shorten >=1pt] ([yshift=5pt]concat'.west)  -- node[above]{} ++(-2em,0em);
+                        \draw[<-,thick,shorten >=1pt] ([yshift=-5pt]concat'.west)  -- node[above]{} ++(-2em,0em);
+                        \draw [thick,->,shorten >=1pt] (concat') -- (map');
+                        \draw [thick,->,shorten >=1pt] (map') -- (filter');
+                        \draw [thick,->,shorten >=1pt] (filter') -- (count');
+                        \draw[->,thick,shorten >=1pt] (count'.east)  -- node[above]{} ++(2em,0em);
+
+                        \node[draw,densely dotted, label={[xshift=2mm]above:{\tiny worker 1}},fit=(concat) (map) (filter) (count)] {};
+                        \node[draw,densely dotted, label={[xshift=2mm]above:{\tiny worker 2}},fit=(concat') (map') (filter') (count')] {};
+                        \node[draw,densely dotted, label={[xshift=2mm]above:{\tiny physical workers}},fit=(concat') (concat) (map') (filter') (count')] {};
                       \end{tikzpicture}
                     \end{subfigure}
                   \end{figure}
           \end{itemize}
+                  \vspace*{-1ex}
     \item Time-Aware Computations
           \begin{itemize}
             \item Explain watermarks
@@ -204,7 +240,7 @@
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL}
   \begin{itemize}
-    \item Classical higher-order logic (HOL): Simple Typed Lambda Calculus + (Hilbert) axiom of choice + axiom of infiity + rank-1 polymorphism
+    \item Classical higher-order logic (HOL): Simple Typed Lambda Calculus + (Hilbert) axiom of choice + axiom of infinity + rank-1 polymorphism
     \item Isabelle: A generic proof assistant
           \begin{figure}
             \centering
