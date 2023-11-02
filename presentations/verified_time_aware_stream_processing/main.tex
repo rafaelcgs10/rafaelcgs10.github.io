@@ -8,7 +8,6 @@
 \usetikzlibrary{positioning}
 \usepackage{booktabs}
 \usepackage{enumitem}
-\setbeamercovered{dynamic}
 
 \usepackage{listings}
 \usepackage{lstautogobble}
@@ -101,6 +100,8 @@
   University of Copenhagen}
 
 \begin{document}
+\setbeamercovered{invisible}
+% \setbeamercovered{dynamic}
 
 \begin{frame}
   \titlepage
@@ -161,7 +162,7 @@
     \item Dataflow Model:
           \begin{itemize}
             \item Directed graph of interconnected operators that perform event-wise transformations
-            \item Examples: Apache Flink, Apache Samza, Apache Spark, Google Cloud Dataflow, and Timely Dataflow
+            \item E.g.: Apache Flink, Apache Samza, Apache Spark, Google Cloud Dataflow, and Timely Dataflow
                   \vspace*{-1ex}
                   \begin{overlayarea}{\textwidth}{.15\textheight}
                     \centering
@@ -171,7 +172,6 @@
                     \end{figure}
                   \end{overlayarea}
                   \vspace*{-1ex}
-                  \pause
             \item Highly Parallel
                   \vspace*{-1ex}
                   \begin{figure}
@@ -286,7 +286,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
           \pause
     \item Coinductive principle for lazy list equality:
           \begin{itemize}
-            \item Show that there is a pair of goggles that makes them to look the same, which implies that:
+            \item Show that there is a ``pair of goggles '' (relation) that makes them to look the same:
                   \begin{itemize}
                     \item The first lazy list is empty iff second is
                     \item They have the same head
@@ -326,7 +326,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
           \end{itemize}
     \item Coinductive principle for lazy list equality:
           \begin{itemize}
-            \item Show that there is a pair of goggles that makes them to look the same, which implies that:
+            \item Show that there is a ``pair of goggles '' (relation) that makes them to look the same:
                   \begin{itemize}
                     \item The first lazy list is empty iff second is
                     \item They have the same head
@@ -367,7 +367,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
           \end{itemize}
     \item Coinductive principle for lazy list equality:
           \begin{itemize}
-            \item Show that there is a pair of goggles that makes them to look the same, which implies that:
+            \item Show that there is a ``pair of goggles '' (relation) that makes them to look the same:
                   \begin{itemize}
                     \item The first lazy list is empty iff second is
                     \item They have the same head
@@ -399,7 +399,7 @@ fun lshift :: "'a list => 'a llist => 'a llist" (infixr @@ 65) where
 definition while_option :: "('a => bool) => ('a => 'a) => 'a => 'a option" where
 "while_option b c s = $\ldots$"
 \end{tcblisting}
-    \item While rule for invariant reasoning (hoare-style):
+    \item While rule for invariant reasoning (Hoare-style):
           \begin{itemize}
             \item There is something that holds before a step; that thing still holds after the step
           \end{itemize}
@@ -422,18 +422,8 @@ corec lapp :: "'a llist => 'a llist => 'a llist" where
     \item Friendly function
           \begin{itemize}
             \item Preserves productivity: it may consume at most one constructor to produce one constructor.
+            \item \is{lshift} (\is{@@}) is proved to a be friend
           \end{itemize}
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-friend_of_corec lshift where
-  "xs @@ lxs = (case xs of
-    [] => (case lxs of LNil => LNil | LCons x lxs' => LCons x lxs')
-  | x#xs' => LCons x (xs' @@ lxs))"
-  by (auto split: list.splits llist.splits) (transfer_prover)
-
-lconcat lxs = case lxs of LNil => LNil | LCons xs lxs' => lshift xs (lconcat lxs')
-\end{tcblisting}
-\vspace*{-1ex}
           \pause
           \item Coinduction up to congruence: Coinduction for Lazy list equality can be extended to compare an entire finite prefix through a congruence relation
   \end{itemize}
@@ -599,7 +589,7 @@ corec skip_op where
                     \item Correctness
 \vspace*{-1ex}
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-"produce (skip_op op n) lxs = ldropn produce op lxs"
+"produce (skip_op op n) lxs = ldropn n (produce op lxs)"
 \end{tcblisting}
 \vspace*{-1ex}
           \pause
@@ -729,6 +719,68 @@ coinductive productive where
    productive (LCons (WM t) lxs)"
 \end{tcblisting}
 \vspace*{-1ex}
+
+  \begin{figure}[!t]
+    \begin{subfigure}{.5\textwidth}
+      \raggedright
+      \begin{tabular}{@{}l@{}}
+        \text{\is{stream_2 =}}
+        \\
+        \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9},background rectangle/.style={fill=yellow!10!white},show background rectangle]
+          \tikzset{tape/.style={minimum size=.6cm, draw}}
+          \begin{scope}[start chain=0 going right, node distance=0mm]
+            \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**}} {
+              \ifnum\i=5
+                \node [on chain=0, tape, outer sep=0pt] (n\i) {\x};
+                \draw (n\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(n\i.south east)+(+.1,0)$)} -- (n\i.south east) -- cycle;
+              \else
+                \node [on chain=0, tape] (n\i) {\x};
+              \fi
+            }
+          \end{scope}
+        \end{tikzpicture}
+        \vspace*{-1.3ex}
+        \\
+        \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9},background rectangle/.style={fill=yellow!10!white},show background rectangle]
+          \tikzset{tape/.style={minimum size=.6cm, draw}}
+          \begin{scope}[start chain=0 going right, node distance=0mm]
+            \foreach \x [count=\i] in {\is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
+              \ifnum\i=5
+                \node [on chain=0, tape, outer sep=0pt] (n\i) {\x};
+                \draw (n\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(n\i.south east)+(+.1,0)$)} -- (n\i.south east) -- cycle;
+              \else
+                \node [on chain=0, tape] (n\i) {\x};
+              \fi
+              \ifnum\i=1
+                \draw (n\i.north west) -- ++(-0.1,0) decorate [decoration={zigzag, segment length=0.12cm, amplitude=.02cm}] {-- ($(n\i.south west)+(-.1,0)$)} -- (n\i.south west) -- cycle;
+              \fi
+            }
+            \node [right=.05cm of n5] {$\cdots$};
+          \end{scope}
+        \end{tikzpicture}
+      \end{tabular}
+      \label{fig:stream_example_1}
+    \end{subfigure}
+    \begin{subfigure}{.38\textwidth}
+      \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm,background rectangle/.style={fill=yellow!10!white},show background rectangle]
+        \node (t0) at (-0.8,0) {$C_{t_{0}}$: \{\is{**a**}\}};
+        \node (t1) at (-2.5,1) {$C_{t_{1}}$: \{\is{**c**}\}};
+        \node (t2) at (-0.8,1) {$C_{t_{2}}$: \{\is{**b**}\}};
+        \node (t3) at (0.8,1) {$C_{t_{3}}$: \{\is{**a**}\}};
+        \node (t4) at (-2.5,2) {$C_{t_{4}}$: \{\is{**d**}\}};
+        \node (t5) at (0.0,2) {$C_{t_{5}}$: \{\is{**a**,**c**}\}};
+
+        \path [->] (t0) edge node {} (t1);
+        \path [->] (t0) edge node {} (t2);
+        \path [->] (t0) edge node {} (t3);
+        \path [->] (t3) edge node {} (t5);
+        \path [->] (t1) edge node {} (t4);
+        \path [->] (t2) edge node {} (t5);
+      \end{tikzpicture}
+      \label{fig:diamond_order}
+    \vspace*{-2ex}
+  \end{subfigure}
+  \end{figure}
           \pause
           \item Up to congruence coinduction principle
           \end{itemize}
@@ -1209,8 +1261,9 @@ definition "incr_hist_op buf1 buf2 =
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Histogram Operator: Soundness, Completeness, Monotone and Productive Preservation}
+  \frametitle{Histogram Operator: Correctness}
   \begin{itemize}
+    \item Correctness: (1) Soundness + (2) Completeness + (3) Monotone Preservation + (4) Productive Preservation
     \item Given a monotone and productive time-aware stream
   \end{itemize}
   \begin{figure}[!t]
@@ -1262,19 +1315,20 @@ definition "incr_hist_op buf1 buf2 =
 \begin{frame}[fragile]
   \frametitle{Efficient Histogram Operator}
   \begin{itemize}
-    \item Efficient histogram operator \is{incr_batch_op'} for timestamp in total order
+    \item Efficient histogram operator \is{incr_hist_op'} for timestamp in total order
           \begin{itemize}
             \item State of the operator: last computed histogram, and buffer of newly accumulated data
           \end{itemize}
-    \item Equivalent \is{incr_batch_op} only for monotone time-aware stream (equivalence relation)
+    \item Equivalent \is{incr_hist_op} only for monotone time-aware stream (equivalence relation)
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Join}
+  \frametitle{Join Operator}
   \begin{itemize}
-    \item Use the \is{sum} type to represent two stream as one
-    \item Partial order for the \is{sum}: left compares with left, right compares with right
+    \item Relation Join
+    \item Use the \is{sum} type in the timestamps to represent two stream as one
+    \item Partial order for the \is{sum}: lefts and rights are incomparable
     \item Defined using \is{incr_batch_op}
     \item Soundness, Completeness, Monotone
           \begin{itemize}
