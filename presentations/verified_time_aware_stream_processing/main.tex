@@ -279,7 +279,10 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
           \end{itemize}
 \vspace*{-1ex}
           \pause
-    \item Induction principle assuming membership in the lazy list
+    \item Induction principle with \is{lset} assumption
+          \begin{itemize}
+            \item If \is{x \in lset lxs}, and if \is{P} holds for all lazy lists containing \is{x}, then \is{P lxs} is true
+          \end{itemize}
           \pause
     \item Coinductive principle for lazy list equality:
           \begin{itemize}
@@ -295,7 +298,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
 \begin{overlayarea}{\textwidth}{.45\textheight}
   \begin{figure}
     \centering
-    \only<3>{\includegraphics[scale=0.4]{equality_1.png}}
+    \only<3>{\includegraphics[scale=0.3]{equality_1.png}}
   \end{figure}
 \end{overlayarea}
 \end{frame}
@@ -317,10 +320,13 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
             \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
           \end{itemize}
 \vspace*{-1ex}
-    \item Induction principle assuming membership in the lazy list
+    \item Induction principle with \is{lset} assumption
+          \begin{itemize}
+            \item If \is{x \in lset lxs}, and if \is{P} holds for all lazy lists containing \is{x}, then \is{P lxs} is true
+          \end{itemize}
     \item Coinductive principle for lazy list equality:
           \begin{itemize}
-            \item Show that there is a pair of goggles that makes them to look the same, which must imply that:
+            \item Show that there is a pair of goggles that makes them to look the same, which implies that:
                   \begin{itemize}
                     \item The first lazy list is empty iff second is
                     \item They have the same head
@@ -332,7 +338,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
 \begin{overlayarea}{\textwidth}{.45\textheight}
   \begin{figure}
     \centering
-    \includegraphics[scale=0.4]{equality_2.png}
+    \includegraphics[scale=0.3]{equality_2.png}
   \end{figure}
 \end{overlayarea}
 \end{frame}
@@ -355,7 +361,10 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
             \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
           \end{itemize}
 \vspace*{-1ex}
-    \item Induction principle assuming membership in the lazy list
+    \item Induction principle with \is{lset} assumption
+          \begin{itemize}
+            \item If \is{x \in lset lxs}, and if \is{P} holds for all lazy lists containing \is{x}, then \is{P lxs} is true
+          \end{itemize}
     \item Coinductive principle for lazy list equality:
           \begin{itemize}
             \item Show that there is a pair of goggles that makes them to look the same, which implies that:
@@ -370,7 +379,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
 \begin{overlayarea}{\textwidth}{.45\textheight}
   \begin{figure}
     \centering
-    \includegraphics[scale=0.4]{equality.png}
+    \includegraphics[scale=0.3]{equality.png}
   \end{figure}
 \end{overlayarea}
 \end{frame}
