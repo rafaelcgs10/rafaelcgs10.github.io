@@ -136,16 +136,16 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Contents}
-  \begin{itemize}
-    \item Introduction
-    \item Preliminaries
-    \item Lazy Lists Processors
-    \item Time-Aware Operators
-    \item Case Study
-    \item Next Steps
-  \end{itemize}
-\end{frame}
+% \begin{frame}{Contents}
+%   \begin{itemize}
+%     \item Introduction
+%     \item Preliminaries
+%     \item Lazy Lists Processors
+%     \item Time-Aware Operators
+%     \item Case Study
+%     \item Next Steps
+%   \end{itemize}
+% \end{frame}
 
 \section{Introduction}
 
@@ -492,13 +492,8 @@ codatatype ('o, 'i) op = Logic ("apply": "('i => ('o, 'i) op $\times$ 'o list)")
     \item Produce function: applies the logic (co)recursively throughout a lazy list
 \vspace*{-1.5ex}
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-definition "produce_1' op lxs = while_option
-  ($\lambda$(op, lxs). \<not> lnull lxs \<and> snd (apply op (lhd lxs)) = [])
-  ($\lambda$(op, lxs). (fst (apply op (lhd lxs)), ltl lxs)) (op, lxs)"
-definition "produce_1 op lxs =
-  (case produce_1' op lxs of None => None
-  | Some (op', lxs') => if lnull lxs' then None else
-    let (op'', out) = apply op' (lhd lxs') in Some (op'', hd out, tl out, ltl lxs'))"
+definition "produce_1 op lxs = while_option $\ldots$
+
 corec produce where
   "produce op lxs = (case produce_1 op lxs of None => LNil
     | Some (op', x, xs, lxs') => LCons x (xs @@ produce op' lxs'))"
@@ -522,7 +517,7 @@ corec count_op where "count_op P n =
     \centering
     \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9}]
       \begin{scope}[local bounding box=scope1]
-        \node[] (0,0) (s1) {\text{\is{stream_2}}};
+        \node[] (0,0) (s1) {\text{\is{stream_1}}};
         \node[right = 0.0cm of s1] (eq) {$=$};
       \end{scope}
       \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
@@ -536,7 +531,7 @@ corec count_op where "count_op P n =
 
       \begin{scope}[shift={($(scope1.center)+(-2.2cm,-1cm)$)},local bounding box=scope3]
         \node[] (0,0) (prod) {\text{\is{produce (count_op is_even 0)}}};
-        \node[right = 0.0cm of prod] (s1) {\text{\is{stream_2}}};
+        \node[right = 0.0cm of prod] (s1) {\text{\is{stream_1}}};
         \node[right = 0.0cm of s1] (eq) {$=$};
       \end{scope}
       \begin{scope}[shift={($(scope3.east)+(0.9cm,0)$)}]
@@ -592,8 +587,14 @@ corec skip_op where
      else (op', drop n out))"
 \end{tcblisting}
 \vspace*{-1ex}
+                          item Correctness
+\vspace*{-1ex}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+"produce (skip_op op n) lxs = ldropn produce op lxs"
+\end{tcblisting}
+\vspace*{-1ex}
           \pause
-                    \item Correctness: Coinduction up to congruence for lazy list equality
+                    \item Proof: Coinduction up to congruence for lazy list equality
   \end{itemize}
   \end{itemize}
 \end{frame}
@@ -632,9 +633,7 @@ coinductive monotone :: "('t::order, 'd) event llist => 't set => bool" where
    monotone (LCons (DT t d) lxs) W"
 \end{tcblisting}
 \vspace*{-1ex}
-          \pause
           \item Up to congruence coinduction principle
-          \pause
     \item Example:
   \end{itemize}
 
@@ -642,12 +641,12 @@ coinductive monotone :: "('t::order, 'd) event llist => 't set => bool" where
     \begin{subfigure}{.5\textwidth}
       \raggedright
       \begin{tabular}{@{}l@{}}
-        \text{\is{stream_3 =}}
+        \text{\is{stream_2 =}}
         \\
         \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9},background rectangle/.style={fill=yellow!10!white},show background rectangle]
           \tikzset{tape/.style={minimum size=.6cm, draw}}
           \begin{scope}[start chain=0 going right, node distance=0mm]
-            \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_5 **c**}} {
+            \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**}} {
               \ifnum\i=5
                 \node [on chain=0, tape, outer sep=0pt] (n\i) {\x};
                 \draw (n\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(n\i.south east)+(+.1,0)$)} -- (n\i.south east) -- cycle;
@@ -662,7 +661,7 @@ coinductive monotone :: "('t::order, 'd) event llist => 't set => bool" where
         \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9},background rectangle/.style={fill=yellow!10!white},show background rectangle]
           \tikzset{tape/.style={minimum size=.6cm, draw}}
           \begin{scope}[start chain=0 going right, node distance=0mm]
-            \foreach \x [count=\i] in {\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_2},\is{WM t_5},\is{DT t_2 **b**}} {
+            \foreach \x [count=\i] in {\is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
               \ifnum\i=5
                 \node [on chain=0, tape, outer sep=0pt] (n\i) {\x};
                 \draw (n\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(n\i.south east)+(+.1,0)$)} -- (n\i.south east) -- cycle;
@@ -775,7 +774,7 @@ corec batch_op where
 
     \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}, transform shape]
       \begin{scope}[local bounding box=scope1]
-        \node[] (0,0) (s1) {\text{\is{stream_3}}};
+        \node[] (0,0) (s1) {\text{\is{stream_2}}};
         \node[right = 0.0cm of s1] (eq) {$=$};
       \end{scope}
       \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
@@ -794,7 +793,7 @@ corec batch_op where
       \end{scope}
 
       \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
-        \node[] (0,0) (prod) {\text{\is{produce (batch_op [(t_0,**a**)]) stream_3 =}}};
+        \node[] (0,0) (prod) {\text{\is{produce (batch_op [(t_0,**a**)]) stream_2 =}}};
       \end{scope}
       \begin{scope}[shift={($(scope3.east)+(1.7cm,0)$)}]
         \tikzset{tape/.style={minimum size=.8cm, draw}}
@@ -855,7 +854,7 @@ corec batch_op where
 
     \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}, transform shape]
       \begin{scope}[local bounding box=scope1]
-        \node[] (0,0) (s1) {\text{\is{stream_3}}};
+        \node[] (0,0) (s1) {\text{\is{stream_2}}};
         \node[right = 0.0cm of s1] (eq) {$=$};
       \end{scope}
       \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
@@ -874,7 +873,7 @@ corec batch_op where
       \end{scope}
 
       \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
-        \node[] (0,0) (prod) {\text{\is{produce (batch_op [(t_0,**a**)]) stream_3 =}}};
+        \node[] (0,0) (prod) {\text{\is{produce (batch_op [(t_0,**a**)]) stream_2 =}}};
       \end{scope}
       \begin{scope}[shift={($(scope3.east)+(1.7cm,0)$)}]
         \tikzset{tape/.style={minimum size=.8cm, draw}}
@@ -955,7 +954,7 @@ corec incr_op where
     \centering
     \begin{tikzpicture}[scale=0.7, every node/.style={scale=0.7}, transform shape]
       \begin{scope}[local bounding box=scope1]
-        \node[] (-2cm,0) (s1) {\text{\is{stream_3}}};
+        \node[] (-2cm,0) (s1) {\text{\is{stream_2}}};
         \node[right = 0.0cm of s1] (eq) {$=$};
       \end{scope}
       \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
@@ -974,7 +973,7 @@ corec incr_op where
       \end{scope}
 
       \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
-        \node[] (0,0) (prod) {\text{\is{stream_4 = produce (batch_op [(t_0,**a**)]) stream_3 =}}};
+        \node[] (0,0) (prod) {\text{\is{stream_3 = produce (batch_op [(t_0,**a**)]) stream_2 =}}};
       \end{scope}
       \begin{scope}[shift={($(scope3.east)+(1.7cm,0)$)}]
         \tikzset{tape/.style={minimum size=.8cm, draw}}
@@ -992,7 +991,7 @@ corec incr_op where
       \end{scope}
 
       \begin{scope}[shift={($(scope3.west)+(-0.0cm,-2cm)$)},local bounding box=scope4]
-        \node[] (0,0) (prod2) {\text{\is{produce (incr_op []) stream_4 =}}};
+        \node[] (0,0) (prod2) {\text{\is{produce (incr_op []) stream_3 =}}};
       \end{scope}
       \begin{scope}[shift={($(scope4.east)+(1.7cm,0)$)}]
         \tikzset{tape/.style={minimum size=.8cm, draw}}
@@ -1026,7 +1025,7 @@ corec incr_op where
     \centering
     \begin{tikzpicture}[scale=0.7, every node/.style={scale=0.7}, transform shape]
       \begin{scope}[local bounding box=scope1]
-        \node[] (-2cm,0) (s1) {\text{\is{stream_3}}};
+        \node[] (-2cm,0) (s1) {\text{\is{stream_2}}};
         \node[right = 0.0cm of s1] (eq) {$=$};
       \end{scope}
       \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
@@ -1045,7 +1044,7 @@ corec incr_op where
       \end{scope}
 
       \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
-        \node[] (0,0) (prod) {\text{\is{stream_4 = produce (batch_op [(t_0,**a**)]) stream_3 =}}};
+        \node[] (0,0) (prod) {\text{\is{stream_3 = produce (batch_op [(t_0,**a**)]) stream_2 =}}};
       \end{scope}
       \begin{scope}[shift={($(scope3.east)+(1.7cm,0)$)}]
         \tikzset{tape/.style={minimum size=.8cm, draw}}
@@ -1063,7 +1062,7 @@ corec incr_op where
       \end{scope}
 
       \begin{scope}[shift={($(scope3.west)+(-0.0cm,-2cm)$)},local bounding box=scope4]
-        \node[] (0,0) (prod2) {\text{\is{produce (incr_op []) stream_4 =}}};
+        \node[] (0,0) (prod2) {\text{\is{produce (incr_op []) stream_3 =}}};
       \end{scope}
       \begin{scope}[shift={($(scope4.east)+(1.7cm,0)$)}]
         \tikzset{tape/.style={minimum size=.8cm, draw}}
@@ -1185,11 +1184,7 @@ definition "incr_batch_op buf1 buf2 = comp_op (batch_op buf1) (incr_op buf2)"
 corec map_op where "map_op f = Logic ($\lambda$ ev. case ev of
        WM wm => (map_op f, [WM wm]) | DT t d => (map_op f, [DT t (f t d)]))"
 
-abbreviation "data_at_from_list xs t == map snd (filter ($\lambda$ (t', d) . t' = t) xs)"
-definition "coll xs t = mset (data_at_from_list xs t)"
-
-definition "incr_coll t xs = coll xs t + mset (concat (map
-  ($\lambda$ x . concat (map ($\lambda$ t' . coll xs t') x)) (paths (remdups (map fst xs)) t)))"
+definition "incr_coll t xs = mset $\ldots$"
 
 definition "incr_hist_op buf1 buf2 =
   comp_op (incr_batch_op buf1 buf2) (map_op incr_coll)"
@@ -1207,7 +1202,7 @@ definition "incr_hist_op buf1 buf2 =
     \centering
     \begin{tikzpicture}[scale=0.75, every node/.style={scale=0.75}, transform shape]
       \begin{scope}[local bounding box=scope1]
-        \node[] (0,0) (s1) {\text{\is{stream_3}}};
+        \node[] (0,0) (s1) {\text{\is{stream_2}}};
         \node[right = 0.0cm of s1] (eq) {$=$};
       \end{scope}
       \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
@@ -1226,7 +1221,7 @@ definition "incr_hist_op buf1 buf2 =
       \end{scope}
 
       \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
-        \node[] (0,0) (prod) {\text{\is{produce (incr_hist_op [] []) stream_3 =}}};
+        \node[] (0,0) (prod) {\text{\is{produce (incr_hist_op [] []) stream_2 =}}};
       \end{scope}
       \begin{scope}[shift={($(scope3.east)+(1.2cm,0)$)}]
         \tikzset{tape/.style={minimum size=.8cm, draw}}
@@ -1252,25 +1247,12 @@ definition "incr_hist_op buf1 buf2 =
 \begin{frame}[fragile]
   \frametitle{Efficient Histogram Operator}
   \begin{itemize}
-    \item We show a equivalent efficient histogram operator for timestamp in total order
-    \item Equivalent only for monotone time-aware stream (equivalence relation)
+    \item Efficient histogram operator \is{incr_batch_op'} for timestamp in total order
+          \begin{itemize}
+            \item State of the operator: last computed histogram, and buffer of newly accumulated data
+          \end{itemize}
+    \item Equivalent \is{incr_batch_op} only for monotone time-aware stream (equivalence relation)
   \end{itemize}
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-corec incr_hist_op' where
-  "incr_hist_op' H buf = Logic ($\lambda$ ev. case ev of
-    DT (t::_::linorder) d => (incr_hist_op' H (buf @ [(t, d)]), [])
-  | WM wm => if ? (t, d) \in set buf . t <= wm
-    then let out = filter ($\lambda$ (t, _). t <= wm) buf in
-      let buf' = filter ($\lambda$ (t, _). t > wm) buf in
-      let ts = remdups ((map fst out)) in
-      let Hs = map
-        ($\lambda$t. DT t (H + (mset (map snd (filter ($\lambda$(t', _). t' <= t) out)))))
-        ts in
-      (incr_hist_op' (H + (mset (map snd out))) buf', Hs @ [WM wm])
-    else (incr_hist_op' H buf, []))"
-\end{tcblisting}
-\vspace*{-1ex}
 \end{frame}
 
 \begin{frame}[fragile]
