@@ -587,7 +587,7 @@ corec skip_op where
      else (op', drop n out))"
 \end{tcblisting}
 \vspace*{-1ex}
-                          item Correctness
+                    \item Correctness
 \vspace*{-1ex}
 \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 "produce (skip_op op n) lxs = ldropn produce op lxs"
@@ -889,16 +889,16 @@ corec batch_op where
           \node [right=.05cm of b7] {$\cdots$};
         \end{scope}
       \end{scope}
-      \draw[<-, thick]  (b1.north) -- (a2.south);
+      \draw[<-, thick]  ([xshift=-5mm]b1.north) -- (a2.south);
       \draw[<-, thick]  (b1.north) -- (a3.south);
-      \draw[<-, thick]  (b1.north) -- (a4.south);
+      \draw[<-, thick]  ([xshift=+5mm]b1.north) -- (a4.south);
       \draw[<-, thick]  (b3.north) -- (a5.south);
-      \draw[<-, thick]  (b3.north) -- (a6.south);
+      \draw[<-, thick]  ([xshift=+5mm]b3.north) -- (a6.south);
       \draw[<-, thick]  (b5.north) -- (a8.south);
-      \draw[<-, thick]  (b5.north) -- (a10.south);
-      \draw[<-, thick]  (b6.north) -- (a7.south);
+      \draw[<-, thick]  ([xshift=+5mm]b5.north) -- (a10.south);
+      \draw[<-, thick]  ([xshift=-5mm]b6.north) -- (a7.south);
       \draw[<-, thick]  (b6.north) -- (a9.south);
-      \draw[<-, thick]  (b6.north) -- (a10.south);
+      \draw[<-, thick]  ([xshift=+5mm]b6.north) -- (a10.south);
       \draw[<-, thick]  (b1.south) to [out=270,in=270]  (prod.south);
     \end{tikzpicture}
   \end{figure}
@@ -1009,9 +1009,12 @@ corec incr_op where
       \end{scope}
 
       \draw[->, thick]  (c1.north) -- (b1.south);
-      \draw[->, thick]  (c2.north) -- (b1.south);
+      \draw[->, thick]  (c2.north) -- ([xshift=-5mm]b1.south);
       \draw[->, thick]  (c4.north) -- (b3.south);
       \draw[->, thick]  (c6.north) -- (b5.south);
+      \draw[->, thick]  (c4.south) to [out=270,in=270]  ([xshift=-5mm]c2.south);
+      \draw[->, thick]  (c6.south) to [out=270,in=270]  ([xshift=-5mm]c4.south);
+      \draw[->, thick]  (c6.south) to [out=270,in=270]  (c2.south);
     \end{tikzpicture}
   \end{figure}
   \begin{itemize}
@@ -1083,6 +1086,9 @@ corec incr_op where
       \draw[<-, thick]  (c2.north) -- (b1.south);
       \draw[<-, thick]  (c4.north) -- (b3.south);
       \draw[<-, thick]  (c6.north) -- (b5.south);
+      \draw[<-, thick]  ([xshift=-5mm]c4.south) to [out=270,in=270]  (c2.south);
+      \draw[<-, thick]  ([xshift=-5mm]c6.south) to [out=270,in=270]  (c4.south);
+      \draw[<-, thick]  (c6.south) to [out=270,in=270]  (c2.south);
     \end{tikzpicture}
   \end{figure}
   \begin{itemize}
@@ -1275,7 +1281,7 @@ definition "incr_hist_op buf1 buf2 =
   \begin{itemize}
     \item Feedback loop
     \item Exit argument
-    \item connect to the Isabelle-LLVM refinement framework
+    \item Connect to the Isabelle-LLVM refinement framework
   \end{itemize}
 \end{frame}
 
