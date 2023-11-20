@@ -1,0 +1,11 @@
+\frametitle{Join Operator}
+  \begin{itemize}
+    \item Relation Join
+    \item Use the \is{sum} type in the timestamps to represent two stream as one
+    \item Partial order for the \is{sum}: lefts and rights are incomparable
+    \item Defined using \is{incr_batch_op}
+    \item Soundness, Completeness, Monotone
+          \begin{itemize}
+            \item WIP: Productive
+          \end{itemize}
+  \end{itemize}

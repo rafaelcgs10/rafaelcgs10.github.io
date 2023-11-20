@@ -1,0 +1,9 @@
+#+title: Notes
+
+* SLIDE 1
+** The above command compactly introduces the type 'a llist of potentially infinite sequences along with
+*** constructors LNil :: 'a llist and LCons :: 'a => 'a llist => 'a llist,
+*** selectors lhd :: 'a llist => 'a (where lhd LNil = undefined, i.e., a fixed, unspecified value of type 'a) and ltl :: 'a llist => 'a llist (where ltl LNil = LNil as specified),
+*** discriminator lnull :: 'a llist => bool returning true iff its argument is LNil,
+*** the functorial action lmap :: ('a => 'b) => 'a llist => 'b llist, and
+*** the function lset :: 'a llist => 'a set extracting all the elements contained in the lazy list to a (potentially infinite) set.
