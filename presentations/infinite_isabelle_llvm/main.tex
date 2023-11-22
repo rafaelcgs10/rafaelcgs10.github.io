@@ -354,6 +354,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
     \item How do we make efficient and verified programs in Isabelle/HOL?
           \pause
           \item Isabelle-LLVM!
+          \item Let's port this formalization to Isabelle-LLVM then!
     \item This is a non-terminating program
     \end{itemize}
 \end{frame}
@@ -395,22 +396,36 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
                     \item Isabelle/HOL: Partial Function Package
                   \end{itemize}
             \item Every monotonic function on Complete Chain Partial Order (CCPO) has a fixed point
+            \item Induction principle
           \end{itemize}
     \item No need for well-foundness
-    \item
-    \item Isabelle-LLVM's monad:
-          \vspace*{-1ex}
-          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-datatype 'a neM = SPEC (the_spec: "'a => bool") | FAIL
-          \end{tcblisting}
-          \vspace*{-1ex}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{What the Heck is a CCPO?}
   \begin{itemize}
-    \item Complete Chain Partial Order
+    \item Chain: A set in which all elements are comparable
+    \item Complete Chain Partial Order:
+          \begin{enumerate}
+            \item A partial order: \is{'a::order}
+            \item A function that returns the suprimium (least upper bound) from a chain \is{'a::order set => 'a}
+          \end{enumerate}
+    \pause
+    \item Isabelle-LLVM's monad:
+          \vspace*{-1ex}
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+datatype 'a neM = SPEC (the_spec: "'a => bool") | FAIL
+          \end{tcblisting}
+          \vspace*{-1ex}
+          \begin{itemize}
+            \item Order: flat (every \is{SPEC} is greater than \is{FAIL}, \is{SPEC}s are only comparable when they are equal)
+            \item Suprimium from a chain: The \is{SPEC}, or the only \is{FAIL}
+            \item Bottom: \is{FAIL}
+                  \begin{itemize}
+                    \item Non-termination
+                  \end{itemize}
+          \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -419,18 +434,7 @@ datatype 'a neM = SPEC (the_spec: "'a => bool") | FAIL
 \begin{frame}[fragile]
   \frametitle{Our CCPO Attempt}
   \begin{itemize}
-    \item
-    \item Exit argument
-    \item Connect to the Isabelle-LLVM refinement framework
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Our Monad Attempt}
-  \begin{itemize}
-    \item Feedback loop
-    \item Exit argument
-    \item Connect to the Isabelle-LLVM refinement framework
+    \item Let's look in Isabelle!
   \end{itemize}
 \end{frame}
 

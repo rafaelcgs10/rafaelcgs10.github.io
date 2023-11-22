@@ -1,6 +1,4 @@
-\frametitle{Our Monad Attempt}
+\frametitle{Our CCPO Attempt}
   \begin{itemize}
-    \item Feedback loop
-    \item Exit argument
-    \item Connect to the Isabelle-LLVM refinement framework
+    \item Let's look in Isabelle!
   \end{itemize}
