@@ -1,2 +1,1 @@
-codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
-  for map: lmap where "ltl LNil = LNil"
+datatype 'a neM = SPEC (the_spec: "'a => bool") | FAIL

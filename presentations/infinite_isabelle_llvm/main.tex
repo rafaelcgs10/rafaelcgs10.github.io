@@ -348,6 +348,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
     \item It is executable! But slow!
           \begin{itemize}
             \item Code generator: functional languages (OCaml, Haskell, SML...)
+            \item Functional data-structures: (many algorithms are slow with linked lists)
           \end{itemize}
     \pause
     \item How do we make efficient and verified programs in Isabelle/HOL?
@@ -362,9 +363,24 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
 \begin{frame}[fragile]
   \frametitle{Isabelle Refinement Framework and Isabelle-LLVM}
   \begin{itemize}
+    \item Isabelle Refinement Framework
+          \begin{itemize}
+            \item Framework for step-wise refinement verification (refinement calculus): Specification $\rightarrow$ Abstract Algorithm $\rightarrow$ Less Abstract Algorithm $\rightarrow$ Executable Code
+            \item Imperative HOL as backend (lowest layer in the refinement)
+                  \begin{itemize}
+                    \item Shallow Embedding of Monadic programs in HOL
+                  \end{itemize}
+            \item Separation Logic (heap memory reasoning)
+          \end{itemize}
     \item Isabelle-LLVM is a new backend for the Isabelle Refinement Framework
           \begin{itemize}
-            \item A more efficient
+            \item Generates LLVM code (efficient imperative code)
+          \end{itemize}
+          \pause
+    \item Can we write and verify non-terminating programs in this framework?
+          \pause
+          \begin{itemize}
+            \item Yes and No!
           \end{itemize}
   \end{itemize}
 \end{frame}
@@ -372,14 +388,29 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
 \begin{frame}[fragile]
   \frametitle{Isabelle-LLVM's Recursion Model}
   \begin{itemize}
-    \item Monotone: watermarks do not go back in time
+    \item Knaster–Tarski theorem
+          \begin{itemize}
+            \item Standard way to define the semantics of recursive definitions
+                  \begin{itemize}
+                    \item Isabelle/HOL: Partial Function Package
+                  \end{itemize}
+            \item Every monotonic function on Complete Chain Partial Order (CCPO) has a fixed point
+          \end{itemize}
+    \item No need for well-foundness
+    \item
+    \item Isabelle-LLVM's monad:
+          \vspace*{-1ex}
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+datatype 'a neM = SPEC (the_spec: "'a => bool") | FAIL
+          \end{tcblisting}
+          \vspace*{-1ex}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{What the Heck is a CCPO?}
   \begin{itemize}
-    \item Connect to the Isabelle-LLVM refinement framework
+    \item Complete Chain Partial Order
   \end{itemize}
 \end{frame}
 
