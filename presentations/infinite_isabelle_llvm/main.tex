@@ -348,7 +348,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
     \item It is executable! But slow!
           \begin{itemize}
             \item Code generator: functional languages (OCaml, Haskell, SML...)
-            \item Functional data-structures: (many algorithms are slow with linked lists)
+            \item Functional data-structures (often not ideal)
           \end{itemize}
     \pause
     \item How do we make efficient and verified programs in Isabelle/HOL?
@@ -435,6 +435,19 @@ datatype 'a neM = SPEC (the_spec: "'a => bool") | FAIL
   \frametitle{Our CCPO Attempt}
   \begin{itemize}
     \item Let's look in Isabelle!
+  \end{itemize}
+\end{frame}
+
+\section{The Other Steps}
+\begin{frame}[fragile]
+  \frametitle{More Changes to Isabelle-LLVM?}
+  \begin{itemize}
+    \item Separation Logic?
+          \begin{itemize}
+            \item Express properties about the trace of the program
+          \end{itemize}
+    \item Refinement Calculus?
+    \item LLVM code generator?
   \end{itemize}
 \end{frame}
 

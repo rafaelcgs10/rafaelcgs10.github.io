@@ -1,4 +1,9 @@
-\frametitle{Our CCPO Attempt}
+\frametitle{More Changes to Isabelle-LLVM?}
   \begin{itemize}
-    \item Let's look in Isabelle!
+    \item Separation Logic?
+          \begin{itemize}
+            \item Express properties about the trace of the program
+          \end{itemize}
+    \item Refinement Calculus?
+    \item LLVM code generator?
   \end{itemize}
