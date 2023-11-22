@@ -1,7 +1,2 @@
-corec map_op where "map_op f = Logic ($\lambda$ ev. case ev of
-       WM wm => (map_op f, [WM wm]) | DT t d => (map_op f, [DT t (f t d)]))"
-
-definition "incr_coll t xs = mset $\ldots$"
-
-definition "incr_hist_op buf1 buf2 =
-  comp_op (incr_batch_op buf1 buf2) (map_op incr_coll)"
+codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
+  for map: lmap where "ltl LNil = LNil"
