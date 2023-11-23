@@ -257,12 +257,26 @@
                     \item e.g.: A watermark 5 says that there is no data associated with timestamp 5 or bellow arriving
                     \item Are increasingly monotonic (they don't go backwards in time)
                   \end{itemize}
+            \item e.g.:
+  \begin{figure}[!t]
+      \raggedright
+        \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8},background rectangle/.style={fill=yellow!10!white},show background rectangle]
+          \tikzset{tape/.style={minimum size=.6cm, draw}}
+          \begin{scope}[start chain=0 going right, node distance=0mm]
+            \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**}, \is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
+                \node [on chain=0, tape] (n\i) {\x};
+            }
+            \node [right=.05cm of n10] {$\cdots$};
+          \end{scope}
+        \end{tikzpicture}
+    \end{figure}
           \end{itemize}
   \end{itemize}
 \end{frame}
 
 % \draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\lambda$ e. case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if $\exists$ t $\in$ (map fst buf). \ t \ $\le$ wm\\ \ then\\ \ \ \ out <- filter ($\lambda$ (t, \_) . t $\le$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter ($\lambda$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map ($\lambda$ t . DT t (H + (mset (map snd (filter ($\lambda$ (t', \_) . t' $\le$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
 
+% https://www.mathcha.io/editor
 \begin{frame}[fragile]
   \frametitle{Exameple of Time-Aware Stream Processing}
 
