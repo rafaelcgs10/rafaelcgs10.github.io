@@ -406,7 +406,7 @@
 % Text Node
 \draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
 % Text Node
-\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\lambda$ e. case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if $\exists$ t $\in$ (map fst buf). \ t \ $\le$ wm\\ \ then\\ \ \ \ out <- filter ($\lambda$ (t, \_) . t $\le$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter ($\lambda$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map ($\lambda$ t . DT t (H + (mset (map snd (filter ($\lambda$ (t', \_) . t' $\le$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
 % Text Node
 \draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = [(2,b)]\\H = \{\}};
 
@@ -456,7 +456,7 @@
 % Text Node
 \draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
 % Text Node
-\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\lambda$ e. case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if $\exists$ t $\in$ (map fst buf). \ t \ $\le$ wm\\ \ then\\ \ \ \ out <- filter ($\lambda$ (t, \_) . t $\le$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter ($\lambda$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map ($\lambda$ t . DT t (H + (mset (map snd (filter ($\lambda$ (t', \_) . t' $\le$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
 % Text Node
 \draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = [(2,b)]\\H = \{\}};
 
@@ -502,7 +502,7 @@
 % Text Node
 \draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
 % Text Node
-\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\lambda$ e. case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if $\exists$ t $\in$ (map fst buf). \ t \ $\le$ wm\\ \ then\\ \ \ \ out <- filter ($\lambda$ (t, \_) . t $\le$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter ($\lambda$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map ($\lambda$ t . DT t (H + (mset (map snd (filter ($\lambda$ (t', \_) . t' $\le$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
 % Text Node
 \draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = [(2,b), (1,a)]\\H = \{\}};
 
@@ -549,7 +549,7 @@
 % Text Node
 \draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
 % Text Node
-\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\lambda$ e. case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if $\exists$ t $\in$ (map fst buf). \ t \ $\le$ wm\\ \ then\\ \ \ \ out <- filter ($\lambda$ (t, \_) . t $\le$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter ($\lambda$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map ($\lambda$ t . DT t (H + (mset (map snd (filter ($\lambda$ (t', \_) . t' $\le$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
 % Text Node
 \draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = [(2,b), (1,a)]\\H = \{\}};
 
@@ -597,7 +597,7 @@
 % Text Node
 \draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
 % Text Node
-\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\lambda$ e. case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if $\exists$ t $\in$ (map fst buf). \ t \ $\le$ wm\\ \ then\\ \ \ \ out <- filter ($\lambda$ (t, \_) . t $\le$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter ($\lambda$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map ($\lambda$ t . DT t (H + (mset (map snd (filter ($\lambda$ (t', \_) . t' $\le$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
 % Text Node
 \draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = [(2,b)]\\H = \{a\}};
 % Text Node
@@ -639,7 +639,7 @@
 % Text Node
 \draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
 % Text Node
-\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\lambda$ e. case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if $\exists$ t $\in$ (map fst buf). \ t \ $\le$ wm\\ \ then\\ \ \ \ out <- filter ($\lambda$ (t, \_) . t $\le$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter ($\lambda$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map ($\lambda$ t . DT t (H + (mset (map snd (filter ($\lambda$ (t', \_) . t' $\le$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
 % Text Node
 \draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = [(2,b), (2,c), (3,a)]\\H = \{a\}};
 % Text Node
@@ -683,7 +683,7 @@
 % Text Node
 \draw (272,438) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 1 };
 % Text Node
-\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\lambda$ e. case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if $\exists$ t $\in$ (map fst buf). \ t \ $\le$ wm\\ \ then\\ \ \ \ out <- filter ($\lambda$ (t, \_) . t $\le$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter ($\lambda$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map ($\lambda$ t . DT t (H + (mset (map snd (filter ($\lambda$ (t', \_) . t' $\le$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
 % Text Node
 \draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = []\\H = \{a,a,b,c\}};
 % Text Node
