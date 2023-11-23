@@ -4,8 +4,34 @@
 
 \usepackage{fancybox,graphicx,hyperref,url}
 \usepackage{tikz}
+\usetikzlibrary{fit}
+\usetikzlibrary{shadings}
+\usetikzlibrary{shapes.arrows,shadows.blur}
 \usetikzlibrary{shapes,arrows}
 \usetikzlibrary{positioning}
+\usetikzlibrary{calc, chains, decorations.pathmorphing}
+\usetikzlibrary{shapes,arrows,backgrounds}
+\usetikzlibrary{positioning,fit,shapes.geometric,shapes}
+\usepackage{physics}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{mathdots}
+\usepackage{yhmath}
+\usepackage{cancel}
+\usepackage{color}
+\usepackage{siunitx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{gensymb}
+\usepackage{tabularx}
+\usepackage{extarrows}
+\usepackage{booktabs}
+\usetikzlibrary{fadings}
+\usetikzlibrary{patterns}
+\usetikzlibrary{shadows.blur}
+\usetikzlibrary{shapes}
+
 \usepackage{booktabs}
 \usepackage{enumitem}
 
@@ -22,9 +48,6 @@
 \usepackage{xpatch}
 \usepackage{xcolor}
 \usepackage{realboxes}
-\usetikzlibrary{fit}
-\usetikzlibrary{shadings}
-\usetikzlibrary{shapes.arrows,shadows.blur}
 
 \pgfdeclarefunctionalshading{Hermite-Gaussian modes}{\pgfpoint{-25bp}{-25bp}}{\pgfpoint{25bp}{25bp}}{}{
     10 atan sin 1000 mul cos 1 add
@@ -45,11 +68,7 @@
 \lstset{autogobble}
 % \lstset{breaklines=true}
 
-\usepackage{tikz}
 \usepackage{subcaption}
-\usetikzlibrary{calc, chains, decorations.pathmorphing}
-\usetikzlibrary{shapes,arrows,backgrounds}
-\usetikzlibrary{positioning,fit,shapes.geometric,shapes}
 
 \setbeamercovered{transparent}
 
@@ -223,7 +242,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Time-Aware Stream Processing}
+  \frametitle{Time-Aware Stream Processing (part 1)}
   \begin{itemize}
     \item Time-Aware Computations:
           \begin{itemize}
@@ -238,21 +257,448 @@
                     \item e.g.: A watermark 5 says that there is no data associated with timestamp 5 or bellow arriving
                     \item Are increasingly monotonic (they don't go backwards in time)
                   \end{itemize}
-            \item e.g.:
-  \begin{figure}[!t]
-      \raggedright
-        \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8},background rectangle/.style={fill=yellow!10!white},show background rectangle]
-          \tikzset{tape/.style={minimum size=.6cm, draw}}
-          \begin{scope}[start chain=0 going right, node distance=0mm]
-            \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**}, \is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
-                \node [on chain=0, tape] (n\i) {\x};
-            }
-            \node [right=.05cm of n10] {$\cdots$};
-          \end{scope}
-        \end{tikzpicture}
-    \end{figure}
           \end{itemize}
   \end{itemize}
+\end{frame}
+
+% \draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\lambda$ e. case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if $\exists$ t $\in$ (map fst buf). \ t \ $\le$ wm\\ \ then\\ \ \ \ out <- filter ($\lambda$ (t, \_) . t $\le$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter ($\lambda$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map ($\lambda$ t . DT t (H + (mset (map snd (filter ($\lambda$ (t', \_) . t' $\le$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+
+\begin{frame}[fragile]
+  \frametitle{Exameple of Time-Aware Stream Processing}
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+\resizebox{0.9\textwidth}{0.8\textheight}{%
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,489); %set diagram left start at 0, and has height of 489
+
+%Rounded Rect [id:dp2828185464138784]
+\draw  [line width=1.5]  (47.37,174.6) .. controls (47.37,141.68) and (74.05,115) .. (106.97,115) -- (588.4,115) .. controls (621.32,115) and (648,141.68) .. (648,174.6) -- (648,353.4) .. controls (648,386.32) and (621.32,413) .. (588.4,413) -- (106.97,413) .. controls (74.05,413) and (47.37,386.32) .. (47.37,353.4) -- cycle ;
+%Shape: Rectangle [id:dp8322547950272192]
+\draw   (144,36) -- (194,36) -- (194,66) -- (144,66) -- cycle ;
+%Shape: Rectangle [id:dp16185128837259355]
+\draw   (194,36) -- (244,36) -- (244,66) -- (194,66) -- cycle ;
+%Shape: Rectangle [id:dp07527633485084895]
+\draw   (244,36) -- (294,36) -- (294,66) -- (244,66) -- cycle ;
+%Shape: Rectangle [id:dp6518760155585928]
+\draw   (294,36) -- (344,36) -- (344,66) -- (294,66) -- cycle ;
+%Shape: Rectangle [id:dp8004967249958459]
+\draw   (344,36) -- (394,36) -- (394,66) -- (344,66) -- cycle ;
+%Shape: Rectangle [id:dp6426296003908789]
+\draw   (394,36) -- (444,36) -- (444,66) -- (394,66) -- cycle ;
+%Straight Lines [id:da3914639201104144]
+\draw [line width=3]    (0,259) -- (43,259) ;
+\draw [shift={(48,259)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+%Straight Lines [id:da5752451790936068]
+\draw [line width=3]    (648,259.92) -- (700,259.08) ;
+\draw [shift={(705,259)}, rotate = 179.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+
+% Text Node
+\draw (146,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 2 b};
+% Text Node
+\draw (196,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 1 a};
+% Text Node
+\draw (246,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 1 };
+% Text Node
+\draw (296,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 2 c};
+% Text Node
+\draw (346,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 3 a};
+% Text Node
+\draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
+% Text Node
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\lambda$ e. case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if $\exists$ t $\in$ (map fst buf). \ t \ $\le$ wm\\ \ then\\ \ \ \ out <- filter ($\lambda$ (t, \_) . t $\le$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter ($\lambda$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map ($\lambda$ t . DT t (H + (mset (map snd (filter ($\lambda$ (t', \_) . t' $\le$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+% Text Node
+\draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = []\\H = \{\}};
+\end{tikzpicture}
+}
+
+\end{frame}
+
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Exameple of Time-Aware Stream Processing}
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+  \resizebox{0.9\textwidth}{0.8\textheight}{%
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,489); %set diagram left start at 0, and has height of 489
+
+%Rounded Rect [id:dp2828185464138784]
+\draw  [line width=1.5]  (47.37,174.6) .. controls (47.37,141.68) and (74.05,115) .. (106.97,115) -- (588.4,115) .. controls (621.32,115) and (648,141.68) .. (648,174.6) -- (648,353.4) .. controls (648,386.32) and (621.32,413) .. (588.4,413) -- (106.97,413) .. controls (74.05,413) and (47.37,386.32) .. (47.37,353.4) -- cycle ;
+%Shape: Rectangle [id:dp8322547950272192]
+\draw   (0,216) -- (50,216) -- (50,246) -- (0,246) -- cycle ;
+%Shape: Rectangle [id:dp16185128837259355]
+\draw   (194,36) -- (244,36) -- (244,66) -- (194,66) -- cycle ;
+%Shape: Rectangle [id:dp07527633485084895]
+\draw   (244,36) -- (294,36) -- (294,66) -- (244,66) -- cycle ;
+%Shape: Rectangle [id:dp6518760155585928]
+\draw   (294,36) -- (344,36) -- (344,66) -- (294,66) -- cycle ;
+%Shape: Rectangle [id:dp8004967249958459]
+\draw   (344,36) -- (394,36) -- (394,66) -- (344,66) -- cycle ;
+%Shape: Rectangle [id:dp6426296003908789]
+\draw   (394,36) -- (444,36) -- (444,66) -- (394,66) -- cycle ;
+%Straight Lines [id:da3914639201104144]
+\draw [line width=3]    (0,259) -- (43,259) ;
+\draw [shift={(48,259)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+%Straight Lines [id:da5752451790936068]
+\draw [line width=3]    (648,259.92) -- (700,259.08) ;
+\draw [shift={(705,259)}, rotate = 179.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+
+% Text Node
+\draw (2,222) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 2 b};
+% Text Node
+\draw (196,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 1 a};
+% Text Node
+\draw (246,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 1 };
+% Text Node
+\draw (296,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 2 c};
+% Text Node
+\draw (346,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 3 a};
+% Text Node
+\draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
+% Text Node
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\lambda$ e. case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if $\exists$ t $\in$ (map fst buf). \ t \ $\le$ wm\\ \ then\\ \ \ \ out <- filter ($\lambda$ (t, \_) . t $\le$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter ($\lambda$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map ($\lambda$ t . DT t (H + (mset (map snd (filter ($\lambda$ (t', \_) . t' $\le$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+ Text Node
+\draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = []\\H = \{\}};
+\end{tikzpicture}
+  }
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example Time-Aware Stream Processing}
+  \resizebox{0.9\textwidth}{0.8\textheight}{%
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,489); %set diagram left start at 0, and has height of 489
+
+%Rounded Rect [id:dp2828185464138784]
+\draw  [line width=1.5]  (47.37,174.6) .. controls (47.37,141.68) and (74.05,115) .. (106.97,115) -- (588.4,115) .. controls (621.32,115) and (648,141.68) .. (648,174.6) -- (648,353.4) .. controls (648,386.32) and (621.32,413) .. (588.4,413) -- (106.97,413) .. controls (74.05,413) and (47.37,386.32) .. (47.37,353.4) -- cycle ;
+%Shape: Rectangle [id:dp16185128837259355]
+\draw   (194,36) -- (244,36) -- (244,66) -- (194,66) -- cycle ;
+%Shape: Rectangle [id:dp07527633485084895]
+\draw   (244,36) -- (294,36) -- (294,66) -- (244,66) -- cycle ;
+%Shape: Rectangle [id:dp6518760155585928]
+\draw   (294,36) -- (344,36) -- (344,66) -- (294,66) -- cycle ;
+%Shape: Rectangle [id:dp8004967249958459]
+\draw   (344,36) -- (394,36) -- (394,66) -- (344,66) -- cycle ;
+%Shape: Rectangle [id:dp6426296003908789]
+\draw   (394,36) -- (444,36) -- (444,66) -- (394,66) -- cycle ;
+%Straight Lines [id:da3914639201104144]
+\draw [line width=3]    (0,259) -- (43,259) ;
+\draw [shift={(48,259)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+%Straight Lines [id:da5752451790936068]
+\draw [line width=3]    (648,259.92) -- (700,259.08) ;
+\draw [shift={(705,259)}, rotate = 179.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+
+% Text Node
+\draw (196,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 1 a};
+% Text Node
+\draw (246,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 1 };
+% Text Node
+\draw (296,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 2 c};
+% Text Node
+\draw (346,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 3 a};
+% Text Node
+\draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
+% Text Node
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+% Text Node
+\draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = [(2,b)]\\H = \{\}};
+
+
+\end{tikzpicture}
+
+  }
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example Time-Aware Stream Processing}
+  \resizebox{0.9\textwidth}{0.8\textheight}{%
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,489); %set diagram left start at 0, and has height of 489
+
+%Rounded Rect [id:dp2828185464138784]
+\draw  [line width=1.5]  (47.37,174.6) .. controls (47.37,141.68) and (74.05,115) .. (106.97,115) -- (588.4,115) .. controls (621.32,115) and (648,141.68) .. (648,174.6) -- (648,353.4) .. controls (648,386.32) and (621.32,413) .. (588.4,413) -- (106.97,413) .. controls (74.05,413) and (47.37,386.32) .. (47.37,353.4) -- cycle ;
+%Shape: Rectangle [id:dp16185128837259355]
+\draw   (0,216) -- (50,216) -- (50,246) -- (0,246) -- cycle ;
+%Shape: Rectangle [id:dp07527633485084895]
+\draw   (244,36) -- (294,36) -- (294,66) -- (244,66) -- cycle ;
+%Shape: Rectangle [id:dp6518760155585928]
+\draw   (294,36) -- (344,36) -- (344,66) -- (294,66) -- cycle ;
+%Shape: Rectangle [id:dp8004967249958459]
+\draw   (344,36) -- (394,36) -- (394,66) -- (344,66) -- cycle ;
+%Shape: Rectangle [id:dp6426296003908789]
+\draw   (394,36) -- (444,36) -- (444,66) -- (394,66) -- cycle ;
+%Straight Lines [id:da3914639201104144]
+\draw [line width=3]    (0,259) -- (43,259) ;
+\draw [shift={(48,259)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+%Straight Lines [id:da5752451790936068]
+\draw [line width=3]    (648,259.92) -- (700,259.08) ;
+\draw [shift={(705,259)}, rotate = 179.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+
+% Text Node
+\draw (2,222) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 1 a};
+% Text Node
+\draw (246,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 1 };
+% Text Node
+\draw (296,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 2 c};
+% Text Node
+\draw (346,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 3 a};
+% Text Node
+\draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
+% Text Node
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+% Text Node
+\draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = [(2,b)]\\H = \{\}};
+
+
+\end{tikzpicture}
+
+  }
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example Time-Aware Stream Processing}
+  \resizebox{0.9\textwidth}{0.8\textheight}{%
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,489); %set diagram left start at 0, and has height of 489
+
+%Rounded Rect [id:dp2828185464138784]
+\draw  [line width=1.5]  (47.37,174.6) .. controls (47.37,141.68) and (74.05,115) .. (106.97,115) -- (588.4,115) .. controls (621.32,115) and (648,141.68) .. (648,174.6) -- (648,353.4) .. controls (648,386.32) and (621.32,413) .. (588.4,413) -- (106.97,413) .. controls (74.05,413) and (47.37,386.32) .. (47.37,353.4) -- cycle ;
+%Shape: Rectangle [id:dp07527633485084895]
+\draw   (244,36) -- (294,36) -- (294,66) -- (244,66) -- cycle ;
+%Shape: Rectangle [id:dp6518760155585928]
+\draw   (294,36) -- (344,36) -- (344,66) -- (294,66) -- cycle ;
+%Shape: Rectangle [id:dp8004967249958459]
+\draw   (344,36) -- (394,36) -- (394,66) -- (344,66) -- cycle ;
+%Shape: Rectangle [id:dp6426296003908789]
+\draw   (394,36) -- (444,36) -- (444,66) -- (394,66) -- cycle ;
+%Straight Lines [id:da3914639201104144]
+\draw [line width=3]    (0,259) -- (43,259) ;
+\draw [shift={(48,259)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+%Straight Lines [id:da5752451790936068]
+\draw [line width=3]    (648,259.92) -- (700,259.08) ;
+\draw [shift={(705,259)}, rotate = 179.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+
+% Text Node
+\draw (246,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 1 };
+% Text Node
+\draw (296,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 2 c};
+% Text Node
+\draw (346,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 3 a};
+% Text Node
+\draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
+% Text Node
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+% Text Node
+\draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = [(2,b), (1,a)]\\H = \{\}};
+
+
+\end{tikzpicture}
+
+  }
+\end{frame}
+
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example Time-Aware Stream Processing}
+  \resizebox{0.9\textwidth}{0.8\textheight}{%
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,489); %set diagram left start at 0, and has height of 489
+
+%Rounded Rect [id:dp2828185464138784]
+\draw  [line width=1.5]  (47.37,174.6) .. controls (47.37,141.68) and (74.05,115) .. (106.97,115) -- (588.4,115) .. controls (621.32,115) and (648,141.68) .. (648,174.6) -- (648,353.4) .. controls (648,386.32) and (621.32,413) .. (588.4,413) -- (106.97,413) .. controls (74.05,413) and (47.37,386.32) .. (47.37,353.4) -- cycle ;
+%Shape: Rectangle [id:dp07527633485084895]
+\draw   (0,216) -- (50,216) -- (50,246) -- (0,246) -- cycle ;
+%Shape: Rectangle [id:dp6518760155585928]
+\draw   (294,36) -- (344,36) -- (344,66) -- (294,66) -- cycle ;
+%Shape: Rectangle [id:dp8004967249958459]
+\draw   (344,36) -- (394,36) -- (394,66) -- (344,66) -- cycle ;
+%Shape: Rectangle [id:dp6426296003908789]
+\draw   (394,36) -- (444,36) -- (444,66) -- (394,66) -- cycle ;
+%Straight Lines [id:da3914639201104144]
+\draw [line width=3]    (0,259) -- (43,259) ;
+\draw [shift={(48,259)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+%Straight Lines [id:da5752451790936068]
+\draw [line width=3]    (648,259.92) -- (700,259.08) ;
+\draw [shift={(705,259)}, rotate = 179.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+
+% Text Node
+\draw (2,222) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 1 };
+% Text Node
+\draw (296,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 2 c};
+% Text Node
+\draw (346,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 3 a};
+% Text Node
+\draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
+% Text Node
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+% Text Node
+\draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = [(2,b), (1,a)]\\H = \{\}};
+
+
+\end{tikzpicture}
+
+  }
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example Time-Aware Stream Processing}
+  \resizebox{0.9\textwidth}{0.8\textheight}{%
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,489); %set diagram left start at 0, and has height of 489
+
+%Rounded Rect [id:dp2828185464138784]
+\draw  [line width=1.5]  (47.37,174.6) .. controls (47.37,141.68) and (74.05,115) .. (106.97,115) -- (588.4,115) .. controls (621.32,115) and (648,141.68) .. (648,174.6) -- (648,353.4) .. controls (648,386.32) and (621.32,413) .. (588.4,413) -- (106.97,413) .. controls (74.05,413) and (47.37,386.32) .. (47.37,353.4) -- cycle ;
+%Shape: Rectangle [id:dp07527633485084895]
+\draw   (396,432) -- (446,432) -- (446,462) -- (396,462) -- cycle ;
+%Shape: Rectangle [id:dp6518760155585928]
+\draw   (294,36) -- (344,36) -- (344,66) -- (294,66) -- cycle ;
+%Shape: Rectangle [id:dp8004967249958459]
+\draw   (344,36) -- (394,36) -- (394,66) -- (344,66) -- cycle ;
+%Shape: Rectangle [id:dp6426296003908789]
+\draw   (394,36) -- (444,36) -- (444,66) -- (394,66) -- cycle ;
+%Straight Lines [id:da3914639201104144]
+\draw [line width=3]    (0,259) -- (43,259) ;
+\draw [shift={(48,259)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+%Straight Lines [id:da5752451790936068]
+\draw [line width=3]    (648,259.92) -- (700,259.08) ;
+\draw [shift={(705,259)}, rotate = 179.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+%Shape: Rectangle [id:dp9360080992935229]
+\draw   (325,432) -- (396,432) -- (396,462) -- (325,462) -- cycle ;
+
+% Text Node
+\draw (398,438) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 1 };
+% Text Node
+\draw (296,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 2 c};
+% Text Node
+\draw (346,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 3 a};
+% Text Node
+\draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
+% Text Node
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+% Text Node
+\draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = [(2,b)]\\H = \{a\}};
+% Text Node
+\draw (331,438) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 1 \{a\}};
+
+
+\end{tikzpicture}
+
+  }
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example Time-Aware Stream Processing}
+  \resizebox{0.9\textwidth}{0.8\textheight}{%
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,489); %set diagram left start at 0, and has height of 489
+
+%Rounded Rect [id:dp2828185464138784]
+\draw  [line width=1.5]  (47.37,174.6) .. controls (47.37,141.68) and (74.05,115) .. (106.97,115) -- (588.4,115) .. controls (621.32,115) and (648,141.68) .. (648,174.6) -- (648,353.4) .. controls (648,386.32) and (621.32,413) .. (588.4,413) -- (106.97,413) .. controls (74.05,413) and (47.37,386.32) .. (47.37,353.4) -- cycle ;
+%Shape: Rectangle [id:dp07527633485084895]
+\draw   (396,432) -- (446,432) -- (446,462) -- (396,462) -- cycle ;
+%Shape: Rectangle [id:dp6426296003908789]
+\draw   (394,36) -- (444,36) -- (444,66) -- (394,66) -- cycle ;
+%Straight Lines [id:da3914639201104144]
+\draw [line width=3]    (0,259) -- (43,259) ;
+\draw [shift={(48,259)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+%Straight Lines [id:da5752451790936068]
+\draw [line width=3]    (648,259.92) -- (700,259.08) ;
+\draw [shift={(705,259)}, rotate = 179.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+%Shape: Rectangle [id:dp9360080992935229]
+\draw   (325,432) -- (396,432) -- (396,462) -- (325,462) -- cycle ;
+
+% Text Node
+\draw (398,438) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 1 };
+% Text Node
+\draw (396,42) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4};
+% Text Node
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+% Text Node
+\draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = [(2,b), (2,c), (3,a)]\\H = \{a\}};
+% Text Node
+\draw (331,438) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 1 \{a\}};
+
+
+\end{tikzpicture}
+
+  }
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Example Time-Aware Stream Processing}
+  \resizebox{0.9\textwidth}{0.8\textheight}{%
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,489); %set diagram left start at 0, and has height of 489
+
+%Rounded Rect [id:dp2828185464138784]
+\draw  [line width=1.5]  (47.37,174.6) .. controls (47.37,141.68) and (74.05,115) .. (106.97,115) -- (588.4,115) .. controls (621.32,115) and (648,141.68) .. (648,174.6) -- (648,353.4) .. controls (648,386.32) and (621.32,413) .. (588.4,413) -- (106.97,413) .. controls (74.05,413) and (47.37,386.32) .. (47.37,353.4) -- cycle ;
+%Shape: Rectangle [id:dp07527633485084895]
+\draw   (271,432) -- (321,432) -- (321,462) -- (271,462) -- cycle ;
+%Straight Lines [id:da3914639201104144]
+\draw [line width=3]    (0,259) -- (43,259) ;
+\draw [shift={(48,259)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+%Straight Lines [id:da5752451790936068]
+\draw [line width=3]    (648,259.92) -- (700,259.08) ;
+\draw [shift={(705,259)}, rotate = 179.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=3]    (20.77,-6.25) .. controls (13.2,-2.65) and (6.28,-0.57) .. (0,0) .. controls (6.28,0.57) and (13.2,2.66) .. (20.77,6.25)   ;
+%Shape: Rectangle [id:dp9360080992935229]
+\draw   (200,432) -- (271,432) -- (271,462) -- (200,462) -- cycle ;
+%Shape: Rectangle [id:dp025487318872198017]
+\draw   (518,432) -- (568,432) -- (568,462) -- (518,462) -- cycle ;
+%Shape: Rectangle [id:dp6091069098377138]
+\draw   (321,432) -- (412,432) -- (412,462) -- (321,462) -- cycle ;
+%Shape: Rectangle [id:dp12580135752131838]
+\draw   (413,432) -- (517.5,432) -- (517.5,462) -- (413,462) -- cycle ;
+
+% Text Node
+\draw (272,438) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 1 };
+% Text Node
+\draw (55,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {\$\textbackslash lambda case e of\\DT t d => insert (t, d) buf\\WM wm =>\\ \ if \$\textbackslash exists\$ t \$\textbackslash in\$ (map fst buf)\textbackslash math-container\{\}. \ t \ \$\textbackslash le\$ wm\\ \ then\\ \ \ \ out <- filter (\$\textbackslash lambda\$ (t, \_) . t \$\textbackslash le\$ wm) buf\\ \ \ \ \ ts <- remdups (map fst out)\\ \ \ \ \ buf <- filter (\$\textbackslash lambda\$ (t, \_) . t > wm) buf\\ \ \ \ \ H <- H + (mset (map snd out))\\ \ \ \ \ push (map (\$\textbackslash lambda\$ t . DT t (H + (mset (map snd (filter (\$\textbackslash lambda\$ (t', \_) . t' \$\textbackslash le\$ t) out))))) ts) @ [WM wm]\\ \ else\\ \ \ \ \ push \ [WM wm]};
+% Text Node
+\draw (505,56.33) node [anchor=north west][inner sep=0.75pt]   [align=left] {buf = []\\H = \{a,a,b,c\}};
+% Text Node
+\draw (206,438) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 1 \{a\}};
+% Text Node
+\draw (519,438) node [anchor=north west][inner sep=0.75pt]   [align=left] {WM 4 };
+% Text Node
+\draw (327,438) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 2 \{a,b,c\}};
+% Text Node
+\draw (419,438) node [anchor=north west][inner sep=0.75pt]   [align=left] {DT 3 \{a,a,b,c\}};
+
+
+\end{tikzpicture}
+
+  }
 \end{frame}
 
 \section{Preliminaries}
@@ -304,7 +750,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
           \begin{itemize}
             \item Using Isabelle/HOL: (co)datatypes, (co)recursion, and (co)induction
             \item Streams are lazy lists, and operators as a codatatype
-            \item Semantics: a \is{produce} function that runs an operator throughout a lazy lists
+            \item Semantics: a \is{produce :: 'i llist => ('i, 'o) op => 'o llist} function that runs an operator throughout a lazy lists
                   \begin{itemize}
                     \item Mix of recursion and corecursion: inductive and coinductive principles
                   \end{itemize}
@@ -327,7 +773,7 @@ codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
                     \item Convenience operators: batching and incremental computations
                           \begin{itemize}
                             \item Incremental computing: only update results that are affected by the new input
-                            \item With verified properties: Soundness, Completeness, preservation of productivity, and preservation of monotonicity
+                            \item With verified properties: Soundness, Completeness, preservation of monotonicity, and preservation of productivity
                           \end{itemize}
                   \end{itemize}
             \item Compositional reasoning
