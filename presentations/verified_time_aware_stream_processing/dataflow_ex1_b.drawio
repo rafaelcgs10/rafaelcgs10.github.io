@@ -1,0 +1,49 @@
+<mxfile host="Electron" modified="2024-06-01T12:11:41.909Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.3 Chrome/118.0.5993.159 Electron/27.3.11 Safari/537.36" etag="kz75ULVNEOT4g9bTa6tx" version="22.0.3" type="device">
+  <diagram name="Page-1" id="7l_J2yBBjgkDMlGloOlC">
+    <mxGraphModel dx="989" dy="586" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="0.6" pageWidth="1600" pageHeight="900" math="1" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_g1IpS9bpQ4U1qeAF5R8-9" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="_g1IpS9bpQ4U1qeAF5R8-15">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="884.0000000000003" y="289.91999999999985" as="sourcePoint" />
+            <mxPoint x="959.69" y="289.58000000000004" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_g1IpS9bpQ4U1qeAF5R8-10" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;logic:&lt;br&gt;\(\lambda\) ev. case ev of&lt;br&gt;&amp;nbsp; DT t d \(\Rightarrow\)&lt;br&gt;&amp;nbsp; &amp;nbsp; push (map (DT t) (slice d))&lt;br&gt;| WM wm \(\Rightarrow\)&lt;br&gt;&amp;nbsp; &amp;nbsp; done wm&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;container=0;" vertex="1" parent="1">
+          <mxGeometry x="95" y="230" width="130" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="_g1IpS9bpQ4U1qeAF5R8-11" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="_g1IpS9bpQ4U1qeAF5R8-10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint y="290" as="sourcePoint" />
+            <mxPoint x="15" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_g1IpS9bpQ4U1qeAF5R8-12" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;logic:&lt;br&gt;\(\lambda\) ev. case ev of&lt;br&gt;&amp;nbsp; DT t d \(\Rightarrow\)&lt;br&gt;&amp;nbsp; &amp;nbsp; push [DT t d] if d = &quot;dog&quot; or d = &quot;cat&quot;&lt;br&gt;| WM wm \(\Rightarrow\)&lt;br&gt;&amp;nbsp; &amp;nbsp; done wm&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;container=0;" vertex="1" parent="1">
+          <mxGeometry x="290" y="230" width="190" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="_g1IpS9bpQ4U1qeAF5R8-13" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="_g1IpS9bpQ4U1qeAF5R8-10" target="_g1IpS9bpQ4U1qeAF5R8-12">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="235" y="290" as="sourcePoint" />
+            <mxPoint x="165" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_g1IpS9bpQ4U1qeAF5R8-14" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="_g1IpS9bpQ4U1qeAF5R8-15">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="765" y="289.71000000000004" as="sourcePoint" />
+            <mxPoint x="845" y="289.71000000000004" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_g1IpS9bpQ4U1qeAF5R8-15" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;states:&lt;br&gt;&amp;nbsp; &amp;nbsp;buf = []&lt;br&gt;&amp;nbsp; &amp;nbsp;H = Multiset.new()&lt;br&gt;&lt;br&gt;logic:&lt;br&gt;\(\lambda\) ev. case ev of&lt;br&gt;&amp;nbsp; DT t d \(\Rightarrow\)&lt;br&gt;&amp;nbsp; &amp;nbsp; buf \(\leftarrow\) (t, d)#buf&lt;br&gt;| WM wm \(\Rightarrow\)&lt;br&gt;&amp;nbsp; &amp;nbsp; ts \(\leftarrow\) remdups (map fst (filter (\(\lambda\) (t, d). t \(\le\) wm) buf));&lt;br&gt;&amp;nbsp; &amp;nbsp; out \(\leftarrow\) map (\(\lambda\) t. DT t (H + mset (map snd (filter (\(\lambda\) (t&#39;, d). t&#39; \(\le\) t) buf)))) ts;&lt;br&gt;&amp;nbsp; &amp;nbsp; H \(\leftarrow\) H + mset (map snd (filter (\(\lambda\) (t, d). t \(\le\) wm) buf));&lt;br&gt;&amp;nbsp; &amp;nbsp; buf \(\leftarrow\) filter (\(\lambda\) (t, d). t \(\gt\) wm) buf;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&amp;nbsp; &amp;nbsp; push out;&lt;br&gt;&amp;nbsp; &amp;nbsp; done wm&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;container=0;" vertex="1" parent="1">
+          <mxGeometry x="560" y="160" width="340" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="_g1IpS9bpQ4U1qeAF5R8-16" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="_g1IpS9bpQ4U1qeAF5R8-12" target="_g1IpS9bpQ4U1qeAF5R8-15">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="425" y="290" as="sourcePoint" />
+            <mxPoint x="375" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

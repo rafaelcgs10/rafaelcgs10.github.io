@@ -10,6 +10,7 @@
 \usepackage{enumitem}
 
 \usepackage{listings}
+\usepackage{pdfpages}
 \usepackage{lstautogobble}
 \input{lstisabelle}
 \usepackage[listings,skins,breakable,xparse]{tcolorbox}
@@ -93,7 +94,7 @@
   Rafael Castro G. Silva\\\medskip
   {\small \url{rasi@di.ku.dk}}}
 
-\date{02/11/2023}
+\date{04/06/2024}
 
 \institute[UCPH]{
   Department of Computer Science \\
@@ -107,142 +108,210 @@
   \titlepage
 
 \end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{What is this PhD/Status seminar about?}
-  \begin{itemize}
-          \pause
-    \item Distributed Systems
-          \begin{itemize}
-            \item Stream processing frameworks
-                  \begin{itemize}
-                    \item Dataflow models
-                          \begin{itemize}
-                            \item Time-Aware Computations
-                          \end{itemize}
-                  \end{itemize}
-          \end{itemize}
-          \pause
-    \item Formal Methods
-          \begin{itemize}
-            \item Verification using proof assistants
-                  \begin{itemize}
-                    \item Isabelle proofs
-                          \begin{itemize}
-                            \item Verified + executable + efficient code
-                          \end{itemize}
-                  \end{itemize}
-          \end{itemize}
-    \item Formalization of Time-Aware Stream Processing
-  \end{itemize}
-\end{frame}
-
-% \begin{frame}{Contents}
-%   \begin{itemize}
-%     \item Introduction
-%     \item Preliminaries
-%     \item Lazy Lists Processors
-%     \item Time-Aware Operators
-%     \item Case Study
-%     \item Next Steps
-%   \end{itemize}
-% \end{frame}
-
 \section{Introduction}
 
-% TODO add references
-% TODO check Dmitriys page
-% https://www21.in.tum.de/~traytel/
-% TODO finish this
 \begin{frame}[fragile]
-  \frametitle{Stream Processing}
+  \frametitle{Time-Aware Stream Processing}
   \begin{itemize}
-    \item Stream Processing: Abstraction for processing data when the input is not completely presented in the begging of the computation
-          \pause
-    \item Dataflow Model:
+    \item What is Time-Aware Stream Processing?
           \begin{itemize}
-            \item Directed graph of interconnected operators that perform event-wise transformations
-            \item E.g.: Apache Flink, Apache Samza, Apache Spark, Google Cloud Dataflow, and Timely Dataflow
-                  \vspace*{-1ex}
-                  \begin{overlayarea}{\textwidth}{.15\textheight}
-                    \centering
-                    \begin{figure}
-                      \centering
-                      \only<2->{\includegraphics[scale=0.15]{all.png}}
-                    \end{figure}
-                  \end{overlayarea}
-                  \vspace*{-1ex}
-            \item Highly Parallel
-                  \vspace*{-1ex}
-                  \begin{figure}
-                    \begin{subfigure}{0.45\linewidth}
-                      \begin{tikzpicture}[node distance = 0.6cm, scale=0.6, transform shape]]
-                        \tikzstyle{operator} = [rectangle, draw, fill=blue!60, text width=3.0em, text centered, minimum height=20pt, line width=1pt]
-
-                        \node [operator] at (0,0)  (concat) {concat};
-                        \node [operator, right = of concat] (map) {map};
-                        \node [operator, right = of map] (filter) {filter};
-                        \node [operator, right = of filter] (count) {count};
-
-                        \draw[<-,thick,shorten >=1pt] ([yshift=5pt]concat.west)  -- node[above]{} ++(-2em,0em);
-                        \draw[<-,thick,shorten >=1pt] ([yshift=-5pt]concat.west)  -- node[above]{} ++(-2em,0em);
-                        \draw [thick,->,shorten >=1pt] (concat) -- (map);
-                        \draw [thick,->,shorten >=1pt] (map) -- (filter);
-                        \draw [thick,->,shorten >=1pt] (filter) -- (count);
-                        \draw[->,thick,shorten >=1pt] (count.east)  -- node[above]{} ++(2em,0em);
-
-                        \node[draw,densely dotted, label={[xshift=2mm]above:{\tiny logical dataflow}},fit=(concat) (map) (filter) (count)] {};
-
-                      \end{tikzpicture}
-                    \end{subfigure}
-                    \begin{subfigure}{0.45\linewidth}
-                      \begin{tikzpicture}[node distance = 0.6cm,auto, scale=0.6, transform shape]]
-                        \tikzstyle{operator} = [rectangle, draw, fill=blue!60, text width=3.0em, text centered, minimum height=20pt, line width=1pt]
-
-                        \node [operator] at (0,0)  (concat) {concat};
-                        \node [operator, right = of concat] (map) {map};
-                        \node [operator, right = of map] (filter) {filter};
-                        \node [operator, right = of filter] (count) {count};
-
-                        \draw[<-,thick,shorten >=1pt] ([yshift=5pt]concat.west)  -- node[above]{} ++(-2em,0em);
-                        \draw[<-,thick,shorten >=1pt] ([yshift=-5pt]concat.west)  -- node[above]{} ++(-2em,0em);
-                        \draw [thick,->,shorten >=1pt] (concat) -- (map);
-                        \draw [thick,->,shorten >=1pt] (map) -- (filter);
-                        \draw [thick,->,shorten >=1pt] (filter) -- (count);
-                        \draw[->,thick,shorten >=1pt] (count.east)  -- node[above]{} ++(2em,0em);
-
-                        \node[draw,densely dotted, label={[xshift=2mm]above:{\tiny worker 1}},fit=(concat) (map) (filter) (count)] {};
-
-                        \node [operator, below=0.7cm of concat]  (concat') {concat};
-                        \node [operator, right = of concat'] (map') {map};
-                        \node [operator, right = of map'] (filter') {filter};
-                        \node [operator, right = of filter'] (count') {count};
-
-                        \draw[<-,thick,shorten >=1pt] ([yshift=5pt]concat'.west)  -- node[above]{} ++(-2em,0em);
-                        \draw[<-,thick,shorten >=1pt] ([yshift=-5pt]concat'.west)  -- node[above]{} ++(-2em,0em);
-                        \draw [thick,->,shorten >=1pt] (concat') -- (map');
-                        \draw [thick,->,shorten >=1pt] (map') -- (filter');
-                        \draw [thick,->,shorten >=1pt] (filter') -- (count');
-                        \draw[->,thick,shorten >=1pt] (count'.east)  -- node[above]{} ++(2em,0em);
-
-                        \node[draw,densely dotted, label={[xshift=2mm]above:{\tiny worker 1}},fit=(concat) (map) (filter) (count)] {};
-                        \node[draw,densely dotted, label={[xshift=2mm]above:{\tiny worker 2}},fit=(concat') (map') (filter') (count')] {};
-                        \node[draw,dotted, label={[xshift=2mm, yshift=0.3cm]above:{\tiny physical workers}},fit=(concat') (concat) (map') (map) (filter) (filter') (count) (count')] {};
-                      \end{tikzpicture}
-                    \end{subfigure}
-                  \end{figure}
+                  \pause
+            \item Stream Processing: programs that compute unbounded sequences of data (streams)
+                  \pause
+            \item Time-Aware: Data has timestamp metadata; timestamps are bounded by watermarks
+                  \begin{itemize}
+                    \item Timestamp: A partially-ordered value associated with the data (e.g., unix-time, int, pairs of ints, etc...)
+                    \item Watermark: A value of the same type of the timestamp. Represents data-completeness.
+                          \begin{figure}
+                            \centering
+                            \includegraphics[width=.75\textwidth]{stream_ex1.pdf}
+                          \end{figure}
+                  \end{itemize}
           \end{itemize}
-                  \vspace*{-1ex}
           \pause
-    \item Time-Aware Computations
+    \item Asynchronous Dataflow Programming: Directed graph of interconnected operators that perform event-wise transformations
+    \item E.g.: Apache Flink, Apache Samza, Apache Spark, Google Cloud Dataflow, and Timely Dataflow
+          \vspace*{-1ex}
+          \begin{overlayarea}{\textwidth}{.1\textheight}
+            \centering
+            \begin{figure}
+              \centering
+              \only<2->{\includegraphics[scale=0.1]{all.png}}
+            \end{figure}
+          \end{overlayarea}
+          \vspace*{-1ex}
+          \pause
+    \item Why?
           \begin{itemize}
-            \item Timestamps: Metadata associating the data with some data collection
-            \item Watermarks: Metadata indicating the completion of a data collection
+            \item Highly Parallel
+            \item Low latency (output as soon as possible)
+            \item Incremental computing
           \end{itemize}
   \end{itemize}
 \end{frame}
 
-\section{Preliminaries}
+\begin{frame}[fragile]
+  \frametitle{Time-Aware Stream Processing Example}
+  Example:\\
+  Incrementally count the occurrences of the words ``dog'' and ``cat''
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=1,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=2,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=3,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=4,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=5,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=6,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=7,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=8,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=9,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=10,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=11,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=12,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=13,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=14,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=15,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=16,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=17,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=18,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=19,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=20,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Time-Aware Stream Processing Example}
+    \includegraphics[page=21,width=.95\textwidth]{dataflow_ex1.pdf}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{Properties}
+  \begin{itemize}
+    \item How do we know if our Dataflow program is what we want?
+          \pause
+    \item We need a correctness specification
+          \pause
+    \item \textbf{Intuition of the specification}:
+          \begin{itemize}
+            \item Soundness: for every output \textit{DT t H}, the ``dog'' count in \textit{H} is the count of events with timestamp $(\le) t$ which contains the string ``dog''; similarly for ``cat''. The count for any other word is always 0.
+            \item Completeness: The other way around.
+          \end{itemize}
+    % \item What is correctness for a program that does not always terminate?
+  \end{itemize}
+  \begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{correctness.pdf}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[fragile,noframenumbering]
+  \frametitle{How to prove it}
+  \begin{itemize}
+    \item \textbf{lets break down the problem!}:
+          \begin{itemize}
+            \item The correctness of the entire Dataflow emerges from the correctness of each part (operator)
+                  \begin{itemize}
+                    \item Operator 1: Slicer
+                    \item Operator 2: Filter
+                    \item Operator 3: Incremental histogram
+                          \begin{itemize}
+                            \item Assumptions about the incoming stream:
+                                  \begin{enumerate}
+                                    \item Monotone: after \text{WM wm} no \textit{DT t d} such that $t \le wm$.
+                                    \item Productive: after \textit{DT t d} eventually \text{WM wm} such that $t \le wm$
+                                  \end{enumerate}
+                          \end{itemize}
+                  \end{itemize}
+                  \includegraphics[width=.6\textwidth]{dataflow_ex1_b.pdf}
+          \end{itemize}
+    \item The original incoming stream must respect monotonicity and productivity
+          \begin{figure}
+            \centering
+            \includegraphics[width=.70\textwidth]{stream_ex1.pdf}
+          \end{figure}
+    \item Each operator must preserve monotonicity and productivity!
+  \end{itemize}
+\end{frame}
+
+\section{Writing it down in a proof assistant!}
+
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL}
   \begin{itemize}
@@ -257,7 +326,6 @@
             \end{figure}
           \end{overlayarea}
     \item Isabelle/HOL: Isabelle's flavor of HOL
-    \item All functions in Isabelle/HOL must be total
   \end{itemize}
 \end{frame}
 
@@ -265,167 +333,154 @@
   \frametitle{Isabelle/HOL: (Co)datatypes}
   \begin{itemize}
     \item Datatypes and Codatatypes
-\vspace*{-1ex}
+          \vspace*{-1ex}
           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
-  for map: lmap where "ltl LNil = LNil"
+for map: lmap where "ltl LNil = LNil"
           \end{tcblisting}
-\vspace*{-1ex}
+          \vspace*{-1ex}
     \item Examples:
           \begin{itemize}
             \item \is{LNil}
             \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
             \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
           \end{itemize}
-\vspace*{-1ex}
+          \vspace*{-1ex}
           \pause
-    \item Induction principle with \is{lset} assumption
-          \begin{itemize}
-            \item If \is{x \in lset lxs}, and if \is{P} holds for all lazy lists containing \is{x}, then \is{P lxs} is true
-          \end{itemize}
-          \pause
-    \item Coinductive principle for lazy list equality:
-          \begin{itemize}
-            \item Show that there is a ``pair of goggles '' (relation) that makes them to look the same:
-                  \begin{itemize}
-                    \item The first lazy list is empty iff second is
-                    \item They have the same head
-                    \item Their tail looks the same
-                  \end{itemize}
-          \end{itemize}
+    \item Coinductive principle for lazy list equality
+          % \begin{itemize}
+          %   \item Show that there is a ``pair of goggles '' (relation) that makes them to look the same:
+          %         \begin{itemize}
+          %           \item The first lazy list is empty iff second is
+          %           \item They have the same head
+          %           \item Their tail looks the same
+          %         \end{itemize}
+          % \end{itemize}
   \end{itemize}
-\vspace*{-1ex}
-\begin{overlayarea}{\textwidth}{.45\textheight}
-  \begin{figure}
-    \centering
-    \only<3>{\includegraphics[scale=0.3]{equality_1.png}}
-  \end{figure}
-\end{overlayarea}
+  % \vspace*{-1ex}
+  % \begin{overlayarea}{\textwidth}{.45\textheight}
+  %   \begin{figure}
+  %     \centering
+  %     \only<3>{\includegraphics[scale=0.3]{equality_1.png}}
+  %   \end{figure}
+  % \end{overlayarea}
 \end{frame}
 
-\begin{frame}[fragile,noframenumbering]
-  \frametitle{Isabelle/HOL: (Co)datatypes}
-  \begin{itemize}
-    \item Datatypes and Codatatypes
-\vspace*{-1ex}
-          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
-  for map: lmap where "ltl LNil = LNil"
-          \end{tcblisting}
-\vspace*{-1ex}
-    \item Examples:
-          \begin{itemize}
-            \item \is{LNil}
-            \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
-            \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
-          \end{itemize}
-\vspace*{-1ex}
-    \item Induction principle with \is{lset} assumption
-          \begin{itemize}
-            \item If \is{x \in lset lxs}, and if \is{P} holds for all lazy lists containing \is{x}, then \is{P lxs} is true
-          \end{itemize}
-    \item Coinductive principle for lazy list equality:
-          \begin{itemize}
-            \item Show that there is a ``pair of goggles '' (relation) that makes them to look the same:
-                  \begin{itemize}
-                    \item The first lazy list is empty iff second is
-                    \item They have the same head
-                    \item Their tail looks the same
-                  \end{itemize}
-          \end{itemize}
-  \end{itemize}
-\vspace*{-1ex}
-\begin{overlayarea}{\textwidth}{.45\textheight}
-  \begin{figure}
-    \centering
-    \includegraphics[scale=0.3]{equality_2.png}
-  \end{figure}
-\end{overlayarea}
-\end{frame}
 
-% TODO add notes for explaining codatatype command
-\begin{frame}[fragile,noframenumbering]
-  \frametitle{Isabelle/HOL: (Co)datatypes}
-  \begin{itemize}
-    \item Datatypes and Codatatypes
-\vspace*{-1ex}
-          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
-  for map: lmap where "ltl LNil = LNil"
-          \end{tcblisting}
-\vspace*{-1ex}
-    \item Examples:
-          \begin{itemize}
-            \item \is{LNil}
-            \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
-            \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
-          \end{itemize}
-\vspace*{-1ex}
-    \item Induction principle with \is{lset} assumption
-          \begin{itemize}
-            \item If \is{x \in lset lxs}, and if \is{P} holds for all lazy lists containing \is{x}, then \is{P lxs} is true
-          \end{itemize}
-    \item Coinductive principle for lazy list equality:
-          \begin{itemize}
-            \item Show that there is a ``pair of goggles '' (relation) that makes them to look the same:
-                  \begin{itemize}
-                    \item The first lazy list is empty iff second is
-                    \item They have the same head
-                    \item Their tail looks the same
-                  \end{itemize}
-          \end{itemize}
-  \end{itemize}
-\vspace*{-1ex}
-\begin{overlayarea}{\textwidth}{.45\textheight}
-  \begin{figure}
-    \centering
-    \includegraphics[scale=0.3]{equality.png}
-  \end{figure}
-\end{overlayarea}
-\end{frame}
+% \begin{frame}[fragile,noframenumbering]
+%   \frametitle{Isabelle/HOL: (Co)datatypes}
+%   \begin{itemize}
+%     \item Datatypes and Codatatypes
+%           \vspace*{-1ex}
+%           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+%             codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
+%             for map: lmap where "ltl LNil = LNil"
+%           \end{tcblisting}
+%           \vspace*{-1ex}
+%     \item Examples:
+%           \begin{itemize}
+%             \item \is{LNil}
+%             \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
+%             \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
+%           \end{itemize}
+%           \vspace*{-1ex}
+%     \item Coinductive principle for lazy list equality:
+%           \begin{itemize}
+%             \item Show that there is a ``pair of goggles '' (relation) that makes them to look the same:
+%                   \begin{itemize}
+%                     \item The first lazy list is empty iff second is
+%                     \item They have the same head
+%                     \item Their tail looks the same
+%                   \end{itemize}
+%           \end{itemize}
+%   \end{itemize}
+%   \vspace*{-1ex}
+%   \begin{overlayarea}{\textwidth}{.45\textheight}
+%     \begin{figure}
+%       \centering
+%       \includegraphics[scale=0.3]{equality_2.png}
+%     \end{figure}
+%   \end{overlayarea}
+% \end{frame}
+
+% % TODO add notes for explaining codatatype command
+% \begin{frame}[fragile,noframenumbering]
+%   \frametitle{Isabelle/HOL: (Co)datatypes}
+%   \begin{itemize}
+%     \item Datatypes and Codatatypes
+%           \vspace*{-1ex}
+%           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+%             codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
+%             for map: lmap where "ltl LNil = LNil"
+%           \end{tcblisting}
+%           \vspace*{-1ex}
+%     \item Examples:
+%           \begin{itemize}
+%             \item \is{LNil}
+%             \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
+%             \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
+%           \end{itemize}
+%           \vspace*{-1ex}
+%     \item Coinductive principle for lazy list equality:
+%           \begin{itemize}
+%             \item Show that there is a ``pair of goggles '' (relation) that makes them to look the same:
+%                   \begin{itemize}
+%                     \item The first lazy list is empty iff second is
+%                     \item They have the same head
+%                     \item Their tail looks the same
+%                   \end{itemize}
+%           \end{itemize}
+%   \end{itemize}
+%   \vspace*{-1ex}
+%   \begin{overlayarea}{\textwidth}{.45\textheight}
+%     \begin{figure}
+%       \centering
+%       \includegraphics[scale=0.3]{equality.png}
+%     \end{figure}
+%   \end{overlayarea}
+% \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL: Recursion and While Combinator}
   \begin{itemize}
     \item Recursion
-
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 fun lshift :: "'a list => 'a llist => 'a llist" (infixr @@ 65) where
   "lshift [] lxs = lxs"
 | "lshift (x # xs) lxs = LCons x (lshift xs lxs)"
-\end{tcblisting}
-  \item While Combinator
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+          \end{tcblisting}
+    \item While Combinator
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 definition while_option :: "('a => bool) => ('a => 'a) => 'a => 'a option" where
 "while_option b c s = $\ldots$"
-\end{tcblisting}
+          \end{tcblisting}
     \item While rule for invariant reasoning (Hoare-style):
           \begin{itemize}
             \item There is something that holds before a step; that thing still holds after the step
           \end{itemize}
-          \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Isabelle/HOL: Corecursion and Friends}
+  \frametitle{Isabelle/HOL: Corecursion}
   \begin{itemize}
-          \item Corecursion is like recursion, but instead of always eventually reducing an argument it always eventually produces something
+    \item Corecursion is like recursion, but instead of always eventually reducing an argument it always eventually produces something
           \pause
     \item Corec:
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+          \vspace*{-1ex}
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 corec lapp :: "'a llist => 'a llist => 'a llist" where
-  "lapp lxs lys = case lxs of LNil => lys | LCons x lxs' => LCons x (lapp lxs' lys)"
-\end{tcblisting}
-\vspace*{-1ex}
-          \pause
-    \item Friendly function
-          \begin{itemize}
-            \item Preserves productivity: it may consume at most one constructor to produce one constructor.
-            \item \is{lshift} (\is{@@}) is proved to a be friend
-          \end{itemize}
-          \pause
-          \item Coinduction up to congruence: Coinduction for Lazy list equality can be extended to compare an entire finite prefix through a congruence relation
+"lapp lxs lys = case lxs of LNil => lys | LCons x lxs' => LCons x (lapp lxs' lys)"
+          \end{tcblisting}
+          \vspace*{-1ex}
+          % \pause
+    % \item Friendly function
+    %       \begin{itemize}
+    %         \item Preserves productivity: it may consume at most one constructor to produce one constructor.
+    %         \item \is{lshift} (\is{@@}) is proved to a be friend
+    %       \end{itemize}
+    %       \pause
+    % \item Coinduction up to congruence: Coinduction for Lazy list equality can be extended to compare an entire finite prefix through a congruence relation
   \end{itemize}
 \end{frame}
 
@@ -436,32 +491,32 @@ corec lapp :: "'a llist => 'a llist => 'a llist" where
           \begin{itemize}
             \item Finite number of introduction rule applications
           \end{itemize}
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+          \vspace*{-1ex}
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 inductive in_llist :: "'a => 'a llist => bool" where
-    In_llist: "in_llist x (LCons x lxs)"
-  | Next_llist: "in_llist x lxs => in_llist x (LCons y lxs)"
+  In_llist: "in_llist x (LCons x lxs)"
+| Next_llist: "in_llist x lxs => in_llist x (LCons y lxs)"
 
 in_llist 2 (LCons 1 (LCons (2 (...))))
-\end{tcblisting}
-\vspace*{-1ex}
+          \end{tcblisting}
+          \vspace*{-1ex}
           \pause
     \item Coinductive predicate
           \begin{itemize}
             \item Infinite number of introduction rule applications
           \end{itemize}
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+          \vspace*{-1ex}
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 coinductive lprefix :: "'a llist => 'a llist => bool" where
-    LNil_lprefix: "lprefix LNil lys"
-  | LCons_lprefix: "lprefix lxs lys => lprefix (LCons x lxs) (LCons x lys)"
+  LNil_lprefix: "lprefix LNil lys"
+| LCons_lprefix: "lprefix lxs lys => lprefix (LCons x lxs) (LCons x lys)"
 
 lprefix (LCons 1 (LCons (2 (...)))) (LCons 1 (LCons (2 (...))))
-\end{tcblisting}
-\vspace*{-1ex}
+          \end{tcblisting}
+          \vspace*{-1ex}
           \pause
     \item Coinduction principle
-    \item But not coinduction up to congruence for free
+    % \item But not coinduction up to congruence for free
   \end{itemize}
 \end{frame}
 
@@ -473,12 +528,12 @@ lprefix (LCons 1 (LCons (2 (...)))) (LCons 1 (LCons (2 (...))))
     \item Operator as a codatatype
           \begin{itemize}
             \item Taking \is{'i} as the input type, and \is{'o} as the output type:
-\vspace*{-1.5ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+                  \vspace*{-1.5ex}
+                  \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 codatatype ('o, 'i) op = Logic ("apply": "('i => ('o, 'i) op $\times$ 'o list)")
-\end{tcblisting}
-\vspace*{-1.5ex}
-          \pause
+                  \end{tcblisting}
+                  \vspace*{-1.5ex}
+                  \pause
             \item Infinite trees: applying the selector \is{apply} ``walks'' a branch of the tree
           \end{itemize}
   \end{itemize}
@@ -489,17 +544,18 @@ codatatype ('o, 'i) op = Logic ("apply": "('i => ('o, 'i) op $\times$ 'o list)")
   \frametitle{Execution formalization}
   \begin{itemize}
     \item Produce function: applies the logic (co)recursively throughout a lazy list
-\vspace*{-1.5ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+          \vspace*{-1.5ex}
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 definition "produce_1 op lxs = while_option $\ldots$
 
 corec produce where
-  "produce op lxs = (case produce_1 op lxs of None => LNil
-    | Some (op', x, xs, lxs') => LCons x (xs @@ produce op' lxs'))"
-\end{tcblisting}
-\vspace*{-1.5ex}
+"produce op lxs = (case produce_1 op lxs of
+  None => LNil
+| Some (op', x, xs, lxs') => LCons x (xs @@ produce op' lxs'))"
+          \end{tcblisting}
+          \vspace*{-1.5ex}
           \pause
-          \item \is{produce_1} has an induction principle based on the while invariant rule
+    \item \is{produce_1} has an induction principle based on the while invariant rule
   \end{itemize}
 \end{frame}
 
@@ -548,53 +604,18 @@ corec count_op where "count_op P n =
   \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Sequential Composition}
-  \begin{itemize}
-    \item Sequential composition: take the output of the first operator and give it as input to the second operator.
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-definition "fproduce op xs = fold ($\lambda$e (op, out).
-  let (op', out') = apply op e in (op', out @ out')) xs (op, [])"
-corec comp_op where
-  "comp_op op_1 op_2 = Logic ($\lambda$ev.
-     let (op_1', out) = apply op_1 ev;  (op_2', out') = fproduce op_2 out
-     in (comp_op op_1' op_2', out'))"
-\end{tcblisting}
-  \end{itemize}
-\end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Sequential Composition: Correctness}
+  \frametitle{Sequential Composition operator}
   \begin{itemize}
+    \item Sequential composition: take the output of the first operator and give it as input to the second operator.
     \item Correctness:
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+          \vspace*{-1ex}
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 "produce (comp_op op_1 op_2) lxs = produce op_2 (produce op_1 lxs)"
-\end{tcblisting}
-\vspace*{-1ex}
-          \pause
-            \item Proof: coinduction principle for lazy list equality and \is{produce_1} induction principle
-                  \begin{itemize}
-          \pause
-                    \item Generalization: we must be able to reason about elements in arbitrary positions
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-corec skip_op where
-  "skip_op op n = Logic ($\lambda$ev. let (op', out) = apply op ev in
-     if length out < n then (skip_op op' (n - length out), [])
-     else (op', drop n out))"
-\end{tcblisting}
-\vspace*{-1ex}
-                    \item Correctness
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-"produce (skip_op op n) lxs = ldropn n (produce op lxs)"
-\end{tcblisting}
-\vspace*{-1ex}
-          \pause
-                    \item Proof: Coinduction up to congruence for lazy list equality
-  \end{itemize}
+          \end{tcblisting}
+          \vspace*{-1ex}
+    \item Proof: coinduction principle for lazy list equality and \is{produce_1} induction principle
   \end{itemize}
 \end{frame}
 
@@ -604,724 +625,65 @@ corec skip_op where
   \frametitle{Time-Aware Streams}
   \begin{itemize}
     \item Time-Aware lazy lists
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+          \vspace*{-1ex}
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 datatype ('t::order, 'd) event = DT (tmp: 't) (data: 'd) | WM (wmk: 't)
-\end{tcblisting}
-\vspace*{-1ex}
+          \end{tcblisting}
+          \vspace*{-1ex}
           \pause
     \item Generalization to partial orders
           \begin{itemize}
             \item Cycles
             \item Operators with multiple inputs
           \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Monotone Time-Aware Streams}
-  \begin{itemize}
-    \item Monotone: watermarks do not go back in time
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-coinductive monotone :: "('t::order, 'd) event llist => 't set => bool" where
-  LNil: "monotone LNil W"
-| LConsR: "($\forall$wm' $\in$ W. \<not> wm' >= wm) --> monotone lxs ({wm} $\cup$ W) -->
-   monotone (LCons (WM wm) lxs) W"
-| LConsL: "($\forall$wm $\in$ W. \<not> wm >= t) --> monotone lxs W -->
-   monotone (LCons (DT t d) lxs) W"
-\end{tcblisting}
-\vspace*{-1ex}
-          \item Up to congruence coinduction principle
-    \item Example:
+    \item Productive and monotone streams: Coinductive predicates over lazy lists of events.
   \end{itemize}
-
-  \begin{figure}[!t]
-    \begin{subfigure}{.5\textwidth}
-      \raggedright
-      \begin{tabular}{@{}l@{}}
-        \text{\is{stream_2 =}}
-        \\
-        \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9},background rectangle/.style={fill=yellow!10!white},show background rectangle]
-          \tikzset{tape/.style={minimum size=.6cm, draw}}
-          \begin{scope}[start chain=0 going right, node distance=0mm]
-            \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**}} {
-              \ifnum\i=5
-                \node [on chain=0, tape, outer sep=0pt] (n\i) {\x};
-                \draw (n\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(n\i.south east)+(+.1,0)$)} -- (n\i.south east) -- cycle;
-              \else
-                \node [on chain=0, tape] (n\i) {\x};
-              \fi
-            }
-          \end{scope}
-        \end{tikzpicture}
-        \vspace*{-1.3ex}
-        \\
-        \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9},background rectangle/.style={fill=yellow!10!white},show background rectangle]
-          \tikzset{tape/.style={minimum size=.6cm, draw}}
-          \begin{scope}[start chain=0 going right, node distance=0mm]
-            \foreach \x [count=\i] in {\is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
-              \ifnum\i=5
-                \node [on chain=0, tape, outer sep=0pt] (n\i) {\x};
-                \draw (n\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(n\i.south east)+(+.1,0)$)} -- (n\i.south east) -- cycle;
-              \else
-                \node [on chain=0, tape] (n\i) {\x};
-              \fi
-              \ifnum\i=1
-                \draw (n\i.north west) -- ++(-0.1,0) decorate [decoration={zigzag, segment length=0.12cm, amplitude=.02cm}] {-- ($(n\i.south west)+(-.1,0)$)} -- (n\i.south west) -- cycle;
-              \fi
-            }
-            \node [right=.05cm of n5] {$\cdots$};
-          \end{scope}
-        \end{tikzpicture}
-      \end{tabular}
-      \label{fig:stream_example_1}
-    \end{subfigure}
-    \begin{subfigure}{.38\textwidth}
-      \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm,background rectangle/.style={fill=yellow!10!white},show background rectangle]
-        \node (t0) at (-0.8,0) {$C_{t_{0}}$: \{\is{**a**}\}};
-        \node (t1) at (-2.5,1) {$C_{t_{1}}$: \{\is{**c**}\}};
-        \node (t2) at (-0.8,1) {$C_{t_{2}}$: \{\is{**b**}\}};
-        \node (t3) at (0.8,1) {$C_{t_{3}}$: \{\is{**a**}\}};
-        \node (t4) at (-2.5,2) {$C_{t_{4}}$: \{\is{**d**}\}};
-        \node (t5) at (0.0,2) {$C_{t_{5}}$: \{\is{**a**,**c**}\}};
-
-        \path [->] (t0) edge node {} (t1);
-        \path [->] (t0) edge node {} (t2);
-        \path [->] (t0) edge node {} (t3);
-        \path [->] (t3) edge node {} (t5);
-        \path [->] (t1) edge node {} (t4);
-        \path [->] (t2) edge node {} (t5);
-      \end{tikzpicture}
-      \label{fig:diamond_order}
-    \vspace*{-2ex}
-  \end{subfigure}
-  \end{figure}
 \end{frame}
 
-
 \begin{frame}[fragile]
-  \frametitle{Productive Time-Aware Streams}
+  \frametitle{Proving histogram correct: building Blocks}
   \begin{itemize}
-    \item Productive: always eventually allows the production
-          \pause
+    \item Histogram operator: batching and incremental computing
+    \item Building Blocks: reusable operators
           \begin{itemize}
-            \item Batching operators: accumulate data until its completion
-          \pause
-            \item Data is always eventually completed by some watermark
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-coinductive productive where
-  LFinite: "lfinite lxs --> productive lxs"
-| EnvWM: "\<not> lfinite lxs --> (?u $\in$ vimage WM (lset lxs). u >= t) -->
-   productive lxs --> productive (LCons (DT t d) lxs)"
-| SkipWM: "\<not> lfinite lxs --> productive lxs -->
-   productive (LCons (WM t) lxs)"
-\end{tcblisting}
-\vspace*{-1ex}
-
-  \begin{figure}[!t]
-    \begin{subfigure}{.5\textwidth}
-      \raggedright
-      \begin{tabular}{@{}l@{}}
-        \text{\is{stream_2 =}}
-        \\
-        \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9},background rectangle/.style={fill=yellow!10!white},show background rectangle]
-          \tikzset{tape/.style={minimum size=.6cm, draw}}
-          \begin{scope}[start chain=0 going right, node distance=0mm]
-            \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**}} {
-              \ifnum\i=5
-                \node [on chain=0, tape, outer sep=0pt] (n\i) {\x};
-                \draw (n\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(n\i.south east)+(+.1,0)$)} -- (n\i.south east) -- cycle;
-              \else
-                \node [on chain=0, tape] (n\i) {\x};
-              \fi
-            }
-          \end{scope}
-        \end{tikzpicture}
-        \vspace*{-1.3ex}
-        \\
-        \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9},background rectangle/.style={fill=yellow!10!white},show background rectangle]
-          \tikzset{tape/.style={minimum size=.6cm, draw}}
-          \begin{scope}[start chain=0 going right, node distance=0mm]
-            \foreach \x [count=\i] in {\is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
-              \ifnum\i=5
-                \node [on chain=0, tape, outer sep=0pt] (n\i) {\x};
-                \draw (n\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(n\i.south east)+(+.1,0)$)} -- (n\i.south east) -- cycle;
-              \else
-                \node [on chain=0, tape] (n\i) {\x};
-              \fi
-              \ifnum\i=1
-                \draw (n\i.north west) -- ++(-0.1,0) decorate [decoration={zigzag, segment length=0.12cm, amplitude=.02cm}] {-- ($(n\i.south west)+(-.1,0)$)} -- (n\i.south west) -- cycle;
-              \fi
-            }
-            \node [right=.05cm of n5] {$\cdots$};
-          \end{scope}
-        \end{tikzpicture}
-      \end{tabular}
-      \label{fig:stream_example_1}
-    \end{subfigure}
-    \begin{subfigure}{.38\textwidth}
-      \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm,background rectangle/.style={fill=yellow!10!white},show background rectangle]
-        \node (t0) at (-0.8,0) {$C_{t_{0}}$: \{\is{**a**}\}};
-        \node (t1) at (-2.5,1) {$C_{t_{1}}$: \{\is{**c**}\}};
-        \node (t2) at (-0.8,1) {$C_{t_{2}}$: \{\is{**b**}\}};
-        \node (t3) at (0.8,1) {$C_{t_{3}}$: \{\is{**a**}\}};
-        \node (t4) at (-2.5,2) {$C_{t_{4}}$: \{\is{**d**}\}};
-        \node (t5) at (0.0,2) {$C_{t_{5}}$: \{\is{**a**,**c**}\}};
-
-        \path [->] (t0) edge node {} (t1);
-        \path [->] (t0) edge node {} (t2);
-        \path [->] (t0) edge node {} (t3);
-        \path [->] (t3) edge node {} (t5);
-        \path [->] (t1) edge node {} (t4);
-        \path [->] (t2) edge node {} (t5);
-      \end{tikzpicture}
-      \label{fig:diamond_order}
-    \vspace*{-2ex}
-  \end{subfigure}
-  \end{figure}
-          \pause
-          \item Up to congruence coinduction principle
+            \item Batching: \text{batch\_op}
+            \item Incremental computing: \text{incr\_op}
+            \item Soundness, completeness, preservation of monotonicity and productivity
           \end{itemize}
   \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Building Blocks: Batch Operator}
-  \begin{itemize}
-          \item Building Blocks: reusable operators
-          \begin{itemize}
-            \item Batching and incremental computations
-          \end{itemize}
-          \pause
-    \item \is{batch_op}: produces batches of accumulated data
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-corec batch_op where
-  "batch_op buf = Logic ($\lambda$ev. case ev of DT t d => (batch_op (buf @ [(t, d)]), [])
-  | WM wm => if ?(t, d) $\in$ set buf. t <= wm
-      then let out = filter ($\lambda$(t, _). t <= wm) buf;
-                  buf' = filter ($\lambda$(t, _). \<not> t <= wm) buf
-             in (batch_op buf', [DT wm out, WM wm])
-      else (batch_op buf, [WM wm]))"
-\end{tcblisting}
-\vspace*{-1ex}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Batch Operator: Soundness}
-  \begin{itemize}
-    \item Given a monotone time-aware stream
-  \end{itemize}
-  \begin{figure}[!t]
-    \centering
-      \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm,background rectangle/.style={fill=yellow!10!white},show background rectangle]
-        \node (t0) at (-0.8,0) {$C_{t_{0}}$: \{\is{**a**}\}};
-        \node (t1) at (-2.5,1) {$C_{t_{1}}$: \{\is{**c**}\}};
-        \node (t2) at (-0.8,1) {$C_{t_{2}}$: \{\is{**b**}\}};
-        \node (t3) at (0.8,1) {$C_{t_{3}}$: \{\is{**a**}\}};
-        \node (t4) at (-2.5,2) {$C_{t_{4}}$: \{\is{**d**}\}};
-        \node (t5) at (0.0,2) {$C_{t_{5}}$: \{\is{**a**,**c**}\}};
-
-        \path [->] (t0) edge node {} (t1);
-        \path [->] (t0) edge node {} (t2);
-        \path [->] (t0) edge node {} (t3);
-        \path [->] (t3) edge node {} (t5);
-        \path [->] (t1) edge node {} (t4);
-        \path [->] (t2) edge node {} (t5);
-      \end{tikzpicture}
-
-    \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}, transform shape]
-      \begin{scope}[local bounding box=scope1]
-        \node[] (0,0) (s1) {\text{\is{stream_2}}};
-        \node[right = 0.0cm of s1] (eq) {$=$};
-      \end{scope}
-      \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
-        \tikzset{tape/.style={minimum size=.6cm, draw}}
-        \begin{scope}[start chain=0 going right, node distance=0mm]
-          \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**},\is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
-            \ifnum\i=10
-              \node [on chain=0, tape, outer sep=0pt] (a\i) {\x};
-              \draw (a\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(a\i.south east)+(+.1,0)$)} -- (a\i.south east) -- cycle;
-            \else
-              \node [on chain=0, tape] (a\i) {\x};
-            \fi
-          }
-          \node [right=.05cm of a10] {$\cdots$};
-        \end{scope}
-      \end{scope}
-
-      \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
-        \node[] (0,0) (prod) {\text{\is{produce (batch_op [(t_0,**a**)]) stream_2 =}}};
-      \end{scope}
-      \begin{scope}[shift={($(scope3.east)+(1.7cm,0)$)}]
-        \tikzset{tape/.style={minimum size=.8cm, draw}}
-        \begin{scope}[start chain=0 going right, node distance=0mm]
-          \foreach \x [count=\i] in {\is{DT t_1 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{WM t_1},\is{DT t_2 [(t_2,**b**)]},\is{WM t_2},\is{DT t_3 [(t_3,**a**)]},\is{DT t_5 [(t_5,**a**),(t_5,**c**)]},\is{WM t_5}} {
-            \ifnum\i=7
-              \node [on chain=0, tape, outer sep=0pt] (b\i) {\x};
-              \draw (b\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(b\i.south east)+(+.1,0)$)} -- (b\i.south east) -- cycle;
-            \else
-              \node [on chain=0, tape] (b\i) {\x};
-            \fi
-          }
-          \node [right=.05cm of b7] {$\cdots$};
-        \end{scope}
-      \end{scope}
-      \draw[->, thick]  (b1.north) -- (a2.south);
-      \draw[->, thick]  (b1.north) -- (a3.south);
-      \draw[->, thick]  (b1.north) -- (a4.south);
-      \draw[->, thick]  (b3.north) -- (a5.south);
-      \draw[->, thick]  (b3.north) -- (a6.south);
-      \draw[->, thick]  (b5.north) -- (a8.south);
-      \draw[->, thick]  (b5.north) -- (a10.south);
-      \draw[->, thick]  (b6.north) -- (a7.south);
-      \draw[->, thick]  (b6.north) -- (a9.south);
-      \draw[->, thick]  (b6.north) -- (a10.south);
-      \draw[->, thick]  (b1.south) to [out=270,in=270]  (prod.south);
-    \end{tikzpicture}
-  \end{figure}
-  \begin{itemize}
-    \item Proof: \is{lset} induction, \is{produce_1} induction, and generalization with \is{skip_op}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Batch Operator: Completeness}
-  \begin{itemize}
-    \item Given a monotone and productive time-aware stream
-    \item if not finite
-  \end{itemize}
-\vspace*{-1ex}
-  \begin{figure}[!t]
-    \centering
-      \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm,background rectangle/.style={fill=yellow!10!white},show background rectangle]
-        \node (t0) at (-0.8,0) {$C_{t_{0}}$: \{\is{**a**}\}};
-        \node (t1) at (-2.5,1) {$C_{t_{1}}$: \{\is{**c**}\}};
-        \node (t2) at (-0.8,1) {$C_{t_{2}}$: \{\is{**b**}\}};
-        \node (t3) at (0.8,1) {$C_{t_{3}}$: \{\is{**a**}\}};
-        \node (t4) at (-2.5,2) {$C_{t_{4}}$: \{\is{**d**}\}};
-        \node (t5) at (0.0,2) {$C_{t_{5}}$: \{\is{**a**,**c**}\}};
-
-        \path [->] (t0) edge node {} (t1);
-        \path [->] (t0) edge node {} (t2);
-        \path [->] (t0) edge node {} (t3);
-        \path [->] (t3) edge node {} (t5);
-        \path [->] (t1) edge node {} (t4);
-        \path [->] (t2) edge node {} (t5);
-      \end{tikzpicture}
-
-    \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}, transform shape]
-      \begin{scope}[local bounding box=scope1]
-        \node[] (0,0) (s1) {\text{\is{stream_2}}};
-        \node[right = 0.0cm of s1] (eq) {$=$};
-      \end{scope}
-      \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
-        \tikzset{tape/.style={minimum size=.6cm, draw}}
-        \begin{scope}[start chain=0 going right, node distance=0mm]
-          \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**},\is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
-            \ifnum\i=10
-              \node [on chain=0, tape, outer sep=0pt] (a\i) {\x};
-              \draw (a\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(a\i.south east)+(+.1,0)$)} -- (a\i.south east) -- cycle;
-            \else
-              \node [on chain=0, tape] (a\i) {\x};
-            \fi
-          }
-          \node [right=.05cm of a10] {$\cdots$};
-        \end{scope}
-      \end{scope}
-
-      \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
-        \node[] (0,0) (prod) {\text{\is{produce (batch_op [(t_0,**a**)]) stream_2 =}}};
-      \end{scope}
-      \begin{scope}[shift={($(scope3.east)+(1.7cm,0)$)}]
-        \tikzset{tape/.style={minimum size=.8cm, draw}}
-        \begin{scope}[start chain=0 going right, node distance=0mm]
-          \foreach \x [count=\i] in {\is{DT t_1 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{WM t_1},\is{DT t_2 [(t_2,**b**)]},\is{WM t_2},\is{DT t_3 [(t_3,**a**)]},\is{DT t_5 [(t_5,**a**),(t_5,**c**)]},\is{WM t_5}} {
-            \ifnum\i=7
-              \node [on chain=0, tape, outer sep=0pt] (b\i) {\x};
-              \draw (b\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(b\i.south east)+(+.1,0)$)} -- (b\i.south east) -- cycle;
-            \else
-              \node [on chain=0, tape] (b\i) {\x};
-            \fi
-          }
-          \node [right=.05cm of b7] {$\cdots$};
-        \end{scope}
-      \end{scope}
-      \draw[<-, thick]  ([xshift=-5mm]b1.north) -- (a2.south);
-      \draw[<-, thick]  (b1.north) -- (a3.south);
-      \draw[<-, thick]  ([xshift=+5mm]b1.north) -- (a4.south);
-      \draw[<-, thick]  (b3.north) -- (a5.south);
-      \draw[<-, thick]  ([xshift=+5mm]b3.north) -- (a6.south);
-      \draw[<-, thick]  (b5.north) -- (a8.south);
-      \draw[<-, thick]  ([xshift=+5mm]b5.north) -- (a10.south);
-      \draw[<-, thick]  ([xshift=-5mm]b6.north) -- (a7.south);
-      \draw[<-, thick]  (b6.north) -- (a9.south);
-      \draw[<-, thick]  ([xshift=+5mm]b6.north) -- (a10.south);
-      \draw[<-, thick]  (b1.south) to [out=270,in=270]  (prod.south);
-    \end{tikzpicture}
-  \end{figure}
-\vspace*{-2ex}
-  \begin{itemize}
-    \item Proof: induction over the position (nat) of the element in the input, and soundness of \is{batch_op}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Batch Operator: Monotone and productive preservation}
-  \begin{itemize}
-    \item The operators must preserve monotone and productive, so we can compose it with something that needs these properties!
-  \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red]
-  \begin{array}{@{}l@{}}
-    \text{\is{monotone lxs W --> monotone (produce (batch_op buf) lxs) W}}
-  \end{array}
-  \end{tcolorbox}
-
-  \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red]
-  \begin{array}{@{}l@{}}
-    \text{\is{productive lxs --> productive (produce (batch_op buf) lxs)}}
-  \end{array}
-  \end{tcolorbox}
-  \end{itemize}
-
-  \begin{itemize}
-    \item Proof: coinduction up to congruence
-  \end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Building Blocks: Incremental Operator}
-  \begin{itemize}
-    \item Incremental computations
-    \item \is{incr_op}: produces accumulated batches of accumulated data
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-corec incr_op where
-  "incr_op buf = Logic ($\lambda$ ev. case ev of DT wm batch =>
-      let out = map ($\lambda$t. DT t (buf @ batch)) (remdups (map fst batch))
-      in (incr_op (buf @ batch), out)
-  | WM wm =>  (incr_op buf, [WM wm]))"
-\end{tcblisting}
-\vspace*{-1ex}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Incremental Operator: Soundness}
-  \begin{figure}[!t]
-    \centering
-    \begin{tikzpicture}[scale=0.7, every node/.style={scale=0.7}, transform shape]
-      \begin{scope}[local bounding box=scope1]
-        \node[] (-2cm,0) (s1) {\text{\is{stream_2}}};
-        \node[right = 0.0cm of s1] (eq) {$=$};
-      \end{scope}
-      \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
-        \tikzset{tape/.style={minimum size=.6cm, draw}}
-        \begin{scope}[start chain=0 going right, node distance=0mm]
-          \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**},\is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
-            \ifnum\i=10
-              \node [on chain=0, tape, outer sep=0pt] (a\i) {\x};
-              \draw (a\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(a\i.south east)+(+.1,0)$)} -- (a\i.south east) -- cycle;
-            \else
-              \node [on chain=0, tape] (a\i) {\x};
-            \fi
-          }
-          \node [right=.05cm of a10] {$\cdots$};
-        \end{scope}
-      \end{scope}
-
-      \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
-        \node[] (0,0) (prod) {\text{\is{stream_3 = produce (batch_op [(t_0,**a**)]) stream_2 =}}};
-      \end{scope}
-      \begin{scope}[shift={($(scope3.east)+(1.7cm,0)$)}]
-        \tikzset{tape/.style={minimum size=.8cm, draw}}
-        \begin{scope}[start chain=0 going right, node distance=0mm]
-          \foreach \x [count=\i] in {\is{DT t_1 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{WM t_1},\is{DT t_2 [(t_2,**b**)]},\is{WM t_2},\is{DT t_3 [(t_3,**a**)]},\is{DT t_5 [(t_5,**a**),(t_5,**c**)]},\is{WM t_5}} {
-            \ifnum\i=7
-              \node [on chain=0, tape, outer sep=0pt] (b\i) {\x};
-              \draw (b\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(b\i.south east)+(+.1,0)$)} -- (b\i.south east) -- cycle;
-            \else
-              \node [on chain=0, tape] (b\i) {\x};
-            \fi
-          }
-          \node [right=.05cm of b7] {$\cdots$};
-        \end{scope}
-      \end{scope}
-
-      \begin{scope}[shift={($(scope3.west)+(-0.0cm,-2cm)$)},local bounding box=scope4]
-        \node[] (0,0) (prod2) {\text{\is{produce (incr_op []) stream_3 =}}};
-      \end{scope}
-      \begin{scope}[shift={($(scope4.east)+(1.7cm,0)$)}]
-        \tikzset{tape/.style={minimum size=.8cm, draw}}
-        \begin{scope}[start chain=0 going right, node distance=0mm]
-          \foreach \x [count=\i] in {\is{DT t_0 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{DT t_1 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{WM t_1},\is{DT t_2 [(t_0,**a**),(t_0,**a**),(t_1,**c**),(t_2,**b**)]},\is{WM t_2},\is{DT t_3 [(t_0,**a**),(t_0,**a**),(t_1,**c**),(t_2,**b**),(t_3,**a**)]}} {
-            \ifnum\i=6
-              \node [on chain=0, tape, outer sep=0pt] (c\i) {\x};
-              \draw (c\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(c\i.south east)+(+.1,0)$)} -- (c\i.south east) -- cycle;
-            \else
-              \node [on chain=0, tape] (c\i) {\x};
-            \fi
-          }
-          \node [right=.05cm of c6] {$\cdots$};
-        \end{scope}
-      \end{scope}
-
-      \draw[->, thick]  (c1.north) -- (b1.south);
-      \draw[->, thick]  (c2.north) -- ([xshift=-5mm]b1.south);
-      \draw[->, thick]  (c4.north) -- (b3.south);
-      \draw[->, thick]  (c6.north) -- (b5.south);
-      \draw[->, thick]  (c4.south) to [out=270,in=270]  ([xshift=-5mm]c2.south);
-      \draw[->, thick]  (c6.south) to [out=270,in=270]  ([xshift=-5mm]c4.south);
-      \draw[->, thick]  (c6.south) to [out=270,in=270]  (c2.south);
-    \end{tikzpicture}
-  \end{figure}
-  \begin{itemize}
-    \item Proof: \is{produce_1} induction, and generalization with \is{skip_op}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Incremental Operator: Completeness}
-  \begin{figure}[!t]
-    \centering
-    \begin{tikzpicture}[scale=0.7, every node/.style={scale=0.7}, transform shape]
-      \begin{scope}[local bounding box=scope1]
-        \node[] (-2cm,0) (s1) {\text{\is{stream_2}}};
-        \node[right = 0.0cm of s1] (eq) {$=$};
-      \end{scope}
-      \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
-        \tikzset{tape/.style={minimum size=.6cm, draw}}
-        \begin{scope}[start chain=0 going right, node distance=0mm]
-          \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**},\is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
-            \ifnum\i=10
-              \node [on chain=0, tape, outer sep=0pt] (a\i) {\x};
-              \draw (a\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(a\i.south east)+(+.1,0)$)} -- (a\i.south east) -- cycle;
-            \else
-              \node [on chain=0, tape] (a\i) {\x};
-            \fi
-          }
-          \node [right=.05cm of a10] {$\cdots$};
-        \end{scope}
-      \end{scope}
-
-      \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
-        \node[] (0,0) (prod) {\text{\is{stream_3 = produce (batch_op [(t_0,**a**)]) stream_2 =}}};
-      \end{scope}
-      \begin{scope}[shift={($(scope3.east)+(1.7cm,0)$)}]
-        \tikzset{tape/.style={minimum size=.8cm, draw}}
-        \begin{scope}[start chain=0 going right, node distance=0mm]
-          \foreach \x [count=\i] in {\is{DT t_1 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{WM t_1},\is{DT t_2 [(t_2,**b**)]},\is{WM t_2},\is{DT t_3 [(t_3,**a**)]},\is{DT t_5 [(t_5,**a**),(t_5,**c**)]},\is{WM t_5}} {
-            \ifnum\i=7
-              \node [on chain=0, tape, outer sep=0pt] (b\i) {\x};
-              \draw (b\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(b\i.south east)+(+.1,0)$)} -- (b\i.south east) -- cycle;
-            \else
-              \node [on chain=0, tape] (b\i) {\x};
-            \fi
-          }
-          \node [right=.05cm of b7] {$\cdots$};
-        \end{scope}
-      \end{scope}
-
-      \begin{scope}[shift={($(scope3.west)+(-0.0cm,-2cm)$)},local bounding box=scope4]
-        \node[] (0,0) (prod2) {\text{\is{produce (incr_op []) stream_3 =}}};
-      \end{scope}
-      \begin{scope}[shift={($(scope4.east)+(1.7cm,0)$)}]
-        \tikzset{tape/.style={minimum size=.8cm, draw}}
-        \begin{scope}[start chain=0 going right, node distance=0mm]
-          \foreach \x [count=\i] in {\is{DT t_0 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{DT t_1 [(t_0,**a**),(t_0,**a**),(t_1,**c**)]},\is{WM t_1},\is{DT t_2 [(t_0,**a**),(t_0,**a**),(t_1,**c**),(t_2,**b**)]},\is{WM t_2},\is{DT t_3 [(t_0,**a**),(t_0,**a**),(t_1,**c**),(t_2,**b**),(t_3,**a**)]}} {
-            \ifnum\i=6
-              \node [on chain=0, tape, outer sep=0pt] (c\i) {\x};
-              \draw (c\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(c\i.south east)+(+.1,0)$)} -- (c\i.south east) -- cycle;
-            \else
-              \node [on chain=0, tape] (c\i) {\x};
-            \fi
-          }
-          \node [right=.05cm of c6] {$\cdots$};
-        \end{scope}
-      \end{scope}
-
-      \draw[<-, thick]  (c1.north) -- (b1.south);
-      \draw[<-, thick]  (c2.north) -- (b1.south);
-      \draw[<-, thick]  (c4.north) -- (b3.south);
-      \draw[<-, thick]  (c6.north) -- (b5.south);
-      \draw[<-, thick]  ([xshift=-5mm]c4.south) to [out=270,in=270]  (c2.south);
-      \draw[<-, thick]  ([xshift=-5mm]c6.south) to [out=270,in=270]  (c4.south);
-      \draw[<-, thick]  (c6.south) to [out=270,in=270]  (c2.south);
-    \end{tikzpicture}
-  \end{figure}
-  \begin{itemize}
-    \item Proof: induction over the position (nat) of the element in the input
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Incremental Operator: Monotone and productive preservation}
-  \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red]
-  \begin{array}{@{}l@{}}
-    \text{\is{monotone lxs W --> monotone (produce (incr_op []) lxs) W}}
-  \end{array}
-  \end{tcolorbox}
-
-  \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=my_red]
-  \begin{array}{@{}l@{}}
-    \text{\is{productive lxs --> productive (produce (incr_op []) lxs)}}
-  \end{array}
-  \end{tcolorbox}
-
-  \begin{itemize}
-    \item Proof: coinduction up to congruence
-  \end{itemize}
-
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Compositional Reasoning}
   \begin{itemize}
     \item \is{batch_op} and \is{incr_op} can be composed
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+          \vspace*{-1ex}
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 definition "incr_batch_op buf1 buf2 = comp_op (batch_op buf1) (incr_op buf2)"
-\end{tcblisting}
-\vspace*{-1ex}
-  \item Soundness, completeness, and monotone and productive preservation
+          \end{tcblisting}
+          \vspace*{-1ex}
+    \item Soundness, completeness, and monotone and productive preservation
   \end{itemize}
-\end{frame}
-
-\section{Case Study}
-
-\begin{frame}
-  \frametitle{Histogram}
-  \begin{itemize}
-    \item A histogram count the elements of a collection
-    \item Incremental histogram: timestamps smaller or equal
-    \item $H_{t_{5}} = C_{t_{0}} + C_{t_{0}} + C_{t_{1}} + C_{t_{2}} + C_{t_{5}}$
-    \item \is{paths} to $t_{5}$: $\{t_{0},t_{2}\}$ and $\{t_{0},t_{3}\}$
-  \end{itemize}
-
-\begin{figure}[!t]
-  \begin{subfigure}{.4\textwidth}
-    \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm]
-      \node (t0) at (-0.8,0) {$C_{t_{0}}$: \{\is{**a**}\}};
-      \node (t1) at (-2.5,1) {$C_{t_{1}}$: \{\is{**c**}\}};
-      \node (t2) at (-0.8,1) {$C_{t_{2}}$: \{\is{**b**}\}};
-      \node (t3) at (0.8,1) {$C_{t_{3}}$: \{\is{**a**}\}};
-      \node (t4) at (-2.5,2) {$C_{t_{4}}$: \{\is{**d**}\}};
-      \node (t5) at (0.0,2) {$C_{t_{5}}$: \{\is{**a**,**c**}\}};
-
-      \path [->] (t0) edge node {} (t1);
-      \path [->] (t0) edge node {} (t2);
-      \path [->] (t0) edge node {} (t3);
-      \path [->] (t3) edge node {} (t5);
-      \path [->] (t1) edge node {} (t4);
-      \path [->] (t2) edge node {} (t5);
-
-    \end{tikzpicture}
-    \label{fig:collection_diamond_order}
-  \end{subfigure}
-  \begin{subfigure}{.5\textwidth}
-  \begin{tikzpicture}[style={grow'=up,level distance=3em, sibling distance=2em}, level distance=8mm]
-    \node (t0) at (-2,0) {$H_{t_{0}}$: \{\is{**a**}\}};
-    \node (t1) at (-4,1) {$H_{t_{1}}$: \{\is{**c**, **a**}\}};
-    \node (t2) at (-2,1) {$H_{t_{2}}$: \{\is{**b**, **a**}\}};
-    \node (t3) at (0,1) {$H_{t_{3}}$: \{\is{**a**, **a**}\}};
-    \node (t4) at (-4,2) {$H_{t_{4}}$: \{\is{**a**,**c**,**d**}\}};
-    \node (t5) at (-1,2) {$H_{t_{5}}$: \{\is{**a**,**a**,**a**,**a**,**b**,**c**}\}};
-
-    \path [->] (t0) edge node {} (t1);
-    \path [->] (t0) edge node {} (t2);
-    \path [->] (t0) edge node {} (t3);
-    \path [->] (t3) edge node {} (t5);
-    \path [->] (t1) edge node {} (t4);
-    \path [->] (t2) edge node {} (t5);
-
-  \end{tikzpicture}
-  \label{fig:histograms_diamond_order}
-  \end{subfigure}
-  \label{fig:histograms}
-\end{figure}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Histogram Operator}
-\vspace*{-1ex}
-\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+  \vspace*{-1ex}
+  \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 corec map_op where "map_op f = Logic ($\lambda$ ev. case ev of
-       WM wm => (map_op f, [WM wm]) | DT t d => (map_op f, [DT t (f t d)]))"
-
-definition "incr_coll t xs = mset $\ldots$"
+WM wm => (map_op f, [WM wm]) | DT t d => (map_op f, [DT t (f t d)]))"
 
 definition "incr_hist_op buf1 buf2 =
-  comp_op (incr_batch_op buf1 buf2) (map_op incr_coll)"
-\end{tcblisting}
-\vspace*{-1ex}
+comp_op (incr_batch_op buf1 buf2) (map_op incr_coll)"
+  \end{tcblisting}
+  \begin{itemize}
+    \item Soundness, completeness, and monotone and productive preservation
+  \end{itemize}
+  \vspace*{-1ex}
 
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Histogram Operator: Correctness}
-  \begin{itemize}
-    \item Correctness: (1) Soundness + (2) Completeness + (3) Monotone Preservation + (4) Productive Preservation
-    \item Given a monotone and productive time-aware stream
-  \end{itemize}
-  \begin{figure}[!t]
-    \centering
-    \begin{tikzpicture}[scale=0.75, every node/.style={scale=0.75}, transform shape]
-      \begin{scope}[local bounding box=scope1]
-        \node[] (0,0) (s1) {\text{\is{stream_2}}};
-        \node[right = 0.0cm of s1] (eq) {$=$};
-      \end{scope}
-      \begin{scope}[shift={($(scope1.east)+(0.8cm,0)$)}]
-        \tikzset{tape/.style={minimum size=.6cm, draw}}
-        \begin{scope}[start chain=0 going right, node distance=0mm]
-          \foreach \x [count=\i] in {\is{DT t_4 **d**},\is{DT t_0 **a**},\is{DT t_1 **c**},\is{WM t_1},\is{DT t_2 **b**},\is{WM t_2},\is{DT t_5 **c**},\is{DT t_3 **a**},\is{DT t_5 **a**},\is{WM t_5}} {
-            \ifnum\i=10
-              \node [on chain=0, tape, outer sep=0pt] (a\i) {\x};
-              \draw (a\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(a\i.south east)+(+.1,0)$)} -- (a\i.south east) -- cycle;
-            \else
-              \node [on chain=0, tape] (a\i) {\x};
-            \fi
-          }
-          \node [right=.05cm of a10] {$\cdots$};
-        \end{scope}
-      \end{scope}
-
-      \begin{scope}[shift={($(scope1.center)+(-2.2cm,-2cm)$)},local bounding box=scope3]
-        \node[] (0,0) (prod) {\text{\is{produce (incr_hist_op [] []) stream_2 =}}};
-      \end{scope}
-      \begin{scope}[shift={($(scope3.east)+(1.2cm,0)$)}]
-        \tikzset{tape/.style={minimum size=.8cm, draw}}
-        \begin{scope}[start chain=0 going right, node distance=0mm]
-          \foreach \x [count=\i] in {\is{DT t_0 (mset [**a**])},\is{DT t_1 (mset [**a**,**c**])},\is{WM t_1},\is{DT t_2 (mset [**a**,**b**])},\is{WM t_2},\is{DT t_3 (mset [**a**,**a**])},\is{DT t_5 (mset [**a**,**a**,**a**,**b**,**c**])},\is{WM t_5}} {
-            \ifnum\i=8
-              \node [on chain=0, tape, outer sep=0pt] (b\i) {\x};
-              \draw (b\i.north east) -- ++(.1,0) decorate [decoration={zigzag, segment length=.12cm, amplitude=.02cm}] {-- ($(b\i.south east)+(+.1,0)$)} -- (b\i.south east) -- cycle;
-            \else
-              \node [on chain=0, tape] (b\i) {\x};
-            \fi
-          }
-          \node [right=.05cm of b8] {$\cdots$};
-        \end{scope}
-      \end{scope}
-    \end{tikzpicture}
-  \end{figure}
-  \begin{itemize}
-    \item Proof: soundness, completeness, monotone and productive preservation of \is{incr_batch_op}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Efficient Histogram Operator}
-  \begin{itemize}
-    \item Efficient histogram operator \is{incr_hist_op'} for timestamp in total order
-          \begin{itemize}
-            \item State of the operator: last computed histogram, and buffer of newly accumulated data
-          \end{itemize}
-    \item Equivalent \is{incr_hist_op} only for monotone time-aware stream (equivalence relation)
-  \end{itemize}
-\end{frame}
+\section{Other shapes}
 
 \begin{frame}[fragile]
   \frametitle{Join Operator}
@@ -1330,10 +692,7 @@ definition "incr_hist_op buf1 buf2 =
     \item Use the \is{sum} type in the timestamps to represent two stream as one
     \item Partial order for the \is{sum}: lefts and rights are incomparable
     \item Defined using \is{incr_batch_op}
-    \item Soundness, Completeness, Monotone
-          \begin{itemize}
-            \item WIP: Productive
-          \end{itemize}
+    \item Soundness, completeness, and monotone and productive preservation
   \end{itemize}
 \end{frame}
 
@@ -1343,8 +702,6 @@ definition "incr_hist_op buf1 buf2 =
   \frametitle{Next Steps}
   \begin{itemize}
     \item Feedback loop
-    \item Exit argument
-    \item Connect to the Isabelle-LLVM refinement framework
   \end{itemize}
 \end{frame}
 
