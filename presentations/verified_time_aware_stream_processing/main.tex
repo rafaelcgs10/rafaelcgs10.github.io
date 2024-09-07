@@ -310,24 +310,24 @@
   \end{itemize}
 \end{frame}
 
-\section{Writing it down in a proof assistant!}
+\section{Writing it down in Isabelle/HOL!}
 
-\begin{frame}[fragile]
-  \frametitle{Isabelle/HOL}
-  \begin{itemize}
-    \item Classical higher-order logic (HOL): Simple Typed Lambda Calculus + (Hilbert) axiom of choice + axiom of infinity + rank-1 polymorphism
-          \pause
-    \item Isabelle: A generic proof assistant
-          \begin{overlayarea}{\textwidth}{.45\textheight}
-            \centering
-            \begin{figure}
-              \centering
-              \only<2>{\includegraphics[scale=0.15]{isabelle}}
-            \end{figure}
-          \end{overlayarea}
-    \item Isabelle/HOL: Isabelle's flavor of HOL
-  \end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Isabelle/HOL}
+%   \begin{itemize}
+%     \item Classical higher-order logic (HOL): Simple Typed Lambda Calculus + (Hilbert) axiom of choice + axiom of infinity + rank-1 polymorphism
+%           \pause
+%     \item Isabelle: A generic proof assistant
+%           \begin{overlayarea}{\textwidth}{.45\textheight}
+%             \centering
+%             \begin{figure}
+%               \centering
+%               \only<2>{\includegraphics[scale=0.15]{isabelle}}
+%             \end{figure}
+%           \end{overlayarea}
+%     \item Isabelle/HOL: Isabelle's flavor of HOL
+%   \end{itemize}
+% \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL: (Co)datatypes}
@@ -515,7 +515,7 @@ lprefix (LCons 1 (LCons (2 (...)))) (LCons 1 (LCons (2 (...))))
           \end{tcblisting}
           \vspace*{-1ex}
           \pause
-    \item Coinduction principle
+    \item Coinductive principle
     % \item But not coinduction up to congruence for free
   \end{itemize}
 \end{frame}
@@ -615,7 +615,7 @@ corec count_op where "count_op P n =
 "produce (comp_op op_1 op_2) lxs = produce op_2 (produce op_1 lxs)"
           \end{tcblisting}
           \vspace*{-1ex}
-    \item Proof: coinduction principle for lazy list equality and \is{produce_1} induction principle
+    \item Proof: coinductive principle for lazy list equality and \is{produce_1} induction principle
   \end{itemize}
 \end{frame}
 
@@ -650,51 +650,54 @@ datatype ('t::order, 'd) event = DT (tmp: 't) (data: 'd) | WM (wmk: 't)
             \item Incremental computing: \text{incr\_op}
             \item Soundness, completeness, preservation of monotonicity and productivity
           \end{itemize}
+  \pause
+          \item Define histogram using the building blocks
+          \item Compositional Reasoning: correctness follows from the correctness of the building blocks
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Compositional Reasoning}
-  \begin{itemize}
-    \item \is{batch_op} and \is{incr_op} can be composed
-          \vspace*{-1ex}
-          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-definition "incr_batch_op buf1 buf2 = comp_op (batch_op buf1) (incr_op buf2)"
-          \end{tcblisting}
-          \vspace*{-1ex}
-    \item Soundness, completeness, and monotone and productive preservation
-  \end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Compositional Reasoning}
+%   \begin{itemize}
+%     \item \is{batch_op} and \is{incr_op} can be composed
+%           \vspace*{-1ex}
+%           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+% definition "incr_batch_op buf1 buf2 = comp_op (batch_op buf1) (incr_op buf2)"
+%           \end{tcblisting}
+%           \vspace*{-1ex}
+%     \item Soundness, completeness, and monotone and productive preservation
+%   \end{itemize}
+% \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Histogram Operator}
-  \vspace*{-1ex}
-  \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-corec map_op where "map_op f = Logic ($\lambda$ ev. case ev of
-WM wm => (map_op f, [WM wm]) | DT t d => (map_op f, [DT t (f t d)]))"
+% \begin{frame}[fragile]
+%   \frametitle{Histogram Operator}
+%   \vspace*{-1ex}
+%   \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+% corec map_op where "map_op f = Logic ($\lambda$ ev. case ev of
+% WM wm => (map_op f, [WM wm]) | DT t d => (map_op f, [DT t (f t d)]))"
 
-definition "incr_hist_op buf1 buf2 =
-comp_op (incr_batch_op buf1 buf2) (map_op incr_coll)"
-  \end{tcblisting}
-  \begin{itemize}
-    \item Soundness, completeness, and monotone and productive preservation
-  \end{itemize}
-  \vspace*{-1ex}
+% definition "incr_hist_op buf1 buf2 =
+% comp_op (incr_batch_op buf1 buf2) (map_op incr_coll)"
+%   \end{tcblisting}
+%   \begin{itemize}
+%     \item Soundness, completeness, and monotone and productive preservation
+%   \end{itemize}
+%   \vspace*{-1ex}
 
-\end{frame}
+% \end{frame}
 
-\section{Other shapes}
+% \section{Other shapes}
 
-\begin{frame}[fragile]
-  \frametitle{Join Operator}
-  \begin{itemize}
-    \item Relation Join
-    \item Use the \is{sum} type in the timestamps to represent two stream as one
-    \item Partial order for the \is{sum}: lefts and rights are incomparable
-    \item Defined using \is{incr_batch_op}
-    \item Soundness, completeness, and monotone and productive preservation
-  \end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Join Operator}
+%   \begin{itemize}
+%     \item Relation Join
+%     \item Use the \is{sum} type in the timestamps to represent two stream as one
+%     \item Partial order for the \is{sum}: lefts and rights are incomparable
+%     \item Defined using \is{incr_batch_op}
+%     \item Soundness, completeness, and monotone and productive preservation
+%   \end{itemize}
+% \end{frame}
 
 \section{Next Steps}
 
