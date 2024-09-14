@@ -88,13 +88,37 @@
   \end{frame}
 }
 
-\title[Verified Time-Aware Stream Processing]{Verified Time-Aware Stream Processing}
+\title[Time-Aware Stream Processing in Isabelle/HOL]{Time-Aware Stream Processing in Isabelle/HOL}
 
-\author[Rafael Castro]{
-  Rafael Castro G. Silva\\\medskip
+\author[Rafael Castro and Dmitriy Traytel]{
+  Rafael Castro G. Silva and  Dmitriy Traytel\\\medskip
   {\small \url{rasi@di.ku.dk}}}
 
-\date{04/06/2024}
+\date{14/09/2024}
+
+% change title (done)
+% (co)datatypes -> codatatypes (done)
+% while_option from HOL library (done)
+% coindtive principle -> coinduction principle (done)
+% remove next step slide, andd as a bullet (done)
+% explain slice in more detail (done)
+% mention selectors in llist slide, drop lmap, drop lset (done)
+% move count operator example to slide that introduce op type (done)
+% modeling lazy list processors which do not care about time (done)
+% reduce Corecursion is like recursion line (done)
+% why partial order? mention timely dataflow (done)
+% explain what incremental, and set expectation for example (done)
+% move arrows (done)
+% Change push to out, done to out (done)
+% put star footnote on op type saying it is simplified compare to the paper, also in the composition lemma (done)
+% write the lapp lemma about lfinite (done)
+% show coinduction principle for llist (done)
+% add link llist afp (done)
+% on produce slide, metion lshift as friend (point to freinds with benefits paper) (done)
+% justify the compositional reasoning with lines of code for each building block (done)
+% slide about tecnicques used, coinduction principles, friends, reasoning up to friends, generalization using skip_op, combining coinduction and induction, coinduction up to congruence for coinductive predicates, say our paper is more detailed in these topics
+%
+% add definition of batch_op, and all 4 properties
 
 \institute[UCPH]{
   Department of Computer Science \\
@@ -116,7 +140,7 @@
     \item What is Time-Aware Stream Processing?
           \begin{itemize}
                   \pause
-            \item Stream Processing: programs that compute unbounded sequences of data (streams)
+            \item Stream Processing: programs that compute (possibly) unbounded sequences of data (streams)
                   \pause
             \item Time-Aware: Data has timestamp metadata; timestamps are bounded by watermarks
                   \begin{itemize}
@@ -145,7 +169,7 @@
           \begin{itemize}
             \item Highly Parallel
             \item Low latency (output as soon as possible)
-            \item Incremental computing
+            \item Incremental computing (re-uses previous computations)
           \end{itemize}
   \end{itemize}
 \end{frame}
@@ -153,7 +177,11 @@
 \begin{frame}[fragile]
   \frametitle{Time-Aware Stream Processing Example}
   Example:\\
-  Incrementally count the occurrences of the words ``dog'' and ``cat''
+  \textbf{Incrementally} count the occurrences of the words ``dog'' and ``cat''
+  \begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{stream_ex1.pdf}
+  \end{figure}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -310,7 +338,7 @@
   \end{itemize}
 \end{frame}
 
-\section{Writing it down in Isabelle/HOL!}
+\section{Formalization in Isabelle/HOL}
 
 % \begin{frame}[fragile]
 %   \frametitle{Isabelle/HOL}
@@ -330,15 +358,15 @@
 % \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Isabelle/HOL: (Co)datatypes}
+  \frametitle{Isabelle/HOL: Codatatypes}
   \begin{itemize}
-    \item Datatypes and Codatatypes
+    \item Codatatypes
           \vspace*{-1ex}
           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
-for map: lmap where "ltl LNil = LNil"
+codatatype llist = (lnull: LNil) | LCons (lhd: 'a) (ltl: "'a llist")
           \end{tcblisting}
           \vspace*{-1ex}
+    \item Selectors: \textit{lhd}, \textit{ltl}, Discriminator: \textit{lnull}
     \item Examples:
           \begin{itemize}
             \item \is{LNil}
@@ -347,15 +375,15 @@ for map: lmap where "ltl LNil = LNil"
           \end{itemize}
           \vspace*{-1ex}
           \pause
-    \item Coinductive principle for lazy list equality
-          % \begin{itemize}
-          %   \item Show that there is a ``pair of goggles '' (relation) that makes them to look the same:
-          %         \begin{itemize}
-          %           \item The first lazy list is empty iff second is
-          %           \item They have the same head
-          %           \item Their tail looks the same
-          %         \end{itemize}
-          % \end{itemize}
+    \item Coinduction principle for lazy list equality
+          \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+R lxs lys ==>
+(!! lxs lys. R lxs lys ==>
+  lnull lxs = lnull lys \and
+  (\<not> lnull lxs --> \<not> lnull lys --> lhd lxs = lhd lys \and R (ctl lxs) (ctl lys))) ==>
+lxs = lys
+\end{tcblisting}
+    \item More about \textit{llist} at the \textbf{Coinductive} AFP entry!
   \end{itemize}
   % \vspace*{-1ex}
   % \begin{overlayarea}{\textwidth}{.45\textheight}
@@ -454,9 +482,13 @@ fun lshift :: "'a list => 'a llist => 'a llist" (infixr @@ 65) where
 definition while_option :: "('a => bool) => ('a => 'a) => 'a => 'a option" where
 "while_option b c s = $\ldots$"
           \end{tcblisting}
+          \begin{itemize}
+            \item From HOL-Library
+            \item \textit{None} (Diverged), \textit{Some x} (Finished with final state \textit{x})
     \item While rule for invariant reasoning (Hoare-style):
           \begin{itemize}
             \item There is something that holds before a step; that thing still holds after the step
+          \end{itemize}
           \end{itemize}
   \end{itemize}
 \end{frame}
@@ -464,13 +496,16 @@ definition while_option :: "('a => bool) => ('a => 'a) => 'a => 'a option" where
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL: Corecursion}
   \begin{itemize}
-    \item Corecursion is like recursion, but instead of always eventually reducing an argument it always eventually produces something
+    \item Recursion: always eventually reduces an argument
+    \item Corecursion: always eventually produces something
           \pause
     \item Corec:
           \vspace*{-1ex}
           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 corec lapp :: "'a llist => 'a llist => 'a llist" where
 "lapp lxs lys = case lxs of LNil => lys | LCons x lxs' => LCons x (lapp lxs' lys)"
+
+\<not> lfinite lxs ==> lapp lxs lys = lxs
           \end{tcblisting}
           \vspace*{-1ex}
           % \pause
@@ -515,27 +550,37 @@ lprefix (LCons 1 (LCons (2 (...)))) (LCons 1 (LCons (2 (...))))
           \end{tcblisting}
           \vspace*{-1ex}
           \pause
-    \item Coinductive principle
+    \item Coinduction principle
     % \item But not coinduction up to congruence for free
   \end{itemize}
 \end{frame}
 
-\section{Lazy Lists Processors}
+\section{Lazy Lists Processors (a.k.a. Non-Time-Aware Stream Processing)}
 
 \begin{frame}[fragile]
   \frametitle{Operator formalization}
   \begin{itemize}
-    \item Operator as a codatatype
+    \item Operator as a codatatype\footnote{This is a simplification of the codatatype in the paper!}
+
           \begin{itemize}
             \item Taking \is{'i} as the input type, and \is{'o} as the output type:
                   \vspace*{-1.5ex}
                   \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 codatatype ('o, 'i) op = Logic ("apply": "('i => ('o, 'i) op $\times$ 'o list)")
                   \end{tcblisting}
+
                   \vspace*{-1.5ex}
                   \pause
             \item Infinite trees: applying the selector \is{apply} ``walks'' a branch of the tree
           \end{itemize}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+corec count_op where "count_op P n =
+  Logic ($\lambda$e. if P e then (count_op P (n + 1), [n+1]) else (count_op P n, []))"
+\end{tcblisting}
+
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+apply (count_op is_even 0) 0 = (count_op is_even 1, [1])
+\end{tcblisting}
   \end{itemize}
 \end{frame}
 
@@ -554,6 +599,8 @@ corec produce where
 | Some (op', x, xs, lxs') => LCons x (xs @@ produce op' lxs'))"
           \end{tcblisting}
           \vspace*{-1.5ex}
+    \item \text{lshift (@@)} is a friend of corec function!\footnote{More about it at the ``Friends with benefits'' paper by Jasmin Christian Blanchette, Aymeric Bouzy, Andreas Lochbihler, Andrei Popescu, and
+Dmitriy Traytel}
           \pause
     \item \is{produce_1} has an induction principle based on the while invariant rule
   \end{itemize}
@@ -609,13 +656,13 @@ corec count_op where "count_op P n =
   \frametitle{Sequential Composition operator}
   \begin{itemize}
     \item Sequential composition: take the output of the first operator and give it as input to the second operator.
-    \item Correctness:
+    \item Correctness\footnote{This is a simplification of the lemma in the paper!}:
           \vspace*{-1ex}
           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
 "produce (comp_op op_1 op_2) lxs = produce op_2 (produce op_1 lxs)"
           \end{tcblisting}
           \vspace*{-1ex}
-    \item Proof: coinductive principle for lazy list equality and \is{produce_1} induction principle
+    \item Proof: coinduction principle for lazy list equality and \is{produce_1} induction principle
   \end{itemize}
 \end{frame}
 
@@ -634,7 +681,13 @@ datatype ('t::order, 'd) event = DT (tmp: 't) (data: 'd) | WM (wmk: 't)
     \item Generalization to partial orders
           \begin{itemize}
             \item Cycles
+                  \begin{itemize}
+                    \item Timely Dataflow: uses pairs to count data cycles (e.g. \textit{(data round n, at cycle i)})
+                  \end{itemize}
             \item Operators with multiple inputs
+                  \begin{itemize}
+                    \item sum type: represents the multiple input/output ports
+                  \end{itemize}
           \end{itemize}
     \item Productive and monotone streams: Coinductive predicates over lazy lists of events.
   \end{itemize}
@@ -650,9 +703,12 @@ datatype ('t::order, 'd) event = DT (tmp: 't) (data: 'd) | WM (wmk: 't)
             \item Incremental computing: \text{incr\_op}
             \item Soundness, completeness, preservation of monotonicity and productivity
           \end{itemize}
-  \pause
           \item Define histogram using the building blocks
           \item Compositional Reasoning: correctness follows from the correctness of the building blocks
+          \begin{itemize}
+            \item Building blocks: more than 9000 loc
+            \item Incremental Histogram: 300 loc
+          \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -669,22 +725,32 @@ datatype ('t::order, 'd) event = DT (tmp: 't) (data: 'd) | WM (wmk: 't)
 %   \end{itemize}
 % \end{frame}
 
-% \begin{frame}[fragile]
-%   \frametitle{Histogram Operator}
-%   \vspace*{-1ex}
-%   \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-% corec map_op where "map_op f = Logic ($\lambda$ ev. case ev of
-% WM wm => (map_op f, [WM wm]) | DT t d => (map_op f, [DT t (f t d)]))"
+\begin{frame}[fragile]
+  \frametitle{Batching Operator}
+  The \textit{batch\_op} operator\footnote{Another simplification from the paper}:
+  \vspace*{-1ex}
+  \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+fun batches where "batches [] tds = ([], tds)"
+|  "batches (wm # wms) tds = let (bs, tds') = batches wms [(t, d) $\leftarrow$ tds. $\neg$ t <= wm]
+                                    in (DT wm [(t, d) $\leftarrow$ tds. t <= wm] # bs, tds')"
 
-% definition "incr_hist_op buf1 buf2 =
-% comp_op (incr_batch_op buf1 buf2) (map_op incr_coll)"
-%   \end{tcblisting}
-%   \begin{itemize}
-%     \item Soundness, completeness, and monotone and productive preservation
-%   \end{itemize}
-%   \vspace*{-1ex}
+corec batch_op where
+  "batch_op tds = Logic ($\lambda$ev. case ev of DT t d => (batch_op (tds @ [(t, d)]), [])
+  | WM wm => let (out, tds') = batches [wm] tds
+                   in (batch_op tds', [x $\leftarrow$ out. data x $\ne$ []] @ [WM wm]))"
+\end{tcblisting}
 
-% \end{frame}
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+mono lxs W --> DT wm b \in lset (produce (batch_op tds) lxs) -->>
+(\<forall>t \in set_t b. coll b t = lcoll lxs t + coll tds t) \<and>
+set_t b = batch_ts ((map (\<lambda> (t,d). DT t d) tds) @@ lxs) wm
+\end{tcblisting}
+
+\begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
+mono lxs W --> (\<forall>t \in set_t tds. \<forall>wm \in W. \<not> t <= wm) -->> mono (produce (batch_op tds) lxs) W
+\end{tcblisting}
+
+\end{frame}
 
 % \section{Other shapes}
 
@@ -699,14 +765,22 @@ datatype ('t::order, 'd) event = DT (tmp: 't) (data: 'd) | WM (wmk: 't)
 %   \end{itemize}
 % \end{frame}
 
-\section{Next Steps}
+\section{Conclusion}
 
 \begin{frame}
-  \frametitle{Next Steps}
+  \frametitle{Conclusion}
   \begin{itemize}
-    \item Feedback loop
+    \item Isabelle/HOL has a good tool set to formalize and reason about stream processing:
+          \begin{itemize}
+            \item Codatatypes, coinductive predicates, corecursion with friends, reasoning up to friends (congruence),
+                  \begin{itemize}
+                    \item Coinduction up to congruence principle is automatically derived for codatatypes (but not for coinductive principles)
+                  \end{itemize}
+          \end{itemize}
+    \item Next step: Feedback loop
   \end{itemize}
 \end{frame}
+% slide about tecnicques used, coinduction principles, friends, reasoning up to friends, generalization using skip_op, combining coinduction and induction, coinduction up to congruence for coinductive predicates, say our paper is more detailed in these topics
 
 \section{Questions, comments and suggestions}
 
