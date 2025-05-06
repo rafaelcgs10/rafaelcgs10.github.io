@@ -94,7 +94,7 @@
   Rafael Castro G. Silva, Laouen Fernet and  Dmitriy Traytel\\\medskip
   {\small \url{rasi@di.ku.dk}}}
 
-\date{14/09/2024}
+\date{14/05/2025}
 
 % change title (done)
 % (co)datatypes -> codatatypes (done)
@@ -135,36 +135,45 @@
 \section{Introduction}
 
 \begin{frame}[fragile]
-  \frametitle{Time-Aware Stream Processing}
+  \frametitle{Introduction}
   \begin{itemize}
-    \item What is Time-Aware Stream Processing?
+    \item Nondeterministic Asynchronous Dataflow: Directed graph of interconnected operators that perform event-wise transformations
           \begin{itemize}
-                  \pause
-            \item Stream Processing: programs that compute (possibly) unbounded sequences of data (streams)
-                  \pause
-            \item Time-Aware: Data has timestamp metadata; timestamps are bounded by watermarks
+            \item Dataflow: Directed graph of interconnected operators that perform event-wise transformations
+            \item Asynchronous:
                   \begin{itemize}
-                    \item Timestamp: A partially-ordered value associated with the data (e.g., unix-time, int, pairs of ints, etc...)
-                    \item Watermark: A value of the same type of the timestamp. Represents data-completeness.
-                          \begin{figure}
-                            \centering
-                            \includegraphics[width=.75\textwidth]{stream_ex1.pdf}
-                          \end{figure}
+                    \item Operators execute independently (processes without an orchestrator)
+                    \item Operators can communicate with the network (read/write); do silent computation steps
+                    \item Networks are unbounded FIFO queues
                   \end{itemize}
+            \item Nondeterministic: Operators can make nondeterministic choices
           \end{itemize}
-          \pause
-    \item Asynchronous Dataflow Programming: Directed graph of interconnected operators that perform event-wise transformations
-    \item E.g.: Apache Flink, Apache Samza, Apache Spark, Google Cloud Dataflow, and Timely Dataflow
-          \vspace*{-1ex}
-          \begin{overlayarea}{\textwidth}{.1\textheight}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{The Process Algebra Model}
+  \begin{itemize}
+    \item Nondeterministic Asynchronous Dataflow defined as an algebra by Bergstra et al.:
+          \begin{figure}
             \centering
-            \begin{figure}
-              \centering
-              \only<2->{\includegraphics[scale=0.1]{all.png}}
-            \end{figure}
-          \end{overlayarea}
-          \vspace*{-1ex}
-          \pause
+            \shadowbox{\includegraphics[width=0.3\textwidth]{Bergstra.png}}
+          \end{figure}
+    \item Provides a process algebra model (a process calculi) of Nondeterministic Asynchronous Dataflow
+    \item Defined basic primitives: sequential and parallel composition; feedback loop
+    \item Defined basic primitives: sequential and parallel composition; feedback loop
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Motivation}
+  \begin{itemize}
+    \item Stream Processing: programs that compute (possibly) unbounded sequences of data (streams)
+    \item E.g.: Apache Flink, Apache Samza, Apache Spark, Google Cloud Dataflow, and Timely Dataflow
+          \begin{figure}
+            \centering
+            \includegraphics[scale=0.1]{all}
+          \end{figure}
     \item Why?
           \begin{itemize}
             \item Highly Parallel
@@ -174,8 +183,7 @@
   \end{itemize}
 \end{frame}
 
-
-\section{Formalization in Isabelle/HOL}
+\section{Isabelle/HOL Preliminaries}
 
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL}
@@ -202,80 +210,6 @@
   \end{itemize}
 \end{frame}
 
-
-% \begin{frame}[fragile,noframenumbering]
-%   \frametitle{Isabelle/HOL: (Co)datatypes}
-%   \begin{itemize}
-%     \item Datatypes and Codatatypes
-%           \vspace*{-1ex}
-%           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-%             codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
-%             for map: lmap where "ltl LNil = LNil"
-%           \end{tcblisting}
-%           \vspace*{-1ex}
-%     \item Examples:
-%           \begin{itemize}
-%             \item \is{LNil}
-%             \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
-%             \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
-%           \end{itemize}
-%           \vspace*{-1ex}
-%     \item Coinductive principle for lazy list equality:
-%           \begin{itemize}
-%             \item Show that there is a ``pair of goggles '' (relation) that makes them to look the same:
-%                   \begin{itemize}
-%                     \item The first lazy list is empty iff second is
-%                     \item They have the same head
-%                     \item Their tail looks the same
-%                   \end{itemize}
-%           \end{itemize}
-%   \end{itemize}
-%   \vspace*{-1ex}
-%   \begin{overlayarea}{\textwidth}{.45\textheight}
-%     \begin{figure}
-%       \centering
-%       \includegraphics[scale=0.3]{equality_2.png}
-%     \end{figure}
-%   \end{overlayarea}
-% \end{frame}
-
-% % TODO add notes for explaining codatatype command
-% \begin{frame}[fragile,noframenumbering]
-%   \frametitle{Isabelle/HOL: (Co)datatypes}
-%   \begin{itemize}
-%     \item Datatypes and Codatatypes
-%           \vspace*{-1ex}
-%           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-%             codatatype (lset: 'a) llist = lnull: LNil | LCons (lhd: 'a) (ltl: "'a llist")
-%             for map: lmap where "ltl LNil = LNil"
-%           \end{tcblisting}
-%           \vspace*{-1ex}
-%     \item Examples:
-%           \begin{itemize}
-%             \item \is{LNil}
-%             \item \is{LCons 1 (LCons 2 (LCons 3 LNil))}
-%             \item \is{LCons 0 (LCons 0 (LCons 0 (...)))}
-%           \end{itemize}
-%           \vspace*{-1ex}
-%     \item Coinductive principle for lazy list equality:
-%           \begin{itemize}
-%             \item Show that there is a ``pair of goggles '' (relation) that makes them to look the same:
-%                   \begin{itemize}
-%                     \item The first lazy list is empty iff second is
-%                     \item They have the same head
-%                     \item Their tail looks the same
-%                   \end{itemize}
-%           \end{itemize}
-%   \end{itemize}
-%   \vspace*{-1ex}
-%   \begin{overlayarea}{\textwidth}{.45\textheight}
-%     \begin{figure}
-%       \centering
-%       \includegraphics[scale=0.3]{equality.png}
-%     \end{figure}
-%   \end{overlayarea}
-% \end{frame}
-
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL: Corecursion}
   \begin{itemize}
@@ -283,20 +217,6 @@
     \item Corecursion: always eventually produces something
           \pause
     \item Corec:
-%           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-% corec lapp :: "'a llist => 'a llist => 'a llist" where
-% "lapp lxs lys = case lxs of LNil => lys | LCons x lxs' => LCons x (lapp lxs' lys)"
-
-% \<not> lfinite lxs ==> lapp lxs lys = lxs
-%           \end{tcblisting}
-          % \pause
-    % \item Friendly function
-    %       \begin{itemize}
-    %         \item Preserves productivity: it may consume at most one constructor to produce one constructor.
-    %         \item \is{lshift} (\is{@@}) is proved to a be friend
-    %       \end{itemize}
-    %       \pause
-    % \item Coinduction up to congruence: Coinduction for Lazy list equality can be extended to compare an entire finite prefix through a congruence relation
   \end{itemize}
 \end{frame}
 
@@ -332,32 +252,69 @@
   \end{itemize}
 \end{frame}
 
+\section{Operators as a Codatatype}
 
-% \begin{frame}[fragile]
-%   \frametitle{Compositional Reasoning}
-%   \begin{itemize}
-%     \item \is{batch_op} and \is{incr_op} can be composed
-%           \vspace*{-1ex}
-%           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-% definition "incr_batch_op buf1 buf2 = comp_op (batch_op buf1) (incr_op buf2)"
-%           \end{tcblisting}
-%           \vspace*{-1ex}
-%     \item Soundness, completeness, and monotone and productive preservation
-%   \end{itemize}
-% \end{frame}
+\begin{frame}[fragile]
+  \frametitle{Operators}
+  \begin{itemize}
+    \item Codatatypes
+          \vspace*{-1ex}
+  \end{itemize}
+\end{frame}
 
-% \section{Other shapes}
+\begin{frame}[fragile]
+  \frametitle{Examples}
+  \begin{itemize}
+    \item Codatatypes
+          \vspace*{-1ex}
+  \end{itemize}
+\end{frame}
 
-% \begin{frame}[fragile]
-%   \frametitle{Join Operator}
-%   \begin{itemize}
-%     \item Relation Join
-%     \item Use the \is{sum} type in the timestamps to represent two stream as one
-%     \item Partial order for the \is{sum}: lefts and rights are incomparable
-%     \item Defined using \is{incr_batch_op}
-%     \item Soundness, completeness, and monotone and productive preservation
-%   \end{itemize}
-% \end{frame}
+\begin{frame}[fragile]
+  \frametitle{Operators Equivalences: Motivation}
+  \begin{itemize}
+    \item foo
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Operators Equivalences: Strong Bisimilarity}
+  \begin{itemize}
+    \item foo
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Operators Equivalences: Weak Bisimilarity}
+  \begin{itemize}
+    \item foo
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Operators Equivalences: Trace Equivalence}
+  \begin{itemize}
+    \item foo
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Numeral Types for Ports}
+  \begin{itemize}
+    \item foo
+  \end{itemize}
+\end{frame}
+
+\section{Asynchronous Dataflow Operators}
+
+\begin{frame}[fragile]
+  \frametitle{Buffer Infrastructure}
+  \begin{itemize}
+    \item foo
+  \end{itemize}
+\end{frame}
+
+\section{Asynchronous Dataflow Properties}
 
 \section{Conclusion}
 

@@ -1,1 +1,0 @@
-codatatype llist = (lnull: LNil) | LCons (lhd: 'a) (ltl: "'a llist")
