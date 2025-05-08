@@ -90,7 +90,7 @@
 
 \title[Nondeterministic Asynchronous Dataflow in Isabelle/HOL]{Nondeterministic Asynchronous Dataflow in Isabelle/HOL}
 
-\author[Rafael Castro, Laouen Fernet and Dmitriy Traytel]{
+\author[Rafael, Laouen and Dmitriy]{
   Rafael Castro G. Silva, Laouen Fernet and  Dmitriy Traytel\\\medskip
   {\small \url{rasi@di.ku.dk}}}
 
@@ -132,55 +132,88 @@
   \titlepage
 
 \end{frame}
-\section{Introduction}
-
-\begin{frame}[fragile]
-  \frametitle{Introduction}
-  \begin{itemize}
-    \item Nondeterministic Asynchronous Dataflow: Directed graph of interconnected operators that perform event-wise transformations
-          \begin{itemize}
-            \item Dataflow: Directed graph of interconnected operators that perform event-wise transformations
-            \item Asynchronous:
-                  \begin{itemize}
-                    \item Operators execute independently (processes without an orchestrator)
-                    \item Operators can communicate with the network (read/write); do silent computation steps
-                    \item Networks are unbounded FIFO queues
-                  \end{itemize}
-            \item Nondeterministic: Operators can make nondeterministic choices
-          \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{The Process Algebra Model}
-  \begin{itemize}
-    \item Nondeterministic Asynchronous Dataflow defined as an algebra by Bergstra et al.:
-          \begin{figure}
-            \centering
-            \shadowbox{\includegraphics[width=0.3\textwidth]{Bergstra.png}}
-          \end{figure}
-    \item Provides a process algebra model (a process calculi) of Nondeterministic Asynchronous Dataflow
-    \item Defined basic primitives: sequential and parallel composition; feedback loop
-    \item Defined basic primitives: sequential and parallel composition; feedback loop
-  \end{itemize}
-\end{frame}
-
+\section{Motivation}
 \begin{frame}[fragile]
   \frametitle{Motivation}
+  \begin{block}{Context:}
   \begin{itemize}
     \item Stream Processing: programs that compute (possibly) unbounded sequences of data (streams)
-    \item E.g.: Apache Flink, Apache Samza, Apache Spark, Google Cloud Dataflow, and Timely Dataflow
+    \item A common problem in the industry
+    \item Frameworks:\\ Apache Flink, Apache Samza, Apache Spark, Google Cloud Dataflow, and Timely Dataflow
           \begin{figure}
             \centering
             \includegraphics[scale=0.1]{all}
           \end{figure}
-    \item Why?
+    \item Why use frameworks?
           \begin{itemize}
             \item Highly Parallel
             \item Low latency (output as soon as possible)
             \item Incremental computing (re-uses previous computations)
           \end{itemize}
   \end{itemize}
+  \pause
+  \end{block}
+  \begin{block}{Our goal:}
+    Mechanically Verify Timely Dataflow algorithms
+  \end{block}
+
+\end{frame}
+
+\section{A Good Foundation}
+
+\begin{frame}[fragile]
+  \frametitle{A Good Foundation}
+  \begin{columns}
+    \begin{column}{.35\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=1\textwidth]{network.png}
+      \end{figure}
+    \end{column}
+    \begin{column}{.65\textwidth}
+      \begin{itemize}
+        \item Nondeterministic Asynchronous Dataflow
+              \begin{itemize}
+                \pause
+                \item Dataflow: Directed graph of interconnected operators
+                \pause
+                \item Asynchronous:
+                      \begin{itemize}
+                        \item Operators execute independently:\\ processes without an orchestrator
+                        \item Operators can freely communicate with the network (read/write); do silent computation steps
+                        \item Networks are unbounded FIFO queues
+                      \end{itemize}
+                \pause
+                \item Nondeterministic:
+                      \begin{itemize}
+                        \item Operators can make nondeterministic choices
+                        \item Operators are relations between inputs and outputs sequences
+                      \end{itemize}
+              \end{itemize}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{The Algebra for Nondeterministic Asynchronous Dataflow}
+  \begin{columns}
+    \begin{column}{.6\textwidth}
+      \begin{itemize}
+        \item Bergstra et al. presents an algebra for Nondeterministic Asynchronous Dataflow
+        \item Primitives:\\
+              sequential and parallel composition; feedback loop...
+        \item The 52 axioms
+        \item An process calculus instance
+      \end{itemize}
+    \end{column}
+    \begin{column}{.4\textwidth}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.9\textwidth]{Bergstra.png}}
+      \end{figure}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \section{Isabelle/HOL Preliminaries}
@@ -188,68 +221,28 @@
 \begin{frame}[fragile]
   \frametitle{Isabelle/HOL}
   \begin{itemize}
-    \item Classical higher-order logic (HOL): Simple Typed Lambda Calculus + (Hilbert) axiom of choice + axiom of infinity + rank-1 polymorphism
+    \item Classical higher-order logic (HOL):\\ Simple Typed Lambda Calculus + axiom of choice + axiom of infinity + rank-1 polymorphism
           \pause
     \item Isabelle: A generic proof assistant
-          \begin{overlayarea}{\textwidth}{.45\textheight}
+          \begin{overlayarea}{\textwidth}{.3\textheight}
             \centering
             \begin{figure}
               \centering
-              \only<2>{\includegraphics[scale=0.15]{isabelle}}
+              \includegraphics[scale=0.15]{isabelle}
             \end{figure}
           \end{overlayarea}
     \item Isabelle/HOL: Isabelle's flavor of HOL
   \end{itemize}
-\end{frame}
+  \pause
+    \begin{block}{Why Isabelle/HOL?}
+      \begin{itemize}
+        \item Codatatypes: (possibly) infinite data structures (e.g., lazy lists, streams)
+        \item Corecursion: always eventually produces some codatatype constructor
+        \item Coinductive predicate: infinite number of introduction rule applications
+        \item Coinduction: reason about coinductive predicates
+      \end{itemize}
+  \end{block}
 
-\begin{frame}[fragile]
-  \frametitle{Isabelle/HOL: Codatatypes}
-  \begin{itemize}
-    \item Codatatypes
-          \vspace*{-1ex}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Isabelle/HOL: Corecursion}
-  \begin{itemize}
-    \item Recursion: always eventually reduces an argument
-    \item Corecursion: always eventually produces something
-          \pause
-    \item Corec:
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Isabelle/HOL: (Co)inductive Predicates}
-  \begin{itemize}
-    \item Inductive predicate
-          \begin{itemize}
-            \item Finite number of introduction rule applications
-          \end{itemize}
-%           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-% inductive in_llist :: "'a => 'a llist => bool" where
-%   In_llist: "in_llist x (LCons x lxs)"
-% | Next_llist: "in_llist x lxs => in_llist x (LCons y lxs)"
-
-% in_llist 2 (LCons 1 (LCons (2 (...))))
-%           \end{tcblisting}
-          \pause
-    \item Coinductive predicate
-          \begin{itemize}
-            \item Infinite number of introduction rule applications
-          \end{itemize}
-%           \begin{tcblisting}{hbox,listing only,listing options={language=isabelle,aboveskip=0pt,belowskip=0pt},size=fbox,boxrule=0pt,frame hidden,arc=0pt,colback=yellow!10!white}
-% coinductive lprefix :: "'a llist => 'a llist => bool" where
-%   LNil_lprefix: "lprefix LNil lys"
-% | LCons_lprefix: "lprefix lxs lys => lprefix (LCons x lxs) (LCons x lys)"
-
-% lprefix (LCons 1 (LCons (2 (...)))) (LCons 1 (LCons (2 (...))))
-%           \end{tcblisting}
-          \pause
-    \item Coinduction principle
-    % \item But not coinduction up to congruence for free
-  \end{itemize}
 \end{frame}
 
 \section{Operators as a Codatatype}
@@ -291,19 +284,19 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Operators Equivalences: Trace Equivalence}
-  \begin{itemize}
-    \item foo
-  \end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Operators Equivalences: Trace Equivalence}
+%   \begin{itemize}
+            %       \item foo
+            %     \end{itemize}
+            %             \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Numeral Types for Ports}
-  \begin{itemize}
-    \item foo
-  \end{itemize}
-\end{frame}
+            %             \begin{frame}[fragile]
+            %             \frametitle{Numeral Types for Ports}
+            %             \begin{itemize}
+            %       \item foo
+            %     \end{itemize}
+            %             \end{frame}
 
 \section{Asynchronous Dataflow Operators}
 
@@ -331,7 +324,7 @@
     \item Next step: Feedback loop
   \end{itemize}
 \end{frame}
-% slide about tecnicques used, coinduction principles, friends, reasoning up to friends, generalization using skip_op, combining coinduction and induction, coinduction up to congruence for coinductive predicates, say our paper is more detailed in these topics
+            %             slide about tecnicques used, coinduction principles, friends, reasoning up to friends, generalization using skip_op, combining coinduction and induction, coinduction up to congruence for coinductive predicates, say our paper is more detailed in these topics
 
 \section{Questions, comments and suggestions}
 

@@ -1,0 +1,74 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/132.0.6834.210 Electron/34.5.2 Safari/537.36" version="24.7.17">
+  <diagram name="Page-1" id="55a83fd1-7818-8e21-69c5-c3457e3827bb">
+    <mxGraphModel dx="2074" dy="1243" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="DocvQjf_28A28v1DP7k2-8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;shape=flexArrow;strokeWidth=2;startSize=4;endSize=4;fillColor=none;" edge="1" parent="1" source="DocvQjf_28A28v1DP7k2-1" target="DocvQjf_28A28v1DP7k2-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-11" style="edgeStyle=orthogonalEdgeStyle;shape=flexArrow;curved=0;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;startSize=4;endArrow=classic;endSize=4;fillColor=none;" edge="1" parent="1" source="DocvQjf_28A28v1DP7k2-1" target="DocvQjf_28A28v1DP7k2-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-21" style="edgeStyle=orthogonalEdgeStyle;shape=flexArrow;curved=0;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;startSize=4;endArrow=classic;endSize=4;fillColor=none;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="DocvQjf_28A28v1DP7k2-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160" y="510" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-1" value="" style="image;html=1;image=img/lib/clip_art/networking/UPS_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="250" y="470" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-12" style="edgeStyle=orthogonalEdgeStyle;shape=flexArrow;curved=0;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;startSize=4;endArrow=classic;endSize=4;fillColor=none;" edge="1" parent="1" source="DocvQjf_28A28v1DP7k2-2" target="DocvQjf_28A28v1DP7k2-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-14" style="edgeStyle=orthogonalEdgeStyle;shape=flexArrow;curved=0;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;strokeColor=default;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;startSize=4;endArrow=classic;endSize=4;fillColor=none;" edge="1" parent="1" source="DocvQjf_28A28v1DP7k2-2" target="DocvQjf_28A28v1DP7k2-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-2" value="" style="image;html=1;image=img/lib/clip_art/networking/UPS_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="320" y="350" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-13" style="edgeStyle=orthogonalEdgeStyle;shape=flexArrow;curved=0;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;startSize=4;endArrow=classic;endSize=4;fillColor=none;" edge="1" parent="1" source="DocvQjf_28A28v1DP7k2-3" target="DocvQjf_28A28v1DP7k2-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-3" value="" style="image;html=1;image=img/lib/clip_art/networking/UPS_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="320" y="590" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-17" style="edgeStyle=orthogonalEdgeStyle;shape=flexArrow;curved=0;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;startSize=4;endArrow=classic;endSize=4;fillColor=none;" edge="1" parent="1" source="DocvQjf_28A28v1DP7k2-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="680" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-19" style="edgeStyle=orthogonalEdgeStyle;shape=flexArrow;curved=0;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=default;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;startSize=4;endArrow=classic;endSize=4;fillColor=none;" edge="1" parent="1" source="DocvQjf_28A28v1DP7k2-4" target="DocvQjf_28A28v1DP7k2-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="560" y="320" />
+              <mxPoint x="360" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-4" value="" style="image;html=1;image=img/lib/clip_art/networking/UPS_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="520" y="350" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-16" style="edgeStyle=orthogonalEdgeStyle;shape=flexArrow;curved=0;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;strokeColor=default;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;startSize=4;endArrow=classic;endSize=4;fillColor=none;" edge="1" parent="1" source="DocvQjf_28A28v1DP7k2-5" target="DocvQjf_28A28v1DP7k2-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-20" style="edgeStyle=orthogonalEdgeStyle;shape=flexArrow;curved=0;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;strokeColor=default;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;startSize=4;endArrow=classic;endSize=4;fillColor=none;" edge="1" parent="1" source="DocvQjf_28A28v1DP7k2-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="680" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-5" value="" style="image;html=1;image=img/lib/clip_art/networking/UPS_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="440" y="470" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-18" style="edgeStyle=orthogonalEdgeStyle;shape=flexArrow;curved=0;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=default;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;startSize=4;endArrow=classic;endSize=4;fillColor=none;" edge="1" parent="1" source="DocvQjf_28A28v1DP7k2-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="680" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DocvQjf_28A28v1DP7k2-6" value="" style="image;html=1;image=img/lib/clip_art/networking/UPS_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="520" y="590" width="80" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
