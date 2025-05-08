@@ -1,6 +1,7 @@
-\documentclass[aspectratio=169,10pt]{beamer}
+\documentclass[fleqn,aspectratio=169,10pt]{beamer}
 \usetheme{Madrid}
 \usepackage[T1]{fontenc}
+\include{defs}
 
 \usepackage{fancybox,graphicx,hyperref,url}
 \usepackage{tikz}
@@ -249,6 +250,15 @@
 
 \begin{frame}[fragile]
   \frametitle{Operators}
+
+\begin{isabelle}
+\begin{align*}
+ &   \cmd{codatatype}\ (\const{inputs}\!: \tvar{i}, \const{outputs}\!: \tvar{o}, \tvar{d})\ \type{op} =\\
+ &   \more \const{Read}\ \tvar{i}\ (\tvar{d} \Fun (\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ |\ \const{Write}\ ((\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ \tvar{o}\ \tvar{d}\\
+ &   \more \const{Silent}\ (\tvar{i}, \tvar{o}, \tvar{d})\ \type{op}\ |\ \const{Choice}\ ((\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ \type{cset}
+\end{align*}
+\end{isabelle}
+
   \begin{itemize}
     \item Codatatypes
           \vspace*{-1ex}
