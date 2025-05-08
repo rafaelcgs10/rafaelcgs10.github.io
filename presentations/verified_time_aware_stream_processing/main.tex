@@ -92,7 +92,7 @@
 
 \author[Rafael Castro and Dmitriy Traytel]{
   Rafael Castro G. Silva and  Dmitriy Traytel\\\medskip
-  {\small \url{rasi@di.ku.dk}}}
+  {\small \url{rasi@di.ku.dk, traytel@di.ku.dk}}}
 
 \date{14/09/2024}
 
@@ -380,7 +380,7 @@ codatatype llist = (lnull: LNil) | LCons (lhd: 'a) (ltl: "'a llist")
 R lxs lys ==>
 (!! lxs lys. R lxs lys ==>
   lnull lxs = lnull lys \and
-  (\<not> lnull lxs --> \<not> lnull lys --> lhd lxs = lhd lys \and R (ctl lxs) (ctl lys))) ==>
+  (\<not> lnull lxs --> \<not> lnull lys --> lhd lxs = lhd lys \and R (ltl lxs) (ltl lys))) ==>
 lxs = lys
 \end{tcblisting}
     \item More about \textit{llist} at the \textbf{Coinductive} AFP entry!
@@ -497,7 +497,7 @@ definition while_option :: "('a => bool) => ('a => 'a) => 'a => 'a option" where
   \frametitle{Isabelle/HOL: Corecursion}
   \begin{itemize}
     \item Recursion: always eventually reduces an argument
-    \item Corecursion: always eventually produces something
+    \item Corecursion: always eventually produces something (productivity)
           \pause
     \item Corec:
           \vspace*{-1ex}
@@ -772,7 +772,7 @@ mono lxs W --> (\<forall>t \in set_t tds. \<forall>wm \in W. \<not> t <= wm) -->
   \begin{itemize}
     \item Isabelle/HOL has a good tool set to formalize and reason about stream processing:
           \begin{itemize}
-            \item Codatatypes, coinductive predicates, corecursion with friends, reasoning up to friends (congruence),
+            \item Codatatypes, coinductive predicates, corecursion with friends, reasoning up to friends (congruence)
                   \begin{itemize}
                     \item Coinduction up to congruence principle is automatically derived for codatatypes (but not for coinductive principles)
                   \end{itemize}
