@@ -14,7 +14,7 @@
 \usepackage{pdfpages}
 \usepackage{lstautogobble}
 
-\usepackage[listings,skins,breakable,xparse]{tcolorbox}
+\usepackage[listings,skins,breakable,xparse,most]{tcolorbox}
 \tcbuselibrary{theorems}
 \tcbset{highlight math/.append style={boxrule=0pt,
                                       frame hidden,
@@ -22,7 +22,7 @@
                                       sharp corners}}
 
 \usepackage{xpatch}
-\usepackage{xcolor}
+
 \usepackage{realboxes}
 \usetikzlibrary{fit}
 \usetikzlibrary{shadings}
@@ -250,23 +250,45 @@
 
 \begin{frame}[fragile]
   \frametitle{Operators}
-
-\begin{isabelle}
-\begin{align*}
- &   \cmd{codatatype}\ (\const{inputs}\!: \tvar{i}, \const{outputs}\!: \tvar{o}, \tvar{d})\ \type{op} =\\
- &   \more \const{Read}\ \tvar{i}\ (\tvar{d} \Fun (\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ |\ \const{Write}\ ((\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ \tvar{o}\ \tvar{d}\\
- &   \more \const{Silent}\ (\tvar{i}, \tvar{o}, \tvar{d})\ \type{op}\ |\ \const{Choice}\ ((\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ \type{cset}
-\end{align*}
-\end{isabelle}
-
+  \begin{tcolorbox}[enhanced,title=Operators in Isabelle/HOL,colback=yellow!30]
+    \vspace*{-3ex}
+    \hspace*{-5ex}
+    \begin{align*}
+      &   \cmd{codatatype}\ (\const{inputs}\!: \tvar{i}, \const{outputs}\!: \tvar{o}, \tvar{d})\ \type{op} =\\
+      &   \more \const{Read}\ \tvar{i}\ (\tvar{d} \Fun (\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ |\ \const{Write}\ ((\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ \tvar{o}\ \tvar{d}\\
+      &   \more \const{Silent}\ (\tvar{i}, \tvar{o}, \tvar{d})\ \type{op}\ |\ \const{Choice}\ ((\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ \type{cset}
+    \end{align*}
+  \end{tcolorbox}
   \begin{itemize}
-    \item Codatatypes
-          \vspace*{-1ex}
+    \item Type parameters: inputs/output ports; data
+    \item Operator's actions
+    \item Possibly infinite trees
+    \item inputs/outputs: Sets of used ports
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Examples}
+  \frametitle{Examples 1}
+\begin{tcolorbox}[enhanced,title=Operators in Isabelle/HOL,colback=yellow!30]
+          \vspace*{-5ex}
+          \hspace*{-5ex}
+    \begin{tabular}{p{0.29\textwidth}p{0.32\textwidth}p{0.3\textwidth}}
+      \isa{
+      & \cmd{corec}\ \const{silent_op}\ (\SilentOp)\ \cmd{where}\\
+      & \SilentOp = \const{Silent}\ \SilentOp
+        }&
+           \isa{
+         & \cmd{corec}\ \const{spin_op}\ (\SpinOp)\ \cmd{where}\\
+      & \SpinOp = \const{Choice}\ ((\lambda \_.\ \SpinOp) \Image_c \{()\}_c)
+        }&
+           \isa{
+         & \cmd{lemma}\ \text{spin\_op\_code}\!:\\
+      & \SpinOp = \const{Choice}\ \{\SpinOp\}_c
+        }
+    \end{tabular}
+          \vspace*{-1ex}
+\end{tcolorbox}
+
   \begin{itemize}
     \item Codatatypes
           \vspace*{-1ex}
