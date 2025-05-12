@@ -339,7 +339,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Operators Equivalences: Strong Bisimilarity}
+  \frametitle{Operators Equivalences: Label Transition System}
   \begin{tcolorbox}[enhanced,title=Label Transition System,colback=yellow!30]
     \vspace*{-3ex}
     \hspace*{-5ex}
@@ -351,6 +351,25 @@
         &    \bmore \const{step}\ \const{Tau}\ (\const{Silent}\ \var{op})\ \var{op} \\
         &    \bmore \var{op} \in_c \var{ops} \implies \const{step}\ \var{io}\ \var{op}\ \var{op}' \implies \const{step}\ \var{io}\ (\const{Choice}\ \var{ops})\ \var{op}'
     \end{align*}
+  \end{tcolorbox}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Operators Equivalences: Strong Bisimilarity}
+  \begin{tcolorbox}[enhanced,title=Simulates,colback=yellow!30]
+    \vspace*{-3ex}
+    \hspace*{-5ex}
+    \begin{align*}
+     & \cmd{definition}\ \const{sim} \ \const{where}\\
+     & \more \const{sim}\ \var{R}\ \var{op}_1\ \var{op}_2 = (\forall \var{io}\; \var{op}'_1.\ \const{step}\ \var{io}\ \var{op}_1\ \var{op}'_1 \Implies (\exists \var{op}'_2.\ \const{step}\ \var{io}\ \var{op}_2\ \var{op}'_2 \land \var{R}\ \var{op}'_1\ \var{op}'_2))
+    \end{align*}
+  \end{tcolorbox}
+
+  \begin{tcolorbox}[enhanced,title=Strong Bisimilarity,colback=yellow!30]
+    % \vspace*{-3ex}
+    % \hspace*{-5ex}
+    % \begin{align*}
+    % \end{align*}
   \end{tcolorbox}
 \end{frame}
 
