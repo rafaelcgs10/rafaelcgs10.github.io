@@ -3,6 +3,7 @@
 \usepackage[T1]{fontenc}
 \include{defs}
 
+\usepackage{wasysym}
 \usepackage{fancybox,graphicx,hyperref,url}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows}
@@ -93,7 +94,8 @@
 
 \author[Rafael, Laouen and Dmitriy]{
   Rafael Castro G. Silva, Laouen Fernet and  Dmitriy Traytel\\\medskip
-  {\small \url{rasi@di.ku.dk}}}
+  }
+% {\small \url{rasi@di.ku.dk}}
 
 \date{14/05/2025}
 
@@ -300,25 +302,56 @@
   \vspace*{+5ex}
 
   \begin{itemize}
-    \item They have the same meaning!
-    \item A small quirk: any corecursive call guarded by
-the \isabelleinline{\const{Choice}} constructor must be applied using the map
-function on \isabelleinline{\type{cset}}
+    \item Quirk: any corecursive call guarded by the \isabelleinline{\const{Choice}} must be applied using the proper map function
+    \item They have the same meaning. \pause But are syntactically different \frownie{}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Operators Equivalences: Motivation}
+  \begin{block}{An ideal equivalence relation}
+    \begin{itemize}
+      \item Only equate operators that \textbf{behave} the same
+      \item Useful reasoning principle
+    \end{itemize}
+  \end{block}
+  \pause
   \begin{itemize}
-    \item foo
+
+          \begin{columns}
+            \begin{column}{.3\textwidth}
+              \item Milner's approach: Bisimilarity
+            \end{column}
+            \begin{column}{.27\textwidth}
+              \begin{figure}
+                \includegraphics[scale=0.2]{milner.jpg}
+              \end{figure}
+            \end{column}
+            \begin{column}{.2\textwidth}
+            \end{column}
+          \end{columns}
+          \item Based on labeled transition systems (LTS)
+          \item Labels (actions): Read, Write, Silent ($\tau$)
   \end{itemize}
+  \begin{block}{Intuition}
+    \footnotesize{Two operators are bisimilar if their corresponding transition systems can mutually simulate each other’s transitions.}
+  \end{block}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Operators Equivalences: Strong Bisimilarity}
-  \begin{itemize}
-    \item foo
-  \end{itemize}
+  \begin{tcolorbox}[enhanced,title=Label Transition System,colback=yellow!30]
+    \vspace*{-3ex}
+    \hspace*{-5ex}
+    \begin{align*}
+        &    \cmd{datatype}\ (\tvar{i}, \tvar{o}, \tvar{d})\ \type{IO} = \const{Inp}\ \tvar{i}\ \tvar{d}\ |\ \const{Out}\ \tvar{o}\ \tvar{d}\ |\ \const{Tau}
+        \\[\jot]
+        &    \cmd{inductive}\ \const{step}\ \cmd{where}\\
+        &    \more \const{step}\ (\const{Inp}\ \var{p}\ \var{x})\ (\const{Read}\ \var{p}\ \var{f})\ (\var{f}\ \var{x}) \: \bmore \const{step}\ (\const{Out}\ \var{q}\ \var{x})\ (\const{Write}\ \var{op}\ \var{q}\ \var{x})\ \var{op} \\
+        &    \bmore \const{step}\ \const{Tau}\ (\const{Silent}\ \var{op})\ \var{op} \\
+        &    \bmore \var{op} \in_c \var{ops} \implies \const{step}\ \var{io}\ \var{op}\ \var{op}' \implies \const{step}\ \var{io}\ (\const{Choice}\ \var{ops})\ \var{op}'
+    \end{align*}
+  \end{tcolorbox}
 \end{frame}
 
 \begin{frame}[fragile]

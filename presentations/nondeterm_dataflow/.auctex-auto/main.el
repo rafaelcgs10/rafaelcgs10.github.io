@@ -6,7 +6,7 @@
    (TeX-add-to-alist 'LaTeX-provided-class-options
                      '(("beamer" "fleqn" "aspectratio=169" "10pt")))
    (TeX-add-to-alist 'LaTeX-provided-package-options
-                     '(("fontenc" "T1") ("fancybox" "") ("graphicx" "") ("hyperref" "") ("url" "") ("tikz" "") ("booktabs" "") ("enumitem" "") ("listings" "") ("pdfpages" "") ("lstautogobble" "") ("tcolorbox" "listings" "skins" "breakable" "xparse" "most") ("xpatch" "") ("realboxes" "") ("subcaption" "")))
+                     '(("fontenc" "T1") ("wasysym" "") ("fancybox" "") ("graphicx" "") ("hyperref" "") ("url" "") ("tikz" "") ("booktabs" "") ("enumitem" "") ("listings" "") ("pdfpages" "") ("lstautogobble" "") ("tcolorbox" "listings" "skins" "breakable" "xparse" "most") ("xpatch" "") ("realboxes" "") ("subcaption" "")))
    (add-to-list 'LaTeX-verbatim-environments-local "lstlisting")
    (add-to-list 'LaTeX-verbatim-environments-local "semiverbatim")
    (add-to-list 'LaTeX-verbatim-macros-with-braces-local "lstinline")
@@ -24,6 +24,7 @@
     "beamer"
     "beamer10"
     "fontenc"
+    "wasysym"
     "fancybox"
     "graphicx"
     "hyperref"
