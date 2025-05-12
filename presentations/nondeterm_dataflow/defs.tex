@@ -1,0 +1,124 @@
+\begingroup
+\catcode`_=\active
+\gdef\literalunderscores #1{%
+    \catcode`_=\active
+    \def_{\_}%
+    \scantokens{#1}%
+}
+\endgroup
+
+\newcommand*{\cmd}[1]{\pmb{\mathrm{\protect\literalunderscores{#1}}}}
+\newcommand*{\tvar}[1]{\mathrm{\mathit{\textrm{\textquotesingle}#1}}}
+\newcommand*{\singlequote}{\textrm{\textquotesingle}}
+\newcommand*{\type}[1]{\mathrm{\mathit{#1}}}
+\newcommand*{\const}[1]{\mathrm{\mathsf{\protect\literalunderscores{#1}}}}
+\newcommand*{\var}[1]{\mathrm{\mathit{#1}}}
+\newcommand*{\syntax}[1]{\mathrm{\mathsf{\underline{#1}}}}
+\newcommand*{\literal}[1]{\mathrm{\texttt{#1}}}
+
+\newlength\isawidth
+\newcommand*{\isabelleinner}{%
+    \let\isaoldnewline=\\%
+    \renewcommand{\\}{\setlength\isawidth{\linewidth}\isaoldnewline}%
+    \setlength\isawidth{\linewidth}%
+    \relpenalty=700%
+}
+\newenvironment{isabelle}{\list{}{}\item[]\isabelleinner}{\endlist}
+\newenvironment{isabelle*}{\begingroup\isabelleinner}{\endgroup}
+\newcommand*{\isa}[1]{\parbox[t]{\isawidth}{%
+        \raggedright%
+        \renewcommand{\\}{\isaoldnewline}%
+        \setlength\hangindent{1em}%
+        \strut \!\begin{align*}\displaystyle #1\end{align*}%
+}}
+\newcommand{\isabelleinline}[1]{$#1$}
+
+\newcommand{\more}{\hspace*{1em}\addtolength{\isawidth}{-1em}}
+\newcommand{\bmore}{\leavevmode\rlap{\hspace{0.2em}$|$}\more}
+\newcommand{\less}{\hspace*{-1em}\more}
+\newcommand{\bless}{\hspace*{-1em}\bmore}
+
+\let\phi=\varphi
+\newcommand{\oftype}{\mathrel{::}}
+\newcommand{\Fun}{\Rightarrow}
+\newcommand*{\PartialFun}{\rightharpoonup}
+\newcommand{\Interval}{\mathcal{I}}
+\newcommand{\Implies}{\longrightarrow}
+\newcommand{\Forall}{\forall}
+\newcommand{\Exists}{\exists}
+\newcommand{\Andd}{\wedge}
+%% \newcommand{\Or}{\lor}
+\newcommand{\Iff}{\longleftrightarrow}
+
+\mathcode`\#="2023
+\mathcode`@="2040
+\mathcode`!="2021
+\newcommand{\Nil}{[\,]}
+\newcommand{\Image}{\mathbin{\const{\grave{}}}}
+\newcommand{\InvImage}{\mathbin{{\text -}\const{\grave{}}}}
+\newcommand{\MapThe}[1]{\overline{#1}}
+\newcommand{\Upt}{\mathrel{..\mathrm{<}}}
+\newcommand{\GreaterThanAtMost}{\mathrel{\mathrm{<}..}}
+\newcommand{\None}{\bot}
+\newcommand*{\Some}[1]{\langle #1\rangle}
+\newcommand*{\Union}{\cup}
+\newcommand*{\Intersection}{\cap}
+\newcommand*{\Emptyset}{\{\}}
+
+\newcommand{\Imp}{\rightarrow}
+\newcommand{\Prev}{\operatorname{\CIRCLE}}
+\newcommand{\Next}{\operatorname{\Circle}}
+\newcommand{\Since}{\mathbin{\mathsf{S}}}
+\newcommand{\Until}{\mathbin{\mathsf{U}}}
+\newcommand{\Always}{\operatorname{\square}}
+\newcommand{\PAlways}{\operatorname{\blacksquare}}
+\newcommand{\Eventually}{\operatorname{\lozenge}}
+\newcommand{\Once}{\operatorname{\blacklozenge}}
+
+\newcommand{\SRel}{\const{Eq}_{\const{S}}}
+\newcommand{\SPred}{\const{Pred}_{\const{S}}}
+\newcommand{\SExists}{\const{Exists}_{\const{S}}}
+\newcommand{\SAnd}{\const{And}_{\const{S}}}
+\newcommand{\SOr}{\const{Or}_{\const{S}}}
+\newcommand{\SNext}{\const{Next}_{\const{S}}}
+\newcommand{\SPrev}{\const{Prev}_{\const{S}}}
+\newcommand{\SSince}{\const{Since}_{\const{S}}}
+\newcommand{\SUntil}{\const{Until}_{\const{S}}}
+
+\newcommand{\Exfrm}{\phi_{\mathit{ex}}}
+\newcommand{\Exprefix}{\pi_{\mathit{ex}}}
+
+\newcommand*{\Univ}{\mathfrak{U}}
+
+\newcommand*{\BulkBenq}[2]{{#1} \gg {#2}}
+
+\newcommand*{\assoc}{\curvearrowleft}
+\newcommand*{\reassoc}{\curvearrowright}
+
+\newcommand*{\IdOp}{\mathcal{I}}
+\newcommand*{\TranspOp}{\mathcal{X}}
+\newcommand*{\Scomp}[2]{{#1} \bullet {#2}}
+\newcommand*{\Pcomp}[2]{{#1} \parallel {#2}}
+\newcommand*{\Feedback}[1]{{#1} \uparrow}
+\newcommand*{\EndOp}{\oslash}
+\newcommand*{\SilentOp}{\odot}
+\newcommand*{\SpinOp}{\otimes}
+\newcommand*{\SourceOp}{\rotatebox[origin=c]{180}{!}}
+\newcommand*{\SinkOp}{!}
+\newcommand*{\MergeOp}{\mathcal{V}}
+\newcommand*{\SplitOp}{\Lambda}
+\newcommand*{\AeqOp}{\mathcal{Q}}
+\newcommand*{\AcopyOp}{\mathcal{C}}
+\newcommand*{\PreBuf}{\dashv}
+\newcommand*{\PostBuf}{\vdash}
+
+\newcommand*{\bisim}[2]{{#1} \sim {#2}}
+\newcommand*{\wbisim}[2]{{#1} \approx {#2}}
+\newcommand*{\TraceEquiv}[2]{{#1} \equiv_t {#2}}
+
+\newcommand*\highlight[1]{\mbox{\setlength{\fboxsep}{0pt}\colorbox{gray!30}{\strut$#1$}}}
+
+\newcommand*{\circled}[1]{\tikz[baseline=(char.base)]{
+  \node[shape=circle,draw,inner sep=0] (char) {#1};}}
+\newcommand*{\ogt}{\circled{>}}
+\newcommand*{\olt}{\circled{<}}
