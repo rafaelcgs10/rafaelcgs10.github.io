@@ -430,7 +430,7 @@
   \begin{itemize}
     \item Buffers $\var{buf} \oftype \tvar{a} \Fun \tvar{d}\ \type{list}$
   \end{itemize}
-  \begin{tcolorbox}[enhanced,title=Buffer auxiliarly functions,colback=yellow!30]
+  \begin{tcolorbox}[enhanced,title=Buffer auxiliary functions,colback=yellow!30]
     \vspace*{-3ex}
     \hspace*{-5ex}
     \begin{align*}
@@ -447,8 +447,23 @@
 
 \begin{frame}[fragile]
   \frametitle{Identity}
+  \begin{tcolorbox}[enhanced,title=Identity operator,colback=yellow!30]
+    \vspace*{-3ex}
+    \hspace*{-5ex}
+    \begin{align*}
+      & \const{id_op}\ \var{buf} = \const{Choice}
+      \\
+      & \only<2-4>{(((\lambda \var{p}.\ \const{Read}\ \var{p}\ (\lambda \var{x}.\ \const{id_op}\ (\const{BENQ}\ \var{p}\ \var{x}\ \var{buf})))\ \Image_c \ \Univ_c)\ }
+      \\
+      &\Union_c
+      \\
+      &\only<3-4>{\phantom{(}((\lambda \var{p}.\ \const{Write}\ (\const{id_op}\ (\const{BTL}\ \var{p}\ \var{buf}))\ \var{p}\ (\const{BHD}\ \var{p}\ \var{buf}))\ \Image_c \ \{\var{p} \in_c \Univ_c \mid \var{buf}\ \var{p} \neq []\}))}
+    \end{align*}
+  \end{tcolorbox}
   \begin{itemize}
-    \item foo
+          \only<2-4>{\item $\Univ_c$ is the set of usable ports provide by its type}
+    \item Stream delayer!
+    \item $\IdOp = \const{id_op}\ (\lambda \_.\ [])$
   \end{itemize}
 \end{frame}
 
