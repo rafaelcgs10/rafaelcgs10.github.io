@@ -1,5 +1,9 @@
-\frametitle{Basic network algebra properties}
-  \begin{figure}
-    \centering
-    \includegraphics[width=1\textwidth]{table_1_3.png}
-  \end{figure}
+\frametitle{Related Work}
+  \begin{itemize}
+    \item A Isabelle/HOL instance of Nondeterministic Asynchronous Dataflow
+          \begin{itemize}
+            \item Operators as a shallow embedding as codatatypes
+            \item 51 axioms proved
+          \end{itemize}
+    \item Executable via code extraction to Haskell
+  \end{itemize}
