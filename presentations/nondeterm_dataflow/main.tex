@@ -281,9 +281,9 @@
         \item Type parameters: \\
               inputs/output ports; data
         \item Operator's actions
-        \item Possibly infinite trees
         \item inputs/outputs: \\
               Sets of used ports
+        \item Possibly infinite trees
       \end{itemize}
     \end{column}
     \begin{column}{.22\textwidth}
@@ -428,8 +428,21 @@
 \begin{frame}[fragile]
   \frametitle{Buffer Infrastructure}
   \begin{itemize}
-    \item foo
+    \item Buffers $\var{buf} \oftype \tvar{a} \Fun \tvar{d}\ \type{list}$
   \end{itemize}
+  \begin{tcolorbox}[enhanced,title=Buffer auxiliarly functions,colback=yellow!30]
+    \vspace*{-3ex}
+    \hspace*{-5ex}
+    \begin{align*}
+      & \const{BHD}\ \var{p}\ \var{buf} = \const{hd}\ (\var{buf}\ \var{p})
+      \\
+    & \const{BTL}\ \var{p}\ \var{buf} = \var{buf}(\var{p} := \const{tl}\ (\var{buf}\ \var{p}))
+    \\
+    & \const{BENQ}\ \var{p}\ \var{x}\ \var{buf} = \var{buf}(\var{p} := \var{buf}\ \var{p}\ \const{@}\ [\var{x}])
+      \\
+      & \BulkBenq{\var{buf}_1}{\var{buf}_2} = (\lambda \var{p}.\ \var{buf}_2\ \var{p}\ \const{@}\ \var{buf}_1\ \var{p})
+    \end{align*}
+  \end{tcolorbox}
 \end{frame}
 
 \begin{frame}[fragile]
