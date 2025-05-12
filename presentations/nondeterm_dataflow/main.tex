@@ -250,6 +250,7 @@
 
 \begin{frame}[fragile]
   \frametitle{Operators}
+    \vspace*{-5ex}
   \begin{tcolorbox}[enhanced,title=Operators in Isabelle/HOL,colback=yellow!30]
     \vspace*{-3ex}
     \hspace*{-5ex}
@@ -259,6 +260,7 @@
       &   \more \const{Silent}\ (\tvar{i}, \tvar{o}, \tvar{d})\ \type{op}\ |\ \const{Choice}\ ((\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ \type{cset}
     \end{align*}
   \end{tcolorbox}
+    \vspace*{+5ex}
   \begin{itemize}
     \item Type parameters: inputs/output ports; data
     \item Operator's actions
@@ -269,29 +271,39 @@
 
 \begin{frame}[fragile]
   \frametitle{Examples 1}
-\begin{tcolorbox}[enhanced,title=Operators in Isabelle/HOL,colback=yellow!30]
-          \vspace*{-5ex}
-          \hspace*{-5ex}
-    \begin{tabular}{p{0.29\textwidth}p{0.32\textwidth}p{0.3\textwidth}}
+  \vspace*{-5ex}
+  \begin{tcolorbox}[enhanced,title=Uncommunicative operators,colback=yellow!30]
+    \vspace*{-5ex}
+    \hspace*{-8ex}
+    \begin{tabular}{l l l}
       \isa{
-      & \cmd{corec}\ \const{silent_op}\ (\SilentOp)\ \cmd{where}\\
-      & \SilentOp = \const{Silent}\ \SilentOp
+      & \cmd{abbreviation} \\
+      & \more \EndOp \equiv \const{Choice}\ \{\}_c
         }&
            \isa{
-         & \cmd{corec}\ \const{spin_op}\ (\SpinOp)\ \cmd{where}\\
-      & \SpinOp = \const{Choice}\ ((\lambda \_.\ \SpinOp) \Image_c \{()\}_c)
+         & \cmd{corec}\ \const{silent_op}\ (\SilentOp)\ \cmd{where}\\
+      & \more \SilentOp = \const{Silent}\ \SilentOp
+        }&
+           \vspace*{-3ex}
+      \\
+      \isa{
+      & \cmd{corec}\ \const{spin_op}\ (\SpinOp)\ \cmd{where}\\
+      & \more \SpinOp = \const{Choice}\ ((\lambda \_.\ \SpinOp) \Image_c \{()\}_c)
         }&
            \isa{
          & \cmd{lemma}\ \text{spin\_op\_code}\!:\\
-      & \SpinOp = \const{Choice}\ \{\SpinOp\}_c
+      & \more \SpinOp = \const{Choice}\ \{\SpinOp\}_c
         }
     \end{tabular}
-          \vspace*{-1ex}
-\end{tcolorbox}
+    \vspace*{-1ex}
+  \end{tcolorbox}
+  \vspace*{+5ex}
 
   \begin{itemize}
-    \item Codatatypes
-          \vspace*{-1ex}
+    \item They have the same meaning!
+    \item A small quirk: any corecursive call guarded by
+the \isabelleinline{\const{Choice}} constructor must be applied using the map
+function on \isabelleinline{\type{cset}}
   \end{itemize}
 \end{frame}
 
@@ -340,6 +352,37 @@
 \end{frame}
 
 \section{Asynchronous Dataflow Properties}
+\begin{frame}[fragile]
+  \frametitle{Basic network algebra properties}
+  \begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{table_1.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Basic network algebra properties}
+  \begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{table_1_1.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Basic network algebra properties}
+  \begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{table_1_2.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Basic network algebra properties}
+  \begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{table_1_3.png}
+  \end{figure}
+\end{frame}
 
 \section{Conclusion}
 

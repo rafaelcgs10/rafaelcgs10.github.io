@@ -12,6 +12,7 @@
 \newcommand*{\singlequote}{\textrm{\textquotesingle}}
 \newcommand*{\type}[1]{\mathrm{\mathit{#1}}}
 \newcommand*{\const}[1]{\mathrm{\mathsf{\protect\literalunderscores{#1}}}}
+\newcommand*{\specon}[1]{\literalunderscores{#1}}
 \newcommand*{\var}[1]{\mathrm{\mathit{#1}}}
 \newcommand*{\syntax}[1]{\mathrm{\mathsf{\underline{#1}}}}
 \newcommand*{\literal}[1]{\mathrm{\texttt{#1}}}
@@ -54,7 +55,7 @@
 \mathcode`@="2040
 \mathcode`!="2021
 \newcommand{\Nil}{[\,]}
-\newcommand{\Image}{\mathbin{\const{\grave{}}}}
+\newcommand{\Image}{\mathbin{\specon{\grave{}}}}
 \newcommand{\InvImage}{\mathbin{{\text -}\const{\grave{}}}}
 \newcommand{\MapThe}[1]{\overline{#1}}
 \newcommand{\Upt}{\mathrel{..\mathrm{<}}}

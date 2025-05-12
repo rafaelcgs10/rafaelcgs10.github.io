@@ -1,4 +1,5 @@
-\frametitle{Buffer Infrastructure}
-  \begin{itemize}
-    \item foo
-  \end{itemize}
+\frametitle{Basic network algebra properties}
+  \begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{table_1_3.png}
+  \end{figure}
