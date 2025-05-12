@@ -93,7 +93,7 @@
 \title[Nondeterministic Asynchronous Dataflow in Isabelle/HOL]{Nondeterministic Asynchronous Dataflow in Isabelle/HOL}
 
 \author[Rafael, Laouen and Dmitriy]{
-  Rafael Castro G. Silva, Laouen Fernet and  Dmitriy Traytel\\\medskip
+  \underline{Rafael Castro G. Silva}, Laouen Fernet and  Dmitriy Traytel\\\medskip
   }
 % {\small \url{rasi@di.ku.dk}}
 
@@ -133,16 +133,17 @@
 
 \begin{frame}
   \titlepage
-
 \end{frame}
+
 \section{Motivation}
+
 \begin{frame}[fragile]
   \frametitle{Motivation}
   \begin{block}{Context:}
   \begin{itemize}
     \item Stream Processing: programs that compute (possibly) unbounded sequences of data (streams)
     \item A common problem in the industry
-    \item Frameworks:\\ Apache Flink, Apache Samza, Apache Spark, Google Cloud Dataflow, and Timely Dataflow
+    \item Frameworks: Apache Flink, Google Cloud Dataflow, and Timely Dataflow
           \begin{figure}
             \centering
             \includegraphics[scale=0.1]{all}
@@ -159,7 +160,6 @@
   \begin{block}{Our goal:}
     Mechanically Verify Timely Dataflow algorithms
   \end{block}
-
 \end{frame}
 
 \section{A Good Foundation}
@@ -190,7 +190,6 @@
                 \item Nondeterministic:
                       \begin{itemize}
                         \item Operators can make nondeterministic choices
-                        \item Operators are relations between inputs and outputs sequences
                       \end{itemize}
               \end{itemize}
       \end{itemize}
@@ -206,8 +205,8 @@
         \item Bergstra et al. presents an algebra for Nondeterministic Asynchronous Dataflow
         \item Primitives:\\
               sequential and parallel composition; feedback loop...
-        \item The 52 axioms
-        \item An process calculus instance
+        \item 52 axioms
+        \item A process calculus instance
       \end{itemize}
     \end{column}
     \begin{column}{.4\textwidth}
@@ -217,6 +216,18 @@
       \end{figure}
     \end{column}
   \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Main Contributions}
+  \begin{itemize}
+    \item A Isabelle/HOL instance of Nondeterministic Asynchronous Dataflow
+          \begin{itemize}
+            \item Operators as a shallow embedding as codatatypes
+            \item 51 axioms proved
+          \end{itemize}
+    \item Executable via code extraction to Haskell
+  \end{itemize}
 \end{frame}
 
 \section{Isabelle/HOL Preliminaries}
@@ -252,7 +263,7 @@
 
 \begin{frame}[fragile]
   \frametitle{Operators}
-    \vspace*{-5ex}
+  \vspace*{-2ex}
   \begin{tcolorbox}[enhanced,title=Operators in Isabelle/HOL,colback=yellow!30]
     \vspace*{-3ex}
     \hspace*{-5ex}
@@ -262,49 +273,72 @@
       &   \more \const{Silent}\ (\tvar{i}, \tvar{o}, \tvar{d})\ \type{op}\ |\ \const{Choice}\ ((\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ \type{cset}
     \end{align*}
   \end{tcolorbox}
-    \vspace*{+5ex}
-  \begin{itemize}
-    \item Type parameters: inputs/output ports; data
-    \item Operator's actions
-    \item Possibly infinite trees
-    \item inputs/outputs: Sets of used ports
-  \end{itemize}
-\end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Examples 1}
-  \vspace*{-5ex}
-  \begin{tcolorbox}[enhanced,title=Uncommunicative operators,colback=yellow!30]
-    \vspace*{-5ex}
-    \hspace*{-8ex}
-    \begin{tabular}{l l l}
-      \isa{
-      & \cmd{abbreviation} \\
-      & \more \EndOp \equiv \const{Choice}\ \{\}_c
-        }&
-           \isa{
-         & \cmd{corec}\ \const{silent_op}\ (\SilentOp)\ \cmd{where}\\
-      & \more \SilentOp = \const{Silent}\ \SilentOp
-        }&
-           \vspace*{-3ex}
-      \\
-      \isa{
-      & \cmd{corec}\ \const{spin_op}\ (\SpinOp)\ \cmd{where}\\
-      & \more \SpinOp = \const{Choice}\ ((\lambda \_.\ \SpinOp) \Image_c \{()\}_c)
-        }&
-           \isa{
-         & \cmd{lemma}\ \text{spin\_op\_code}\!:\\
-      & \more \SpinOp = \const{Choice}\ \{\SpinOp\}_c
-        }
-    \end{tabular}
-    \vspace*{-1ex}
-  \end{tcolorbox}
-  \vspace*{+5ex}
-
-  \begin{itemize}
-    \item Quirk: any corecursive call guarded by the \isabelleinline{\const{Choice}} must be applied using the proper map function
-    \item They have the same meaning. \pause But are syntactically different \frownie{}
-  \end{itemize}
+  \begin{columns}
+    \begin{column}{.3\textwidth}
+      \pause
+      \begin{itemize}
+        \item Type parameters: \\
+              inputs/output ports; data
+        \item Operator's actions
+        \item Possibly infinite trees
+        \item inputs/outputs: \\
+              Sets of used ports
+      \end{itemize}
+    \end{column}
+    \begin{column}{.22\textwidth}
+      \pause
+      \begin{tcolorbox}[enhanced,title=Uncommunicative operators,colback=yellow!30]
+        \vspace*{-5ex}
+        \hspace*{-8ex}
+        \begin{tabular}{l l l}
+          \hspace*{-4ex}
+          \isa{
+          & \more \EndOp = \const{Choice}\ \{\}_c
+            }&
+          \vspace*{-5ex}
+          \\
+          \hspace*{-4ex}
+          \isa{
+          & \more \SilentOp = \const{Silent}\ \SilentOp
+            }&
+          \vspace*{-5ex}
+          \\
+          \hspace*{-4ex}
+          \isa{
+          & \more \SpinOp = \const{Choice}\ \{\SpinOp\}_c
+            }
+        \end{tabular}
+        \vspace*{-1ex}
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{.48\textwidth}
+      \pause
+      \begin{tcolorbox}[enhanced,title=More examples,colback=yellow!30]
+        \vspace*{-5ex}
+        \hspace*{-8ex}
+        \begin{tabular}{l l l}
+          \hspace*{-2ex}
+          \isa{
+          \const{ex1} = \const{Choice}\ \{\const{Write}\ \const{ex1}\ 1\ 42, \EndOp\}_c
+            }&
+          \vspace*{-4ex}
+          \\
+          \hspace*{-2ex}
+          \isa{
+          \const{ex2} = \const{Choice}\ \{\const{Write}\ \const{ex2}\ 1\ 42, \const{ex2}\}_c
+          }
+          \vspace*{-4ex}
+          \\
+          \hspace*{-2ex}
+          \isa{
+          \const{ex3} = \const{Choice}\ \{\const{Write}\ \const{ex3}\ 1\ 42, \const{Silent}\ \const{ex3}\}_c
+          }
+        \end{tabular}
+        \vspace*{-1ex}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -319,23 +353,26 @@
   \begin{itemize}
 
           \begin{columns}
-            \begin{column}{.3\textwidth}
-              \item Milner's approach: Bisimilarity
+            \begin{column}{.42\textwidth}
+              \item Milner's approach: Weak Bisimilarity
             \end{column}
-            \begin{column}{.27\textwidth}
+            \begin{column}{.1\textwidth}
               \begin{figure}
-                \includegraphics[scale=0.2]{milner.jpg}
+                \includegraphics[width=1\textwidth]{milner.jpg}
               \end{figure}
             \end{column}
-            \begin{column}{.2\textwidth}
+            \begin{column}{.1\textwidth}
+                \includegraphics[width=1\textwidth]{book.jpg}
+            \end{column}
+            \begin{column}{.1\textwidth}
             \end{column}
           \end{columns}
           \item Based on labeled transition systems (LTS)
           \item Labels (actions): Read, Write, Silent ($\tau$)
   \end{itemize}
-  \begin{block}{Intuition}
-    \footnotesize{Two operators are bisimilar if their corresponding transition systems can mutually simulate each other’s transitions.}
-  \end{block}
+  % \begin{block}{Intuition}
+  %   \footnotesize{Two operators are bisimilar if their corresponding transition systems can mutually simulate each other’s transitions.}
+  % \end{block}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -355,30 +392,38 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Operators Equivalences: Strong Bisimilarity}
-  \begin{tcolorbox}[enhanced,title=Simulates,colback=yellow!30]
+  \frametitle{Operators Equivalences: Weak Bisimilarity}
+  \begin{tcolorbox}[enhanced,title=Weakly Simulates,colback=yellow!30]
     \vspace*{-3ex}
     \hspace*{-5ex}
     \begin{align*}
-     & \cmd{definition}\ \const{sim} \ \const{where}\\
-     & \more \const{sim}\ \var{R}\ \var{op}_1\ \var{op}_2 = (\forall \var{io}\; \var{op}'_1.\ \const{step}\ \var{io}\ \var{op}_1\ \var{op}'_1 \Implies (\exists \var{op}'_2.\ \const{step}\ \var{io}\ \var{op}_2\ \var{op}'_2 \land \var{R}\ \var{op}'_1\ \var{op}'_2))
+     & \const{estep}\ \const{Tau} = (\const{step}\ \const{Tau})^{==} \\
+     & \const{estep}\ \var{io} = \const{step}\ \var{io}
+    \\
+    &  \const{wstep}\ \var{io} = (\const{step}\ \const{Tau})^{**}\ \const{OO}\ (\const{estep}\ \var{io})\ \const{OO}\ (\const{step}\ \const{Tau})^{**}
+    \\
+    & \const{wsim}\ \var{R}\ \var{op}_1\ \var{op}_2 = (\forall \var{io}\; \var{op}'_1.\ \const{step}\ \var{io}\ \var{op}_1\ \var{op}'_1 \Implies (\exists \var{op}'_2.\ \const{wstep}\ \var{io}\ \var{op}_2\ \var{op}'_2 \land \var{R}\ \var{op}'_1\ \var{op}'_2))
     \end{align*}
   \end{tcolorbox}
 
-  \begin{tcolorbox}[enhanced,title=Strong Bisimilarity,colback=yellow!30]
-    % \vspace*{-3ex}
-    % \hspace*{-5ex}
-    % \begin{align*}
-    % \end{align*}
+  \pause
+  \begin{tcolorbox}[enhanced,title=Weak Bisimilarity,colback=yellow!30]
+    \vspace*{-3ex}
+    \hspace*{-5ex}
+    \begin{align*}
+     & \cmd{coinductive}\ \const{wbisim}\ (\cmd{infix} \wbisim{}{} 40)\ \cmd{where}\\
+     & \more \const{wsim}\ (\approx)\ \var{op}_1\ \var{op}_2 \implies \const{wsim}\ (\approx)\ \var{op}_2\ \var{op}_1 \implies \wbisim{\var{op}_1}{\var{op}_2}
+    \end{align*}
   \end{tcolorbox}
+  \pause
+  \begin{itemize}
+    \item $\approx$ has a useful coinduction principle
+    \item $\EndOp \approx \SpinOp \approx \SilentOp$
+    \item $\const{ex1} \approx \const{ex2} \approx \const{ex3}$
+  \end{itemize}
+
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Operators Equivalences: Weak Bisimilarity}
-  \begin{itemize}
-    \item foo
-  \end{itemize}
-\end{frame}
 
 % \begin{frame}[fragile]
 %   \frametitle{Operators Equivalences: Trace Equivalence}
