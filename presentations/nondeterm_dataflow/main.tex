@@ -575,18 +575,17 @@
   \begin{block}{Context:}
   \begin{itemize}
     \item Stream Processing: programs that compute (possibly) unbounded sequences of data (streams)
-    \item A common problem in the industry
     \item Frameworks: Google Cloud Dataflow, Apache Flink, and Timely Dataflow
           \begin{figure}
             \centering
             \includegraphics[scale=0.1]{all}
           \end{figure}
-    \item Why use frameworks?
-          \begin{itemize}
-            \item Highly Parallel
-            \item Low latency (output as soon as possible)
-            \item Incremental computing (re-uses previous computations)
-          \end{itemize}
+    % \item Why use frameworks?
+    %       \begin{itemize}
+    %         \item Highly Parallel
+    %         \item Low latency (output as soon as possible)
+    %         \item Incremental computing (re-uses previous computations)
+    %       \end{itemize}
   \end{itemize}
   \pause
   \end{block}
@@ -628,6 +627,9 @@
       \end{itemize}
     \end{column}
   \end{columns}
+  \begin{block}{Question}
+    How do we know something is Nondeterministic Asynchronous Dataflow
+  \end{block}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -666,10 +668,9 @@
 \section{Isabelle/HOL Preliminaries}
 
 \begin{frame}[fragile]
-  \frametitle{Isabelle/HOL}
+  \frametitle{What is Isabelle/HOL?}
+  \pause
   \begin{itemize}
-    \item Classical higher-order logic (HOL):\\ Simple Typed Lambda Calculus + axiom of choice + axiom of infinity + rank-1 polymorphism
-          \pause
     \item Isabelle: A generic proof assistant
           \begin{overlayarea}{\textwidth}{.3\textheight}
             \centering
@@ -678,6 +679,8 @@
               \includegraphics[scale=0.15]{isabelle}
             \end{figure}
           \end{overlayarea}
+    \item Classical higher-order logic (HOL):\\ Simple Typed Lambda Calculus + axiom of choice + axiom of infinity + rank-1 polymorphism
+          \pause
     \item Isabelle/HOL: Isabelle's flavor of HOL
   \end{itemize}
   \pause
@@ -685,7 +688,7 @@
       \begin{itemize}
         \item Codatatypes: (possibly) infinite data structures (e.g., lazy lists, streams)
         \item Corecursion: always eventually produces some codatatype constructor
-        \item Coinductive predicate: infinite number of introduction rule applications
+        \item Coinductive predicates: infinite number of introduction rule applications
         \item Coinduction: reason about coinductive predicates
       \end{itemize}
   \end{block}
@@ -775,7 +778,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Operators Equivalences: Motivation}
+  \frametitle{Operators Equivalences: Weak Bisimilarity}
   \begin{block}{An ideal equivalence relation}
     \begin{itemize}
       \item Only equate operators that \textbf{behave} the same
@@ -802,72 +805,76 @@
           \end{columns}
           \item Based on labeled transition systems (LTS)
           \item Labels (actions): Read, Write, Silent ($\tau$)
+    \pause
+    \item Weak bisimilarity of operators ($\approx$): LTS + weak simulation + greatest weak bisimulation
+    \item $\approx$ has a useful coinduction principle
+    \item $\EndOp \approx \SpinOp \approx \SilentOp$ and $\const{ex1} \approx \const{ex2} \approx \const{ex3}$
   \end{itemize}
   % \begin{block}{Intuition}
   %   \footnotesize{Two operators are bisimilar if their corresponding transition systems can mutually simulate each other’s transitions.}
   % \end{block}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Operators Equivalences: Label Transition System}
-  \begin{tcolorbox}[enhanced,title=Label Transition System,colback=yellow!30]
-    \vspace*{-3ex}
-    \hspace*{-5ex}
-    \begin{align*}
-        &    \cmd{datatype}\ (\tvar{i}, \tvar{o}, \tvar{d})\ \type{IO} = \const{Inp}\ \tvar{i}\ \tvar{d}\ |\ \const{Out}\ \tvar{o}\ \tvar{d}\ |\ \const{Tau}
-        \\[\jot]
-        & \cmd{inductive}\ \const{step}\ \cmd{where}\\
-        & \more \const{step}\ (\const{Inp}\ \var{p}\ \var{x})\ (\const{Read}\ \var{p}\ \var{f})\ (\var{f}\ \var{x}) \\
-        & \bmore \const{step}\ (\const{Out}\ \var{q}\ \var{x})\ (\const{Write}\ \var{op}\ \var{q}\ \var{x})\ \var{op} \\
-        & \bmore \const{step}\ \const{Tau}\ (\const{Silent}\ \var{op})\ \var{op} \\
-        & \bmore \var{op} \in_c \var{ops} \implies \const{step}\ \var{io}\ \var{op}\ \var{op}' \implies \const{step}\ \var{io}\ (\const{Choice}\ \var{ops})\ \var{op}'
-    \end{align*}
-  \end{tcolorbox}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Operators Equivalences: Label Transition System}
+%   \begin{tcolorbox}[enhanced,title=Label Transition System,colback=yellow!30]
+%     \vspace*{-3ex}
+%     \hspace*{-5ex}
+%     \begin{align*}
+%         &    \cmd{datatype}\ (\tvar{i}, \tvar{o}, \tvar{d})\ \type{IO} = \const{Inp}\ \tvar{i}\ \tvar{d}\ |\ \const{Out}\ \tvar{o}\ \tvar{d}\ |\ \const{Tau}
+%         \\[\jot]
+%         & \cmd{inductive}\ \const{step}\ \cmd{where}\\
+%         & \more \const{step}\ (\const{Inp}\ \var{p}\ \var{x})\ (\const{Read}\ \var{p}\ \var{f})\ (\var{f}\ \var{x}) \\
+%         & \bmore \const{step}\ (\const{Out}\ \var{q}\ \var{x})\ (\const{Write}\ \var{op}\ \var{q}\ \var{x})\ \var{op} \\
+%         & \bmore \const{step}\ \const{Tau}\ (\const{Silent}\ \var{op})\ \var{op} \\
+%         & \bmore \var{op} \in_c \var{ops} \implies \const{step}\ \var{io}\ \var{op}\ \var{op}' \implies \const{step}\ \var{io}\ (\const{Choice}\ \var{ops})\ \var{op}'
+%     \end{align*}
+%   \end{tcolorbox}
+% \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Operators Equivalences: Weak Bisimilarity}
-    \vspace*{-2ex}
-  \begin{tcolorbox}[enhanced,title=Weakly Simulates,colback=yellow!30]
-    \vspace*{-4ex}
-    \hspace*{-5ex}
-    \begin{align*}
-     & \const{estep}\ \const{Tau} = (\const{step}\ \const{Tau})^{==} \\
-     & \const{estep}\ \var{io} = \const{step}\ \var{io}
-    \\
-    &  \const{wstep}\ \var{io} = (\const{step}\ \const{Tau})^{**}\ \const{OO}\ (\const{estep}\ \var{io})\ \const{OO}\ (\const{step}\ \const{Tau})^{**}
-    \\
-    & \const{wsim}\ \var{R}\ \var{op}_1\ \var{op}_2 = (\forall \var{io}\; \var{op}'_1.\ \const{step}\ \var{io}\ \var{op}_1\ \var{op}'_1 \Implies (\exists \var{op}'_2.\ \const{wstep}\ \var{io}\ \var{op}_2\ \var{op}'_2 \land \var{R}\ \var{op}'_1\ \var{op}'_2))
-    \end{align*}
-    \vspace*{-5ex}
-  \end{tcolorbox}
-  \vspace*{-1ex}
-  \begin{itemize}
-    \item A Relation \isabelleinline{\var{R}} is a \emph{weak simulation} if \isabelleinline{\forall \var{op}_1\; \var{op}_2.\ \var{R}\ \var{op}_1\ \var{op}_2 \Implies \const{wsim}\ \var{R}\ \var{op}_1\ \var{op}_2}.
-  \end{itemize}
-    \vspace*{-1.3ex}
-  \pause
-  \begin{tcolorbox}[enhanced,title=Weak Bisimilarity,colback=yellow!30]
-    \vspace*{-3ex}
-    \hspace*{-5ex}
-    \begin{align*}
-     & \cmd{coinductive}\ \const{wbisim}\ (\cmd{infix} \wbisim{}{} 40)\ \cmd{where}\\
-     & \more \const{wsim}\ (\approx)\ \var{op}_1\ \var{op}_2 \implies \const{wsim}\ (\approx)\ \var{op}_2\ \var{op}_1 \implies \wbisim{\var{op}_1}{\var{op}_2}
-    \end{align*}
-    \vspace*{-5ex}
-  \end{tcolorbox}
-  \vspace*{-1ex}
-  \begin{itemize}
-    \item \isabelleinline{\var{R}} is a \emph{weak bisimulation} when both \isabelleinline{\var{R}} and its converse \isabelleinline{\var{R}^{\const{-1}}} are weak simulations. \\
-          Weak bisimilarity is the largest weak bisimulation.
-  \end{itemize}
+% \begin{frame}[fragile]
+%   \frametitle{Operators Equivalences: Weak Bisimilarity}
+%     \vspace*{-2ex}
+%   \begin{tcolorbox}[enhanced,title=Weakly Simulates,colback=yellow!30]
+%     \vspace*{-4ex}
+%     \hspace*{-5ex}
+%     \begin{align*}
+%      & \const{estep}\ \const{Tau} = (\const{step}\ \const{Tau})^{==} \\
+%      & \const{estep}\ \var{io} = \const{step}\ \var{io}
+%     \\
+%     &  \const{wstep}\ \var{io} = (\const{step}\ \const{Tau})^{**}\ \const{OO}\ (\const{estep}\ \var{io})\ \const{OO}\ (\const{step}\ \const{Tau})^{**}
+%     \\
+%     & \const{wsim}\ \var{R}\ \var{op}_1\ \var{op}_2 = (\forall \var{io}\; \var{op}'_1.\ \const{step}\ \var{io}\ \var{op}_1\ \var{op}'_1 \Implies (\exists \var{op}'_2.\ \const{wstep}\ \var{io}\ \var{op}_2\ \var{op}'_2 \land \var{R}\ \var{op}'_1\ \var{op}'_2))
+%     \end{align*}
+%     \vspace*{-5ex}
+%   \end{tcolorbox}
+%   \vspace*{-1ex}
+%   \begin{itemize}
+%     \item A Relation \isabelleinline{\var{R}} is a \emph{weak simulation} if \isabelleinline{\forall \var{op}_1\; \var{op}_2.\ \var{R}\ \var{op}_1\ \var{op}_2 \Implies \const{wsim}\ \var{R}\ \var{op}_1\ \var{op}_2}.
+%   \end{itemize}
+%     \vspace*{-1.3ex}
+%   \pause
+%   \begin{tcolorbox}[enhanced,title=Weak Bisimilarity,colback=yellow!30]
+%     \vspace*{-3ex}
+%     \hspace*{-5ex}
+%     \begin{align*}
+%      & \cmd{coinductive}\ \const{wbisim}\ (\cmd{infix} \wbisim{}{} 40)\ \cmd{where}\\
+%      & \more \const{wsim}\ (\approx)\ \var{op}_1\ \var{op}_2 \implies \const{wsim}\ (\approx)\ \var{op}_2\ \var{op}_1 \implies \wbisim{\var{op}_1}{\var{op}_2}
+%     \end{align*}
+%     \vspace*{-5ex}
+%   \end{tcolorbox}
+%   \vspace*{-1ex}
+%   \begin{itemize}
+%     \item \isabelleinline{\var{R}} is a \emph{weak bisimulation} when both \isabelleinline{\var{R}} and its converse \isabelleinline{\var{R}^{\const{-1}}} are weak simulations. \\
+%           Weak bisimilarity is the largest weak bisimulation.
+%   \end{itemize}
 
-  \pause
-  \begin{itemize}
-    \item $\approx$ has a useful coinduction principle
-    \item $\EndOp \approx \SpinOp \approx \SilentOp$ and $\const{ex1} \approx \const{ex2} \approx \const{ex3}$
-  \end{itemize}
-\end{frame}
+%   \pause
+%   \begin{itemize}
+%     \item $\approx$ has a useful coinduction principle
+%     \item $\EndOp \approx \SpinOp \approx \SilentOp$ and $\const{ex1} \approx \const{ex2} \approx \const{ex3}$
+%   \end{itemize}
+% \end{frame}
 
 \section{Asynchronous Dataflow Operators}
 
@@ -875,8 +882,12 @@
   \frametitle{Auxiliary Definitions}
       \pause
   \begin{tcbraster}[raster columns=2, raster equal height]
+      \begin{itemize}
+        \item Buffers: $\tvar{p} \Fun \tvar{d}\ list$
+      \end{itemize}
+      \vspace*{+1ex}
     \begin{tcolorbox}[enhanced,title=Buffer functions,colback=yellow!30]
-      \vspace*{-4ex}
+        \vspace*{-4ex}
       \begin{align*}
         & \hspace*{-6ex} \const{BHD}\ \var{p}\ \var{buf} = \const{hd}\ (\var{buf}\ \var{p})
         \\
@@ -905,8 +916,8 @@
         \vspace*{-4ex}
         \begin{align*}
           & \hspace*{-6ex} \const{map\_op} \oftype \type{(\tvar{i}_1 \Fun \tvar{i}_2) \Fun (\tvar{o}_1 \Fun \tvar{o}_2) \Fun (\tvar{i}_1, \tvar{o}_1, \tvar{d})\ \type{op} \Fun (\tvar{i}_2, \tvar{o}_2, \tvar{d})\ \type{op}} \\
-          & \hspace*{-6ex} \const{projl}\ \oftype \type{(\tvar{a} + \tvar{b}) \Fun \tvar{a}} \\
-          & \hspace*{-6ex} \const{projr}\ \oftype \type{(\tvar{a} + \tvar{b}) \Fun \tvar{b}} \\
+          % & \hspace*{-6ex} \const{projl}\ \oftype \type{(\tvar{a} + \tvar{b}) \Fun \tvar{a}} \\
+          % & \hspace*{-6ex} \const{projr}\ \oftype \type{(\tvar{a} + \tvar{b}) \Fun \tvar{b}} \\
           & \hspace*{-6ex} \reassoc\ \oftype \type{(\tvar{a} + \tvar{b}) + \tvar{c} \Fun \tvar{a} + \tvar{b} + \tvar{c}} \\
           & \hspace*{-6ex} \assoc\ \oftype \type{\tvar{a} + \tvar{b} + \tvar{c} \Fun (\tvar{a} + \tvar{b}) + \tvar{c} }
         \end{align*}
