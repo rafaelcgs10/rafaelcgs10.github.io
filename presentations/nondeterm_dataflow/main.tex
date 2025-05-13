@@ -3,6 +3,20 @@
 \usepackage[T1]{fontenc}
 \include{defs}
 
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.6\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle\hspace*{3em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{1ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
 \usepackage{wasysym}
 \usepackage{fancybox,graphicx,hyperref,url}
 \usepackage{tikz}
@@ -511,7 +525,7 @@
 
 \title[Nondeterministic Asynchronous Dataflow in Isabelle/HOL]{Nondeterministic Asynchronous Dataflow in Isabelle/HOL}
 
-\author[Rafael, Laouen and, Dmitriy]{
+\author[\underline{Rafael}, Laouen and, Dmitriy]{
   \underline{Rafael Castro G. Silva}, Laouen Fernet and,  Dmitriy Traytel\\\medskip
   }
 % {\small \url{rasi@di.ku.dk}}
@@ -576,7 +590,7 @@
   \end{itemize}
   \pause
   \end{block}
-  \begin{block}{Our goal:}
+  \begin{block}{Our long term goal:}
     Mechanically Verify Timely Dataflow algorithms
   \end{block}
 \end{frame}
@@ -858,7 +872,7 @@
 \section{Asynchronous Dataflow Operators}
 
 \begin{frame}[fragile]
-  \frametitle{Auxiliary definitions}
+  \frametitle{Auxiliary Definitions}
       \pause
   \begin{tcbraster}[raster columns=2, raster equal height]
     \begin{tcolorbox}[enhanced,title=Buffer functions,colback=yellow!30]
@@ -869,8 +883,8 @@
         & \hspace*{-6ex} \const{BTL}\ \var{p}\ \var{buf} = \var{buf}(\var{p} := \const{tl}\ (\var{buf}\ \var{p}))
         \\
         & \hspace*{-6ex} \const{BENQ}\ \var{p}\ \var{x}\ \var{buf} = \var{buf}(\var{p} := \var{buf}\ \var{p}\ \const{@}\ [\var{x}])
-        \\
-        & \hspace*{-6ex} \BulkBenq{\var{buf}_1}{\var{buf}_2} = (\lambda \var{p}.\ \var{buf}_2\ \var{p}\ \const{@}\ \var{buf}_1\ \var{p})
+        % \\
+        % & \hspace*{-6ex} \BulkBenq{\var{buf}_1}{\var{buf}_2} = (\lambda \var{p}.\ \var{buf}_2\ \var{p}\ \const{@}\ \var{buf}_1\ \var{p})
       \end{align*}
       \vspace*{-5ex}
     \end{tcolorbox}
@@ -960,7 +974,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Composition: equation}
+  \frametitle{Composition: Equation}
   \vspace*{-2ex}
   \begin{tcolorbox}[enhanced,title=Equation of the composition operator,colback=yellow!30]
     \vspace*{-4ex}
@@ -1079,7 +1093,7 @@
 
 \section{Asynchronous Dataflow Properties}
 \begin{frame}[fragile]
-  \frametitle{Basic network algebra properties}
+  \frametitle{Basic Network Algebra Properties}
     \vspace*{-4ex}
 \begin{table}[t]
     \begin{tabular}{ l l }
@@ -1135,7 +1149,7 @@
 \end{frame}
 
 \begin{frame}[fragile, noframenumbering]
-  \frametitle{Basic network algebra properties}
+  \frametitle{Basic Network Algebra Properties}
     \vspace*{-4ex}
 \begin{table}[t]
     \begin{tabular}{ l l }
@@ -1189,7 +1203,7 @@
 \end{frame}
 
 \begin{frame}[fragile, noframenumbering]
-  \frametitle{Basic network algebra properties}
+  \frametitle{Basic Network Algebra Properties}
     \vspace*{-4ex}
 \begin{table}[t]
     \begin{tabular}{ l l }
@@ -1243,7 +1257,7 @@
 \end{frame}
 
 \begin{frame}[fragile, noframenumbering]
-  \frametitle{Basic network algebra properties}
+  \frametitle{Basic Network Algebra Properties}
     \vspace*{-4ex}
 \begin{table}[t]
     \begin{tabular}{ l l }
@@ -1297,7 +1311,7 @@
 \end{frame}
 
 \begin{frame}[fragile, noframenumbering]
-  \frametitle{Basic network algebra properties}
+  \frametitle{Basic Network Algebra Properties}
     \vspace*{-4ex}
 \begin{table}[t]
     \begin{tabular}{ l l }
@@ -1351,7 +1365,7 @@
 \end{frame}
 
 \begin{frame}[fragile, noframenumbering]
-  \frametitle{Basic network algebra properties}
+  \frametitle{Basic Network Algebra Properties}
     \vspace*{-4ex}
 \begin{table}[t]
     \begin{tabular}{ l l }
@@ -1404,7 +1418,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Properties of equality test, merge, copy, split, source and sink operators}
+  \frametitle{Properties of Equality Test, Merge, Copy, Split, Source and Sink operators}
     \vspace*{-4ex}
 \begin{table}[t]
     \addtolength{\tabcolsep}{-0.8em}
@@ -1519,7 +1533,7 @@
 \end{frame}
 
 \begin{frame}[fragile, noframenumbering]
-  \frametitle{Properties of equality test, merge, copy, split, source and sink operators}
+  \frametitle{Properties of Equality Test, Merge, Copy, Split, Source and Sink operators}
     \vspace*{-4ex}
 \begin{table}[t]
     \addtolength{\tabcolsep}{-0.8em}
@@ -1632,7 +1646,7 @@
 \end{frame}
 
 \begin{frame}[fragile, noframenumbering]
-  \frametitle{Properties of equality test, merge, copy, split, source and sink operators}
+  \frametitle{Properties of Equality Test, Merge, Copy, Split, Source and Sink operators}
     \vspace*{-4ex}
 \begin{table}[t]
     \addtolength{\tabcolsep}{-0.8em}
@@ -1743,7 +1757,7 @@
 \end{frame}
 
 \begin{frame}[fragile, noframenumbering]
-  \frametitle{Properties of equality test, merge, copy, split, source and sink operators}
+  \frametitle{Properties of Equality Test, Merge, Copy, Split, Source and Sink operators}
     \vspace*{-4ex}
 \begin{table}[t]
     \addtolength{\tabcolsep}{-0.8em}
@@ -1856,7 +1870,7 @@
 \end{frame}
 
 \begin{frame}[fragile, noframenumbering]
-  \frametitle{Properties of equality test, merge, copy, split, source and sink operators}
+  \frametitle{Properties of Equality Test, Merge, Copy, Split, Source and Sink operators}
     \vspace*{-4ex}
 \begin{table}[t]
     \addtolength{\tabcolsep}{-0.8em}
