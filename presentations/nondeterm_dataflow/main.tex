@@ -628,7 +628,7 @@
     \end{column}
   \end{columns}
   \begin{block}{Question}
-    How do we know something is Nondeterministic Asynchronous Dataflow
+    How do we know something is Nondeterministic Asynchronous Dataflow?
   \end{block}
 \end{frame}
 
@@ -704,7 +704,7 @@
     \vspace*{-3ex}
     \hspace*{-5ex}
     \begin{align*}
-      &   \cmd{codatatype}\ (\const{inputs}\!: \tvar{i}, \const{outputs}\!: \tvar{o}, \tvar{d})\ \type{op} =\\
+      &   \cmd{codatatype}\ (\tvar{i}, \tvar{o}, \tvar{d})\ \type{op} =\\
       &   \more \const{Read}\ \tvar{i}\ (\tvar{d} \Fun (\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ |\ \const{Write}\ ((\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ \tvar{o}\ \tvar{d}\\
       &   \more \const{Silent}\ (\tvar{i}, \tvar{o}, \tvar{d})\ \type{op}\ |\ \const{Choice}\ ((\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ \type{cset}
     \end{align*}
@@ -717,8 +717,8 @@
         \item Type parameters: \\
               inputs/output ports; data
         \item Operator's actions
-        \item inputs/outputs: \\
-              Sets of used ports
+        % \item inputs/outputs: \\
+        %       Sets of used ports
         \item Possibly infinite trees
       \end{itemize}
     \end{column}
@@ -880,11 +880,14 @@
 
 \begin{frame}[fragile]
   \frametitle{Auxiliary Definitions}
+    \visible<1->{
+      \begin{itemize}
+        \visible<2->{\item Buffers: $\tvar{p} \Fun \tvar{d}\ list$}
+        \visible<3->{\item $\const{choices}$: computes the set of operators that immediately perform next actions}
+      \end{itemize}
+      }
       \pause
   \begin{tcbraster}[raster columns=2, raster equal height]
-      \begin{itemize}
-        \item Buffers: $\tvar{p} \Fun \tvar{d}\ list$
-      \end{itemize}
       \vspace*{+1ex}
     \begin{tcolorbox}[enhanced,title=Buffer functions,colback=yellow!30]
         \vspace*{-4ex}
@@ -897,21 +900,20 @@
         % \\
         % & \hspace*{-6ex} \BulkBenq{\var{buf}_1}{\var{buf}_2} = (\lambda \var{p}.\ \var{buf}_2\ \var{p}\ \const{@}\ \var{buf}_1\ \var{p})
       \end{align*}
-      \vspace*{-5ex}
     \end{tcolorbox}
       \pause
-    \begin{tcolorbox}[enhanced,title=choices function,colback=yellow!30]
+    \begin{tcolorbox}[enhanced,title=choices type,colback=yellow!30]
       \vspace*{-4ex}
-      \hspace*{-5ex}
       \begin{align*}
-        & \hspace*{-6ex} \const{choices}\ \SpinOp = \Emptyset \\
-        & \hspace*{-6ex} \const{Silent}\ \var{op}' \in_c \const{choices}\ \var{op} \Iff \const{step}\ \const{Tau}\ \var{op}\ \var{op}' \\
-        & \hspace*{-6ex} \const{choices}\; (\const{Choice}\ \var{ops}) = \bigcup {}_c \ (\const{choices}\ \Image_c\ \var{ops})
+        & \hspace*{-6ex} \const{choices} \oftype \type{(\tvar{i}, \tvar{o}, \tvar{d})\ \type{op} \Fun ((\tvar{i}, \tvar{o}, \tvar{d})\ \type{op})\ \type{set}} \\
+        % & \hspace*{-6ex} \const{choices}\ \SpinOp = \Emptyset \\
+        % & \hspace*{-6ex} \const{Silent}\ \var{op}' \in_c \const{choices}\ \var{op} \Iff \const{step}\ \const{Tau}\ \var{op}\ \var{op}' \\
+        % & \hspace*{-6ex} \const{choices}\; (\const{Choice}\ \var{ops}) = \bigcup {}_c \ (\const{choices}\ \Image_c\ \var{ops})
       \end{align*}
       \vspace*{-5ex}
     \end{tcolorbox}
   \end{tcbraster}
-      \pause
+      \visible<4->{
       \begin{tcolorbox}[enhanced,title=Mapping ports functions,colback=yellow!30,]
         \vspace*{-4ex}
         \begin{align*}
@@ -923,6 +925,7 @@
         \end{align*}
         \vspace*{-5ex}
       \end{tcolorbox}
+      }
 \end{frame}
 
 \begin{frame}[fragile]
@@ -2107,7 +2110,7 @@
     \begin{column}{.45\textwidth}
       \begin{itemize}
         \item Instance in Algebra of Communicating Processes (ACP)
-        \item Our operators closely follow their ACP counterparts
+        \item Our operators closely follow theirs
       \end{itemize}
       \vspace*{-2ex}
       \begin{figure}
@@ -2119,7 +2122,7 @@
     \begin{column}{.45\textwidth}
       \begin{itemize}
         \item Our operators can be seen as a domain specific variant of choice trees
-        \item Monadic composition
+        % \item Monadic composition
       \end{itemize}
       \vspace*{-2ex}
       \begin{figure}

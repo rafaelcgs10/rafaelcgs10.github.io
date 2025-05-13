@@ -5,7 +5,7 @@
     \begin{column}{.45\textwidth}
       \begin{itemize}
         \item Instance in Algebra of Communicating Processes (ACP)
-        \item Our operators closely follow their ACP counterparts
+        \item Our operators closely follow theirs
       \end{itemize}
       \vspace*{-2ex}
       \begin{figure}
@@ -17,7 +17,7 @@
     \begin{column}{.45\textwidth}
       \begin{itemize}
         \item Our operators can be seen as a domain specific variant of choice trees
-        \item Monadic composition
+        % \item Monadic composition
       \end{itemize}
       \vspace*{-2ex}
       \begin{figure}
@@ -46,6 +46,7 @@
     \end{column}
     \pause
     \begin{column}{.45\textwidth}
+
       \begin{itemize}
         \item Flo: a framework for representing streaming computations originating from different systems like Flink and DBSP
       \end{itemize}
