@@ -393,8 +393,9 @@
 
 \begin{frame}[fragile]
   \frametitle{Operators Equivalences: Weak Bisimilarity}
+    \vspace*{-2ex}
   \begin{tcolorbox}[enhanced,title=Weakly Simulates,colback=yellow!30]
-    \vspace*{-3ex}
+    \vspace*{-4ex}
     \hspace*{-5ex}
     \begin{align*}
      & \const{estep}\ \const{Tau} = (\const{step}\ \const{Tau})^{==} \\
@@ -404,8 +405,13 @@
     \\
     & \const{wsim}\ \var{R}\ \var{op}_1\ \var{op}_2 = (\forall \var{io}\; \var{op}'_1.\ \const{step}\ \var{io}\ \var{op}_1\ \var{op}'_1 \Implies (\exists \var{op}'_2.\ \const{wstep}\ \var{io}\ \var{op}_2\ \var{op}'_2 \land \var{R}\ \var{op}'_1\ \var{op}'_2))
     \end{align*}
+    \vspace*{-5ex}
   \end{tcolorbox}
-
+  \vspace*{-1ex}
+  \begin{itemize}
+    \item A Relation \isabelleinline{\var{R}} is a \emph{weak simulation} if \isabelleinline{\forall \var{op}_1\; \var{op}_2.\ \var{R}\ \var{op}_1\ \var{op}_2 \Implies \const{wsim}\ \var{R}\ \var{op}_1\ \var{op}_2}.
+  \end{itemize}
+    \vspace*{-1.3ex}
   \pause
   \begin{tcolorbox}[enhanced,title=Weak Bisimilarity,colback=yellow!30]
     \vspace*{-3ex}
@@ -414,12 +420,18 @@
      & \cmd{coinductive}\ \const{wbisim}\ (\cmd{infix} \wbisim{}{} 40)\ \cmd{where}\\
      & \more \const{wsim}\ (\approx)\ \var{op}_1\ \var{op}_2 \implies \const{wsim}\ (\approx)\ \var{op}_2\ \var{op}_1 \implies \wbisim{\var{op}_1}{\var{op}_2}
     \end{align*}
+    \vspace*{-5ex}
   \end{tcolorbox}
+  \vspace*{-1ex}
+  \begin{itemize}
+    \item \isabelleinline{\var{R}} is a \emph{weak bisimulation} when both \isabelleinline{\var{R}} and its converse \isabelleinline{\var{R}^{\const{-1}}} are weak simulations. \\
+          Weak bisimilarity is the largest weak bisimulation.
+  \end{itemize}
+
   \pause
   \begin{itemize}
     \item $\approx$ has a useful coinduction principle
-    \item $\EndOp \approx \SpinOp \approx \SilentOp$
-    \item $\const{ex1} \approx \const{ex2} \approx \const{ex3}$
+    \item $\EndOp \approx \SpinOp \approx \SilentOp$ and $\const{ex1} \approx \const{ex2} \approx \const{ex3}$
   \end{itemize}
 \end{frame}
 
@@ -428,9 +440,9 @@
 \begin{frame}[fragile]
   \frametitle{Buffer Infrastructure}
   \begin{itemize}
-    \item Buffers $\var{buf} \oftype \tvar{a} \Fun \tvar{d}\ \type{list}$
+    \item Buffers: $\tvar{a} \Fun \tvar{d}\ \type{list}$
   \end{itemize}
-  \begin{tcolorbox}[enhanced,title=Buffer auxiliary functions,colback=yellow!30]
+  \begin{tcolorbox}[enhanced,title=Auxiliary functions for buffers,colback=yellow!30]
     \vspace*{-3ex}
     \hspace*{-5ex}
     \begin{align*}
@@ -453,18 +465,30 @@
     \begin{align*}
       & \const{id_op}\ \var{buf} = \const{Choice}
       \\
-      & \only<2-4>{(((\lambda \var{p}.\ \const{Read}\ \var{p}\ (\lambda \var{x}.\ \const{id_op}\ (\const{BENQ}\ \var{p}\ \var{x}\ \var{buf})))\ \Image_c \ \Univ_c)\ }
+      & \only<2->{(((\lambda \var{p}.\ \const{Read}\ \var{p}\ (\lambda \var{x}.\ \const{id_op}\ (\const{BENQ}\ \var{p}\ \var{x}\ \var{buf})))\ \Image_c \ \Univ_c)\ }
       \\
       &\Union_c
       \\
-      &\only<3-4>{\phantom{(}((\lambda \var{p}.\ \const{Write}\ (\const{id_op}\ (\const{BTL}\ \var{p}\ \var{buf}))\ \var{p}\ (\const{BHD}\ \var{p}\ \var{buf}))\ \Image_c \ \{\var{p} \in_c \Univ_c \mid \var{buf}\ \var{p} \neq []\}))}
+      &\only<3->{\phantom{(}((\lambda \var{p}.\ \const{Write}\ (\const{id_op}\ (\const{BTL}\ \var{p}\ \var{buf}))\ \var{p}\ (\const{BHD}\ \var{p}\ \var{buf}))\ \Image_c \ \{\var{p} \in_c \Univ_c \mid \var{buf}\ \var{p} \neq []\}))}
     \end{align*}
   \end{tcolorbox}
-  \begin{itemize}
-          \only<2-4>{\item $\Univ_c$ is the set of usable ports provide by its type}
-    \item Stream delayer!
-    \item $\IdOp = \const{id_op}\ (\lambda \_.\ [])$
-  \end{itemize}
+
+  \only<2->{
+    \begin{itemize}
+            \only<2->{\item $\Univ_c$ is the set of usable ports provide by its type}
+            \only<4->{\item Stream delayer!}
+    \end{itemize}
+  }
+
+  \only<5->{
+  \begin{tcolorbox}[enhanced,title=Identity operator with an empty buffer,colback=yellow!30]
+    \vspace*{-3ex}
+    \hspace*{-5ex}
+    \begin{align*}
+      \IdOp = \const{id_op}\ (\lambda \_.\ [])
+    \end{align*}
+  \end{tcolorbox}
+  }
 \end{frame}
 
 \begin{frame}[fragile]
