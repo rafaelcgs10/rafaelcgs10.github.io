@@ -1,9 +1,58 @@
 \frametitle{Related Work}
-  \begin{itemize}
-    \item A Isabelle/HOL instance of Nondeterministic Asynchronous Dataflow
-          \begin{itemize}
-            \item Operators as a shallow embedding as codatatypes
-            \item 51 axioms proved
-          \end{itemize}
-    \item Executable via code extraction to Haskell
-  \end{itemize}
+    \pause
+  \vspace*{-2ex}
+  \begin{columns}
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item Instance in Algebra of Communicating Processes (ACP)
+        \item Our operators closely follow their ACP counterparts
+      \end{itemize}
+      \vspace*{-2ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.6\textwidth]{Bergstra.png}}
+      \end{figure}
+    \end{column}
+    \pause
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item Our operators can be seen as a domain specific variant of choice trees
+        \item Monadic composition
+      \end{itemize}
+      \vspace*{-2ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.6\textwidth]{itrees.png}}
+      \end{figure}
+      \vspace*{-3ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.6\textwidth]{ctrees.png}}
+      \end{figure}
+    \end{column}
+  \end{columns}
+    \pause
+      \vspace*{-2ex}
+  \begin{columns}
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item \textbf{Synchronous} dataflow languages have some proof assistant mechanization
+      \end{itemize}
+      \vspace*{-2ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.5\textwidth]{velus.png}}
+      \end{figure}
+    \end{column}
+    \pause
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item Flo: a framework for representing streaming computations originating from different systems like Flink and DBSP
+      \end{itemize}
+      \vspace*{-2ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.5\textwidth]{flo.png}}
+      \end{figure}
+    \end{column}
+  \end{columns}

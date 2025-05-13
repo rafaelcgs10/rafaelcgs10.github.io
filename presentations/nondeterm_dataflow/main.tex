@@ -773,7 +773,7 @@
 
           \begin{columns}
             \begin{column}{.42\textwidth}
-              \item Milner's approach: Weak Bisimilarity
+              \item Milner's approach!\\ The classic chapter on \textbf{weak bisimilarity}
             \end{column}
             \begin{column}{.1\textwidth}
               \begin{figure}
@@ -908,22 +908,22 @@
     \begin{align*}
       & \const{id_op}\ \var{buf} = \const{Choice}
       \\
-      & \only<2->{(((\lambda \var{p}.\ \const{Read}\ \var{p}\ (\lambda \var{x}.\ \const{id_op}\ (\const{BENQ}\ \var{p}\ \var{x}\ \var{buf})))\ \Image_c \ \Univ_c)\ }
+      & \visible<2->{(((\lambda \var{p}.\ \const{Read}\ \var{p}\ (\lambda \var{x}.\ \const{id_op}\ (\const{BENQ}\ \var{p}\ \var{x}\ \var{buf})))\ \Image_c \ \Univ_c)\ }
       \\
       &\Union_c
       \\
-      &\only<3->{\phantom{(}((\lambda \var{p}.\ \const{Write}\ (\const{id_op}\ (\const{BTL}\ \var{p}\ \var{buf}))\ \var{p}\ (\const{BHD}\ \var{p}\ \var{buf}))\ \Image_c \ \{\var{p} \in_c \Univ_c \mid \var{buf}\ \var{p} \neq []\}))}
+      &\visible<3->{\phantom{(}((\lambda \var{p}.\ \const{Write}\ (\const{id_op}\ (\const{BTL}\ \var{p}\ \var{buf}))\ \var{p}\ (\const{BHD}\ \var{p}\ \var{buf}))\ \Image_c \ \{\var{p} \in_c \Univ_c \mid \var{buf}\ \var{p} \neq []\}))}
     \end{align*}
   \end{tcolorbox}
 
-  \only<2->{
+  \visible<2->{
     \begin{itemize}
-            \only<2->{\item $\Univ_c$ is the set of usable ports provide by its type}
-            \only<4->{\item Stream delayer!}
+            \visible<2->{\item $\Univ_c$ is the set of usable ports provide by its type}
+            \visible<4->{\item Stream delayer: always can read, and it may eventually output}
     \end{itemize}
   }
 
-  \only<5->{
+  \visible<5->{
   \begin{tcolorbox}[enhanced,title=Identity operator with an empty buffer,colback=yellow!30]
     \vspace*{-3ex}
     \hspace*{-5ex}
@@ -962,7 +962,7 @@
 \begin{frame}[fragile]
   \frametitle{Composition: equation}
   \vspace*{-2ex}
-  \begin{tcolorbox}[enhanced,title=Composition operator,colback=yellow!30]
+  \begin{tcolorbox}[enhanced,title=Equation of the composition operator,colback=yellow!30]
     \vspace*{-4ex}
     \hspace*{-8ex}
     \begin{align*}
@@ -2076,14 +2076,63 @@
 
 \begin{frame}[fragile]
   \frametitle{Related Work}
-  \begin{itemize}
-    \item A Isabelle/HOL instance of Nondeterministic Asynchronous Dataflow
-          \begin{itemize}
-            \item Operators as a shallow embedding as codatatypes
-            \item 51 axioms proved
-          \end{itemize}
-    \item Executable via code extraction to Haskell
-  \end{itemize}
+    \pause
+  \vspace*{-2ex}
+  \begin{columns}
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item Instance in Algebra of Communicating Processes (ACP)
+        \item Our operators closely follow their ACP counterparts
+      \end{itemize}
+      \vspace*{-2ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.6\textwidth]{Bergstra.png}}
+      \end{figure}
+    \end{column}
+    \pause
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item Our operators can be seen as a domain specific variant of choice trees
+        \item Monadic composition
+      \end{itemize}
+      \vspace*{-2ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.6\textwidth]{itrees.png}}
+      \end{figure}
+      \vspace*{-3ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.6\textwidth]{ctrees.png}}
+      \end{figure}
+    \end{column}
+  \end{columns}
+    \pause
+      \vspace*{-2ex}
+  \begin{columns}
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item \textbf{Synchronous} dataflow languages have some proof assistant mechanization
+      \end{itemize}
+      \vspace*{-2ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.5\textwidth]{velus.png}}
+      \end{figure}
+    \end{column}
+    \pause
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item Flo: a framework for representing streaming computations originating from different systems like Flink and DBSP
+      \end{itemize}
+      \vspace*{-2ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.5\textwidth]{flo.png}}
+      \end{figure}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \section{Conclusion}
