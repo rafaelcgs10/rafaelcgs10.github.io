@@ -10,6 +10,8 @@
 \usetikzlibrary{positioning}
 \usepackage{booktabs}
 \usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings,decorations.text,arrows.meta,arrows, shapes.geometric, arrows.meta, chains, decorations.markings, positioning, shadows }
 
 \usepackage{listings}
 \usepackage{pdfpages}
@@ -28,6 +30,423 @@
 \usetikzlibrary{fit}
 \usetikzlibrary{shadings}
 \usetikzlibrary{shapes.arrows,shadows.blur}
+
+\tikzset{
+  operator/.style = {
+  circle, draw, minimum size=1.3cm,
+  % align = center
+  },
+  bigoperator/.style = {
+  circle, draw, minimum size=1.8cm,
+  % align = center
+  },
+  pics/transpA/.style = {
+    code = {
+      \node[bigoperator, label={[label distance=-1.2mm]90:\isabelleinline{\TranspOp}}] (op) {};
+      \draw (op.70) ++ (0,-0.1mm) arc(-12:190:3.2mm);
+      \draw[] (op.130) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-il1) {};
+      \draw[] (op.350) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ol1) {} ;
+      \draw[] (op.150) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-il2) {};
+      \draw[] (op.330) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ol2) {} ;
+      \draw[] (op.170) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-il3) {};
+      \draw[] (op.310) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ol3) {} ;
+
+      \draw[] (op.230) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ir1) {};
+      \draw[] (op.50) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-or1) {} ;
+      \draw [-] (-il1) to (-ol1);
+      \draw [-, postaction={decoration={
+            text effects along path,
+            text={{}{\(l_1\)}},
+            text align=left,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.6ex, xshift=+0.5ex},
+          }, decorate}] (-il2) to (-ol2);
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(r_1\)}},
+            text align=left,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.6ex, xshift=+0.5ex},
+          }, decorate}] (-ir1) to (-or1);
+      \draw [-] (-il3) to (-ol3);
+    }
+  },
+  pics/transpB/.style = {
+    code = {
+      \node[bigoperator, label={[label distance=-1.2mm]90:\isabelleinline{\TranspOp}}] (op) {};
+      \draw (op.70) ++ (0,-0.1mm) arc(-12:190:3.2mm);
+      \draw[] (op.190) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ir1) {};
+      \draw[] (op.50) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-or1) {} ;
+      \draw[] (op.210) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ir2) {};
+      \draw[] (op.30) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-or2) {} ;
+      \draw[] (op.230) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ir3) {};
+      \draw[] (op.10) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-or3) {} ;
+
+      \draw[] (op.130) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-il1) {};
+      \draw[] (op.310) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ol1) {} ;
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(r_3\)}},
+            text align=left,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.6ex, xshift=+0.5ex},
+          }, decorate}] (-il1) to (-ol1);
+      \draw [-] (-ir1) to (-or1);
+      \draw [-, postaction={decoration={
+            text effects along path,
+            text={{}{\(l_3\)}},
+            text align=left,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.6ex, xshift=+0.5ex},
+          }, decorate}] (-ir2) to (-or2);
+      \draw [-] (-ir3) to (-or3);
+    }
+  },
+  pics/idA/.style = {
+    code = {
+      \node[bigoperator, label={[label distance=-1.2mm]90:\isabelleinline{\IdOp}}] (op) {};
+      \draw (op.70) ++ (0,-0.1mm) arc(-12:190:3.2mm);
+      \draw[] (op.130) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-il1) {};
+      \draw[] (op.50) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ol1) {} ;
+      \draw[] (op.150) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-il2) {};
+      \draw[] (op.30) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ol2) {} ;
+      \draw[] (op.170) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-il3) {};
+      \draw[] (op.10) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ol3) {} ;
+
+      \draw[] (op.230) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ir1) {};
+      \draw[] (op.310) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-or1) {} ;
+      \draw [-, postaction={decoration={
+            text effects along path,
+            text={{}{\(l\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.6ex},
+          }, decorate}] (-il2) to (-ol2);
+      \draw [-] (-il1) to (-ol1);
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(r\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.4ex},
+          }, decorate}] (-ir1) to (-or1);
+      \draw [-] (-il3) to (-ol3);
+    }
+  },
+  pics/aeqA/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\AeqOp_0}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.4mm);
+      \draw[] (op.150) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-il) {};
+
+      \draw[] (op.210) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ir) {};
+
+      \draw[] (op.0) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-o) {} ;
+
+      \draw [-, postaction={decoration={
+            text effects along path,
+            text={{}{\(x\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.6ex, xshift=-0.5ex},
+          }, decorate}] (-il) to (-o);
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(y\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.4ex, xshift=-0.5ex},
+          }, decorate}] (-ir) to (-o);
+    }
+  },
+  pics/acopyA/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\AcopyOp_0}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.4mm);
+      \draw[] (op.180) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-i) {};
+
+      \draw[] (op.30) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ol) {} ;
+      \draw[] (op.330) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-or) {} ;
+
+      \draw [-, postaction={decoration={
+            text effects along path,
+            text={{}{\(v\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.6ex, xshift=+0.5ex},
+          }, decorate}] (-i) to (-ol);
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(w\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.4ex, xshift=+0.5ex},
+          }, decorate}] (-i) to (-or);
+    }
+  },
+  pics/acopyB/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\AcopyOp_1}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.4mm);
+      \draw[] (op.180) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-i) {};
+
+      \draw[] (op.30) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ol) {} ;
+      \draw[] (op.330) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-or) {} ;
+
+      \draw [-, postaction={decoration={
+            text effects along path,
+            text={{}{\(a_1\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.6ex, xshift=+1.9ex},
+          }, decorate}] (-i) to (-ol);
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(b_1\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.4ex, xshift=+1.9ex},
+          }, decorate}] (-i) to (-or);
+    }
+  },
+  pics/acopyC/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\AcopyOp_2}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.4mm);
+      \draw[] (op.180) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-i) {};
+
+      \draw[] (op.30) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ol) {} ;
+      \draw[] (op.330) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-or) {} ;
+
+      \draw [-, postaction={decoration={
+            text effects along path,
+            text={{}{\(c_1\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.6ex, xshift=+1.9ex},
+          }, decorate}] (-i) to (-ol);
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(d_1\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.4ex, xshift=+1.9ex},
+          }, decorate}] (-i) to (-or);
+    }
+  },
+  pics/transpC/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\TranspOp_0}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.4mm);
+      \draw[] (op.140) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-il) {};
+      \draw[] (op.320) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-or) {} ;
+
+      \draw[] (op.220) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ir) {};
+      \draw[] (op.40) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ol) {} ;
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(c_3\)}},
+            text align=left,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.6ex, xshift=+0.5ex},
+          }, decorate}] (-ir) to (-ol);
+      \draw [-, postaction={decoration={
+            text effects along path,
+            text={{}{\(b_3\)}},
+            text align=left,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.6ex, xshift=+0.5ex},
+          }, decorate}] (-il) to (-or);
+    }
+  },
+  pics/idB/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\IdOp_0}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.4mm);
+      \draw[] (op.180) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-i) {};
+
+      \draw[] (op.0) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-o) {} ;
+
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(a_3\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.4ex},
+          }, decorate}] (-i) to (-o);
+    }
+  },
+  pics/idC/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\IdOp_1}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.4mm);
+      \draw[] (op.180) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-i) {};
+
+      \draw[] (op.0) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-o) {} ;
+
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(d_3\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.4ex},
+          }, decorate}] (-i) to (-o);
+    }
+  },
+  pics/idD/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\IdOp_3}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.4mm);
+      \draw[] (op.180) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-i) {};
+
+      \draw[] (op.0) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-o) {} ;
+
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(bd_2\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.4ex},
+          }, decorate}] (-i) to (-o);
+    }
+  },
+  pics/idE/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\IdOp_2}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.4mm);
+      \draw[] (op.180) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-i) {};
+
+      \draw[] (op.0) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-o) {} ;
+
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(ac_2\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.4ex},
+          }, decorate}] (-i) to (-o);
+    }
+  },
+  pics/aeqB/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\AeqOp_1}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.4mm);
+      \draw[] (op.150) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-il) {};
+
+      \draw[] (op.210) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ir) {};
+
+      \draw[] (op.0) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-o) {} ;
+
+      \draw [-, postaction={decoration={
+            text effects along path,
+            text={{}{\(a_5\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.6ex, xshift=-1.9ex},
+          }, decorate}] (-il) to (-o);
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(c_5\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.4ex, xshift=-1.9ex},
+          }, decorate}] (-ir) to (-o);
+    }
+  },
+  pics/aeqC/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\AeqOp_2}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.4mm);
+      \draw[] (op.150) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-il) {};
+
+      \draw[] (op.210) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-ir) {};
+
+      \draw[] (op.0) node [style = {circle, draw, fill, minimum size=2mm, inner sep=1pt}] (-o) {} ;
+
+      \draw [-,postaction={decoration={
+            text effects along path,
+            text={{}{\(d_5\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.4ex, xshift=-1.9ex},
+          }, decorate}] (-ir) to (-o);
+      \draw [-, postaction={decoration={
+            text effects along path,
+            text={{}{\(b_5\)}},
+            text align=center,
+            text effects/.cd,
+            text along path,
+            characters={fill=white, yshift=-0.6ex, xshift=-1.9ex},
+          }, decorate}] (-il) to (-o);
+    }
+  },
+  pics/aeqop21/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\AeqOp}}] (op) {};
+      \draw[] (op.135) node [style = {circle, draw, fill, minimum size=2mm,
+      inner sep=1pt}] (-i1) {} -- node [style = {circle, draw, fill, minimum
+      size=2mm, inner sep=1pt}] (-o) {} (op.0);
+      \draw[] (op.225) node [style = {circle, draw, fill, minimum size=2mm,
+      inner sep=1pt}] (-i2) {} -- (op.0);
+    }
+  },
+  pics/acopyop12/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\AcopyOp}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.2mm);
+      \draw[] (op.180) node [style = {circle, draw, fill, minimum size=2mm,
+      inner sep=1pt}] (-i) {} -- node [style = {circle, draw, fill, minimum
+      size=2mm, inner sep=1pt}] (-o1) {} (op.45);
+      \draw[] (op.180) -- node [style = {circle, draw, fill, minimum size=2mm,
+      inner sep=1pt}] (-o2) {} (op.315);
+    }
+  },
+  pics/mergeop21/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\MergeOp}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.2mm);
+      \draw[] (op.135) node [style = {circle, draw, fill, minimum size=2mm,
+      inner sep=1pt}] (-i1) {} -- node [style = {circle, draw, fill, minimum
+      size=2mm, inner sep=1pt}] (-o) {} (op.0);
+      \draw[] (op.225) node [style = {circle, draw, fill, minimum size=2mm,
+      inner sep=1pt}] (-i2) {} -- (op.0);
+    }
+  },
+  pics/splitop12/.style = {
+    code = {
+      \node[operator, label={[label distance=-1.3mm]90:\isabelleinline{\SplitOp}}] (op) {};
+      \draw (op.60) ++ (0,-0.1mm) arc(-12:190:3.2mm);
+      \draw[] (op.180) node [style = {circle, draw, fill, minimum size=2mm,
+      inner sep=1pt}] (-i) {} -- node [style = {circle, draw, fill, minimum
+      size=2mm, inner sep=1pt}] (-o1) {} (op.45);
+      \draw[] (op.180) -- node [style = {circle, draw, fill, minimum size=2mm,
+      inner sep=1pt}] (-o2) {} (op.315);
+    }
+  },
+}
 
 \pgfdeclarefunctionalshading{Hermite-Gaussian modes}{\pgfpoint{-25bp}{-25bp}}{\pgfpoint{25bp}{25bp}}{}{
     10 atan sin 1000 mul cos 1 add
@@ -92,8 +511,8 @@
 
 \title[Nondeterministic Asynchronous Dataflow in Isabelle/HOL]{Nondeterministic Asynchronous Dataflow in Isabelle/HOL}
 
-\author[Rafael, Laouen and Dmitriy]{
-  \underline{Rafael Castro G. Silva}, Laouen Fernet and  Dmitriy Traytel\\\medskip
+\author[Rafael, Laouen and, Dmitriy]{
+  \underline{Rafael Castro G. Silva}, Laouen Fernet and,  Dmitriy Traytel\\\medskip
   }
 % {\small \url{rasi@di.ku.dk}}
 
@@ -143,7 +562,7 @@
   \begin{itemize}
     \item Stream Processing: programs that compute (possibly) unbounded sequences of data (streams)
     \item A common problem in the industry
-    \item Frameworks: Apache Flink, Google Cloud Dataflow, and Timely Dataflow
+    \item Frameworks: Google Cloud Dataflow, Apache Flink, and Timely Dataflow
           \begin{figure}
             \centering
             \includegraphics[scale=0.1]{all}
@@ -221,7 +640,7 @@
 \begin{frame}[fragile]
   \frametitle{Main Contributions}
   \begin{itemize}
-    \item A Isabelle/HOL instance of Nondeterministic Asynchronous Dataflow
+    \item An Isabelle/HOL instance of Nondeterministic Asynchronous Dataflow
           \begin{itemize}
             \item Operators as a shallow embedding as codatatypes
             \item 51 axioms proved
@@ -986,27 +1405,672 @@
 
 \begin{frame}[fragile]
   \frametitle{Properties of equality test, merge, copy, split, source and sink operators}
-  \begin{figure}
-    \centering
-    \includegraphics[width=1\textwidth]{table_1_3.png}
-  \end{figure}
+    \vspace*{-4ex}
+\begin{table}[t]
+    \addtolength{\tabcolsep}{-0.8em}
+    \begin{tabular}{ l l l }
+        \multicolumn{3}{l}{$
+            \text{A1}\!: \wbisim{\Scomp{(\Pcomp{\AeqOp}{\IdOp})}{\AeqOp}}{\const{map_op}\
+                \assoc\ \const{id}\ (\Scomp{(\Pcomp{\IdOp}{\AeqOp})}{\AeqOp})} %\quad \text{for
+                %} \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        $
+        \text{A2}\!: \wbisim{\Scomp{\TranspOp}{\ogt}}{\ogt} \quad \text{for } \ogt
+        \in \{\AeqOp, \MergeOp\}
+        $ &
+        $
+        \text{A6}\!: \wbisim{\Scomp{\olt}{\TranspOp}}{\olt} \quad \text{for } \olt
+        \in \{\AcopyOp, \SplitOp\}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A3}_\AeqOp\!: \wbisim{\Scomp{(\Pcomp{(\SourceOp \oftype (\type{0},
+                        \tvar{a}, \tvar{d})\ \type{op})}{\IdOp})}{\AeqOp}}{\Scomp{(\SinkOp \oftype
+                    (\type{0} + \tvar{a}, \type{0}, \tvar{d})\ \type{op})}{\SourceOp}}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A3}_\MergeOp\!: \wbisim{\Scomp{(\Pcomp{(\SourceOp \oftype (\type{0},
+                        \tvar{a}, \tvar{d})\ \type{op})}{\IdOp})}{\MergeOp}}{\const{map_op}\
+                \const{Inr}\ \const{id}\ \IdOp}
+            $} \\
+        $
+        \text{A4}\!: \wbisim{\Scomp{\ogt}{\SinkOp}}{\Pcomp{\SinkOp}{\SinkOp}}
+        \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+        $ &
+        $
+        \text{A8}\!:
+        \wbisim{\Scomp{\SourceOp}{\olt}}{\Pcomp{\SourceOp}{\SourceOp}} \quad
+        \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+        $ \\
+        $
+        \text{A5}\!:
+        \wbisim{\Scomp{\AcopyOp}{(\Pcomp{\AcopyOp}{\IdOp})}}{\const{map_op}\
+            \const{id}\ \assoc\ (\Scomp{\AcopyOp}{(\Pcomp{\IdOp}{\AcopyOp})})}
+        $ \\
+        $
+        \text{A7}\!:
+        \wbisim{\Scomp{\AcopyOp}{(\Pcomp{\SinkOp}{\IdOp})}}{\const{map_op}\
+            \const{id}\ \const{Inr}\ \IdOp}
+        $ &
+        $
+        \text{A9}\!: \wbisim{\Scomp{\SourceOp}{\SinkOp}}{\IdOp}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A10}\!:
+            \wbisim{\Scomp{\AeqOp}{\AcopyOp}}{\Scomp{\Scomp{(\Pcomp{\AcopyOp}{\AcopyOp})}{(\const{map_op}\
+                        \reassoc\ \reassoc\ (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                            (\Pcomp{\IdOp}{\TranspOp})}{\IdOp}))}}{(\Pcomp{\AeqOp\,}{\AeqOp\,})}}
+            $} \\
+        $
+        \text{A11}\!: \wbisim{\Scomp{\AcopyOp}{\AeqOp}}{\IdOp}
+        $ &
+        $
+        \text{A12}\!: \wbisim{\SourceOp}{(\IdOp \oftype (\type{0}, \type{0},
+            \tvar{d})\ \type{op})}
+        $ \\
+        $
+        \text{A16}\!: \wbisim{\SinkOp}{(\IdOp \oftype (\type{0}, \type{0},
+            \tvar{d})\ \type{op})}
+        $ &
+        $
+        \text{A13}\!: \wbisim{\SourceOp}{\Pcomp{\SourceOp}{\SourceOp}}
+        $ &
+        $
+        \text{A17}\!: \wbisim{\SinkOp}{\Pcomp{\SinkOp}{\SinkOp}}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A14}\!: \wbisim{\const{map_op}\ \const{id}\ \const{Inl}\ (\ogt
+                \oftype (\type{0} + \type{0}, \type{0}, \tvar{d})\ \type{op})}{\IdOp}
+            \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A15}\!: \wbisim{\ogt}{\Scomp{\const{map_op}\ \reassoc\ \reassoc\
+                    (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                        (\Pcomp{\IdOp}{\TranspOp})}{\IdOp})}{(\Pcomp{\ogt}{\ogt})}} \quad
+            \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A18}\!: \wbisim{\const{map_op}\ \const{Inl}\ \const{id}\ (\olt
+                \oftype (\type{0}, \type{0} + \type{0}, \tvar{d})\ \type{op})}{\IdOp}
+            \quad \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A19}\!: \wbisim{\olt}{\Scomp{(\Pcomp{\olt}{\olt})}{\const{map_op}\
+                    \reassoc\ \reassoc\ (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                        (\Pcomp{\IdOp}{\TranspOp})}{\IdOp})}} \quad \text{for } \olt \in
+            \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F3}\!: \wbisim{\Feedback{(\const{map_op}\ \const{id}\ \const{Inr}\
+                    \ogt)}}{\SinkOp} \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F4}\!: \wbisim{\Feedback{(\const{map_op}\ \const{Inr}\ \const{id}\
+                    \olt)}}{\SourceOp} \quad \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F5}\!:
+            \wbisim{\Feedback{(\Scomp{\Scomp{(\Pcomp{\IdOp}{\AcopyOp})}{\const{map_op}\
+                            \reassoc\ \reassoc\
+                            (\Pcomp{\TranspOp}{\IdOp})}}{(\Pcomp{\IdOp}{\AeqOp})})}}{\Scomp{\SinkOp}{\SourceOp}}
+            $}
+    \end{tabular}
+    \vspace*{-4ex}
+\end{table}
 \end{frame}
 
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Properties of equality test, merge, copy, split, source and sink operators}
+    \vspace*{-4ex}
+\begin{table}[t]
+    \addtolength{\tabcolsep}{-0.8em}
+    \begin{tabular}{ l l l }
+        \multicolumn{3}{l}{$\text{A1}\!: \highlight{\wbisim{\Scomp{(\Pcomp{\AeqOp}{\IdOp})}{\AeqOp}}{\const{map_op}\ \assoc\ \const{id}\ (\Scomp{(\Pcomp{\IdOp}{\AeqOp})}{\AeqOp})} %\quad \text{for
+                %} \ogt \in \{\AeqOp, \MergeOp\}
+            }$} \\
+        $
+        \text{A2}\!: \wbisim{\Scomp{\TranspOp}{\ogt}}{\ogt} \quad \text{for } \ogt
+        \in \{\AeqOp, \MergeOp\}
+        $ &
+        $
+        \text{A6}\!: \wbisim{\Scomp{\olt}{\TranspOp}}{\olt} \quad \text{for } \olt
+        \in \{\AcopyOp, \SplitOp\}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A3}_\AeqOp\!: \wbisim{\Scomp{(\Pcomp{(\SourceOp \oftype (\type{0},
+                        \tvar{a}, \tvar{d})\ \type{op})}{\IdOp})}{\AeqOp}}{\Scomp{(\SinkOp \oftype
+                    (\type{0} + \tvar{a}, \type{0}, \tvar{d})\ \type{op})}{\SourceOp}}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A3}_\MergeOp\!: \wbisim{\Scomp{(\Pcomp{(\SourceOp \oftype (\type{0},
+                        \tvar{a}, \tvar{d})\ \type{op})}{\IdOp})}{\MergeOp}}{\const{map_op}\
+                \const{Inr}\ \const{id}\ \IdOp}
+            $} \\
+        $
+        \text{A4}\!: \wbisim{\Scomp{\ogt}{\SinkOp}}{\Pcomp{\SinkOp}{\SinkOp}}
+        \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+        $ &
+        $
+        \text{A8}\!:
+        \wbisim{\Scomp{\SourceOp}{\olt}}{\Pcomp{\SourceOp}{\SourceOp}} \quad
+        \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+        $ \\
+        $
+        \text{A5}\!:
+        \wbisim{\Scomp{\AcopyOp}{(\Pcomp{\AcopyOp}{\IdOp})}}{\const{map_op}\
+            \const{id}\ \assoc\ (\Scomp{\AcopyOp}{(\Pcomp{\IdOp}{\AcopyOp})})}
+        $ \\
+        $
+        \text{A7}\!:
+        \wbisim{\Scomp{\AcopyOp}{(\Pcomp{\SinkOp}{\IdOp})}}{\const{map_op}\
+            \const{id}\ \const{Inr}\ \IdOp}
+        $ &
+        $
+        \text{A9}\!: \wbisim{\Scomp{\SourceOp}{\SinkOp}}{\IdOp}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A10}\!:
+            \wbisim{\Scomp{\AeqOp}{\AcopyOp}}{\Scomp{\Scomp{(\Pcomp{\AcopyOp}{\AcopyOp})}{(\const{map_op}\
+                        \reassoc\ \reassoc\ (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                            (\Pcomp{\IdOp}{\TranspOp})}{\IdOp}))}}{(\Pcomp{\AeqOp\,}{\AeqOp\,})}}
+            $} \\
+        $
+        \text{A11}\!: \wbisim{\Scomp{\AcopyOp}{\AeqOp}}{\IdOp}
+        $ &
+        $
+        \text{A12}\!: \wbisim{\SourceOp}{(\IdOp \oftype (\type{0}, \type{0},
+            \tvar{d})\ \type{op})}
+        $ \\
+        $
+        \text{A16}\!: \wbisim{\SinkOp}{(\IdOp \oftype (\type{0}, \type{0},
+            \tvar{d})\ \type{op})}
+        $ &
+        $
+        \text{A13}\!: \wbisim{\SourceOp}{\Pcomp{\SourceOp}{\SourceOp}}
+        $ &
+        $
+        \text{A17}\!: \wbisim{\SinkOp}{\Pcomp{\SinkOp}{\SinkOp}}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A14}\!: \wbisim{\const{map_op}\ \const{id}\ \const{Inl}\ (\ogt
+                \oftype (\type{0} + \type{0}, \type{0}, \tvar{d})\ \type{op})}{\IdOp}
+            \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A15}\!: \wbisim{\ogt}{\Scomp{\const{map_op}\ \reassoc\ \reassoc\
+                    (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                        (\Pcomp{\IdOp}{\TranspOp})}{\IdOp})}{(\Pcomp{\ogt}{\ogt})}} \quad
+            \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A18}\!: \wbisim{\const{map_op}\ \const{Inl}\ \const{id}\ (\olt
+                \oftype (\type{0}, \type{0} + \type{0}, \tvar{d})\ \type{op})}{\IdOp}
+            \quad \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A19}\!: \wbisim{\olt}{\Scomp{(\Pcomp{\olt}{\olt})}{\const{map_op}\
+                    \reassoc\ \reassoc\ (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                        (\Pcomp{\IdOp}{\TranspOp})}{\IdOp})}} \quad \text{for } \olt \in
+            \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F3}\!: \wbisim{\Feedback{(\const{map_op}\ \const{id}\ \const{Inr}\
+                    \ogt)}}{\SinkOp} \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F4}\!: \wbisim{\Feedback{(\const{map_op}\ \const{Inr}\ \const{id}\
+                    \olt)}}{\SourceOp} \quad \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F5}\!:
+            \wbisim{\Feedback{(\Scomp{\Scomp{(\Pcomp{\IdOp}{\AcopyOp})}{\const{map_op}\
+                            \reassoc\ \reassoc\
+                            (\Pcomp{\TranspOp}{\IdOp})}}{(\Pcomp{\IdOp}{\AeqOp})})}}{\Scomp{\SinkOp}{\SourceOp}}
+            $}
+    \end{tabular}
+    \vspace*{-4ex}
+\end{table}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Properties of equality test, merge, copy, split, source and sink operators}
+    \vspace*{-4ex}
+\begin{table}[t]
+    \addtolength{\tabcolsep}{-0.8em}
+    \begin{tabular}{ l l l }
+        \multicolumn{3}{l}{$\text{A1}\!: \wbisim{\Scomp{(\Pcomp{\AeqOp}{\IdOp})}{\AeqOp}}{\const{map_op}\ \assoc\ \const{id}\ (\Scomp{(\Pcomp{\IdOp}{\AeqOp})}{\AeqOp})} %\quad \text{for
+                %} \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        $
+        \text{A2}\!: \highlight{\wbisim{\Scomp{\TranspOp}{\ogt}}{\ogt} \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}}
+        $ &
+        $
+        \text{A6}\!: \highlight{\wbisim{\Scomp{\olt}{\TranspOp}}{\olt} \quad \text{for } \olt \in \{\AcopyOp, \SplitOp\} }
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A3}_\AeqOp\!: \wbisim{\Scomp{(\Pcomp{(\SourceOp \oftype (\type{0},
+                        \tvar{a}, \tvar{d})\ \type{op})}{\IdOp})}{\AeqOp}}{\Scomp{(\SinkOp \oftype
+                    (\type{0} + \tvar{a}, \type{0}, \tvar{d})\ \type{op})}{\SourceOp}}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A3}_\MergeOp\!: \wbisim{\Scomp{(\Pcomp{(\SourceOp \oftype (\type{0},
+                        \tvar{a}, \tvar{d})\ \type{op})}{\IdOp})}{\MergeOp}}{\const{map_op}\
+                \const{Inr}\ \const{id}\ \IdOp}
+            $} \\
+        $
+        \text{A4}\!: \wbisim{\Scomp{\ogt}{\SinkOp}}{\Pcomp{\SinkOp}{\SinkOp}}
+        \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+        $ &
+        $
+        \text{A8}\!:
+        \wbisim{\Scomp{\SourceOp}{\olt}}{\Pcomp{\SourceOp}{\SourceOp}} \quad
+        \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+        $ \\
+        $
+        \text{A5}\!:
+        \wbisim{\Scomp{\AcopyOp}{(\Pcomp{\AcopyOp}{\IdOp})}}{\const{map_op}\
+            \const{id}\ \assoc\ (\Scomp{\AcopyOp}{(\Pcomp{\IdOp}{\AcopyOp})})}
+        $ \\
+        $
+        \text{A7}\!:
+        \wbisim{\Scomp{\AcopyOp}{(\Pcomp{\SinkOp}{\IdOp})}}{\const{map_op}\
+            \const{id}\ \const{Inr}\ \IdOp}
+        $ &
+        $
+        \text{A9}\!: \wbisim{\Scomp{\SourceOp}{\SinkOp}}{\IdOp}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A10}\!:
+            \wbisim{\Scomp{\AeqOp}{\AcopyOp}}{\Scomp{\Scomp{(\Pcomp{\AcopyOp}{\AcopyOp})}{(\const{map_op}\
+                        \reassoc\ \reassoc\ (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                            (\Pcomp{\IdOp}{\TranspOp})}{\IdOp}))}}{(\Pcomp{\AeqOp\,}{\AeqOp\,})}}
+            $} \\
+        $
+        \text{A11}\!: \wbisim{\Scomp{\AcopyOp}{\AeqOp}}{\IdOp}
+        $ &
+        $
+        \text{A12}\!: \wbisim{\SourceOp}{(\IdOp \oftype (\type{0}, \type{0},
+            \tvar{d})\ \type{op})}
+        $ \\
+        $
+        \text{A16}\!: \wbisim{\SinkOp}{(\IdOp \oftype (\type{0}, \type{0},
+            \tvar{d})\ \type{op})}
+        $ &
+        $
+        \text{A13}\!: \wbisim{\SourceOp}{\Pcomp{\SourceOp}{\SourceOp}}
+        $ &
+        $
+        \text{A17}\!: \wbisim{\SinkOp}{\Pcomp{\SinkOp}{\SinkOp}}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A14}\!: \wbisim{\const{map_op}\ \const{id}\ \const{Inl}\ (\ogt
+                \oftype (\type{0} + \type{0}, \type{0}, \tvar{d})\ \type{op})}{\IdOp}
+            \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A15}\!: \wbisim{\ogt}{\Scomp{\const{map_op}\ \reassoc\ \reassoc\
+                    (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                        (\Pcomp{\IdOp}{\TranspOp})}{\IdOp})}{(\Pcomp{\ogt}{\ogt})}} \quad
+            \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A18}\!: \wbisim{\const{map_op}\ \const{Inl}\ \const{id}\ (\olt
+                \oftype (\type{0}, \type{0} + \type{0}, \tvar{d})\ \type{op})}{\IdOp}
+            \quad \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A19}\!: \wbisim{\olt}{\Scomp{(\Pcomp{\olt}{\olt})}{\const{map_op}\
+                    \reassoc\ \reassoc\ (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                        (\Pcomp{\IdOp}{\TranspOp})}{\IdOp})}} \quad \text{for } \olt \in
+            \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F3}\!: \wbisim{\Feedback{(\const{map_op}\ \const{id}\ \const{Inr}\
+                    \ogt)}}{\SinkOp} \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F4}\!: \wbisim{\Feedback{(\const{map_op}\ \const{Inr}\ \const{id}\
+                    \olt)}}{\SourceOp} \quad \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F5}\!:
+            \wbisim{\Feedback{(\Scomp{\Scomp{(\Pcomp{\IdOp}{\AcopyOp})}{\const{map_op}\
+                            \reassoc\ \reassoc\
+                            (\Pcomp{\TranspOp}{\IdOp})}}{(\Pcomp{\IdOp}{\AeqOp})})}}{\Scomp{\SinkOp}{\SourceOp}}
+            $}
+    \end{tabular}
+    \vspace*{-4ex}
+\end{table}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Properties of equality test, merge, copy, split, source and sink operators}
+    \vspace*{-4ex}
+\begin{table}[t]
+    \addtolength{\tabcolsep}{-0.8em}
+    \begin{tabular}{ l l l }
+        \multicolumn{3}{l}{$\text{A1}\!: \wbisim{\Scomp{(\Pcomp{\AeqOp}{\IdOp})}{\AeqOp}}{\const{map_op}\ \assoc\ \const{id}\ (\Scomp{(\Pcomp{\IdOp}{\AeqOp})}{\AeqOp})} %\quad \text{for
+                %} \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        $
+        \text{A2}\!: \wbisim{\Scomp{\TranspOp}{\ogt}}{\ogt} \quad \text{for } \ogt
+        \in \{\AeqOp, \MergeOp\}
+        $ &
+        $
+        \text{A6}\!: \wbisim{\Scomp{\olt}{\TranspOp}}{\olt} \quad \text{for } \olt
+        \in \{\AcopyOp, \SplitOp\}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A3}_\AeqOp\!: \wbisim{\Scomp{(\Pcomp{(\SourceOp \oftype (\type{0},
+                        \tvar{a}, \tvar{d})\ \type{op})}{\IdOp})}{\AeqOp}}{\Scomp{(\SinkOp \oftype
+                    (\type{0} + \tvar{a}, \type{0}, \tvar{d})\ \type{op})}{\SourceOp}}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A3}_\MergeOp\!: \wbisim{\Scomp{(\Pcomp{(\SourceOp \oftype (\type{0},
+                        \tvar{a}, \tvar{d})\ \type{op})}{\IdOp})}{\MergeOp}}{\const{map_op}\
+                \const{Inr}\ \const{id}\ \IdOp}
+            $} \\
+        $
+        \text{A4}\!: \wbisim{\Scomp{\ogt}{\SinkOp}}{\Pcomp{\SinkOp}{\SinkOp}}
+        \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+        $ &
+        $
+        \text{A8}\!:
+        \wbisim{\Scomp{\SourceOp}{\olt}}{\Pcomp{\SourceOp}{\SourceOp}} \quad
+        \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+        $ \\
+        $
+        \text{A5}\!:
+        \wbisim{\Scomp{\AcopyOp}{(\Pcomp{\AcopyOp}{\IdOp})}}{\const{map_op}\
+            \const{id}\ \assoc\ (\Scomp{\AcopyOp}{(\Pcomp{\IdOp}{\AcopyOp})})}
+        $ \\
+        $
+        \text{A7}\!:
+        \wbisim{\Scomp{\AcopyOp}{(\Pcomp{\SinkOp}{\IdOp})}}{\const{map_op}\
+            \const{id}\ \const{Inr}\ \IdOp}
+        $ &
+        $
+        \text{A9}\!: \wbisim{\Scomp{\SourceOp}{\SinkOp}}{\IdOp}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A10}\!:
+            \wbisim{\Scomp{\AeqOp}{\AcopyOp}}{\Scomp{\Scomp{(\Pcomp{\AcopyOp}{\AcopyOp})}{(\const{map_op}\
+                        \reassoc\ \reassoc\ (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                            (\Pcomp{\IdOp}{\TranspOp})}{\IdOp}))}}{(\Pcomp{\AeqOp\,}{\AeqOp\,})}}
+            $} \\
+        $
+        \text{A11}\!: \highlight{\wbisim{\Scomp{\AcopyOp}{\AeqOp}}{\IdOp}}
+        $ &
+        $
+        \text{A12}\!: \wbisim{\SourceOp}{(\IdOp \oftype (\type{0}, \type{0},
+            \tvar{d})\ \type{op})}
+        $ \\
+        $
+        \text{A16}\!: \wbisim{\SinkOp}{(\IdOp \oftype (\type{0}, \type{0},
+            \tvar{d})\ \type{op})}
+        $ &
+        $
+        \text{A13}\!: \wbisim{\SourceOp}{\Pcomp{\SourceOp}{\SourceOp}}
+        $ &
+        $
+        \text{A17}\!: \wbisim{\SinkOp}{\Pcomp{\SinkOp}{\SinkOp}}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A14}\!: \wbisim{\const{map_op}\ \const{id}\ \const{Inl}\ (\ogt
+                \oftype (\type{0} + \type{0}, \type{0}, \tvar{d})\ \type{op})}{\IdOp}
+            \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A15}\!: \wbisim{\ogt}{\Scomp{\const{map_op}\ \reassoc\ \reassoc\
+                    (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                        (\Pcomp{\IdOp}{\TranspOp})}{\IdOp})}{(\Pcomp{\ogt}{\ogt})}} \quad
+            \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A18}\!: \wbisim{\const{map_op}\ \const{Inl}\ \const{id}\ (\olt
+                \oftype (\type{0}, \type{0} + \type{0}, \tvar{d})\ \type{op})}{\IdOp}
+            \quad \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A19}\!: \wbisim{\olt}{\Scomp{(\Pcomp{\olt}{\olt})}{\const{map_op}\
+                    \reassoc\ \reassoc\ (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                        (\Pcomp{\IdOp}{\TranspOp})}{\IdOp})}} \quad \text{for } \olt \in
+            \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F3}\!: \wbisim{\Feedback{(\const{map_op}\ \const{id}\ \const{Inr}\
+                    \ogt)}}{\SinkOp} \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F4}\!: \wbisim{\Feedback{(\const{map_op}\ \const{Inr}\ \const{id}\
+                    \olt)}}{\SourceOp} \quad \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F5}\!:
+            \wbisim{\Feedback{(\Scomp{\Scomp{(\Pcomp{\IdOp}{\AcopyOp})}{\const{map_op}\
+                            \reassoc\ \reassoc\
+                            (\Pcomp{\TranspOp}{\IdOp})}}{(\Pcomp{\IdOp}{\AeqOp})})}}{\Scomp{\SinkOp}{\SourceOp}}
+            $}
+    \end{tabular}
+    \vspace*{-4ex}
+\end{table}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Properties of equality test, merge, copy, split, source and sink operators}
+    \vspace*{-4ex}
+\begin{table}[t]
+    \addtolength{\tabcolsep}{-0.8em}
+    \begin{tabular}{ l l l }
+        \multicolumn{3}{l}{$\text{A1}\!: \wbisim{\Scomp{(\Pcomp{\AeqOp}{\IdOp})}{\AeqOp}}{\const{map_op}\ \assoc\ \const{id}\ (\Scomp{(\Pcomp{\IdOp}{\AeqOp})}{\AeqOp})} %\quad \text{for
+                %} \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        $
+        \text{A2}\!: \wbisim{\Scomp{\TranspOp}{\ogt}}{\ogt} \quad \text{for } \ogt
+        \in \{\AeqOp, \MergeOp\}
+        $ &
+        $
+        \text{A6}\!: \wbisim{\Scomp{\olt}{\TranspOp}}{\olt} \quad \text{for } \olt
+        \in \{\AcopyOp, \SplitOp\}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A3}_\AeqOp\!: \wbisim{\Scomp{(\Pcomp{(\SourceOp \oftype (\type{0},
+                        \tvar{a}, \tvar{d})\ \type{op})}{\IdOp})}{\AeqOp}}{\Scomp{(\SinkOp \oftype
+                    (\type{0} + \tvar{a}, \type{0}, \tvar{d})\ \type{op})}{\SourceOp}}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A3}_\MergeOp\!: \wbisim{\Scomp{(\Pcomp{(\SourceOp \oftype (\type{0},
+                        \tvar{a}, \tvar{d})\ \type{op})}{\IdOp})}{\MergeOp}}{\const{map_op}\
+                \const{Inr}\ \const{id}\ \IdOp}
+            $} \\
+        $
+        \text{A4}\!: \wbisim{\Scomp{\ogt}{\SinkOp}}{\Pcomp{\SinkOp}{\SinkOp}}
+        \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+        $ &
+        $
+        \text{A8}\!:
+        \wbisim{\Scomp{\SourceOp}{\olt}}{\Pcomp{\SourceOp}{\SourceOp}} \quad
+        \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+        $ \\
+        $
+        \text{A5}\!:
+        \wbisim{\Scomp{\AcopyOp}{(\Pcomp{\AcopyOp}{\IdOp})}}{\const{map_op}\
+            \const{id}\ \assoc\ (\Scomp{\AcopyOp}{(\Pcomp{\IdOp}{\AcopyOp})})}
+        $ \\
+        $
+        \text{A7}\!:
+        \wbisim{\Scomp{\AcopyOp}{(\Pcomp{\SinkOp}{\IdOp})}}{\const{map_op}\
+            \const{id}\ \const{Inr}\ \IdOp}
+        $ &
+        $
+        \text{A9}\!: \wbisim{\Scomp{\SourceOp}{\SinkOp}}{\IdOp}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A10}\!: \highlight{\wbisim{\Scomp{\AeqOp}{\AcopyOp}}{\Scomp{\Scomp{(\Pcomp{\AcopyOp}{\AcopyOp})}{(\const{map_op}\ \reassoc\ \reassoc\ (\Pcomp{\const{map_op}\ \assoc\ \assoc\ (\Pcomp{\IdOp}{\TranspOp})}{\IdOp}))}}{(\Pcomp{\AeqOp\,}{\AeqOp\,})}} }$} \\
+        $
+        \text{A11}\!: \wbisim{\Scomp{\AcopyOp}{\AeqOp}}{\IdOp}
+        $ &
+        $
+        \text{A12}\!: \wbisim{\SourceOp}{(\IdOp \oftype (\type{0}, \type{0},
+            \tvar{d})\ \type{op})}
+        $ \\
+        $
+        \text{A16}\!: \wbisim{\SinkOp}{(\IdOp \oftype (\type{0}, \type{0},
+            \tvar{d})\ \type{op})}
+        $ &
+        $
+        \text{A13}\!: \wbisim{\SourceOp}{\Pcomp{\SourceOp}{\SourceOp}}
+        $ &
+        $
+        \text{A17}\!: \wbisim{\SinkOp}{\Pcomp{\SinkOp}{\SinkOp}}
+        $ \\
+        \multicolumn{3}{l}{$
+            \text{A14}\!: \wbisim{\const{map_op}\ \const{id}\ \const{Inl}\ (\ogt
+                \oftype (\type{0} + \type{0}, \type{0}, \tvar{d})\ \type{op})}{\IdOp}
+            \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A15}\!: \wbisim{\ogt}{\Scomp{\const{map_op}\ \reassoc\ \reassoc\
+                    (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                        (\Pcomp{\IdOp}{\TranspOp})}{\IdOp})}{(\Pcomp{\ogt}{\ogt})}} \quad
+            \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A18}\!: \wbisim{\const{map_op}\ \const{Inl}\ \const{id}\ (\olt
+                \oftype (\type{0}, \type{0} + \type{0}, \tvar{d})\ \type{op})}{\IdOp}
+            \quad \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{A19}\!: \wbisim{\olt}{\Scomp{(\Pcomp{\olt}{\olt})}{\const{map_op}\
+                    \reassoc\ \reassoc\ (\Pcomp{\const{map_op}\ \assoc\ \assoc\
+                        (\Pcomp{\IdOp}{\TranspOp})}{\IdOp})}} \quad \text{for } \olt \in
+            \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F3}\!: \wbisim{\Feedback{(\const{map_op}\ \const{id}\ \const{Inr}\
+                    \ogt)}}{\SinkOp} \quad \text{for } \ogt \in \{\AeqOp, \MergeOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F4}\!: \wbisim{\Feedback{(\const{map_op}\ \const{Inr}\ \const{id}\
+                    \olt)}}{\SourceOp} \quad \text{for } \olt \in \{\AcopyOp, \SplitOp\}
+            $} \\
+        \multicolumn{3}{l}{$
+            \text{F5}\!:
+            \wbisim{\Feedback{(\Scomp{\Scomp{(\Pcomp{\IdOp}{\AcopyOp})}{\const{map_op}\
+                            \reassoc\ \reassoc\
+                            (\Pcomp{\TranspOp}{\IdOp})}}{(\Pcomp{\IdOp}{\AeqOp})})}}{\Scomp{\SinkOp}{\SourceOp}}
+            $}
+    \end{tabular}
+    \vspace*{-4ex}
+\end{table}
+\end{frame}
 \begin{frame}[fragile]
   \frametitle{A10}
-  \begin{figure}
-    \centering
-    \includegraphics[width=1\textwidth]{table_1_3.png}
-  \end{figure}
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}
+    \pic (aeq0) at (-1, 0) {aeqA};
+    \pic (acopy0) at (1, 0) {acopyA};
+
+    \draw [-, postaction={decoration={
+          text effects along path,
+          text={{}{\(z\)}},
+          text align=center,
+          text effects/.cd,
+          text along path,
+          characters={fill=white, yshift=-0.6ex},
+        }, decorate}]  (aeq0-o) to (acopy0-i);
+
+    \node at (2.5, 0) {\LARGE \(\wbisim{}{}\)};
+
+    \pic (acopy1) at (4, 1.5) {acopyB};
+    \pic (acopy2) at (4, -1.5) {acopyC};
+    \pic (transp1) at (6, 0) {transpC};
+    \pic (id0) at (6, 1.85) {idB};
+    \pic (id1) at (6, -1.85) {idC};
+    \pic (aeq1) at (8, 1.5) {aeqB};
+    \pic (aeq2) at (8, -1.5) {aeqC};
+
+    \draw [-, postaction={decoration={
+          text effects along path,
+          text={{}{\(a_2\)}},
+          text align=center,
+          text effects/.cd,
+          text along path,
+          characters={fill=white, yshift=-0.4ex},
+        }, decorate}]  (acopy1-ol) to (id0-i);
+    \draw [-, postaction={decoration={
+          text effects along path,
+          text={{}{\(b_2\)}},
+          text align=center,
+          text effects/.cd,
+          text along path,
+          characters={fill=white, yshift=-0.4ex},
+        }, decorate}]  (acopy1-or) to (transp1-il);
+    \draw [-, postaction={decoration={
+          text effects along path,
+          text={{}{\(c_2\)}},
+          text align=center,
+          text effects/.cd,
+          text along path,
+          characters={fill=white, yshift=-0.4ex},
+        }, decorate}]  (acopy2-ol) to (transp1-ir);
+    \draw [-, postaction={decoration={
+          text effects along path,
+          text={{}{\(d_2\)}},
+          text align=center,
+          text effects/.cd,
+          text along path,
+          characters={fill=white, yshift=-0.4ex},
+        }, decorate}]  (acopy2-or) to (id1-i);
+    \draw [-, postaction={decoration={
+          text effects along path,
+          text={{}{\(a_4\)}},
+          text align=center,
+          text effects/.cd,
+          text along path,
+          characters={fill=white, yshift=-0.4ex},
+        }, decorate}]  (id0-o) to (aeq1-il);
+    \draw [-, postaction={decoration={
+          text effects along path,
+          text={{}{\(c_4\)}},
+          text align=center,
+          text effects/.cd,
+          text along path,
+          characters={fill=white, yshift=-0.4ex},
+        }, decorate}]  (transp1-ol) to (aeq1-ir);
+    \draw [-, postaction={decoration={
+          text effects along path,
+          text={{}{\(b_4\)}},
+          text align=center,
+          text effects/.cd,
+          text along path,
+          characters={fill=white, yshift=-0.4ex},
+        }, decorate}]  (transp1-or) to (aeq2-il);
+    \draw [-, postaction={decoration={
+          text effects along path,
+          text={{}{\(d_4\)}},
+          text align=center,
+          text effects/.cd,
+          text along path,
+          characters={fill=white, yshift=-0.4ex},
+        }, decorate}]  (id1-o) to (aeq2-ir);
+
+  \end{tikzpicture}
+  \vspace*{-3ex}
+\end{figure}
+\begin{itemize}
+  \item $\wbisim{}{}$ coinduction principle
+  \item Buffers generalization
+  \item Buffers invariant
+\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Well-Behaved Operators}
-  \begin{figure}
-    \centering
-    \includegraphics[width=1\textwidth]{table_1_3.png}
-  \end{figure}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Well-Behaved Operators}
+%   \begin{itemize}
+%     \item Some axioms for the operator codatatype have some
+%   \end{itemize}
+% \end{frame}
 
 \section{Related Work}
 
@@ -1026,17 +2090,31 @@
 \begin{frame}
   \frametitle{Conclusion}
   \begin{itemize}
-    \item Isabelle/HOL has a good tool set to formalize and reason about stream processing:
+    \item An Isabelle/HOL instance of Nondeterministic Asynchronous Dataflow
+          \pause
+    \item Isabelle/HOL has a good tool set:
           \begin{itemize}
-            \item Codatatypes, coinductive predicates, corecursion with friends, reasoning up to friends (congruence),
-                  \begin{itemize}
-                    \item Coinduction up to congruence principle is automatically derived for codatatypes (but not for coinductive principles)
-                  \end{itemize}
+            \item Codatatypes, corecursion, coinductive predicates
           \end{itemize}
-    \item Next step: Feedback loop
+          \pause
+    \item 51/52 axioms proved
+          \begin{itemize}
+            \item Axiom A1 for the merge operator does not hold in our instance when equivalence is $\wbisim{}{}$. \\
+                  We conjecture it also does not hold in the process algebra from Bergstra et al.
+          \end{itemize}
+          \pause
+    \item Jonsson’s trace model, trace equivalence
+          \pause
+    \item Around 28 000 lines of definitions and proofs
+          \pause
+    \item Future work:
+          \begin{itemize}
+            \item Brock–Andersen Time anomaly
+            \item Formalize Timely Dataflow infrastructure
+            \item Verify Timely Dataflow algorithms
+          \end{itemize}
   \end{itemize}
 \end{frame}
-            %             slide about tecnicques used, coinduction principles, friends, reasoning up to friends, generalization using skip_op, combining coinduction and induction, coinduction up to congruence for coinductive predicates, say our paper is more detailed in these topics
 
 \section{Questions, comments and suggestions}
 
