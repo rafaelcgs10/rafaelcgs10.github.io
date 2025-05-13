@@ -568,41 +568,420 @@
 \begin{frame}[fragile]
   \frametitle{Asynchronous Dataflow Operators}
   \begin{itemize}
-    \item foo
+    \item Identity: $\IdOp$
+    \item Parallel composition: $\Pcomp{\var{op}_1}{\var{op}_2}$
+    \item Sequential composition: $\Scomp{\var{op}_1}{\var{op}_2}$
   \end{itemize}
+  \pause
+
+  \begin{tcbraster}[raster columns=2, raster equal height]
+  \begin{tcolorbox}[enhanced,title=Feedback operator type ($\Feedback{op}$) ,colback=yellow!30]
+    \vspace*{-7ex}
+    \hspace*{-8ex}
+    \begin{align*}
+      & \hspace*{-6ex} \Feedback{} \ \oftype \type{(\tvar{i} + \tvar{m}, \tvar{o} + \tvar{m}, \tvar{d}) \ op \Fun (\tvar{i}, \tvar{o}, \tvar{d}) \ op}
+    \end{align*}
+    \vspace*{-6ex}
+  \end{tcolorbox}
+  \pause
+  \begin{tcolorbox}[enhanced,title=Transpose operator type,colback=yellow!30]
+    \vspace*{-7ex}
+    \hspace*{-8ex}
+    \begin{align*}
+      & \hspace*{-6ex} \TranspOp \ \oftype \type{(\tvar{n} + \tvar{m}, \tvar{m} + \tvar{n}, \tvar{d}) \ op}
+    \end{align*}
+    \vspace*{-6ex}
+  \end{tcolorbox}
+  \end{tcbraster}
+  \pause
+
+  \begin{tcbraster}[raster columns=2, raster equal height]
+  \begin{tcolorbox}[enhanced,title=Dummy source operator type,colback=yellow!30]
+    \vspace*{-7ex}
+    \hspace*{-8ex}
+    \begin{align*}
+      & \hspace*{-6ex} \SourceOp \ \oftype \type{(\tvar{i}, \tvar{o}, \tvar{d}) \ op}
+    \end{align*}
+    \vspace*{-6ex}
+  \end{tcolorbox}
+  \pause
+  \begin{tcolorbox}[enhanced,title=Sink operator type,colback=yellow!30]
+    \vspace*{-7ex}
+    \hspace*{-8ex}
+    \begin{align*}
+      & \hspace*{-6ex} \SinkOp \ \oftype \type{(\tvar{i}, \tvar{o}, \tvar{d}) \ op}
+    \end{align*}
+    \vspace*{-6ex}
+  \end{tcolorbox}
+  \end{tcbraster}
+  \pause
+
+  \begin{tcbraster}[raster columns=2, raster equal height]
+  \begin{tcolorbox}[enhanced,title=Split operator type,colback=yellow!30]
+    \vspace*{-7ex}
+    \hspace*{-8ex}
+    \begin{align*}
+      & \hspace*{-6ex} \SplitOp \ \oftype \type{(\tvar{n}, \tvar{n} + \tvar{n}, \tvar{d}) \ op}
+    \end{align*}
+    \vspace*{-6ex}
+  \end{tcolorbox}
+  \pause
+  \begin{tcolorbox}[enhanced,title=Merge operator type,colback=yellow!30]
+    \vspace*{-7ex}
+    \hspace*{-8ex}
+    \begin{align*}
+      & \hspace*{-6ex} \MergeOp \ \oftype \type{(\tvar{n} + \tvar{n}, \tvar{n}, \tvar{d}) \ op}
+    \end{align*}
+    \vspace*{-6ex}
+  \end{tcolorbox}
+  \end{tcbraster}
+  \pause
+
+  \begin{tcbraster}[raster columns=2, raster equal height]
+  \begin{tcolorbox}[enhanced,title=Copy operator type,colback=yellow!30]
+    \vspace*{-7ex}
+    \hspace*{-8ex}
+    \begin{align*}
+      & \hspace*{-6ex} \AcopyOp \ \oftype \type{(\tvar{n}, \tvar{n} + \tvar{n}, \tvar{d}) \ op}
+    \end{align*}
+    \vspace*{-6ex}
+  \end{tcolorbox}
+  \pause
+  \begin{tcolorbox}[enhanced,title=Equality test operator type,colback=yellow!30]
+    \vspace*{-7ex}
+    \hspace*{-8ex}
+    \begin{align*}
+      & \hspace*{-6ex} \AeqOp \ \oftype \type{(\tvar{n} + \tvar{n}, \tvar{n}, \tvar{d} \ \type{option}) \ op}
+    \end{align*}
+    \vspace*{-6ex}
+  \end{tcolorbox}
+  \end{tcbraster}
 \end{frame}
 
 \section{Asynchronous Dataflow Properties}
 \begin{frame}[fragile]
   \frametitle{Basic network algebra properties}
-  \begin{figure}
-    \centering
-    \includegraphics[width=1\textwidth]{table_1.png}
-  \end{figure}
+    \vspace*{-4ex}
+\begin{table}[t]
+    \begin{tabular}{ l l }
+        \multicolumn{2}{l}{$\text{B1}\!:
+            \wbisim{\Pcomp{\var{op}_1}{(\Pcomp{\var{op}_2}{\var{op}_3})}}{\const{map_op}\
+                \reassoc\ \reassoc\
+                \Pcomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{\var{op}_3}}$} \\
+        $\text{B2\_1}\!: \wbisim{\Pcomp{\var{op}}{(\IdOp \oftype
+                (\type{0}, \type{0}, \tvar{d})\ \type{op})}}{\const{map_op}\ \const{Inl}\
+            \const{Inl}\ \var{op}}$ \\
+        $\text{B2\_2}\!: \wbisim{\Pcomp{(\IdOp \oftype (\type{0},
+                \type{0}, \tvar{d})\ \type{op})}{\var{op}}}{\const{map_op}\ \const{Inr}\
+            \const{Inr}\ \var{op}}$ \\
+        \multicolumn{2}{l}{$\text{B3}\!:
+            \wbisim{\Scomp{(\Scomp{\var{op}_1}{\var{op}_2})}{\var{op}_3}}{\Scomp{\var{op}_1}{(\Scomp{\var{op}_2}{\var{op}_3})}}$} \\
+        $\text{B4\_1}\!: \wbisim{\Scomp{\var{op}\, }{\IdOp}}{\var{op}\,}$ &
+        $\text{B4\_2}\!: \wbisim{\Scomp{\IdOp}{\var{op}}}{\var{op}}$ \\
+        \multicolumn{2}{l}{$\text{B5}\!:
+            \wbisim{\Scomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{(\Pcomp{\var{op}_3}{\var{op}_4})}}{\Pcomp{(\Scomp{\var{op}_1}{\var{op}_3})}{(\Scomp{\var{op}_2}{\var{op}_4})}}$} \\
+        $\text{B6}\!: \wbisim{\Pcomp{\IdOp}{\IdOp}}{\IdOp}$ &
+        $\text{B7}\!: \wbisim{\Scomp{\TranspOp}{\TranspOp}}{\IdOp}$ \\
+        \multicolumn{2}{l}{$\text{B8}\!: \wbisim{(\TranspOp \oftype (\tvar{i} + \type{0},
+                \type{0} + \tvar{i}, \tvar{d})\ \type{op})}{\const{map_op}\ \const{id}\
+                (\const{case_sum}\ \const{Inr}\ \const{Inl})\ \IdOp}$} \\
+        \multicolumn{2}{l}{$\text{B9}\!: \wbisim{\TranspOp}{\Scomp{\const{map_op}\
+                    \reassoc\ \reassoc\
+                    (\Pcomp{\TranspOp}{\IdOp})}{\const{map_op}\ \const{id}\ \assoc\
+                    (\Pcomp{\IdOp}{\TranspOp})}}$} \\
+        \multicolumn{2}{l}{$\text{B10}\!: \wbisim{\Scomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{\TranspOp}}{\Scomp{\TranspOp}{(\Pcomp{\var{op}_2}{\var{op}_1 )}}}$} \\
+        $\text{F1}\!: \wbisim{\Feedback{\IdOp}}{(\IdOp \oftype
+            (\type{0}, \type{0}, \tvar{d})\ \type{op})}$ &
+        $\text{F2}\!: \wbisim{\Feedback{\TranspOp}}{\IdOp}$ \\
+      \multicolumn{2}{l}{$\text{R1}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Scomp{\var{op}_2}{(\Feedback{\var{op}_1})}}{\Feedback{(\Scomp{(\Pcomp{\var{op}_2}{\IdOp})}{\var{op}_1})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R2}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Scomp{(\Feedback{\var{op}_1})}{\var{op}_2}}{\Feedback{(\Scomp{\var{op}_1}{(\Pcomp{\var{op}_2}{\IdOp})})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R3}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\Pcomp{\var{op}_1}{(\Feedback{\var{op}_2})}}{\Feedback{(\const{map_op}\
+                        \assoc\ \assoc\ (\Pcomp{\var{op}_1}{\var{op}_2}))}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R4}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Feedback{(\Scomp{\var{op}_1}{(\Pcomp{\IdOp}{\var{op}_2})})}}{\Feedback{(\Scomp{(\Pcomp{\IdOp}{\var{op}_2})}{\var{op}_1})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R5}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\const{map_op}\ \const{Inl}\ \const{Inl}\ (\Feedback{(\var{op}  \oftype (\tvar{i} + \type{0},
+                        \tvar{o} + \type{0}, \tvar{d})\ \type{op})})}{\var{op}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R6}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\Feedback{(\Feedback{\var{op}})}}{\Feedback{(\const{map_op}\ \reassoc\ \reassoc \ \var{op})}}$
+        \end{tabular}}
+    \end{tabular}
+    \vspace*{-4ex}
+\end{table}
 \end{frame}
 
 \begin{frame}[fragile, noframenumbering]
   \frametitle{Basic network algebra properties}
-  \begin{figure}
-    \centering
-    \includegraphics[width=1\textwidth]{table_1_1.png}
-  \end{figure}
+    \vspace*{-4ex}
+\begin{table}[t]
+    \begin{tabular}{ l l }
+        \multicolumn{2}{l}{$\text{B1}\!:
+            \highlight{\wbisim{\Pcomp{\var{op}_1}{(\Pcomp{\var{op}_2}{\var{op}_3})}}{\const{map_op}\ \reassoc\ \reassoc\ \Pcomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{\var{op}_3}}}$} \\
+        $\text{B2\_1}\!: \wbisim{\Pcomp{\var{op}}{(\IdOp \oftype
+                (\type{0}, \type{0}, \tvar{d})\ \type{op})}}{\const{map_op}\ \const{Inl}\
+            \const{Inl}\ \var{op}}$ \\
+        $\text{B2\_2}\!: \wbisim{\Pcomp{(\IdOp \oftype (\type{0},
+                \type{0}, \tvar{d})\ \type{op})}{\var{op}}}{\const{map_op}\ \const{Inr}\
+            \const{Inr}\ \var{op}}$ \\
+        \multicolumn{2}{l}{$\text{B3}\!:
+            \wbisim{\Scomp{(\Scomp{\var{op}_1}{\var{op}_2})}{\var{op}_3}}{\Scomp{\var{op}_1}{(\Scomp{\var{op}_2}{\var{op}_3})}}$} \\
+        $\text{B4\_1}\!: \wbisim{\Scomp{\var{op}\, }{\IdOp}}{\var{op}\,}$ &
+        $\text{B4\_2}\!: \wbisim{\Scomp{\IdOp}{\var{op}}}{\var{op}}$ \\
+        \multicolumn{2}{l}{$\text{B5}\!:
+            \wbisim{\Scomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{(\Pcomp{\var{op}_3}{\var{op}_4})}}{\Pcomp{(\Scomp{\var{op}_1}{\var{op}_3})}{(\Scomp{\var{op}_2}{\var{op}_4})}}$} \\
+        $\text{B6}\!: \wbisim{\Pcomp{\IdOp}{\IdOp}}{\IdOp}$ &
+        $\text{B7}\!: \wbisim{\Scomp{\TranspOp}{\TranspOp}}{\IdOp}$ \\
+        \multicolumn{2}{l}{$\text{B8}\!: \wbisim{(\TranspOp \oftype (\tvar{i} + \type{0},
+                \type{0} + \tvar{i}, \tvar{d})\ \type{op})}{\const{map_op}\ \const{id}\
+                (\const{case_sum}\ \const{Inr}\ \const{Inl})\ \IdOp}$} \\
+        \multicolumn{2}{l}{$\text{B9}\!: \wbisim{\TranspOp}{\Scomp{\const{map_op}\
+                    \reassoc\ \reassoc\
+                    (\Pcomp{\TranspOp}{\IdOp})}{\const{map_op}\ \const{id}\ \assoc\
+                    (\Pcomp{\IdOp}{\TranspOp})}}$} \\
+        \multicolumn{2}{l}{$\text{B10}\!: \wbisim{\Scomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{\TranspOp}}{\Scomp{\TranspOp}{(\Pcomp{\var{op}_2}{\var{op}_1 )}}}$} \\
+        $\text{F1}\!: \wbisim{\Feedback{\IdOp}}{(\IdOp \oftype
+            (\type{0}, \type{0}, \tvar{d})\ \type{op})}$ &
+        $\text{F2}\!: \wbisim{\Feedback{\TranspOp}}{\IdOp}$ \\
+      \multicolumn{2}{l}{$\text{R1}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Scomp{\var{op}_2}{(\Feedback{\var{op}_1})}}{\Feedback{(\Scomp{(\Pcomp{\var{op}_2}{\IdOp})}{\var{op}_1})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R2}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Scomp{(\Feedback{\var{op}_1})}{\var{op}_2}}{\Feedback{(\Scomp{\var{op}_1}{(\Pcomp{\var{op}_2}{\IdOp})})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R3}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\Pcomp{\var{op}_1}{(\Feedback{\var{op}_2})}}{\Feedback{(\const{map_op}\
+                        \assoc\ \assoc\ (\Pcomp{\var{op}_1}{\var{op}_2}))}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R4}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Feedback{(\Scomp{\var{op}_1}{(\Pcomp{\IdOp}{\var{op}_2})})}}{\Feedback{(\Scomp{(\Pcomp{\IdOp}{\var{op}_2})}{\var{op}_1})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R5}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\const{map_op}\ \const{Inl}\ \const{Inl}\ (\Feedback{(\var{op}  \oftype (\tvar{i} + \type{0},
+                        \tvar{o} + \type{0}, \tvar{d})\ \type{op})})}{\var{op}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R6}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\Feedback{(\Feedback{\var{op}})}}{\Feedback{(\const{map_op}\ \reassoc\ \reassoc \ \var{op})}}$
+        \end{tabular}}
+    \end{tabular}
+    \vspace*{-4ex}
+\end{table}
 \end{frame}
 
 \begin{frame}[fragile, noframenumbering]
   \frametitle{Basic network algebra properties}
-  \begin{figure}
-    \centering
-    \includegraphics[width=1\textwidth]{table_1_2.png}
-  \end{figure}
+    \vspace*{-4ex}
+\begin{table}[t]
+    \begin{tabular}{ l l }
+        \multicolumn{2}{l}{$\text{B1}\!:
+            \wbisim{\Pcomp{\var{op}_1}{(\Pcomp{\var{op}_2}{\var{op}_3})}}{\const{map_op}\ \reassoc\ \reassoc\ \Pcomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{\var{op}_3}}$} \\
+        $\text{B2\_1}\!: \wbisim{\Pcomp{\var{op}}{(\IdOp \oftype
+                (\type{0}, \type{0}, \tvar{d})\ \type{op})}}{\const{map_op}\ \const{Inl}\
+            \const{Inl}\ \var{op}}$ \\
+        $\text{B2\_2}\!: \wbisim{\Pcomp{(\IdOp \oftype (\type{0},
+                \type{0}, \tvar{d})\ \type{op})}{\var{op}}}{\const{map_op}\ \const{Inr}\
+            \const{Inr}\ \var{op}}$ \\
+        \multicolumn{2}{l}{$\text{B3}\!:
+            \highlight{\wbisim{\Scomp{(\Scomp{\var{op}_1}{\var{op}_2})}{\var{op}_3}}{\Scomp{\var{op}_1}{(\Scomp{\var{op}_2}{\var{op}_3})}}}$} \\
+        $\text{B4\_1}\!: \wbisim{\Scomp{\var{op}\, }{\IdOp}}{\var{op}\,}$ &
+        $\text{B4\_2}\!: \wbisim{\Scomp{\IdOp}{\var{op}}}{\var{op}}$ \\
+        \multicolumn{2}{l}{$\text{B5}\!:
+            \wbisim{\Scomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{(\Pcomp{\var{op}_3}{\var{op}_4})}}{\Pcomp{(\Scomp{\var{op}_1}{\var{op}_3})}{(\Scomp{\var{op}_2}{\var{op}_4})}}$} \\
+        $\text{B6}\!: \wbisim{\Pcomp{\IdOp}{\IdOp}}{\IdOp}$ &
+        $\text{B7}\!: \wbisim{\Scomp{\TranspOp}{\TranspOp}}{\IdOp}$ \\
+        \multicolumn{2}{l}{$\text{B8}\!: \wbisim{(\TranspOp \oftype (\tvar{i} + \type{0},
+                \type{0} + \tvar{i}, \tvar{d})\ \type{op})}{\const{map_op}\ \const{id}\
+                (\const{case_sum}\ \const{Inr}\ \const{Inl})\ \IdOp}$} \\
+        \multicolumn{2}{l}{$\text{B9}\!: \wbisim{\TranspOp}{\Scomp{\const{map_op}\
+                    \reassoc\ \reassoc\
+                    (\Pcomp{\TranspOp}{\IdOp})}{\const{map_op}\ \const{id}\ \assoc\
+                    (\Pcomp{\IdOp}{\TranspOp})}}$} \\
+        \multicolumn{2}{l}{$\text{B10}\!: \wbisim{\Scomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{\TranspOp}}{\Scomp{\TranspOp}{(\Pcomp{\var{op}_2}{\var{op}_1 )}}}$} \\
+        $\text{F1}\!: \wbisim{\Feedback{\IdOp}}{(\IdOp \oftype
+            (\type{0}, \type{0}, \tvar{d})\ \type{op})}$ &
+        $\text{F2}\!: \wbisim{\Feedback{\TranspOp}}{\IdOp}$ \\
+      \multicolumn{2}{l}{$\text{R1}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Scomp{\var{op}_2}{(\Feedback{\var{op}_1})}}{\Feedback{(\Scomp{(\Pcomp{\var{op}_2}{\IdOp})}{\var{op}_1})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R2}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Scomp{(\Feedback{\var{op}_1})}{\var{op}_2}}{\Feedback{(\Scomp{\var{op}_1}{(\Pcomp{\var{op}_2}{\IdOp})})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R3}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\Pcomp{\var{op}_1}{(\Feedback{\var{op}_2})}}{\Feedback{(\const{map_op}\
+                        \assoc\ \assoc\ (\Pcomp{\var{op}_1}{\var{op}_2}))}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R4}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Feedback{(\Scomp{\var{op}_1}{(\Pcomp{\IdOp}{\var{op}_2})})}}{\Feedback{(\Scomp{(\Pcomp{\IdOp}{\var{op}_2})}{\var{op}_1})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R5}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\const{map_op}\ \const{Inl}\ \const{Inl}\ (\Feedback{(\var{op}  \oftype (\tvar{i} + \type{0},
+                        \tvar{o} + \type{0}, \tvar{d})\ \type{op})})}{\var{op}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R6}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\Feedback{(\Feedback{\var{op}})}}{\Feedback{(\const{map_op}\ \reassoc\ \reassoc \ \var{op})}}$
+        \end{tabular}}
+    \end{tabular}
+    \vspace*{-4ex}
+\end{table}
 \end{frame}
 
 \begin{frame}[fragile, noframenumbering]
   \frametitle{Basic network algebra properties}
-  \begin{figure}
-    \centering
-    \includegraphics[width=1\textwidth]{table_1_3.png}
-  \end{figure}
+    \vspace*{-4ex}
+\begin{table}[t]
+    \begin{tabular}{ l l }
+        \multicolumn{2}{l}{$\text{B1}\!:
+            \wbisim{\Pcomp{\var{op}_1}{(\Pcomp{\var{op}_2}{\var{op}_3})}}{\const{map_op}\ \reassoc\ \reassoc\ \Pcomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{\var{op}_3}}$} \\
+        $\text{B2\_1}\!: \wbisim{\Pcomp{\var{op}}{(\IdOp \oftype
+                (\type{0}, \type{0}, \tvar{d})\ \type{op})}}{\const{map_op}\ \const{Inl}\
+            \const{Inl}\ \var{op}}$ \\
+        $\text{B2\_2}\!: \wbisim{\Pcomp{(\IdOp \oftype (\type{0},
+                \type{0}, \tvar{d})\ \type{op})}{\var{op}}}{\const{map_op}\ \const{Inr}\
+            \const{Inr}\ \var{op}}$ \\
+        \multicolumn{2}{l}{$\text{B3}\!:
+            \wbisim{\Scomp{(\Scomp{\var{op}_1}{\var{op}_2})}{\var{op}_3}}{\Scomp{\var{op}_1}{(\Scomp{\var{op}_2}{\var{op}_3})}}$} \\
+        $\text{B4\_1}\!: \wbisim{\Scomp{\var{op}\, }{\IdOp}}{\var{op}\,}$ &
+        $\text{B4\_2}\!: \wbisim{\Scomp{\IdOp}{\var{op}}}{\var{op}}$ \\
+        \multicolumn{2}{l}{$\text{B5}\!:
+            \wbisim{\Scomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{(\Pcomp{\var{op}_3}{\var{op}_4})}}{\Pcomp{(\Scomp{\var{op}_1}{\var{op}_3})}{(\Scomp{\var{op}_2}{\var{op}_4})}}$} \\
+        $\text{B6}\!: \wbisim{\Pcomp{\IdOp}{\IdOp}}{\IdOp}$ &
+        $\text{B7}\!: \wbisim{\Scomp{\TranspOp}{\TranspOp}}{\IdOp}$ \\
+        \multicolumn{2}{l}{$\text{B8}\!: \wbisim{(\TranspOp \oftype (\tvar{i} + \type{0},
+                \type{0} + \tvar{i}, \tvar{d})\ \type{op})}{\const{map_op}\ \const{id}\
+                (\const{case_sum}\ \const{Inr}\ \const{Inl})\ \IdOp}$} \\
+        \multicolumn{2}{l}{$\text{B9}\!: \wbisim{\TranspOp}{\Scomp{\const{map_op}\
+                    \reassoc\ \reassoc\
+                    (\Pcomp{\TranspOp}{\IdOp})}{\const{map_op}\ \const{id}\ \assoc\
+                    (\Pcomp{\IdOp}{\TranspOp})}}$} \\
+        \multicolumn{2}{l}{$\text{B10}\!: \highlight{\wbisim{\Scomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{\TranspOp}}{\Scomp{\TranspOp}{(\Pcomp{\var{op}_2}{\var{op}_1 )}}}}$} \\
+        $\text{F1}\!: \wbisim{\Feedback{\IdOp}}{(\IdOp \oftype
+            (\type{0}, \type{0}, \tvar{d})\ \type{op})}$ &
+        $\text{F2}\!: \wbisim{\Feedback{\TranspOp}}{\IdOp}$ \\
+      \multicolumn{2}{l}{$\text{R1}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Scomp{\var{op}_2}{(\Feedback{\var{op}_1})}}{\Feedback{(\Scomp{(\Pcomp{\var{op}_2}{\IdOp})}{\var{op}_1})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R2}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Scomp{(\Feedback{\var{op}_1})}{\var{op}_2}}{\Feedback{(\Scomp{\var{op}_1}{(\Pcomp{\var{op}_2}{\IdOp})})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R3}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\Pcomp{\var{op}_1}{(\Feedback{\var{op}_2})}}{\Feedback{(\const{map_op}\
+                        \assoc\ \assoc\ (\Pcomp{\var{op}_1}{\var{op}_2}))}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R4}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Feedback{(\Scomp{\var{op}_1}{(\Pcomp{\IdOp}{\var{op}_2})})}}{\Feedback{(\Scomp{(\Pcomp{\IdOp}{\var{op}_2})}{\var{op}_1})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R5}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\const{map_op}\ \const{Inl}\ \const{Inl}\ (\Feedback{(\var{op}  \oftype (\tvar{i} + \type{0},
+                        \tvar{o} + \type{0}, \tvar{d})\ \type{op})})}{\var{op}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R6}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\Feedback{(\Feedback{\var{op}})}}{\Feedback{(\const{map_op}\ \reassoc\ \reassoc \ \var{op})}}$
+        \end{tabular}}
+    \end{tabular}
+    \vspace*{-4ex}
+\end{table}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Basic network algebra properties}
+    \vspace*{-4ex}
+\begin{table}[t]
+    \begin{tabular}{ l l }
+        \multicolumn{2}{l}{$\text{B1}\!:
+            \wbisim{\Pcomp{\var{op}_1}{(\Pcomp{\var{op}_2}{\var{op}_3})}}{\const{map_op}\ \reassoc\ \reassoc\ \Pcomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{\var{op}_3}}$} \\
+        $\text{B2\_1}\!: \wbisim{\Pcomp{\var{op}}{(\IdOp \oftype
+                (\type{0}, \type{0}, \tvar{d})\ \type{op})}}{\const{map_op}\ \const{Inl}\
+            \const{Inl}\ \var{op}}$ \\
+        $\text{B2\_2}\!: \wbisim{\Pcomp{(\IdOp \oftype (\type{0},
+                \type{0}, \tvar{d})\ \type{op})}{\var{op}}}{\const{map_op}\ \const{Inr}\
+            \const{Inr}\ \var{op}}$ \\
+        \multicolumn{2}{l}{$\text{B3}\!:
+            \wbisim{\Scomp{(\Scomp{\var{op}_1}{\var{op}_2})}{\var{op}_3}}{\Scomp{\var{op}_1}{(\Scomp{\var{op}_2}{\var{op}_3})}}$} \\
+        $\text{B4\_1}\!: \wbisim{\Scomp{\var{op}\, }{\IdOp}}{\var{op}\,}$ &
+        $\text{B4\_2}\!: \wbisim{\Scomp{\IdOp}{\var{op}}}{\var{op}}$ \\
+        \multicolumn{2}{l}{$\text{B5}\!:
+            \wbisim{\Scomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{(\Pcomp{\var{op}_3}{\var{op}_4})}}{\Pcomp{(\Scomp{\var{op}_1}{\var{op}_3})}{(\Scomp{\var{op}_2}{\var{op}_4})}}$} \\
+        $\text{B6}\!: \wbisim{\Pcomp{\IdOp}{\IdOp}}{\IdOp}$ &
+        $\text{B7}\!: \wbisim{\Scomp{\TranspOp}{\TranspOp}}{\IdOp}$ \\
+        \multicolumn{2}{l}{$\text{B8}\!: \wbisim{(\TranspOp \oftype (\tvar{i} + \type{0},
+                \type{0} + \tvar{i}, \tvar{d})\ \type{op})}{\const{map_op}\ \const{id}\
+                (\const{case_sum}\ \const{Inr}\ \const{Inl})\ \IdOp}$} \\
+        \multicolumn{2}{l}{$\text{B9}\!: \wbisim{\TranspOp}{\Scomp{\const{map_op}\
+                    \reassoc\ \reassoc\
+                    (\Pcomp{\TranspOp}{\IdOp})}{\const{map_op}\ \const{id}\ \assoc\
+                    (\Pcomp{\IdOp}{\TranspOp})}}$} \\
+        \multicolumn{2}{l}{$\text{B10}\!: \wbisim{\Scomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{\TranspOp}}{\Scomp{\TranspOp}{(\Pcomp{\var{op}_2}{\var{op}_1 )}}}$} \\
+        $\text{F1}\!: \wbisim{\Feedback{\IdOp}}{(\IdOp \oftype
+            (\type{0}, \type{0}, \tvar{d})\ \type{op})}$ &
+        $\text{F2}\!: \wbisim{\Feedback{\TranspOp}}{\IdOp}$ \\
+      \multicolumn{2}{l}{$\text{R1}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Scomp{\var{op}_2}{(\Feedback{\var{op}_1})}}{\Feedback{(\Scomp{(\Pcomp{\var{op}_2}{\IdOp})}{\var{op}_1})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R2}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Scomp{(\Feedback{\var{op}_1})}{\var{op}_2}}{\Feedback{(\Scomp{\var{op}_1}{(\Pcomp{\var{op}_2}{\IdOp})})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R3}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\Pcomp{\var{op}_1}{(\Feedback{\var{op}_2})}}{\Feedback{(\const{map_op}\
+                        \assoc\ \assoc\ (\Pcomp{\var{op}_1}{\var{op}_2}))}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R4}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Feedback{(\Scomp{\var{op}_1}{(\Pcomp{\IdOp}{\var{op}_2})})}}{\Feedback{(\Scomp{(\Pcomp{\IdOp}{\var{op}_2})}{\var{op}_1})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R5}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\const{map_op}\ \const{Inl}\ \const{Inl}\ (\Feedback{(\var{op}  \oftype (\tvar{i} + \type{0},
+                        \tvar{o} + \type{0}, \tvar{d})\ \type{op})})}{\var{op}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R6}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\highlight{\wbisim{\Feedback{(\Feedback{\var{op}})}}{\Feedback{(\const{map_op}\ \reassoc\ \reassoc \ \var{op})}}}$
+        \end{tabular}}
+    \end{tabular}
+    \vspace*{-4ex}
+\end{table}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Basic network algebra properties}
+    \vspace*{-4ex}
+\begin{table}[t]
+    \begin{tabular}{ l l }
+        \multicolumn{2}{l}{$\text{B1}\!:
+            \wbisim{\Pcomp{\var{op}_1}{(\Pcomp{\var{op}_2}{\var{op}_3})}}{\const{map_op}\ \reassoc\ \reassoc\ \Pcomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{\var{op}_3}}$} \\
+        $\text{B2\_1}\!: \wbisim{\Pcomp{\var{op}}{(\IdOp \oftype
+                (\type{0}, \type{0}, \tvar{d})\ \type{op})}}{\const{map_op}\ \const{Inl}\
+            \const{Inl}\ \var{op}}$ \\
+        $\text{B2\_2}\!: \wbisim{\Pcomp{(\IdOp \oftype (\type{0},
+                \type{0}, \tvar{d})\ \type{op})}{\var{op}}}{\const{map_op}\ \const{Inr}\
+            \const{Inr}\ \var{op}}$ \\
+        \multicolumn{2}{l}{$\text{B3}\!:
+            \wbisim{\Scomp{(\Scomp{\var{op}_1}{\var{op}_2})}{\var{op}_3}}{\Scomp{\var{op}_1}{(\Scomp{\var{op}_2}{\var{op}_3})}}$} \\
+        $\text{B4\_1}\!: \wbisim{\Scomp{\var{op}\, }{\IdOp}}{\var{op}\,}$ &
+        $\text{B4\_2}\!: \wbisim{\Scomp{\IdOp}{\var{op}}}{\var{op}}$ \\
+        \multicolumn{2}{l}{$\text{B5}\!:
+            \wbisim{\Scomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{(\Pcomp{\var{op}_3}{\var{op}_4})}}{\Pcomp{(\Scomp{\var{op}_1}{\var{op}_3})}{(\Scomp{\var{op}_2}{\var{op}_4})}}$} \\
+        $\text{B6}\!: \wbisim{\Pcomp{\IdOp}{\IdOp}}{\IdOp}$ &
+        $\text{B7}\!: \wbisim{\Scomp{\TranspOp}{\TranspOp}}{\IdOp}$ \\
+        \multicolumn{2}{l}{$\text{B8}\!: \wbisim{(\TranspOp \oftype (\tvar{i} + \type{0},
+                \type{0} + \tvar{i}, \tvar{d})\ \type{op})}{\const{map_op}\ \const{id}\
+                (\const{case_sum}\ \const{Inr}\ \const{Inl})\ \IdOp}$} \\
+        \multicolumn{2}{l}{$\text{B9}\!: \wbisim{\TranspOp}{\Scomp{\const{map_op}\
+                    \reassoc\ \reassoc\
+                    (\Pcomp{\TranspOp}{\IdOp})}{\const{map_op}\ \const{id}\ \assoc\
+                    (\Pcomp{\IdOp}{\TranspOp})}}$} \\
+        \multicolumn{2}{l}{$\text{B10}\!: \wbisim{\Scomp{(\Pcomp{\var{op}_1}{\var{op}_2})}{\TranspOp}}{\Scomp{\TranspOp}{(\Pcomp{\var{op}_2}{\var{op}_1 )}}}$} \\
+        $\text{F1}\!: \wbisim{\Feedback{\IdOp}}{(\IdOp \oftype
+            (\type{0}, \type{0}, \tvar{d})\ \type{op})}$ &
+        $\text{F2}\!: \wbisim{\Feedback{\TranspOp}}{\IdOp}$ \\
+      \multicolumn{2}{l}{$\text{R1}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Scomp{\var{op}_2}{(\Feedback{\var{op}_1})}}{\Feedback{(\Scomp{(\Pcomp{\var{op}_2}{\IdOp})}{\var{op}_1})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R2}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Scomp{(\Feedback{\var{op}_1})}{\var{op}_2}}{\Feedback{(\Scomp{\var{op}_1}{(\Pcomp{\var{op}_2}{\IdOp})})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R3}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\Pcomp{\var{op}_1}{(\Feedback{\var{op}_2})}}{\Feedback{(\const{map_op}\
+                        \assoc\ \assoc\ (\Pcomp{\var{op}_1}{\var{op}_2}))}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R4}\!:$\hspace{-0.5em}\begin{tabular}[t]{l} $\wbisim{\Feedback{(\Scomp{\var{op}_1}{(\Pcomp{\IdOp}{\var{op}_2})})}}{\Feedback{(\Scomp{(\Pcomp{\IdOp}{\var{op}_2})}{\var{op}_1})}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R5}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\highlight{\wbisim{\const{map_op}\ \const{Inl}\ \const{Inl}\ (\Feedback{(\var{op}  \oftype (\tvar{i} + \type{0}, \tvar{o} + \type{0}, \tvar{d})\ \type{op})})}{\var{op}}}$
+        \end{tabular}} \\
+        \multicolumn{2}{l}{$\text{R6}\!:$\hspace{-0.5em}\begin{tabular}[t]{l}
+                $\wbisim{\Feedback{(\Feedback{\var{op}})}}{\Feedback{(\const{map_op}\ \reassoc\ \reassoc \ \var{op})}}$
+        \end{tabular}}
+    \end{tabular}
+    \vspace*{-4ex}
+\end{table}
 \end{frame}
 
 \begin{frame}[fragile]
