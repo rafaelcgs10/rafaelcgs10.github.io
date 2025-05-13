@@ -15,7 +15,7 @@
 \usepackage{pdfpages}
 \usepackage{lstautogobble}
 
-\usepackage[listings,skins,breakable,xparse,most]{tcolorbox}
+\usepackage[listings,skins,breakable,xparse,most,raster]{tcolorbox}
 \tcbuselibrary{theorems}
 \tcbset{highlight math/.append style={boxrule=0pt,
                                       frame hidden,
@@ -383,10 +383,11 @@
     \begin{align*}
         &    \cmd{datatype}\ (\tvar{i}, \tvar{o}, \tvar{d})\ \type{IO} = \const{Inp}\ \tvar{i}\ \tvar{d}\ |\ \const{Out}\ \tvar{o}\ \tvar{d}\ |\ \const{Tau}
         \\[\jot]
-        &    \cmd{inductive}\ \const{step}\ \cmd{where}\\
-        &    \more \const{step}\ (\const{Inp}\ \var{p}\ \var{x})\ (\const{Read}\ \var{p}\ \var{f})\ (\var{f}\ \var{x}) \: \bmore \const{step}\ (\const{Out}\ \var{q}\ \var{x})\ (\const{Write}\ \var{op}\ \var{q}\ \var{x})\ \var{op} \\
-        &    \bmore \const{step}\ \const{Tau}\ (\const{Silent}\ \var{op})\ \var{op} \\
-        &    \bmore \var{op} \in_c \var{ops} \implies \const{step}\ \var{io}\ \var{op}\ \var{op}' \implies \const{step}\ \var{io}\ (\const{Choice}\ \var{ops})\ \var{op}'
+        & \cmd{inductive}\ \const{step}\ \cmd{where}\\
+        & \more \const{step}\ (\const{Inp}\ \var{p}\ \var{x})\ (\const{Read}\ \var{p}\ \var{f})\ (\var{f}\ \var{x}) \\
+        & \bmore \const{step}\ (\const{Out}\ \var{q}\ \var{x})\ (\const{Write}\ \var{op}\ \var{q}\ \var{x})\ \var{op} \\
+        & \bmore \const{step}\ \const{Tau}\ (\const{Silent}\ \var{op})\ \var{op} \\
+        & \bmore \var{op} \in_c \var{ops} \implies \const{step}\ \var{io}\ \var{op}\ \var{op}' \implies \const{step}\ \var{io}\ (\const{Choice}\ \var{ops})\ \var{op}'
     \end{align*}
   \end{tcolorbox}
 \end{frame}
@@ -438,28 +439,51 @@
 \section{Asynchronous Dataflow Operators}
 
 \begin{frame}[fragile]
-  \frametitle{Buffer Infrastructure}
-  \begin{itemize}
-    \item Buffers: $\tvar{a} \Fun \tvar{d}\ \type{list}$
-  \end{itemize}
-  \begin{tcolorbox}[enhanced,title=Auxiliary functions for buffers,colback=yellow!30]
-    \vspace*{-3ex}
-    \hspace*{-5ex}
-    \begin{align*}
-      & \const{BHD}\ \var{p}\ \var{buf} = \const{hd}\ (\var{buf}\ \var{p})
-      \\
-    & \const{BTL}\ \var{p}\ \var{buf} = \var{buf}(\var{p} := \const{tl}\ (\var{buf}\ \var{p}))
-    \\
-    & \const{BENQ}\ \var{p}\ \var{x}\ \var{buf} = \var{buf}(\var{p} := \var{buf}\ \var{p}\ \const{@}\ [\var{x}])
-      \\
-      & \BulkBenq{\var{buf}_1}{\var{buf}_2} = (\lambda \var{p}.\ \var{buf}_2\ \var{p}\ \const{@}\ \var{buf}_1\ \var{p})
-    \end{align*}
-  \end{tcolorbox}
+  \frametitle{Auxiliary definitions}
+      \pause
+  \begin{tcbraster}[raster columns=2, raster equal height]
+    \begin{tcolorbox}[enhanced,title=Buffer functions,colback=yellow!30]
+      \vspace*{-4ex}
+      \begin{align*}
+        & \hspace*{-6ex} \const{BHD}\ \var{p}\ \var{buf} = \const{hd}\ (\var{buf}\ \var{p})
+        \\
+        & \hspace*{-6ex} \const{BTL}\ \var{p}\ \var{buf} = \var{buf}(\var{p} := \const{tl}\ (\var{buf}\ \var{p}))
+        \\
+        & \hspace*{-6ex} \const{BENQ}\ \var{p}\ \var{x}\ \var{buf} = \var{buf}(\var{p} := \var{buf}\ \var{p}\ \const{@}\ [\var{x}])
+        \\
+        & \hspace*{-6ex} \BulkBenq{\var{buf}_1}{\var{buf}_2} = (\lambda \var{p}.\ \var{buf}_2\ \var{p}\ \const{@}\ \var{buf}_1\ \var{p})
+      \end{align*}
+      \vspace*{-5ex}
+    \end{tcolorbox}
+      \pause
+    \begin{tcolorbox}[enhanced,title=choices function,colback=yellow!30]
+      \vspace*{-4ex}
+      \hspace*{-5ex}
+      \begin{align*}
+        & \hspace*{-6ex} \const{choices}\ \SpinOp = \Emptyset \\
+        & \hspace*{-6ex} \const{Silent}\ \var{op}' \in_c \const{choices}\ \var{op} \Iff \const{step}\ \const{Tau}\ \var{op}\ \var{op}' \\
+        & \hspace*{-6ex} \const{choices}\; (\const{Choice}\ \var{ops}) = \bigcup {}_c \ (\const{choices}\ \Image_c\ \var{ops})
+      \end{align*}
+      \vspace*{-5ex}
+    \end{tcolorbox}
+  \end{tcbraster}
+      \pause
+      \begin{tcolorbox}[enhanced,title=Mapping ports functions,colback=yellow!30,]
+        \vspace*{-4ex}
+        \begin{align*}
+          & \hspace*{-6ex} \const{map\_op} \oftype \type{(\tvar{i}_1 \Fun \tvar{i}_2) \Fun (\tvar{o}_1 \Fun \tvar{o}_2) \Fun (\tvar{i}_1, \tvar{o}_1, \tvar{d})\ \type{op} \Fun (\tvar{i}_2, \tvar{o}_2, \tvar{d})\ \type{op}} \\
+          & \hspace*{-6ex} \const{projl}\ \oftype \type{(\tvar{a} + \tvar{b}) \Fun \tvar{a}} \\
+          & \hspace*{-6ex} \const{projr}\ \oftype \type{(\tvar{a} + \tvar{b}) \Fun \tvar{b}} \\
+          & \hspace*{-6ex} \reassoc\ \oftype \type{(\tvar{a} + \tvar{b}) + \tvar{c} \Fun \tvar{a} + \tvar{b} + \tvar{c}} \\
+          & \hspace*{-6ex} \assoc\ \oftype \type{\tvar{a} + \tvar{b} + \tvar{c} \Fun (\tvar{a} + \tvar{b}) + \tvar{c} }
+        \end{align*}
+        \vspace*{-5ex}
+      \end{tcolorbox}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Identity}
-  \begin{tcolorbox}[enhanced,title=Identity operator,colback=yellow!30]
+  \begin{tcolorbox}[enhanced,title=Equation of the identity operator,colback=yellow!30]
     \vspace*{-3ex}
     \hspace*{-5ex}
     \begin{align*}
@@ -492,10 +516,53 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Composition}
-  \begin{itemize}
-    \item foo
-  \end{itemize}
+  \frametitle{Composition: Preliminaries}
+  \vspace*{-2ex}
+  \begin{tcolorbox}[enhanced,title=Composition operator type,colback=yellow!30]
+    \vspace*{-4ex}
+    \hspace*{-8ex}
+    \begin{align*}
+      & \hspace*{-6ex} \const{comp_op}\ \oftype \type{(\tvar{o}_1 \Fun \tvar{i}_2 \ \type{option}) \Fun (\tvar{i}_2 \Fun \tvar{d}\ list) \Fun (\tvar{i}_1, \tvar{o}_1, \tvar{d})\ \type{op} \Fun (\tvar{i}_2, \tvar{o}_2, \tvar{d})\ \type{op} \Fun} \\
+      & \hspace*{6.5ex} \type{(\tvar{i}_1 + \tvar{i}_2, \tvar{o}_1 + \tvar{o}_2, \tvar{d})\ \type{op}}
+    \end{align*}
+    \vspace*{-5ex}
+  \end{tcolorbox}
+  \pause
+
+  \begin{tcolorbox}[enhanced,title=Sequential and parallel composition,colback=yellow!30]
+    \vspace*{-4ex}
+    \hspace*{-8ex}
+    \begin{align*}
+      & \Pcomp{\var{op}_1}{\var{op}_2} = \const{comp_op}\ (\lambda \_.\ \const{None})\ (\lambda \_.\ [])\ \var{op}_1\ \var{op}_2 \\
+      & \Scomp{\var{op}_1}{\var{op}_2} = \const{map_op}\ \const{projl}\ \const{projr}\ (\const{comp_op}\ \const{Some}\ (\lambda \_.\ [])\ \var{op}_1\ \var{op}_2)
+    \end{align*}
+    \vspace*{-5ex}
+  \end{tcolorbox}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Composition: equation}
+  \vspace*{-2ex}
+  \begin{tcolorbox}[enhanced,title=Composition operator,colback=yellow!30]
+    \vspace*{-4ex}
+    \hspace*{-8ex}
+    \begin{align*}
+     &\visible<1->{\const{comp_op}\ \var{wire}\ \var{buf}\ \var{op}_1\ \var{op}_2 =} \visible<2->{\const{Choice}\ } \visible<4->{(((\lambda \var{op}.\ \syntax{case}\ \var{op}\ \syntax{of}}\\
+     &\visible<4->{\more \const{Read}\ \var{p}\ \var{f}\ \Fun \const{Read}\ (\const{Inl}\ \var{p})\ (\lambda x.\ \const{comp_op}\ \var{wire}\ \var{buf}\ (\var{f}\ \var{x})\ \var{op}_2)}\\
+     &\visible<5->{\bmore \const{Write}\ \var{op}\ \var{p}\ \var{x} \Fun (\syntax{case}\ \var{wire}\ \var{p}\ \syntax{of}}\\
+     &\visible<5->{\more \more \const{None} \Fun \const{Write}\ (\const{comp_op}\ \var{wire}\ \var{buf}\ \var{op}\ \var{op}_2)\ (\const{Inl}\ \var{p})\ \var{x}}\\
+     &\visible<5->{\more \bmore \const{Some}\ \var{q} \Fun \const{Silent}\ (\const{comp_op}\ \var{wire}\ (\const{BENQ}\ \var{q}\ \var{x}\ \var{buf})\ \var{op}\ \var{op}_2))}\\
+     &\visible<6->{\bmore \const{Silent}\ \var{op} \Fun \const{Silent}\ (\const{comp_op}\ \var{wire}\ \var{buf}\ \var{op}\ \var{op}_2))} \ \visible<3->{\Image_c \ \const{choices}\ \var{op}_1)} \ \visible<2->{\Union_c}\\
+     &\visible<9->{\phantom{(}((\lambda \var{op}.\ \syntax{case}\ \var{op}\ \syntax{of}}\\
+     &\visible<10->{\more \const{Read}\ \var{p}\ \var{f} \Fun \syntax{if}\ \var{p} \in \const{ran}\ \var{wire}}\\
+     &\visible<10->{\more \more \syntax{then}\ \const{Silent}\ (\const{comp_op}\ \var{wire}\ (\const{BTL}\ \var{p}\ \var{buf})\ \var{op}_1\ (\var{f}\ (\const{BHD}\ \var{p}\ \var{buf})))}\\
+     &\visible<10->{\more \more \syntax{else}\ \const{Read}\ (\const{Inr}\ \var{p})\ (\lambda \var{x}.\ \const{comp_op}\ \var{wire}\ \var{buf}\ \var{op}_1\ (\var{f}\ \var{x}))}\\
+     &\visible<9->{\bmore \const{Write}\ \var{op}\ \var{p}\ \var{x} \Fun \const{Write}\ (\const{comp_op}\ \var{wire}\ \var{buf}\ \var{op}_1\ \var{op})\ (\const{Inr}\ \var{p})\ \var{x}}\\
+     &\visible<11->{\bmore \const{Silent}\ \var{op} \Fun \const{Silent}\ (\const{comp_op}\ \var{wire}\ \var{buf}\ \var{op}_1\ \var{op}))} \ \visible<8->{\Image_c \ \const{sound_reads}\ \var{wire}\ \var{buf}\ } \visible<7->{(\const{choices}\ \var{op}_2)))}
+    \end{align*}
+    \vspace*{-5ex}
+  \end{tcolorbox}
+
 \end{frame}
 
 \begin{frame}[fragile]
