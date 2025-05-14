@@ -1,99 +1,58 @@
-\frametitle{A10}
-\begin{figure}[t]
-  \centering
-  \begin{tikzpicture}
-    \pic (aeq0) at (-1, 0) {aeqA};
-    \pic (acopy0) at (1, 0) {acopyA};
-
-    \draw [-, postaction={decoration={
-          text effects along path,
-          text={{}{\(z\)}},
-          text align=center,
-          text effects/.cd,
-          text along path,
-          characters={fill=white, yshift=-0.6ex},
-        }, decorate}]  (aeq0-o) to (acopy0-i);
-
-    \node at (2.5, 0) {\LARGE \(\wbisim{}{}\)};
-
-    \pic (acopy1) at (4, 1.5) {acopyB};
-    \pic (acopy2) at (4, -1.5) {acopyC};
-    \pic (transp1) at (6, 0) {transpC};
-    \pic (id0) at (6, 1.85) {idB};
-    \pic (id1) at (6, -1.85) {idC};
-    \pic (aeq1) at (8, 1.5) {aeqB};
-    \pic (aeq2) at (8, -1.5) {aeqC};
-
-    \draw [-, postaction={decoration={
-          text effects along path,
-          text={{}{\(a_2\)}},
-          text align=center,
-          text effects/.cd,
-          text along path,
-          characters={fill=white, yshift=-0.4ex},
-        }, decorate}]  (acopy1-ol) to (id0-i);
-    \draw [-, postaction={decoration={
-          text effects along path,
-          text={{}{\(b_2\)}},
-          text align=center,
-          text effects/.cd,
-          text along path,
-          characters={fill=white, yshift=-0.4ex},
-        }, decorate}]  (acopy1-or) to (transp1-il);
-    \draw [-, postaction={decoration={
-          text effects along path,
-          text={{}{\(c_2\)}},
-          text align=center,
-          text effects/.cd,
-          text along path,
-          characters={fill=white, yshift=-0.4ex},
-        }, decorate}]  (acopy2-ol) to (transp1-ir);
-    \draw [-, postaction={decoration={
-          text effects along path,
-          text={{}{\(d_2\)}},
-          text align=center,
-          text effects/.cd,
-          text along path,
-          characters={fill=white, yshift=-0.4ex},
-        }, decorate}]  (acopy2-or) to (id1-i);
-    \draw [-, postaction={decoration={
-          text effects along path,
-          text={{}{\(a_4\)}},
-          text align=center,
-          text effects/.cd,
-          text along path,
-          characters={fill=white, yshift=-0.4ex},
-        }, decorate}]  (id0-o) to (aeq1-il);
-    \draw [-, postaction={decoration={
-          text effects along path,
-          text={{}{\(c_4\)}},
-          text align=center,
-          text effects/.cd,
-          text along path,
-          characters={fill=white, yshift=-0.4ex},
-        }, decorate}]  (transp1-ol) to (aeq1-ir);
-    \draw [-, postaction={decoration={
-          text effects along path,
-          text={{}{\(b_4\)}},
-          text align=center,
-          text effects/.cd,
-          text along path,
-          characters={fill=white, yshift=-0.4ex},
-        }, decorate}]  (transp1-or) to (aeq2-il);
-    \draw [-, postaction={decoration={
-          text effects along path,
-          text={{}{\(d_4\)}},
-          text align=center,
-          text effects/.cd,
-          text along path,
-          characters={fill=white, yshift=-0.4ex},
-        }, decorate}]  (id1-o) to (aeq2-ir);
-
-  \end{tikzpicture}
-  \vspace*{-3ex}
-\end{figure}
-\begin{itemize}
-  \item $\wbisim{}{}$ coinduction principle
-  \item Buffers generalization
-  \item Buffers invariant
-\end{itemize}
+\frametitle{Related Work}
+    \pause
+  \vspace*{-2ex}
+  \begin{columns}
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item Instance in Algebra of Communicating Processes (ACP)
+        \item Our operators closely follow theirs
+      \end{itemize}
+      \vspace*{-2ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.6\textwidth]{Bergstra.png}}
+      \end{figure}
+    \end{column}
+    \pause
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item Our operators can be seen as a domain specific variant of choice trees
+        % \item Monadic composition
+      \end{itemize}
+      \vspace*{-2ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.6\textwidth]{itrees.png}}
+      \end{figure}
+      \vspace*{-3ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.6\textwidth]{ctrees.png}}
+      \end{figure}
+    \end{column}
+  \end{columns}
+    \pause
+      \vspace*{-2ex}
+  \begin{columns}
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item \textbf{Synchronous} dataflow languages have some proof assistant mechanization
+      \end{itemize}
+      \vspace*{-2ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.5\textwidth]{velus.png}}
+      \end{figure}
+    \end{column}
+    \pause
+    \begin{column}{.45\textwidth}
+      \begin{itemize}
+        \item Flo: a framework for representing streaming computations originating from different systems like Flink and DBSP
+      \end{itemize}
+      \vspace*{-2ex}
+      \begin{figure}
+        \centering
+        \shadowbox{\includegraphics[width=0.5\textwidth]{flo.png}}
+      \end{figure}
+    \end{column}
+  \end{columns}
