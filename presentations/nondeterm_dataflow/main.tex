@@ -3,6 +3,8 @@
 \usepackage[T1]{fontenc}
 \include{defs}
 
+\setbeamertemplate{navigation symbols}{}
+
 \setbeamertemplate{footline}
 {
   \leavevmode%
@@ -779,7 +781,8 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Operators Equivalences: Weak Bisimilarity}
+  \frametitle{Operators Equivalences:  Weak Bisimilarity}
+    \vspace*{-1ex}
   \begin{block}{An ideal equivalence relation}
     \begin{itemize}
       \item Only equate operators that \textbf{behave} the same
@@ -788,7 +791,6 @@
   \end{block}
   \pause
   \begin{itemize}
-
           \begin{columns}
             \begin{column}{.42\textwidth}
               \item Milner's approach!\\ The classic chapter on \textbf{weak bisimilarity}
@@ -799,20 +801,26 @@
               \end{figure}
             \end{column}
             \begin{column}{.1\textwidth}
-                \includegraphics[width=1\textwidth]{book.jpg}
+              \includegraphics[width=1\textwidth]{book.jpg}
             \end{column}
             \begin{column}{.1\textwidth}
             \end{column}
           \end{columns}
-          \item Based on labeled transition systems (LTS)
-          \item Labels (actions): Read, Write, Silent ($\tau$)
-    \pause
-    \item Weak bisimilarity of operators ($\approx$): LTS + weak simulation + greatest weak bisimulation
-    \item $\approx$ has a useful coinduction principle
-    \item $\EndOp \approx \SpinOp \approx \SilentOp$ and $\const{ex1} \approx \const{ex2} \approx \const{ex3}$
+    \item Based on labeled transition systems (LTS)
+    \item \textbf{Weak}: silent computations are abstracted away
   \end{itemize}
-  % \begin{block}{Intuition}
-  %   \footnotesize{Two operators are bisimilar if their corresponding transition systems can mutually simulate each other’s transitions.}
+    \vspace*{-1ex}
+  \pause
+  \begin{block}{Weak bisimilarity of operators}
+    \begin{itemize}
+      \item Labels (actions): read, write, silent ($\tau$)
+      \item Weak bisimilarity of operators ($\approx$): LTS + weak simulation + greatest weak bisimulation
+      \item $\approx$ has a useful coinduction principle
+      \item $\EndOp \approx \SpinOp \approx \SpinOp$ and $\const{ex1} \approx \const{ex2} \approx \const{ex3}$
+    \end{itemize}
+  \end{block}
+  % \begin{block}{intuition}
+  %   \footnotesize{two operators are bisimilar if their corresponding transition systems can mutually simulate each other’s transitions.}
   % \end{block}
 \end{frame}
 
