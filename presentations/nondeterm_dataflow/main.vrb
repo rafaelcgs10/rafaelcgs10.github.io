@@ -46,7 +46,6 @@
     \end{column}
     \pause
     \begin{column}{.45\textwidth}
-
       \begin{itemize}
         \item Flo: a framework for representing streaming computations originating from different systems like Flink and DBSP
       \end{itemize}
