@@ -32,20 +32,6 @@
 
 \lstset{style=mystyle}
 
-\setbeamertemplate{footline}
-{
-  \leavevmode%
-  \hbox{%
-    \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-      \usebeamerfont{author in head/foot}\insertshortauthor
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[wd=.6\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
-      \usebeamerfont{title in head/foot}\insertshorttitle\hspace*{3em}
-      \insertframenumber{} / \inserttotalframenumber\hspace*{1ex}
-    \end{beamercolorbox}}%
-  \vskip0pt%
-}
-
 \usepackage{wasysym}
 \usepackage{fancybox,graphicx,hyperref,url}
 \usepackage{booktabs}
@@ -65,13 +51,13 @@
   \end{frame}
 }
 
-\title[Flask Tutorial]{Flask Tutorial}
+\title[Please open: \url{github.com/rafaelcgs10/dis2025}]{Flask Tutorial}
 
-\author[Rafael]{Rafael Castro G. Silva}
+\author[Rafael Castro]{Rafael Castro G. Silva}
 
 \date{20/05/2025}
 
-\institute[UCPH]{
+\institute[]{
   Department of Computer Science \\
   University of Copenhagen}
 
@@ -131,7 +117,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{What do I need know?}
+  \frametitle{Prerequisites}
   \begin{itemize}
           \pause
     \item Very basic Python
@@ -288,7 +274,7 @@ def hello(name=None):
   \frametitle{Docker Introduction}
   \vspace*{-1.5ex}
   \pause
-  \begin{block}{The problem:}
+  \begin{block}{The problem}
     \begin{itemize}
       \item Software depends on specific versions of system libraries, and in the computer environment in general (e.g. directory structures, databases, ambient variables, etc)
             \pause
@@ -300,7 +286,7 @@ def hello(name=None):
   \vspace*{-2ex}
     \begin{columns}
       \begin{column}{.95\textwidth}
-        \begin{block}{Solution:}
+        \begin{block}{Solution}
           \begin{itemize}
             \item We enforce the same environment in declarative manner: \\ version of system libraries, databases, the environment variables...
             \item Docker does exactly that!
@@ -335,15 +321,35 @@ def hello(name=None):
   \end{columns}
 \end{frame}
 
-\begin{frame}
-  \frametitle{An Usual Setup}
-
+\begin{frame}[fragile]
+  \frametitle{Docker basics}
+  \pause
+  \begin{block}{More concepts}
+    \begin{itemize}
+      \item Docker container: isolated process with its own file system
+      \item Docker image: is a package that includes all of the files, binaries, libraries, and configurations to run a Docker container
+            \begin{itemize}
+              \item Built on layers: make your own image on top of existing ones
+            \end{itemize}
+            \item Docker volume: persistent data stores for containers
+    \end{itemize}
+  \end{block}
+  \pause
+  \begin{block}{An usual setup:}
+    \begin{itemize}
+      \item \texttt{Dockerfile}: The Docker image in which you main app will run on
+      \item \texttt{entrypoint.sh}: The script that the Dockerfile calls when its container is starting up
+      \item \texttt{docker-compose.yml}: Organizes all the different Docker container of your application
+    \end{itemize}
+  \end{block}
 \end{frame}
 
-\section{The Bank Example Project}
+\section{A Minimal MVC Flask app with Docker Project}
 \begin{frame}
-  \frametitle{The Bank Example Project Overview}
-
+  \frametitle{A Minimal MVC Flask app with Docker Project}
+  \begin{itemize}
+    \item App
+  \end{itemize}
 \end{frame}
 
 \section{Let's write our web apps!}
