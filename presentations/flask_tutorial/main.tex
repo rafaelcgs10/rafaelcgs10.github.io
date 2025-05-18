@@ -88,9 +88,8 @@
 \begin{frame}
   \frametitle{Learning Goals}
   \begin{enumerate}
-    \item Learn what is Flask
-    \item Learn how to bootstrap a Flask web application
-    \item Learn some basic Flask concepts
+    \item Learn what is Flask, and some basic Flask concepts
+    % \item Learn how to bootstrap a Flask web application
     \item Learn the Model View Control (MVC) pattern
     \item Learn basic Docker
   \end{enumerate}
@@ -247,10 +246,113 @@ def hello(name=None):
   \end{itemize}
 \end{frame}
 
-\section{MVC}
+\section{MVC (extra)}
+
+\begin{frame}[fragile]
+  \frametitle{Model View Controller}
+  \pause
+  \begin{itemize}
+    \item Model View Controller (MVC) is a software architectural pattern
+  \end{itemize}
+  \pause
+
+  \begin{columns}
+    \begin{column}{.6\linewidth}
+      \begin{block}{We split the applications in:}
+        \begin{itemize}
+          \item Model: The internal representation of the information (e.g., our domain objects)
+                \begin{itemize}
+                  \item Interact with the database
+                  \item Busyness logic
+                  \item Do complex computations
+                \end{itemize}
+          \item View: The interface for the user
+                \begin{itemize}
+                  \item Builds the HTML/Javascript/JSON/Text
+                \end{itemize}
+          \item Controller: Links model and view
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{.4\linewidth}
+      \begin{figure}[]
+        \centering
+        \includegraphics[width=0.8\textwidth]{mvc}
+      \end{figure}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Docker (extra)}
+\begin{frame}
+  \frametitle{Docker Introduction}
+  \vspace*{-1.5ex}
+  \pause
+  \begin{block}{The problem:}
+    \begin{itemize}
+      \item Software depends on specific versions of system libraries, and in the computer environment in general (e.g. directory structures, databases, ambient variables, etc)
+            \pause
+      \item I use Linux, you may use Windows, your next group colleague may use MacOS
+            \pause
+      \item How do we make sure everybody has the exact same environment?
+    \end{itemize}
+    \pause
+  \vspace*{-2ex}
+    \begin{columns}
+      \begin{column}{.95\textwidth}
+        \begin{block}{Solution:}
+          \begin{itemize}
+            \item We enforce the same environment in declarative manner: \\ version of system libraries, databases, the environment variables...
+            \item Docker does exactly that!
+          \end{itemize}
+        \end{block}
+      \end{column}
+    \end{columns}
+  \end{block}
+  \vspace*{-1.8ex}
+  \pause
+  \begin{columns}
+    \begin{column}{.45\textwidth}
+  \begin{block}{What is Docker?}
+    \begin{itemize}
+            \pause
+      \item What Docker is not: A virtual machine
+            \pause
+      \item It is a container solution based on a Linux kernel feature called cgroups
+      \item It is also runs on MacOS and Windows
+    \end{itemize}
+  \end{block}
+    \end{column}
+    \pause
+    \begin{column}{.45\textwidth}
+      \begin{block}{Why use Docker?}
+        \begin{itemize}
+          \item Like git, it is a standard in the industry
+          \item It will make the life of the TAs way easier
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{An Usual Setup}
+
+\end{frame}
 
 \section{The Bank Example Project}
+\begin{frame}
+  \frametitle{The Bank Example Project Overview}
+
+\end{frame}
 
 \section{Let's write our web apps!}
+\begin{frame}
+  \frametitle{Hands-on}
+  \begin{itemize}
+    \item Follow my step-by-step guide: \url{https://github.com/rafaelcgs10/dis2025}
+    \item Follow the official Flask tutorial: \url{https://flask.palletsprojects.com/en/stable/tutorial/}
+  \end{itemize}
+\end{frame}
 
 \end{document}
