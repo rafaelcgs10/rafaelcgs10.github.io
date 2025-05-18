@@ -1,0 +1,88 @@
+\documentclass[fleqn,aspectratio=169,10pt]{beamer}
+\usetheme{Madrid}
+\usepackage[T1]{fontenc}
+
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.6\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle\hspace*{3em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{1ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\usepackage{wasysym}
+\usepackage{fancybox,graphicx,hyperref,url}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\usepackage{listings}
+\usepackage{pdfpages}
+\usepackage{lstautogobble}
+
+\AtBeginSection[]{
+  \begin{frame}[noframenumbering]
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+      \usebeamerfont{title}\insertsectionhead\par%
+    \end{beamercolorbox}
+    \vfill
+  \end{frame}
+}
+
+\title[Flask Tutorial]{Flask Tutorial}
+
+\author[Rafael]{Rafael Castro G. Silva}
+
+\date{20/05/2025}
+
+\institute[UCPH]{
+  Department of Computer Science \\
+  University of Copenhagen}
+
+\begin{document}
+\setbeamercovered{invisible}
+% \setbeamercovered{dynamic}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section{Learning Goals}
+
+\begin{frame}
+  \frametitle{Learning Goals}
+  \begin{enumerate}
+    \item Learn how to bootstrap a Flask web application
+    \item Learn some basic Flask concepts
+    \item Learn the MVC pattern
+    \item Learn basic Docker
+  \end{enumerate}
+\end{frame}
+
+\section{What is Flask}
+
+\begin{frame}[fragile]
+  \frametitle{What is Flask?}
+  \begin{block}{Context:}
+  \begin{itemize}
+  \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Templates}
+
+\end{frame}
+
+\section{Let's write our web apps!}
+
+\end{document}
