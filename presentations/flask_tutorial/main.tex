@@ -137,7 +137,7 @@
           \pause
     \item Very basic Python
           \begin{itemize}
-            \item Variables, functions, indentation, lists, maps (dictionaries), if-then-else, for loops, import libraries
+            \item Variables, functions, indentation, lists, maps (dictionaries), if-then-else, for loops, class (OO programming), import libraries
           \end{itemize}
     \item Terminal commands: \texttt{ls}, \texttt{cd}, \texttt{pwd}...
     \item Basic HTML
@@ -147,64 +147,109 @@
 \end{frame}
 
 \section{Flask Concepts}
-\begin{frame}
-  \frametitle{The app variable}
 
+\begin{frame}[fragile]
+  \frametitle{The App Variable}
+  \begin{itemize}
+    \item Our app is an instance of the \texttt{Flask} class
+    \item \texttt{\_\_name\_\_} is a default configuration telling that the files of the project are in the current directory
+  \end{itemize}
+\begin{lstlisting}[language=Python]
+from flask import Flask
+
+app = Flask(__name__)
+\end{lstlisting}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Routing}
-  \begin{itemize}
-    \item Python decorator
-    \item GET POST
-  \end{itemize}
+      \vspace*{-2ex}
+\begin{lstlisting}[language=Python]
+from flask import Flask
 
+app = Flask(__name__)
+
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
+\end{lstlisting}
+
+  \begin{itemize}
+    \item \lstinline[language=Python]!@app.route("/")! is Python decorator: extends the behavior of a function
+          \begin{itemize}
+            \item Tells Flask what URL should trigger our function
+            \item The \lstinline[language=Python]!"/"! is the root of our web site domain \\
+                  \texttt{http://127.0.0.1:5000} takes us to this route
+            \item We can have other routes: \lstinline[language=Python]!@app.route("/register")! \\
+                  \texttt{http://127.0.0.1:5000/register} takes us to this other route
+          \end{itemize}
+  \end{itemize}
+  \pause
+  \begin{block}{What else to learn:}
+    \begin{itemize}
+      \item Variable rules: \url{https://flask.palletsprojects.com/en/stable/quickstart/#variable-rules}
+      \item HTTP methods: \url{https://flask.palletsprojects.com/en/stable/quickstart/#http-methods}
+    \end{itemize}
+  \end{block}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Templates}
+  \vspace*{-1.5ex}
+  File \texttt{./app.py}:
 \begin{lstlisting}[language=Python]
-import numpy as np
+from flask import render_template
 
-def incmatrix(genl1,genl2):
-    m = len(genl1)
-    n = len(genl2)
-    M = None #to become the incidence matrix
-    VT = np.zeros((n*m,1), int)  #dummy variable
-
-    #compute the bitwise xor matrix
-    M1 = bitxormatrix(genl1)
-    M2 = np.triu(bitxormatrix(genl2),1)
-
-    for i in range(m-1):
-        for j in range(i+1, m):
-            [r,c] = np.where(M2 == M1[i,j])
-            for k in range(len(r)):
-                VT[(i)*n + r[k]] = 1;
-                VT[(i)*n + c[k]] = 1;
-                VT[(j)*n + r[k]] = 1;
-                VT[(j)*n + c[k]] = 1;
-
-                if M is None:
-                    M = np.copy(VT)
-                else:
-                    M = np.concatenate((M, VT), 1)
-
-                VT = np.zeros((n*m,1), int)
-
-    return M
+@app.route('/hello/')
+@app.route('/hello/<name>')
+def hello(name=None):
+    return render_template('hello.html', person=name)
 \end{lstlisting}
+
+  File \texttt{./templates/hello.html}:
+\begin{lstlisting}[language=HTML]
+<!doctype html>
+<title>Hello from Flask</title>
+{% if person %}
+  <h1>Hello {{ person }}!</h1>
+{% else %}
+  <h1>Hello, World!</h1>
+{% endif %}
+\end{lstlisting}
+  \vspace*{-1.5ex}
+  \pause
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+      \begin{itemize}
+        \item Import \texttt{render\_template}\\ (Jinja2 template engine)
+        \item 2 routes for the same function
+        \item The function has a named argument
+      \end{itemize}
+    \end{column}
+    \pause
+    \begin{column}{.6\textwidth}
+      \begin{itemize}
+        \item \texttt{render\_template} passes the named arguments
+        \item The template has access to the Python variables. \\
+              Inside of \texttt{\{\% \%\}} is Jinja2 code \\
+              Inside of \texttt{\{\{ \}\}} is to print as HTML
+      \end{itemize}
+    \end{column}
+  \end{columns}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Render Template}
+\begin{frame}[fragile]
+  \frametitle{What else to learn about templates?}
   \begin{itemize}
-    \item Python decorator
+    \item If statements: \url{https://jinja.palletsprojects.com/en/stable/templates/#if}
+    \item For loops: \url{https://jinja.palletsprojects.com/en/stable/templates/#for}
+    \item Template Inheritance \url{https://jinja.palletsprojects.com/en/stable/templates/#template-inheritance}
   \end{itemize}
-
 \end{frame}
 
 \section{MVC}
+
+\section{The Bank Example Project}
 
 \section{Let's write our web apps!}
 
